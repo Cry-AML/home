@@ -1,45 +1,52 @@
 /* ==========================================================================
-   Wen Laboratory (文卓谦实验室) - Academic Theme System & Design Craft
-   Refactored according to baoyu-design (Hi-Fi Interactive Prototype Standards)
+   Wen Laboratory (文卓谦实验室) - Award-Tier Design System
+   Benchmarked against Awwwards / Webby / FWA Winning Standards
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap');
 
 /* --------------------------------------------------------------------------
-   1. Theme Variable Tokens
+   1. Theme Variable Tokens & Fluid Typographic Scale
    -------------------------------------------------------------------------- */
 :root, [data-theme="navy"] {
   --color-scheme: light;
   --bg-page: #f8fafc;
   --bg-surface: #ffffff;
   --bg-surface-elevated: #ffffff;
-  --bg-surface-card: #ffffff;
+  --bg-surface-card: rgba(255, 255, 255, 0.85);
+  --bg-glass: rgba(255, 255, 255, 0.72);
   --bg-subtle: #f1f5f9;
   
-  --text-main: #0f172a;
+  --text-main: #091322;
   --text-secondary: #334155;
   --text-muted: #64748b;
   --text-light: #94a3b8;
   
-  --primary: #0f3a66;          /* Academic Navy */
+  --primary: #0f3a66;          /* Ivy League Academic Navy */
   --primary-hover: #164e8a;
   --primary-rgb: 15, 58, 102;
   --primary-light: #e0f2fe;
   --primary-border: #bae6fd;
   
-  --accent: #2563eb;           /* Clinical Blue */
+  --accent: #2563eb;           /* Clinical & Precision Blue */
   --accent-hover: #1d4ed8;
   --accent-tint: #eff6ff;
+  --accent-rgb: 37, 99, 235;
+  
+  --gold: #d97706;
+  --gold-tint: #fef3c7;
   
   --border: #e2e8f0;
-  --border-light: #f1f5f9;
+  --border-light: rgba(226, 232, 240, 0.6);
+  --border-glow: rgba(37, 99, 235, 0.25);
   
   --badge-bg: #e0f2fe;
   --badge-text: #0369a1;
   
   --hero-glow: radial-gradient(circle at 50% 15%, rgba(37, 99, 235, 0.08) 0%, rgba(248, 250, 252, 0) 70%);
-  --card-shadow: 0 4px 20px -2px rgba(15, 58, 102, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
-  --card-shadow-hover: 0 16px 32px -4px rgba(15, 58, 102, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+  --card-shadow: 0 4px 20px -2px rgba(15, 58, 102, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  --card-shadow-hover: 0 20px 40px -4px rgba(15, 58, 102, 0.12), 0 6px 16px -2px rgba(37, 99, 235, 0.08);
+  --ambient-particle: #0f3a66;
 }
 
 [data-theme="crimson"] {
@@ -47,13 +54,14 @@
   --bg-page: #fffbfb;
   --bg-surface: #ffffff;
   --bg-surface-elevated: #ffffff;
-  --bg-surface-card: #ffffff;
+  --bg-surface-card: rgba(255, 255, 255, 0.88);
+  --bg-glass: rgba(255, 255, 255, 0.75);
   --bg-subtle: #fdf2f2;
   
-  --text-main: #240b0e;
+  --text-main: #1f080b;
   --text-secondary: #4a1e22;
-  --text-muted: #6b4d50;
-  --text-light: #9c7a7e;
+  --text-muted: #734f53;
+  --text-light: #a37d82;
   
   --primary: #8b1e2b;          /* Sun Yat-sen Crimson / 逸仙红 */
   --primary-hover: #a82434;
@@ -61,19 +69,25 @@
   --primary-light: #ffe4e6;
   --primary-border: #fecdd3;
   
-  --accent: #dc2626;           /* Bright Crimson */
+  --accent: #dc2626;           /* Cardinal Red */
   --accent-hover: #b91c1c;
   --accent-tint: #fef2f2;
+  --accent-rgb: 220, 38, 38;
+  
+  --gold: #b45309;
+  --gold-tint: #fef3c7;
   
   --border: #fee2e2;
-  --border-light: #fff1f2;
+  --border-light: rgba(254, 226, 226, 0.6);
+  --border-glow: rgba(220, 38, 38, 0.25);
   
   --badge-bg: #ffe4e6;
   --badge-text: #9f1239;
   
   --hero-glow: radial-gradient(circle at 50% 15%, rgba(220, 38, 38, 0.07) 0%, rgba(255, 251, 251, 0) 70%);
-  --card-shadow: 0 4px 20px -2px rgba(139, 30, 43, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
-  --card-shadow-hover: 0 16px 32px -4px rgba(139, 30, 43, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+  --card-shadow: 0 4px 20px -2px rgba(139, 30, 43, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  --card-shadow-hover: 0 20px 40px -4px rgba(139, 30, 43, 0.12), 0 6px 16px -2px rgba(220, 38, 38, 0.08);
+  --ambient-particle: #8b1e2b;
 }
 
 [data-theme="emerald"] {
@@ -81,71 +95,85 @@
   --bg-page: #f6faf8;
   --bg-surface: #ffffff;
   --bg-surface-elevated: #ffffff;
-  --bg-surface-card: #ffffff;
+  --bg-surface-card: rgba(255, 255, 255, 0.88);
+  --bg-glass: rgba(255, 255, 255, 0.75);
   --bg-subtle: #edf7f2;
   
-  --text-main: #062319;
+  --text-main: #052118;
   --text-secondary: #134233;
   --text-muted: #3d6355;
   --text-light: #719688;
   
-  --primary: #0a523d;          /* Stem Cell / Life Science Emerald */
+  --primary: #0a523d;          /* Stem Cell / Regeneration Emerald */
   --primary-hover: #0f6c51;
   --primary-rgb: 10, 82, 61;
   --primary-light: #d1fae5;
   --primary-border: #a7f3d0;
   
-  --accent: #059669;           /* Vibrant Green */
+  --accent: #059669;           /* Bio Green */
   --accent-hover: #047857;
   --accent-tint: #ecfdf5;
+  --accent-rgb: 5, 150, 105;
+  
+  --gold: #d97706;
+  --gold-tint: #fef3c7;
   
   --border: #d1fae5;
-  --border-light: #e6f7ef;
+  --border-light: rgba(209, 250, 229, 0.6);
+  --border-glow: rgba(5, 150, 105, 0.25);
   
   --badge-bg: #d1fae5;
   --badge-text: #065f46;
   
   --hero-glow: radial-gradient(circle at 50% 15%, rgba(5, 150, 105, 0.08) 0%, rgba(246, 250, 248, 0) 70%);
-  --card-shadow: 0 4px 20px -2px rgba(10, 82, 61, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
-  --card-shadow-hover: 0 16px 32px -4px rgba(10, 82, 61, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+  --card-shadow: 0 4px 20px -2px rgba(10, 82, 61, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  --card-shadow-hover: 0 20px 40px -4px rgba(10, 82, 61, 0.12), 0 6px 16px -2px rgba(5, 150, 105, 0.08);
+  --ambient-particle: #059669;
 }
 
 [data-theme="dark"] {
   --color-scheme: dark;
-  --bg-page: #0b0f17;          /* Confocal Obsidian Dark */
-  --bg-surface: #131b26;
-  --bg-surface-elevated: #1a2535;
-  --bg-surface-card: #152030;
-  --bg-subtle: #1e2d40;
+  --bg-page: #080c14;          /* Deep Confocal Space */
+  --bg-surface: #0f1622;
+  --bg-surface-elevated: #162030;
+  --bg-surface-card: rgba(18, 26, 39, 0.85);
+  --bg-glass: rgba(15, 22, 34, 0.78);
+  --bg-subtle: #1a2538;
   
   --text-main: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
   --text-light: #64748b;
   
-  --primary: #38bdf8;          /* Fluorescent Cyan */
+  --primary: #38bdf8;          /* Fluorescent DAPI Cyan */
   --primary-hover: #60a5fa;
   --primary-rgb: 56, 189, 248;
   --primary-light: rgba(56, 189, 248, 0.15);
   --primary-border: rgba(56, 189, 248, 0.35);
   
-  --accent: #34d399;           /* GFP Fluorescent Green */
+  --accent: #34d399;           /* Fluorophore GFP Green */
   --accent-hover: #10b981;
   --accent-tint: rgba(52, 211, 153, 0.12);
+  --accent-rgb: 52, 211, 153;
   
-  --border: #223043;
-  --border-light: #1b2636;
+  --gold: #fbbf24;
+  --gold-tint: rgba(251, 191, 36, 0.12);
   
-  --badge-bg: rgba(56, 189, 248, 0.12);
+  --border: #1e2c40;
+  --border-light: rgba(30, 44, 64, 0.6);
+  --border-glow: rgba(56, 189, 248, 0.35);
+  
+  --badge-bg: rgba(56, 189, 248, 0.14);
   --badge-text: #38bdf8;
   
-  --hero-glow: radial-gradient(circle at 50% 15%, rgba(56, 189, 248, 0.12) 0%, rgba(11, 15, 23, 0) 75%);
-  --card-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.45);
-  --card-shadow-hover: 0 16px 36px -4px rgba(0, 0, 0, 0.65), 0 0 15px rgba(56, 189, 248, 0.1);
+  --hero-glow: radial-gradient(circle at 50% 15%, rgba(56, 189, 248, 0.12) 0%, rgba(8, 12, 20, 0) 75%);
+  --card-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.65);
+  --card-shadow-hover: 0 24px 48px -4px rgba(0, 0, 0, 0.8), 0 0 24px rgba(56, 189, 248, 0.15);
+  --ambient-particle: #38bdf8;
 }
 
 /* --------------------------------------------------------------------------
-   2. Typography & Editorial Hierarchy
+   2. Base Typography & Smooth Rendering
    -------------------------------------------------------------------------- */
 * {
   box-sizing: border-box;
@@ -154,24 +182,30 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5.5rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   margin: 0;
   background-color: var(--bg-page);
   color: var(--text-main);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
-  line-height: 1.6;
-  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.65;
+  transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   overflow-x: hidden;
+  position: relative;
 }
 
+/* Editorial Serif */
 .font-editorial {
-  font-family: 'Newsreader', Georgia, serif;
+  font-family: 'Newsreader', 'Noto Serif SC', Georgia, serif;
 }
 
 .font-mono {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+  font-feature-settings: "tnum" 1, "zero" 1;
 }
 
 ::selection {
@@ -180,57 +214,112 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   3. UI Component Custom Classes & Micro-interactions
+   3. Ambient Particle Canvas & Film Grain Texture
    -------------------------------------------------------------------------- */
-.theme-surface {
-  background-color: var(--bg-surface);
-  border-color: var(--border);
+#ambient-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+  transition: opacity 0.5s ease;
+}
+
+/* Subtle Fine Film Grain Overlay */
+.film-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* --------------------------------------------------------------------------
+   4. Glassmorphism & Elevated Surfaces
+   -------------------------------------------------------------------------- */
+.glass-panel {
+  background-color: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--card-shadow);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .theme-card {
   background-color: var(--bg-surface-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   box-shadow: var(--card-shadow);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .theme-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: var(--card-shadow-hover);
-  border-color: var(--primary-border);
+  border-color: var(--border-glow);
 }
 
 .theme-badge {
   background-color: var(--badge-bg);
   color: var(--badge-text);
+  border: 1px solid var(--primary-border);
 }
 
-.hero-gradient-overlay {
-  background: var(--hero-glow);
+/* Scroll Progress Bar at very top */
+#scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  z-index: 1000;
+  transition: width 0.1s ease-out;
 }
 
-/* Subtle Grid Background Pattern */
-.bg-grid-pattern {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(128, 128, 128, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(128, 128, 128, 0.06) 1px, transparent 1px);
+/* Marquee Infinite Ticker */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
 }
 
-/* Academic Pill Filter Button */
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* --------------------------------------------------------------------------
+   5. Interactive Buttons & Badges
+   -------------------------------------------------------------------------- */
 .pub-filter-btn {
-  padding: 0.4rem 0.95rem;
+  padding: 0.45rem 1rem;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 9999px;
   border: 1px solid var(--border);
   background-color: var(--bg-surface);
   color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .pub-filter-btn:hover {
@@ -243,46 +332,57 @@ body {
   background-color: var(--primary);
   border-color: var(--primary);
   color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.25);
+  box-shadow: 0 4px 14px rgba(var(--primary-rgb), 0.28);
 }
 
-/* Platform Tab Switcher */
 .platform-tab-btn {
-  padding: 0.75rem 1.25rem;
-  border-radius: 0.75rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 1rem;
   font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
   border: 1px solid var(--border);
   background-color: var(--bg-surface);
   color: var(--text-muted);
-  transition: all 0.25s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 .platform-tab-btn:hover {
   color: var(--text-main);
   border-color: var(--primary);
+  transform: translateY(-1px);
 }
 
 .platform-tab-btn.active {
   background-color: var(--primary);
   border-color: var(--primary);
   color: #ffffff !important;
-  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.2);
+  box-shadow: 0 6px 18px rgba(var(--primary-rgb), 0.24);
 }
 
-/* Toast Notification Animation */
+/* Interactive Pedigree Connection Pulse */
+.pedigree-node {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.pedigree-node:hover .pedigree-indicator {
+  transform: scale(1.3);
+  box-shadow: 0 0 15px var(--primary);
+}
+
+/* Micro-interaction Toasts */
 #toast-notification {
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Custom Scrollbars */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-page);

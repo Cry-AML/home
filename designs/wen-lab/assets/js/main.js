@@ -1,24 +1,25 @@
 /**
- * Wen Laboratory (文卓谦实验室) - Main Application Controller
- * High-Fidelity Interactive Prototype following baoyu-design Standards
+ * Wen Laboratory (文卓谦实验室) - Award-Tier Interactive Experience Controller
+ * Benchmarked against Awwwards / Webby / FWA winning standards
  */
 
-// Application State
+// Global State
 let currentLang = localStorage.getItem('wen_lab_lang') || 'zh';
 let currentTheme = localStorage.getItem('wen_lab_theme') || 'navy';
 let currentPubFilter = 'all';
 let currentSearchQuery = '';
 let activePlatformId = 'zebrafish';
+let activePillarId = 'epigenetics';
 
 // -----------------------------------------------------------------------------
-// 1. Theme Controller
+// 1. Theme Controller & Dynamic Particle Palette
 // -----------------------------------------------------------------------------
 function setTheme(theme) {
   currentTheme = theme;
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('wen_lab_theme', theme);
   
-  // Highlight active theme item in menu
+  // Highlight active theme dropdown option
   document.querySelectorAll('.theme-option').forEach(el => {
     if (el.getAttribute('data-theme-name') === theme) {
       el.classList.add('font-bold', 'opacity-100');
@@ -26,10 +27,13 @@ function setTheme(theme) {
       el.classList.remove('font-bold', 'opacity-100');
     }
   });
+
+  // Re-sync particle colors in canvas
+  updateCanvasThemeColors();
 }
 
 // -----------------------------------------------------------------------------
-// 2. Localization & Language Controller
+// 2. Bilingual Localization Controller
 // -----------------------------------------------------------------------------
 function setLanguage(lang) {
   currentLang = lang;
@@ -38,40 +42,35 @@ function setLanguage(lang) {
 
   const dict = I18N_DICTIONARY[lang];
 
-  // Update static text nodes marked with data-i18n
+  // Update text nodes
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (dict[key]) {
-      el.textContent = dict[key];
-    }
+    if (dict[key]) el.textContent = dict[key];
   });
 
   // Update placeholders
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
-    if (dict[key]) {
-      el.placeholder = dict[key];
-    }
+    if (dict[key]) el.placeholder = dict[key];
   });
 
-  // Update HTML Title
-  if (dict.site_title) {
-    document.title = dict.site_title;
-  }
+  // Update title
+  if (dict.site_title) document.title = dict.site_title;
 
-  // Update Language Button Indicator
+  // Update navbar indicator
   const langIndicator = document.getElementById('langIndicator');
   if (langIndicator) {
     langIndicator.textContent = lang === 'zh' ? 'EN / 中文' : '中文 / EN';
   }
 
-  // Re-render dynamic components with localized data
+  // Re-render localized dynamic components
   renderAcademicTimeline();
   renderResearchPillars();
   renderPlatforms();
   renderPublications();
   renderOpenPositions();
   renderNews();
+  updateWorldClocks();
 }
 
 function toggleLanguage() {
@@ -79,25 +78,70 @@ function toggleLanguage() {
 }
 
 // -----------------------------------------------------------------------------
-// 3. Dynamic Rendering Components
+// 3. Dynamic Academic Lineage World Clock (Guangzhou · Boston · Hong Kong)
+// -----------------------------------------------------------------------------
+function updateWorldClocks() {
+  const clockContainer = document.getElementById('world-clocks-container');
+  if (!clockContainer) return;
+
+  const now = new Date();
+  const formatTime = (timeZone) => {
+    return new Intl.DateTimeFormat('en-GB', {
+      timeZone,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    }).format(now);
+  };
+
+  const gzTime = formatTime('Asia/Shanghai');
+  const bostonTime = formatTime('America/New_York');
+  const hkTime = formatTime('Asia/Hong_Kong');
+
+  const isZh = currentLang === 'zh';
+  clockContainer.innerHTML = `
+    <div class="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-[11px] font-mono tracking-tight" style="color: var(--text-muted);">
+      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border theme-surface" style="border-color: var(--border);">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="font-bold text-slate-800 dark:text-slate-200">${isZh ? '广州·中大北校园' : 'Guangzhou · SYSU'}:</span>
+        <span class="font-bold text-sky-600 dark:text-sky-400">${gzTime}</span>
+      </div>
+      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border theme-surface" style="border-color: var(--border);">
+        <span class="w-1.5 h-1.5 rounded-full opacity-60" style="background-color: var(--primary);"></span>
+        <span>${isZh ? '波士顿·哈佛/MGH' : 'Boston · Harvard MGH'}:</span>
+        <span>${bostonTime}</span>
+      </div>
+      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border theme-surface" style="border-color: var(--border);">
+        <span class="w-1.5 h-1.5 rounded-full opacity-60" style="background-color: var(--primary);"></span>
+        <span>${isZh ? '香港·港大医学院' : 'Hong Kong · HKU'}:</span>
+        <span>${hkTime}</span>
+      </div>
+    </div>
+  `;
+}
+
+// -----------------------------------------------------------------------------
+// 4. Dynamic Rendering: Timeline, Pillars, Platforms, Publications
 // -----------------------------------------------------------------------------
 
-// Render Academic Pedigree Timeline
+// Academic Pedigree Timeline
 function renderAcademicTimeline() {
   const container = document.getElementById('pedigree-timeline-container');
   if (!container) return;
 
   const isZh = currentLang === 'zh';
   container.innerHTML = LAB_DATA.pi.pedigree.map((item, idx) => `
-    <div class="relative pl-6 pb-6 border-l-2 theme-transition ${idx === LAB_DATA.pi.pedigree.length - 1 ? 'border-transparent pb-0' : ''}" 
+    <div class="pedigree-node relative pl-7 pb-7 border-l-2 theme-transition ${idx === LAB_DATA.pi.pedigree.length - 1 ? 'border-transparent pb-0' : ''}" 
          style="border-color: ${item.highlight ? 'var(--primary)' : 'var(--border)'};">
-      <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 flex items-center justify-center theme-transition"
+      <span class="pedigree-indicator absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 flex items-center justify-center theme-transition"
             style="background-color: ${item.highlight ? 'var(--primary)' : 'var(--bg-surface)'}; border-color: var(--primary);">
+        ${item.highlight ? '<span class="w-1.5 h-1.5 rounded-full bg-white"></span>' : ''}
       </span>
       <div class="text-xs font-mono font-bold tracking-wider mb-1" style="color: var(--primary);">
         ${isZh ? item.yearZh : item.year}
       </div>
-      <div class="text-sm font-bold text-slate-900 dark:text-slate-100 mb-0.5">
+      <div class="text-sm font-extrabold text-slate-900 dark:text-slate-100 mb-0.5">
         ${isZh ? item.roleZh : item.roleEn}
       </div>
       <div class="text-xs font-medium" style="color: var(--text-muted);">
@@ -107,44 +151,94 @@ function renderAcademicTimeline() {
   `).join('');
 }
 
-// Render Research Pillars
+// Research Pillars with Molecular Mechanism Circuit Cards
+function setActivePillar(pillarId) {
+  activePillarId = pillarId;
+  renderResearchPillars();
+}
+
 function renderResearchPillars() {
   const container = document.getElementById('research-pillars-container');
   if (!container) return;
 
   const isZh = currentLang === 'zh';
-  container.innerHTML = LAB_DATA.researchPillars.map(pillar => `
-    <div class="theme-card p-8 rounded-2xl flex flex-col justify-between relative overflow-hidden group">
-      <div>
-        <div class="flex items-center justify-between mb-6">
-          <div class="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold theme-transition"
-               style="background-color: var(--accent-tint); color: var(--primary);">
-            <i class="fa-solid ${pillar.icon}"></i>
+
+  // Molecular circuit data for each pillar
+  const circuits = {
+    epigenetics: {
+      stepsZh: ["TP53突变 / 恶性表型", "PLK4激酶异常高表达", "染色质封闭 / 组蛋白甲基化", "cGAS-STING天然免疫沉默", "研发PLK4抑制剂重启免疫清除"],
+      stepsEn: ["TP53 Mutation & High Risk", "PLK4 Kinase Overexpression", "Histone Methylation Barrier", "cGAS-STING Innate Silence", "PLK4 Inhibitor Triggers Clearance"]
+    },
+    metabolism: {
+      stepsZh: ["激酶激活突变 (FLT3/KIT)", "Tescalcin-NHE1轴激活", "质子高效外排 (Proton Export)", "胞内pH碱化 (pHi 7.4-7.6)", "碳代谢重编程驱动白血病扩增"],
+      stepsEn: ["Kinase Oncogenes (FLT3/KIT)", "Tescalcin-NHE1 Axis", "Active Proton Extrusion", "Intracellular Alkalinization", "Carbon Metabolic Rewiring"]
+    },
+    resistance: {
+      stepsZh: ["FLT3-ITD靶向抑制剂", "初始临床缓解", "继发性代偿与激酶突变", "单药耐药复发困境", "Quizartinib + Omacetaxine II期临床成功"],
+      stepsEn: ["FLT3-ITD TKI Therapy", "Initial Remission", "Secondary Resistance Mutations", "Fatal Relapse Barrier", "Quizartinib + Omacetaxine Phase II Trial"]
+    }
+  };
+
+  container.innerHTML = LAB_DATA.researchPillars.map(pillar => {
+    const isSelected = pillar.id === activePillarId;
+    const circuit = circuits[pillar.id];
+
+    return `
+      <div class="theme-card p-8 rounded-3xl flex flex-col justify-between relative overflow-hidden transition-all duration-300 cursor-pointer ${isSelected ? 'ring-2 ring-sky-500/40' : ''}"
+           onclick="setActivePillar('${pillar.id}')">
+        <div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold theme-transition shadow-sm"
+                 style="background-color: var(--accent-tint); color: var(--primary);">
+              <i class="fa-solid ${pillar.icon}"></i>
+            </div>
+            <span class="text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full theme-badge">
+              ${isZh ? pillar.tagZh : pillar.tagEn}
+            </span>
           </div>
-          <span class="text-xs font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full theme-badge">
-            ${isZh ? pillar.tagZh : pillar.tagEn}
+
+          <div class="text-xs font-mono font-bold tracking-wider mb-1 opacity-60" style="color: var(--primary);">
+            PILLAR ${pillar.number}
+          </div>
+          
+          <h3 class="text-lg font-black mb-3 tracking-tight leading-snug text-slate-900 dark:text-slate-100">
+            ${isZh ? pillar.titleZh : pillar.titleEn}
+          </h3>
+
+          <p class="text-xs leading-relaxed mb-6" style="color: var(--text-muted);">
+            ${isZh ? pillar.descZh : pillar.descEn}
+          </p>
+
+          <!-- Interactive Molecular Flow Circuit -->
+          <div class="p-3.5 rounded-2xl border mb-6 text-[11px] font-mono leading-relaxed" 
+               style="background-color: var(--bg-subtle); border-color: var(--border);">
+            <div class="font-bold text-[10px] uppercase tracking-wider mb-2 opacity-60" style="color: var(--primary);">
+              <i class="fa-solid fa-network-wired mr-1"></i> ${isZh ? '分子调控通路逻辑' : 'Molecular Circuit Flow'}:
+            </div>
+            <div class="space-y-1.5">
+              ${(isZh ? circuit.stepsZh : circuit.stepsEn).map((step, sIdx, arr) => `
+                <div class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background-color: var(--primary);"></span>
+                  <span class="${sIdx === arr.length - 1 ? 'font-bold' : ''}" style="color: ${sIdx === arr.length - 1 ? 'var(--primary)' : 'var(--text-secondary)'};">${step}</span>
+                  ${sIdx < arr.length - 1 ? '<i class="fa-solid fa-angle-right text-[9px] opacity-40 ml-auto"></i>' : '⭐'}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t flex items-center justify-between text-xs font-mono" style="border-color: var(--border);">
+          <span class="font-bold" style="color: var(--primary);">
+            <i class="fa-solid fa-award mr-1"></i> ${pillar.highlightPaper}
           </span>
+          <span class="text-[10px] text-slate-400 font-semibold">${isZh ? '点击查看' : 'Details'}</span>
         </div>
-        <div class="text-xs font-mono font-bold tracking-wider mb-1 opacity-50" style="color: var(--primary);">
-          PILLAR ${pillar.number}
-        </div>
-        <h3 class="text-lg font-bold mb-3 tracking-tight leading-snug">
-          ${isZh ? pillar.titleZh : pillar.titleEn}
-        </h3>
-        <p class="text-xs leading-relaxed mb-6" style="color: var(--text-muted);">
-          ${isZh ? pillar.descZh : pillar.descEn}
-        </p>
       </div>
-      <div class="pt-4 border-t flex items-center justify-between text-xs font-mono" style="border-color: var(--border);">
-        <span class="font-semibold" style="color: var(--primary);">
-          <i class="fa-solid fa-bookmark mr-1"></i> ${pillar.highlightPaper}
-        </span>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
-// Render Interactive Platforms Showcase
+// Interactive Platforms Showcase
 function setPlatformTab(platformId) {
   activePlatformId = platformId;
   renderPlatforms();
@@ -193,7 +287,7 @@ function renderPlatforms() {
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           ${(isZh ? platform.featuresZh : platform.featuresEn).map(f => `
-            <div class="p-4 rounded-xl border flex items-start gap-3" style="border-color: var(--border); background-color: var(--bg-surface);">
+            <div class="p-4 rounded-2xl border flex items-start gap-3 shadow-sm" style="border-color: var(--border); background-color: var(--bg-surface);">
               <i class="fa-solid fa-circle-check text-xs mt-1" style="color: var(--primary);"></i>
               <span class="text-xs leading-relaxed font-medium" style="color: var(--text-main);">${f}</span>
             </div>
@@ -204,7 +298,7 @@ function renderPlatforms() {
   `;
 }
 
-// Render Publications with Filtering & Search & Counter
+// Render Publications with Filtering, Search & Dynamic Counter Badge
 function renderPublications() {
   const container = document.getElementById('publications-list-container');
   const counterEl = document.getElementById('pub-counter-badge');
@@ -215,11 +309,9 @@ function renderPublications() {
 
   // Filter logic
   const filtered = LAB_DATA.publications.filter(pub => {
-    // Category or landmark filter
     if (currentPubFilter === 'landmark' && !pub.landmark) return false;
     if (currentPubFilter !== 'all' && currentPubFilter !== 'landmark' && pub.category !== currentPubFilter) return false;
 
-    // Search query matching
     if (query) {
       const matchTitle = pub.title.toLowerCase().includes(query);
       const matchAuthors = pub.authors.toLowerCase().includes(query);
@@ -231,7 +323,7 @@ function renderPublications() {
     return true;
   });
 
-  // Update counter badge
+  // Update dynamic count badge
   if (counterEl) {
     const prefix = I18N_DICTIONARY[currentLang].pub_counter_prefix;
     const suffix = I18N_DICTIONARY[currentLang].pub_counter_suffix;
@@ -240,7 +332,7 @@ function renderPublications() {
 
   if (filtered.length === 0) {
     container.innerHTML = `
-      <div class="text-center py-12 border border-dashed rounded-xl" style="border-color: var(--border);">
+      <div class="text-center py-16 border border-dashed rounded-3xl" style="border-color: var(--border);">
         <i class="fa-solid fa-book-open text-3xl opacity-30 mb-3" style="color: var(--primary);"></i>
         <p class="text-xs text-slate-400">${isZh ? '没有找到符合条件的论文记录' : 'No publications found matching your filter.'}</p>
       </div>
@@ -249,14 +341,14 @@ function renderPublications() {
   }
 
   container.innerHTML = filtered.map(pub => {
-    // Highlight Dr. Man's name in author list
+    // Highlight author names
     const highlightedAuthors = pub.authors
       .replace(/Man CH/g, `<strong class="text-slate-900 dark:text-slate-100 underline decoration-2 decoration-sky-500 font-bold">Man CH</strong>`)
       .replace(/Scadden DT/g, `<strong class="text-slate-900 dark:text-slate-100 font-semibold">Scadden DT</strong>`)
       .replace(/Leung AY/g, `<strong class="text-slate-900 dark:text-slate-100 font-semibold">Leung AY</strong>`);
 
     return `
-      <div class="theme-card p-6 rounded-2xl relative transition-all" style="background-color: var(--bg-surface-elevated);">
+      <div class="theme-card p-6 rounded-2xl relative transition-all duration-300" style="background-color: var(--bg-surface-elevated);">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
           <div class="flex flex-wrap items-center gap-2">
             <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full theme-badge font-mono tracking-wider">
@@ -300,13 +392,13 @@ function renderPublications() {
           </a>
 
           <button onclick="openAbstractModal('${pub.id}')" 
-                  class="hover:underline flex items-center gap-1.5" style="color: var(--text-muted);">
+                  class="hover:underline flex items-center gap-1.5 font-semibold" style="color: var(--text-muted);">
             <i class="fa-solid fa-align-left"></i>
             <span>${I18N_DICTIONARY[currentLang].pub_btn_abstract}</span>
           </button>
 
           <button onclick="copyBibTeX('${pub.id}')" 
-                  class="hover:underline flex items-center gap-1.5 ml-auto font-mono" style="color: var(--text-muted);">
+                  class="hover:underline flex items-center gap-1.5 ml-auto font-mono text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
             <i class="fa-solid fa-quote-right"></i>
             <span>${I18N_DICTIONARY[currentLang].pub_btn_bibtex}</span>
           </button>
@@ -316,14 +408,14 @@ function renderPublications() {
   }).join('');
 }
 
-// Render Open Positions
+// Render Open Positions with Quick Drafter
 function renderOpenPositions() {
   const container = document.getElementById('open-positions-container');
   if (!container) return;
 
   const isZh = currentLang === 'zh';
   container.innerHTML = LAB_DATA.openPositions.map(pos => `
-    <div class="theme-card p-8 rounded-2xl flex flex-col justify-between">
+    <div class="theme-card p-8 rounded-3xl flex flex-col justify-between">
       <div>
         <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
           <h4 class="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
@@ -334,7 +426,7 @@ function renderOpenPositions() {
           </span>
         </div>
 
-        <div class="p-4 rounded-xl mb-6 text-xs font-medium" style="background-color: var(--bg-subtle); color: var(--text-secondary);">
+        <div class="p-4 rounded-2xl mb-6 text-xs font-medium" style="background-color: var(--bg-subtle); color: var(--text-secondary);">
           <i class="fa-solid fa-gift mr-1.5" style="color: var(--primary);"></i>
           ${isZh ? pos.salaryZh : pos.salaryEn}
         </div>
@@ -358,7 +450,7 @@ function renderOpenPositions() {
                 class="w-full py-2.5 rounded-xl text-xs font-bold border theme-surface hover:border-slate-400 transition-all flex items-center justify-center gap-2"
                 style="border-color: var(--border); color: var(--primary);">
           <i class="fa-solid fa-envelope-open-text"></i>
-          <span>${isZh ? '快速生成应聘邮件模板' : 'Draft Application Email'}</span>
+          <span>${isZh ? '一键生成自荐申请邮件' : 'Draft Application Email'}</span>
         </button>
       </div>
     </div>
@@ -392,10 +484,9 @@ function renderNews() {
 }
 
 // -----------------------------------------------------------------------------
-// 4. Interactive Utilities: Modals, Lightbox, Toast, Drafter
+// 5. Interactive Modals, Lightbox, Drafter, Toast
 // -----------------------------------------------------------------------------
 
-// Open Abstract Modal
 function openAbstractModal(pubId) {
   const pub = LAB_DATA.publications.find(p => p.id === pubId);
   if (!pub) return;
@@ -435,7 +526,7 @@ function closeAbstractModal() {
   }
 }
 
-// Open Scientific Figure Lightbox
+// Scientific Figure Lightbox
 function openFigureModal() {
   const modal = document.getElementById('figure-modal');
   if (modal) {
@@ -452,7 +543,7 @@ function closeFigureModal() {
   }
 }
 
-// Open Email Drafter Helper
+// Direct Email Application Generator
 function openEmailDrafter(roleType) {
   const isZh = currentLang === 'zh';
   const roles = {
@@ -470,7 +561,7 @@ function openEmailDrafter(roleType) {
   window.location.href = `mailto:manzhq@mail.sysu.edu.cn?subject=${subject}&body=${body}`;
 }
 
-// Copy BibTeX to clipboard with toast notification
+// Copy BibTeX with toast
 function copyBibTeX(pubId) {
   const pub = LAB_DATA.publications.find(p => p.id === pubId);
   if (!pub || !pub.bibtex) return;
@@ -482,7 +573,6 @@ function copyBibTeX(pubId) {
   });
 }
 
-// Toast notification
 function showToast(message) {
   const toast = document.getElementById('toast-notification');
   const msgEl = document.getElementById('toast-message');
@@ -498,7 +588,6 @@ function showToast(message) {
   }, 2500);
 }
 
-// Filter publications by category
 function setPublicationFilter(filter) {
   currentPubFilter = filter;
   document.querySelectorAll('.pub-filter-btn').forEach(btn => {
@@ -512,14 +601,143 @@ function setPublicationFilter(filter) {
 }
 
 // -----------------------------------------------------------------------------
-// 5. Event Listeners Initialization
+// 6. Ambient Living Canvas (Hematopoiesis & Proton Flux Simulator)
+// -----------------------------------------------------------------------------
+let canvas, ctx, particles = [], animationFrameId;
+let mousePos = { x: -1000, y: -1000 };
+
+function getThemePaletteColors() {
+  switch (currentTheme) {
+    case 'crimson':
+      return ['#8b1e2b', '#dc2626', '#f87171', '#fbbf24'];
+    case 'emerald':
+      return ['#0a523d', '#059669', '#34d399', '#6ee7b7'];
+    case 'dark':
+      return ['#38bdf8', '#34d399', '#f43f5e', '#a855f7'];
+    case 'navy':
+    default:
+      return ['#0f3a66', '#2563eb', '#38bdf8', '#93c5fd'];
+  }
+}
+
+function updateCanvasThemeColors() {
+  const colors = getThemePaletteColors();
+  particles.forEach(p => {
+    p.color = colors[Math.floor(Math.random() * colors.length)];
+  });
+}
+
+function initAmbientCanvas() {
+  canvas = document.getElementById('ambient-canvas');
+  if (!canvas) return;
+  ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  window.addEventListener('mousemove', (e) => {
+    mousePos.x = e.clientX;
+    mousePos.y = e.clientY;
+  });
+
+  const particleCount = Math.min(Math.floor(window.innerWidth / 28), 55);
+  const colors = getThemePaletteColors();
+
+  particles = [];
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 2.2 + 0.8,
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: (Math.random() - 0.5) * 0.45,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: Math.random() * 0.5 + 0.2
+    });
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+
+      // Mouse interactive deflection
+      const dx = mousePos.x - p.x;
+      const dy = mousePos.y - p.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 100) {
+        p.x -= (dx / dist) * 0.7;
+        p.y -= (dy / dist) * 0.7;
+      }
+
+      // Draw particle dot
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.alpha;
+      ctx.fill();
+
+      // Connect neighbor particles with organic biological filaments
+      for (let j = i + 1; j < particles.length; j++) {
+        const p2 = particles[j];
+        const dist2 = Math.hypot(p.x - p2.x, p.y - p2.y);
+        if (dist2 < 95) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = p.color;
+          ctx.globalAlpha = (1 - dist2 / 95) * 0.18;
+          ctx.lineWidth = 0.75;
+          ctx.stroke();
+        }
+      }
+    }
+
+    ctx.globalAlpha = 1.0;
+    animationFrameId = requestAnimationFrame(render);
+  }
+
+  render();
+}
+
+// -----------------------------------------------------------------------------
+// 7. Scroll Progress Bar & Event Listeners
 // -----------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  // Apply saved theme & language
+  // Apply initial theme and language
   setTheme(currentTheme);
   setLanguage(currentLang);
 
-  // Publications Search input listener
+  // Initialize canvas
+  initAmbientCanvas();
+
+  // Initialize world clocks and interval
+  updateWorldClocks();
+  setInterval(updateWorldClocks, 1000);
+
+  // Scroll Progress Bar
+  const progressBar = document.getElementById('scroll-progress-bar');
+  window.addEventListener('scroll', () => {
+    const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+    if (totalScroll > 0 && progressBar) {
+      const progress = (window.scrollY / totalScroll) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+  }, { passive: true });
+
+  // Search input listener
   const searchInput = document.getElementById('pub-search-input');
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
@@ -537,7 +755,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Close modals when clicking outside
+  // Close modals when clicking backdrop
   const modal = document.getElementById('abstract-modal');
   if (modal) {
     modal.addEventListener('click', (e) => {
