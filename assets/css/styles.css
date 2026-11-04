@@ -1,0 +1,296 @@
+/* ==========================================================================
+   Wen Laboratory (文卓谦实验室) - Academic Theme System & Design Craft
+   Refactored according to baoyu-design (Hi-Fi Interactive Prototype Standards)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. Theme Variable Tokens
+   -------------------------------------------------------------------------- */
+:root, [data-theme="navy"] {
+  --color-scheme: light;
+  --bg-page: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --bg-surface-card: #ffffff;
+  --bg-subtle: #f1f5f9;
+  
+  --text-main: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  
+  --primary: #0f3a66;          /* Academic Navy */
+  --primary-hover: #164e8a;
+  --primary-rgb: 15, 58, 102;
+  --primary-light: #e0f2fe;
+  --primary-border: #bae6fd;
+  
+  --accent: #2563eb;           /* Clinical Blue */
+  --accent-hover: #1d4ed8;
+  --accent-tint: #eff6ff;
+  
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  
+  --badge-bg: #e0f2fe;
+  --badge-text: #0369a1;
+  
+  --hero-glow: radial-gradient(circle at 50% 15%, rgba(37, 99, 235, 0.08) 0%, rgba(248, 250, 252, 0) 70%);
+  --card-shadow: 0 4px 20px -2px rgba(15, 58, 102, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --card-shadow-hover: 0 16px 32px -4px rgba(15, 58, 102, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="crimson"] {
+  --color-scheme: light;
+  --bg-page: #fffbfb;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --bg-surface-card: #ffffff;
+  --bg-subtle: #fdf2f2;
+  
+  --text-main: #240b0e;
+  --text-secondary: #4a1e22;
+  --text-muted: #6b4d50;
+  --text-light: #9c7a7e;
+  
+  --primary: #8b1e2b;          /* Sun Yat-sen Crimson / 逸仙红 */
+  --primary-hover: #a82434;
+  --primary-rgb: 139, 30, 43;
+  --primary-light: #ffe4e6;
+  --primary-border: #fecdd3;
+  
+  --accent: #dc2626;           /* Bright Crimson */
+  --accent-hover: #b91c1c;
+  --accent-tint: #fef2f2;
+  
+  --border: #fee2e2;
+  --border-light: #fff1f2;
+  
+  --badge-bg: #ffe4e6;
+  --badge-text: #9f1239;
+  
+  --hero-glow: radial-gradient(circle at 50% 15%, rgba(220, 38, 38, 0.07) 0%, rgba(255, 251, 251, 0) 70%);
+  --card-shadow: 0 4px 20px -2px rgba(139, 30, 43, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --card-shadow-hover: 0 16px 32px -4px rgba(139, 30, 43, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="emerald"] {
+  --color-scheme: light;
+  --bg-page: #f6faf8;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --bg-surface-card: #ffffff;
+  --bg-subtle: #edf7f2;
+  
+  --text-main: #062319;
+  --text-secondary: #134233;
+  --text-muted: #3d6355;
+  --text-light: #719688;
+  
+  --primary: #0a523d;          /* Stem Cell / Life Science Emerald */
+  --primary-hover: #0f6c51;
+  --primary-rgb: 10, 82, 61;
+  --primary-light: #d1fae5;
+  --primary-border: #a7f3d0;
+  
+  --accent: #059669;           /* Vibrant Green */
+  --accent-hover: #047857;
+  --accent-tint: #ecfdf5;
+  
+  --border: #d1fae5;
+  --border-light: #e6f7ef;
+  
+  --badge-bg: #d1fae5;
+  --badge-text: #065f46;
+  
+  --hero-glow: radial-gradient(circle at 50% 15%, rgba(5, 150, 105, 0.08) 0%, rgba(246, 250, 248, 0) 70%);
+  --card-shadow: 0 4px 20px -2px rgba(10, 82, 61, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --card-shadow-hover: 0 16px 32px -4px rgba(10, 82, 61, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] {
+  --color-scheme: dark;
+  --bg-page: #0b0f17;          /* Confocal Obsidian Dark */
+  --bg-surface: #131b26;
+  --bg-surface-elevated: #1a2535;
+  --bg-surface-card: #152030;
+  --bg-subtle: #1e2d40;
+  
+  --text-main: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+  
+  --primary: #38bdf8;          /* Fluorescent Cyan */
+  --primary-hover: #60a5fa;
+  --primary-rgb: 56, 189, 248;
+  --primary-light: rgba(56, 189, 248, 0.15);
+  --primary-border: rgba(56, 189, 248, 0.35);
+  
+  --accent: #34d399;           /* GFP Fluorescent Green */
+  --accent-hover: #10b981;
+  --accent-tint: rgba(52, 211, 153, 0.12);
+  
+  --border: #223043;
+  --border-light: #1b2636;
+  
+  --badge-bg: rgba(56, 189, 248, 0.12);
+  --badge-text: #38bdf8;
+  
+  --hero-glow: radial-gradient(circle at 50% 15%, rgba(56, 189, 248, 0.12) 0%, rgba(11, 15, 23, 0) 75%);
+  --card-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.45);
+  --card-shadow-hover: 0 16px 36px -4px rgba(0, 0, 0, 0.65), 0 0 15px rgba(56, 189, 248, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Typography & Editorial Hierarchy
+   -------------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  line-height: 1.6;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  overflow-x: hidden;
+}
+
+.font-editorial {
+  font-family: 'Newsreader', Georgia, serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+::selection {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   3. UI Component Custom Classes & Micro-interactions
+   -------------------------------------------------------------------------- */
+.theme-surface {
+  background-color: var(--bg-surface);
+  border-color: var(--border);
+}
+
+.theme-card {
+  background-color: var(--bg-surface-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.theme-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--primary-border);
+}
+
+.theme-badge {
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+}
+
+.hero-gradient-overlay {
+  background: var(--hero-glow);
+}
+
+/* Subtle Grid Background Pattern */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(128, 128, 128, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(128, 128, 128, 0.06) 1px, transparent 1px);
+}
+
+/* Academic Pill Filter Button */
+.pub-filter-btn {
+  padding: 0.4rem 0.95rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background-color: var(--bg-surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pub-filter-btn:hover {
+  color: var(--text-main);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.pub-filter-btn.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.25);
+}
+
+/* Platform Tab Switcher */
+.platform-tab-btn {
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background-color: var(--bg-surface);
+  color: var(--text-muted);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.platform-tab-btn:hover {
+  color: var(--text-main);
+  border-color: var(--primary);
+}
+
+.platform-tab-btn.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff !important;
+  box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.2);
+}
+
+/* Toast Notification Animation */
+#toast-notification {
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-light);
+}

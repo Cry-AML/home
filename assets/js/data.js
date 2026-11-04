@@ -1,0 +1,415 @@
+/**
+ * Wen Laboratory (文卓谦实验室) - Academic & Research Database
+ * Sun Yat-sen University School of Medicine (中山大学中山医学院)
+ */
+
+const LAB_DATA = {
+  pi: {
+    nameZh: "文卓谦",
+    nameEn: "Chi-Hin Man, Ph.D.",
+    titleZh: "副教授 · 博士生导师 · 逸仙学者",
+    titleEn: "Associate Professor · Ph.D. Supervisor · Yat-sen Scholar",
+    institutionZh: "中山大学中山医学院 病理生理学教研室",
+    institutionEn: "Department of Pathophysiology, Zhongshan School of Medicine, Sun Yat-sen University",
+    email: "manzhq@mail.sysu.edu.cn",
+    officeZh: "广州市越秀区中山二路74号 中山大学广州校区北校园 科技楼",
+    officeEn: "Science & Technology Building, North Campus, Sun Yat-sen University, 74 Zhongshan 2nd Rd, Guangzhou, China",
+    pedigree: [
+      {
+        year: "2024 – Present",
+        yearZh: "2024 – 至今",
+        roleZh: "副教授、博士生导师、“逸仙学者计划”新锐学者",
+        roleEn: "Associate Professor, Ph.D. Supervisor, Yat-sen Scholar (Rising Star)",
+        instZh: "中山大学 中山医学院 病理生理学教研室",
+        instEn: "Zhongshan School of Medicine, Sun Yat-sen University",
+        highlight: true
+      },
+      {
+        year: "2019 – 2024",
+        yearZh: "2019 – 2024",
+        roleZh: "研究助理教授 (Research Assistant Professor)",
+        roleEn: "Research Assistant Professor",
+        instZh: "香港大学 李嘉诚医学院 内科学系",
+        instEn: "Department of Medicine, LKS Faculty of Medicine, The University of Hong Kong (HKU)"
+      },
+      {
+        year: "2015 – 2019",
+        yearZh: "2015 – 2019",
+        roleZh: "博士后研究员 (合作导师: David T. Scadden 教授)",
+        roleEn: "Postdoctoral Fellow (Mentor: Prof. David T. Scadden)",
+        instZh: "哈佛大学医学院 / 麻省总医院 (MGH) 再生医学中心",
+        instEn: "Center for Regenerative Medicine, Massachusetts General Hospital / Harvard Medical School"
+      },
+      {
+        year: "2013",
+        yearZh: "2013",
+        roleZh: "血液学博士学位 (导师: 梁如鸿教授 Prof. Anskar Leung)",
+        roleEn: "Ph.D. in Haematology (Mentor: Prof. Anskar Y.H. Leung)",
+        instZh: "香港大学 李嘉诚医学院",
+        instEn: "LKS Faculty of Medicine, The University of Hong Kong"
+      }
+    ]
+  },
+
+  researchPillars: [
+    {
+      id: "epigenetics",
+      number: "01",
+      icon: "fa-dna",
+      titleZh: "白血病表观遗传重塑与免疫逃逸机制",
+      titleEn: "Epigenetic Rewiring & Immune Evasion in AML",
+      tagZh: "机制发现 & 免疫激活",
+      tagEn: "Mechanisms & Immunotherapy",
+      descZh: "急性髓系白血病（AML）常伴随复杂的基因突变（如 TP53 变异）和染色质表观状态异常。我们重点探究白血病细胞如何通过组蛋白甲基化与染色质重塑沉默自身抗原呈递及 cGAS-STING 天然免疫防御通路，进而介导免疫逃逸。以此为突破口，我们正在开发针对 PLK4 等关键分子的靶向表观-免疫双重活化疗法。",
+      descEn: "Acute Myeloid Leukemia (AML) is characterized by recurrent driver mutations (e.g., TP53) coupled with aberrant epigenetic reprogramming. We focus on dissecting how leukemic blasts exploit histone methylation remodeling to silence intrinsic antigen presentation and the cGAS-STING innate surveillance pathway. We develop novel targeted interventions, such as PLK4 inhibition, to trigger epigenetic-immune reactivation.",
+      highlightPaper: "Blood 2023; 142(23):2002-2015"
+    },
+    {
+      id: "metabolism",
+      number: "02",
+      icon: "fa-atom",
+      titleZh: "质子排泌、胞内pH与代谢重编程",
+      titleEn: "Proton Partitioning, pHi & Metabolic Rewiring",
+      tagZh: "干细胞代谢 & 微环境",
+      tagEn: "Stem Cells & Metabolism",
+      descZh: "细胞内酸碱平衡与碳代谢通量深刻控制着正常造血与白血病干/祖细胞的增殖与命运抉择。在前期与哈佛大学 David Scadden 实验室的紧密合作中，我们揭示了质子外运介导的胞内微环境碱化是驱动碳代谢重编程、促进造血祖细胞生长的核心动力。目前团队进一步拓展激酶激活型 AML 细胞特异性质子调控网络，精准打击其代谢脆弱点。",
+      descEn: "Intracellular acid-base homeostasis and carbon flux governance critically dictate hematopoietic stem/progenitor cell fate and leukemogenesis. Building upon pioneering work at Harvard MGH, we demonstrated that proton export alkalinizes intracellular pH to rewire carbon metabolism and fuel progenitor proliferation. We are decoding the precise proton partitioning axes in kinase-activated AML to target metabolic vulnerabilities.",
+      highlightPaper: "Blood 2022; 139(4):502-522 & Leukemia 2022"
+    },
+    {
+      id: "resistance",
+      number: "03",
+      icon: "fa-capsules",
+      titleZh: "靶向治疗耐药与新型联合治疗转化",
+      titleEn: "Targeted Therapy Resistance & Clinical Translation",
+      tagZh: "临床转化 & 联合用药",
+      tagEn: "Translational Medicine & Trials",
+      descZh: "靶向抑制剂（如针对 FLT3-ITD 的索拉非尼、奎扎替尼）在临床治疗初期虽有显著疗效，但极易诱发继发性耐药导致复发。实验室依托多年深耕的抗药机制研究（如 Tescalcin-Na+/H+ 交换轴），积极探索克服耐药的新策略，最新推动了奎扎替尼联合高三杉酯碱（Omacetaxine）的 II 期临床试验，为难治复发白血病患者提供全新治疗希望。",
+      descEn: "While tyrosine kinase inhibitors against FLT3-ITD achieve impressive initial responses, secondary resistance invariably leads to fatal relapse. Leveraging our discoveries of resistance axes (e.g., the Tescalcin-NHE1 regulatory axis), our lab translates mechanistic findings into actionable regimens, including a successful Phase II clinical trial evaluating Quizartinib combined with Omacetaxine mepesuccinate.",
+      highlightPaper: "Nat Commun 2026; doi:10.1038/s41467-026-71186-5"
+    }
+  ],
+
+  platforms: [
+    {
+      id: "zebrafish",
+      icon: "fa-fish-fins",
+      nameZh: "斑马鱼血液肿瘤模型 (Transgenic Zebrafish)",
+      nameEn: "Transgenic Zebrafish Leukemia Models",
+      tagZh: "体内高通量筛选",
+      tagEn: "High-Throughput In Vivo",
+      descZh: "建立稳定遗传的白血病基因突变体与荧光标记斑马鱼系，结合高通量体外胚胎化合物筛选与动态活体显微成像，实现抗肿瘤靶点与候选药物的体内快速功能评价。",
+      descEn: "Utilizing transgenic and fluorescently tagged zebrafish leukemia lines to perform rapid functional genetic validation, high-throughput in vivo chemical screening, and real-time live imaging.",
+      featuresZh: [
+        "单日可处理数百枚斑马鱼胚胎的表型及化合物筛选",
+        "动态荧光示踪体内白血病造血干祖细胞微环境迁移",
+        "快速解析新靶点基因敲入/敲除的体内生物学效应"
+      ],
+      featuresEn: [
+        "High-throughput phenotypic and compound screening on hundreds of embryos daily",
+        "In vivo dynamic fluorescence tracking of leukemic stem/progenitor niche homing",
+        "Rapid functional genetics using CRISPR/Cas9 and Tol2 transgenesis"
+      ]
+    },
+    {
+      id: "pdx",
+      icon: "fa-shield-virus",
+      nameZh: "人源白血病异种移植模型 (PDX & Bone Marrow Niche)",
+      nameEn: "Patient-Derived Xenografts & Murine Niche",
+      tagZh: "临床微环境重构",
+      tagEn: "Physiological Niche",
+      descZh: "将白血病患者原代细胞移植至高度免疫缺陷小鼠体内，在生理性骨髓微环境中高保真重现人类 AML 的细胞异质性、克隆演进及对靶向药的耐药反弹特征。",
+      descEn: "Engrafting primary human leukemic blasts into immunocompromised murine bone marrow niches to faithfully recapitulate clinical clonal heterogeneity, microenvironmental crosstalk, and drug resistance trajectories.",
+      featuresZh: [
+        "长期维护来自临床患者的原代 AML/MDS 组织细胞库",
+        "精准评估新型候选化合物单药及联合方案在体抗白血病疗效",
+        "骨髓微环境基质细胞与免疫细胞互作多色流式检测"
+      ],
+      featuresEn: [
+        "Curated primary AML/MDS biobank for precision in vivo transplantation",
+        "Preclinical evaluation of novel monotherapies and synergistic combinations",
+        "Multiparametric flow cytometry analysis of bone marrow stromal/immune interactions"
+      ]
+    },
+    {
+      id: "singlecell",
+      icon: "fa-microchip",
+      nameZh: "单细胞多组学与原代细胞药敏平台",
+      nameEn: "Single-Cell Multi-Omics & High-Throughput Drug Profiling",
+      tagZh: "精准药物敏感谱",
+      tagEn: "Multi-Omics & Screening",
+      descZh: "整合单细胞转录组（scRNA-seq）、表观基因组（scATAC-seq）及同位素示踪代谢流技术，构建原代白血病细胞药敏数据库，系统绘制白血病耐药克隆的进化景观。",
+      descEn: "Integrating single-cell transcriptomics, epigenomics (ATAC-seq), and stable-isotope tracing metabolomics with high-throughput drug sensitivity profiling on primary blasts to map clonal resistance.",
+      featuresZh: [
+        "高灵敏度追踪单个细胞分辨率下的表观修饰与代谢重编程",
+        "96/384孔板全自动微量原代细胞药敏筛选与协同指数计算",
+        "生物信息学深度挖掘疾病演进的关键驱动靶标与生物标志物"
+      ],
+      featuresEn: [
+        "Single-cell resolution tracking of epigenetic transitions and metabolic reprogramming",
+        "Automated 96/384-well primary blast drug screening with synergy quantification",
+        "Advanced bioinformatics pipeline decoding key driver targets and prognostic biomarkers"
+      ]
+    }
+  ],
+
+  publications: [
+    {
+      id: "pub-2026-natcomm",
+      year: 2026,
+      landmark: true,
+      category: "resistance",
+      journal: "Nature Communications",
+      impact: "Clinical Phase II Trial",
+      title: "Quizartinib and omacetaxine mepesuccinate combination therapy in FLT3-ITD AML: a phase II trial",
+      authors: "Zheng LC, Wong KKW, Lam SSY, Leung GMK, Li C, Tong KW, Lam W, Zeng XY, Chan KC, Chan NN, Ng KL, Dang CC, Kwok TH, Tsui SP, Sharma R, Wong JWH, Leung SY, Leung AYH, Man CH#",
+      roleNote: "# Corresponding / Senior Author",
+      roleNoteZh: "# 通讯作者 / 临床研究通讯负责人",
+      citation: "Nat Commun. 2026 Apr 6. doi: 10.1038/s41467-026-71186-5.",
+      doi: "10.1038/s41467-026-71186-5",
+      doiUrl: "https://doi.org/10.1038/s41467-026-71186-5",
+      pmid: "41942459",
+      abstractZh: "针对 FLT3-ITD 突变型急性髓系白血病易发生靶向耐药的临床痛点，本研究开展了二代高选择性 FLT3 抑制剂奎扎替尼（Quizartinib）联合蛋白合成抑制剂高三杉酯碱（Omacetaxine mepesuccinate）的前瞻性 II 期临床试验。研究证明该联合疗法展现出卓越的抗白血病协同效应与深度缓解率，有效克服了传统单药耐药问题，为临床挽救性及维持治疗奠定了新范式。",
+      abstractEn: "Overcoming acquired resistance to FLT3 inhibitors remains an unmet clinical challenge in acute myeloid leukemia (AML). Here, we report a prospective Phase II trial combining quizartinib with omacetaxine mepesuccinate in FLT3-ITD-positive AML. The regimen demonstrated high overall response rates and prolonged remissions by simultaneously targeting kinase signaling and protein translation machinery.",
+      bibtex: `@article{Zheng2026NatComm,\n  title={Quizartinib and omacetaxine mepesuccinate combination therapy in FLT3-ITD AML: a phase II trial},\n  author={Zheng, LC and Wong, KKW and Lam, SSY and Leung, GMK and Li, C and Tong, KW and Lam, W and Zeng, XY and Chan, KC and Chan, NN and Leung, AYH and Man, CH},\n  journal={Nature Communications},\n  year={2026},\n  doi={10.1038/s41467-026-71186-5}\n}`
+    },
+    {
+      id: "pub-2023-blood",
+      year: 2023,
+      landmark: true,
+      category: "epigenetics",
+      journal: "Blood",
+      impact: "Featured Plenary Paper",
+      title: "Inhibition of PLK4 remodels histone methylation and activates immune response via cGAS-STING pathway in TP53 mutated AML",
+      authors: "Man CH*#, Lam W*, Dang CC*, Zeng X, Zheng L, Chan NM, Ng KL, Chan KC, Kwok TH, Ng TC, Leung WY, Huen SY, Wong CL, So CC, Dou Z, Goyama S, Bray MR, Mak TW, Leung AY",
+      roleNote: "* Co-first author; # Corresponding author",
+      roleNoteZh: "* 共同第一作者; # 通讯作者",
+      citation: "Blood. 2023 Dec 7;142(23):2002-2015. doi: 10.1182/blood.2023020021.",
+      doi: "10.1182/blood.2023020021",
+      doiUrl: "https://doi.org/10.1182/blood.2023020021",
+      pmid: "37756534",
+      abstractZh: "TP53 基因突变是导致 AML 恶性程度最高、耐药最严重且缺乏有效药物的亚型之一。本文首次揭示 Polo 样激酶 4（PLK4）在 TP53 突变白血病中特异性高表达并促使组蛋白三甲基化修饰异常。药理学抑制 PLK4 能重构染色质开放状态，释放微核并强力激活 cGAS-STING 介导的天然抗肿瘤免疫通路，显著诱导免疫监视清除，为难治性 TP53 突变白血病提供了全新的表观免疫干预靶点。",
+      abstractEn: "TP53-mutated AML carries an exceptionally poor prognosis with resistance to conventional therapies. We demonstrated that PLK4 is aberrantly overexpressed in TP53-mutated AML and orchestrates repressive histone methylation. Inhibiting PLK4 disrupts this repressive epigenetic barrier, inducing cytosolic DNA and activating the cGAS-STING innate immune response to selectively eliminate leukemic cells.",
+      bibtex: `@article{Man2023Blood,\n  title={Inhibition of PLK4 remodels histone methylation and activates immune response via cGAS-STING pathway in TP53 mutated AML},\n  author={Man, Chi-Hin and Lam, W and Dang, CC and Zeng, X and Zheng, L and Chan, NM and Leung, AY},\n  journal={Blood},\n  volume={142},\n  number={23},\n  pages={2002--2015},\n  year={2023},\n  doi={10.1182/blood.2023020021}\n}`
+    },
+    {
+      id: "pub-2023-adv",
+      year: 2023,
+      landmark: false,
+      category: "review",
+      journal: "Adv Exp Med Biol",
+      impact: "Book Chapter / Review",
+      title: "Metabolism in Hematopoiesis and Its malignancy",
+      authors: "Zeng X, Wang YP, Man CH#",
+      roleNote: "# Corresponding author",
+      roleNoteZh: "# 通讯作者",
+      citation: "Adv Exp Med Biol. 2023:1442:45-64.",
+      doi: "10.1007/978-981-99-7471-9_4",
+      doiUrl: "https://doi.org/10.1007/978-981-99-7471-9_4",
+      pmid: "38166548",
+      abstractZh: "系统阐述造血干细胞干性维持、分化成熟过程中的能量代谢与氧化还原稳态网络，并深度总结白血病恶性转化中线粒体代谢、糖酵解、质子稳态与氨基酸代谢的重构机理及靶向治疗潜力。",
+      abstractEn: "A comprehensive review outlining how metabolic checkpoints govern normal hematopoietic stem cell self-renewal and lineage commitment, and discussing metabolic vulnerabilities that arise during leukemogenesis.",
+      bibtex: `@incollection{Zeng2023Metabolism,\n  title={Metabolism in Hematopoiesis and Its Malignancy},\n  author={Zeng, X and Wang, YP and Man, Chi-Hin},\n  booktitle={Adv Exp Med Biol},\n  volume={1442},\n  pages={45--64},\n  year={2023},\n  publisher={Springer}\n}`
+    },
+    {
+      id: "pub-2022-leukemia",
+      year: 2022,
+      landmark: true,
+      category: "metabolism",
+      journal: "Leukemia",
+      impact: "Featured Article",
+      title: "Regulation of proton partitioning in kinase-activating acute myeloid leukemia and its therapeutic implication",
+      authors: "Man CH*#, Zeng X*, Lam W*, Ng TC, Kwok TH, Dang KC, Leung TW, Ng NK, Lam SS, Cher CC, Leung AY",
+      roleNote: "* Co-first author; # Corresponding author",
+      roleNoteZh: "* 共同第一作者; # 通讯作者",
+      citation: "Leukemia. 2022 Aug;36(8):1990-2001. doi: 10.1038/s41375-022-01606-0.",
+      doi: "10.1038/s41375-022-01606-0",
+      doiUrl: "https://doi.org/10.1038/s41375-022-01606-0",
+      pmid: "35688975",
+      abstractZh: "本工作阐明了激酶激活型白血病细胞（如 FLT3-ITD 与 KIT 突变）如何精密调控质子转运蛋白以维持异常的胞内偏碱微环境。质子外排的阻断不仅引发剧烈的胞内酸化与活性氧堆积，更选择性诱导白血病干细胞凋亡，证实干扰质子分配是打击激酶驱动型 AML 的有效策略。",
+      abstractEn: "We characterized how kinase-activating oncogenes reprogram proton flux to sustain an alkaline intracellular pH that fuels leukemic cell survival. Genetic or pharmacological disruption of proton export triggered lethal cellular acidification and oxidative stress selectively in leukemic blasts.",
+      bibtex: `@article{Man2022Leukemia,\n  title={Regulation of proton partitioning in kinase-activating acute myeloid leukemia and its therapeutic implication},\n  author={Man, Chi-Hin and Zeng, X and Lam, W and Ng, TC and Leung, AY},\n  journal={Leukemia},\n  volume={36},\n  number={8},\n  pages={1990--2001},\n  year={2022},\n  doi={10.1038/s41375-022-01606-0}\n}`
+    },
+    {
+      id: "pub-2022-blood",
+      year: 2022,
+      landmark: true,
+      category: "metabolism",
+      journal: "Blood",
+      impact: "Cover & Spotlight Paper (Harvard MGH Work)",
+      title: "Proton export alkalinizes intracellular pH and reprograms carbon metabolism to drive hematopoietic progenitor growth",
+      authors: "Man CH*, Mercier FE, Liu N, Dong W, Stephanopoulos G, Jiang L, Jung Y, Lin CP, Leung AY, Scadden DT",
+      roleNote: "* First Author (Conducted with David T. Scadden at Harvard / MGH)",
+      roleNoteZh: "* 第一作者 (与哈佛大学干细胞中心 David T. Scadden 教授合作完成)",
+      citation: "Blood. 2022 Jan 27;139(4):502-522. doi: 10.1182/blood.2021011563.",
+      doi: "10.1182/blood.2021011563",
+      doiUrl: "https://doi.org/10.1182/blood.2021011563",
+      pmid: "34492695",
+      abstractZh: "正常造血干细胞分化为造血祖细胞的过程中，必须历经剧烈的代谢与能量重构。在哈佛大学麻省总医院期间，文卓谦博士发现质子外排泵激活所引起的胞内碱化，是重塑碳代谢流、驱动造血祖细胞迅速扩增的生化总开关。该里程碑研究奠定了细胞内 pH 作为代谢信号调控干细胞稳态的全新理论框架。",
+      abstractEn: "Stem and progenitor cells rely on coordinated metabolic adaptations during hematopoietic specification. We uncovered that proton export elevates intracellular pH, serving as an essential metabolic rheostat that redirects carbon fluxes into biosynthetic pathways to drive progenitor cell expansion.",
+      bibtex: `@article{Man2022BloodHSC,\n  title={Proton export alkalinizes intracellular pH and reprograms carbon metabolism to drive hematopoietic progenitor growth},\n  author={Man, Chi-Hin and Mercier, Francois E and Liu, N and Scadden, David T},\n  journal={Blood},\n  volume={139},\n  number={4},\n  pages={502--522},\n  year={2022},\n  doi={10.1182/blood.2021011563}\n}`
+    },
+    {
+      id: "pub-2015-blood-sox7",
+      year: 2015,
+      landmark: false,
+      category: "epigenetics",
+      journal: "Blood",
+      impact: "Research Article",
+      title: "Suppression of SOX7 by DNA methylation and its tumor suppressive role in acute myeloid leukemia",
+      authors: "Man CH*, Wan HX*, Fung TK*, Chow HC, Fan AC, Wan TS, Tanaka T, So CW, Kwong YL, Leung AY",
+      roleNote: "* First Author",
+      roleNoteZh: "* 第一作者",
+      citation: "Blood. 2015 Jun 18;125(25):3928-3936. doi: 10.1182/blood-2014-06-580993.",
+      doi: "10.1182/blood-2014-06-580993",
+      doiUrl: "https://doi.org/10.1182/blood-2014-06-580993",
+      pmid: "25934475",
+      abstractZh: "发现转录因子 SOX7 在原代白血病患者中因启动子高甲基化而被广泛表观沉默，恢复 SOX7 表达可强力抑制白血病细胞增殖并阻断 Wnt/β-catenin 信号通路的异常激活，证实其关键抑癌基因功能。",
+      abstractEn: "Demonstrated that SOX7 is silenced by aberrant promoter hypermethylation in primary AML. Restoring SOX7 expression repressed Wnt/beta-catenin signaling and curtailed leukemic growth in vivo, establishing its tumor-suppressive function.",
+      bibtex: `@article{Man2015BloodSOX7,\n  title={Suppression of SOX7 by DNA methylation and its tumor suppressive role in acute myeloid leukemia},\n  author={Man, Chi-Hin and Wan, HX and Fung, TK and Leung, AY},\n  journal={Blood},\n  volume={125},\n  number={25},\n  pages={3928--3936},\n  year={2015},\n  doi={10.1182/blood-2014-06-580993}\n}`
+    },
+    {
+      id: "pub-2015-haematologica",
+      year: 2015,
+      landmark: false,
+      category: "resistance",
+      journal: "Haematologica",
+      impact: "Clinical Article",
+      title: "Azacitidine as post-remission consolidation for sorafenib-induced remission of Fms-Like Tyrosine Kinase-3 internal tandem duplication positive acute myeloid leukemia",
+      authors: "Gill H*, Man CH*, Ip AH, Choi WW, Chow HC, Kwong YL, Leung AY",
+      roleNote: "* Co-first author",
+      roleNoteZh: "* 共同第一作者",
+      citation: "Haematologica. 2015 Oct;100(10):e406-e410. doi: 10.3324/haematol.2014.123034.",
+      doi: "10.3324/haematol.2014.123034",
+      doiUrl: "https://doi.org/10.3324/haematol.2014.123034",
+      pmid: "26092787",
+      abstractZh: "临床前与临床证据证实阿扎胞苷（去甲基化药物）作为巩固维持方案，可显著延缓索拉非尼治疗 FLT3-ITD 阳性白血病缓解后的微小残留病变（MRD）复发。",
+      abstractEn: "Demonstrated the efficacy of azacitidine maintenance post-remission in preventing relapse among FLT3-ITD-positive AML patients treated with sorafenib.",
+      bibtex: `@article{Gill2015Haematologica,\n  title={Azacitidine as post-remission consolidation for sorafenib-induced remission of FLT3-ITD AML},\n  author={Gill, H and Man, Chi-Hin and Leung, AY},\n  journal={Haematologica},\n  volume={100},\n  number={10},\n  pages={e406--e410},\n  year={2015}\n}`
+    },
+    {
+      id: "pub-2014-blood-tescalcin",
+      year: 2014,
+      landmark: true,
+      category: "resistance",
+      journal: "Blood",
+      impact: "Featured Article",
+      title: "A novel tescalcin-sodium/hydrogen exchange axis underlying sorafenib resistance in FLT3-ITD AML",
+      authors: "Man CH*, Lam SS, Sun MK, Chow HC, Gill H, Kwong YL, Leung AY",
+      roleNote: "* First Author",
+      roleNoteZh: "* 第一作者",
+      citation: "Blood. 2014 Apr 17;123(16):2530-2539. doi: 10.1182/blood-2013-07-512194.",
+      doi: "10.1182/blood-2013-07-512194",
+      doiUrl: "https://doi.org/10.1182/blood-2013-07-512194",
+      pmid: "24599957",
+      abstractZh: "首次发现了 Tescalcin 蛋白与钠氢交换蛋白（NHE1）形成的离子交换偶联轴是导致白血病索拉非尼获得性耐药的核心开关，靶向该轴可逆转耐药并恢复靶向敏感性。",
+      abstractEn: "Discovered that the Tescalcin-NHE1 axis is a crucial driver of acquired sorafenib resistance in FLT3-ITD AML, providing an actionable target to sensitize resistant leukemic clones.",
+      bibtex: `@article{Man2014BloodTescalcin,\n  title={A novel tescalcin-sodium/hydrogen exchange axis underlying sorafenib resistance in FLT3-ITD AML},\n  author={Man, Chi-Hin and Lam, SS and Leung, AY},\n  journal={Blood},\n  volume={123},\n  number={16},\n  pages={2530--2539},\n  year={2014}\n}`
+    },
+    {
+      id: "pub-2012-blood-sorafenib",
+      year: 2012,
+      landmark: false,
+      category: "resistance",
+      journal: "Blood",
+      impact: "Foundational Article",
+      title: "Sorafenib treatment of FLT3-ITD+ acute myeloid leukemia: favorable initial outcome and mechanisms of subsequent non-responsiveness",
+      authors: "Man CH*, Fung TK, Ho C, Han HH, Chow HC, Ma AC, Choi WW, Lok S, Cheung AM, Eaves C, Kwong YL, Leung AY",
+      roleNote: "* First Author",
+      roleNoteZh: "* 第一作者",
+      citation: "Blood. 2012 May 31;119(22):5133-5143. doi: 10.1182/blood-2011-06-363960.",
+      doi: "10.1182/blood-2011-06-363960",
+      doiUrl: "https://doi.org/10.1182/blood-2011-06-363960",
+      pmid: "22496155",
+      abstractZh: "系统剖析了靶向药物索拉非尼治疗难治复发 FLT3-ITD AML 的初始显著疗效及其后出现继发性耐药的分子演进通路，为后续一系列抗耐药联合研究奠定了基石。",
+      abstractEn: "Pioneered the clinical and mechanistic characterization of sorafenib therapy in FLT3-ITD+ AML, tracing initial tumor debulking and subsequent resistance evolution.",
+      bibtex: `@article{Man2012BloodSorafenib,\n  title={Sorafenib treatment of FLT3-ITD+ acute myeloid leukemia: favorable initial outcome and mechanisms of subsequent non-responsiveness},\n  author={Man, Chi-Hin and Fung, TK and Leung, AY},\n  journal={Blood},\n  volume={119},\n  number={22},\n  pages={5133--5143},\n  year={2012}\n}`
+    }
+  ],
+
+  openPositions: [
+    {
+      type: "postdoc",
+      titleZh: "博士后研究人员 / 特聘副研究员 (Postdoctoral Fellows)",
+      titleEn: "Postdoctoral Research Fellows",
+      statusZh: "常年招聘 (2-3名)",
+      statusEn: "Open (2-3 Positions)",
+      salaryZh: "年薪 30-40+ 万元（含学校及广东省财政支持），提供科研启动经费与周转住房支持。",
+      salaryEn: "Competitive remuneration (RMB 300,000–400,000+/year) + university apartment subsidies & startup support.",
+      reqsZh: [
+        "近期获得生物学、基础医学、生物信息学或药学等相关专业博士学位，身心健康，年龄一般不超过35岁；",
+        "在血液肿瘤、表观遗传学、免疫学、代谢组学或生物信息学等领域受过系统科研训练，有代表性一作 SCI 文章发表；",
+        "具备较强的独立科研探索能力与英文学术读写能力，工作踏实求真，富有团队协作精神；",
+        "全力协助申请国家“博新计划”、国家自然科学基金青年项目及广东省青年人才项目。"
+      ],
+      reqsEn: [
+        "Ph.D. degree in Molecular Biology, Medicine, Immunology, Bioinformatics, or related disciplines (under 35 years old);",
+        "Strong track record in hematology, epigenetics, metabolism, or single-cell omics with first-author publications;",
+        "High motivation, strong critical thinking, and fluent written/spoken scientific English;",
+        "Full support to apply for National Postdoctoral Programs (BoXin) and NSFC Young Scientists Fund."
+      ]
+    },
+    {
+      type: "graduate",
+      titleZh: "博士研究生与硕士研究生 (Ph.D. & Master's Students)",
+      titleEn: "Graduate Students (Ph.D. & M.Sc. Candidates)",
+      statusZh: "每年招生",
+      statusEn: "Annual Admissions",
+      salaryZh: "享受中山大学全额学业奖学金、国家助学金及课题组丰厚科研津贴，优秀者优先推荐联合培养。",
+      salaryEn: "Full SYSU scholarship, national stipend, and generous laboratory research allowances.",
+      reqsZh: [
+        "欢迎具有生物科学、生物技术、基础医学、临床医学、药学及生物信息学背景的推免生和统考考生报考；",
+        "对肿瘤生物学、血液恶性疾病转化医学怀有浓厚好奇心与求知欲；",
+        "通过国家大学英语六级（CET-6）或具备相应托福/雅思成绩者优先。"
+      ],
+      reqsEn: [
+        "Undergraduate or master degree in biological sciences, medicine, or bioinformatics;",
+        "Strong curiosity and dedication toward cancer biology and translational hematology;",
+        "Solid command of academic English and research communication skills."
+      ]
+    },
+    {
+      type: "ra",
+      titleZh: "科研助理 / 实验室技术员 (Research Assistants / Lab Techs)",
+      titleEn: "Research Assistants & Laboratory Technicians",
+      statusZh: "招募中 (1-2名)",
+      statusEn: "1-2 Positions Available",
+      salaryZh: "提供富有竞争力的校级聘用薪酬福利（五险一金），表现优异者可优先推荐攻读博硕士学位。",
+      salaryEn: "Competitive salary with complete social insurance; priority recommendation for master's or Ph.D. studies.",
+      reqsZh: [
+        "生物学或医学相关专业本科及以上学历；",
+        "熟练掌握细胞培养、分子克隆、Western blot、流式细胞术或小鼠动物实验基本操作者优先；",
+        "工作细致负责，有较强的沟通协调能力与团队奉献意识。"
+      ],
+      reqsEn: [
+        "B.S. or M.S. in Biology, Biochemistry, Medicine, or related fields;",
+        "Hands-on expertise in cell culture, molecular cloning, flow cytometry, or mouse models;",
+        "Meticulous, well-organized, with strong interpersonal communication skills."
+      ]
+    }
+  ],
+
+  news: [
+    {
+      date: "2026-04",
+      titleZh: "重磅转化成果！团队在 Nature Communications 发表白血病耐药克服 Phase II 临床研究",
+      titleEn: "Landmark Paper: Phase II AML clinical trial accepted in Nature Communications",
+      descZh: "文卓谦副教授作为通讯作者的 Quizartinib 联合高三杉酯碱 II 期临床试验成果在 Nature Communications 正式发表，为克服 FLT3-ITD 白血病复发耐药提供突破性临床方案。",
+      descEn: "Phase II trial evaluating Quizartinib plus Omacetaxine mepesuccinate in FLT3-ITD AML co-led by Dr. Chi-Hin Man is published in Nature Communications."
+    },
+    {
+      date: "2024-03",
+      titleZh: "文卓谦博士入选中大“逸仙学者计划”并全职加入中山医学院组建独立实验室",
+      titleEn: "Dr. Chi-Hin Man appointed Associate Professor & Yat-sen Scholar at SYSU",
+      descZh: "文卓谦博士正式加入中山大学中山医学院病理生理学教研室担任副教授、博士生导师，成立白血病表观遗传与代谢免疫实验室，开启全新篇章。",
+      descEn: "Dr. Chi-Hin Man joins Sun Yat-sen University School of Medicine as Associate Professor & Ph.D. Supervisor, launching the Wen Laboratory."
+    },
+    {
+      date: "2023-12",
+      titleZh: "团队在顶级期刊 Blood 发表论文，揭示 PLK4 调控表观修饰与天然免疫逃逸新机制",
+      titleEn: "Major paper in Blood: PLK4 rewires epigenetics to silence cGAS-STING in AML",
+      descZh: "阐明 PLK4 抑制剂重构组蛋白甲基化、重启 TP53 突变白血病细胞 cGAS-STING 通路并激活宿主抗肿瘤免疫的全新机理。",
+      descEn: "Revealing that PLK4 inhibition overcomes epigenetic suppression of the cGAS-STING innate immunity pathway in TP53-mutated AML."
+    }
+  ]
+};

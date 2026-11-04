@@ -1,0 +1,24 @@
+{
+  "name": "wen-lab-website",
+  "version": "1.0.0",
+  "description": "Academic Laboratory Homepage for Dr. Chi-Hin Man (文卓谦实验室) - Sun Yat-sen University School of Medicine",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "npx serve ."
+  },
+  "keywords": [
+    "academic-website",
+    "lab-homepage",
+    "sun-yat-sen-university",
+    "leukemia-research",
+    "bilingual",
+    "multi-theme"
+  ],
+  "author": "Wen Laboratory",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}

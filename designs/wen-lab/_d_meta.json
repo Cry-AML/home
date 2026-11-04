@@ -1,0 +1,18 @@
+{
+  "type": "design",
+  "designSystems": [],
+  "primaryDesignSystem": null,
+  "assets": {
+    "Wen Lab Academic Homepage": {
+      "versions": [
+        {
+          "path": "index.html",
+          "createdAt": "2026-11-04T08:12:01.599Z",
+          "status": "approved"
+        }
+      ]
+    }
+  },
+  "createdAt": "2026-11-04T08:12:01.653Z",
+  "updatedAt": "2026-11-04T08:12:01.653Z"
+}
