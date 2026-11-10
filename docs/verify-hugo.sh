@@ -41,11 +41,12 @@ chk "ui-body class present" "grep -q 'ui-body' public/index.html"
 chk "ui-caption class present" "grep -q 'ui-caption' public/index.html"
 chk "no text-[11px] or text-[10px]" "! grep -qE 'text-\[1[01]px\]' public/index.html"
 
-echo "== 7. Rules 2 & 9: Reduced Cognitive Load & No Redundant Prompts =="
+echo "== 7. Rules 2, 9 & 11: Clean UI, No Eyebrows & Reduced Cognitive Load =="
 chk "redundant tab prompt removed" "! grep -q '切换下方平台卡片' public/index.html"
 chk "redundant figure hint text removed" "! grep -q '点击图片放大查看' public/index.html"
 chk "redundant publication intro removed" "! grep -q '以下展示文卓谦博士及团队的核心代表作' public/index.html"
 chk "no disruptive hero theme-switcher pills" "! grep -q 'data-theme-name' public/index.html"
+chk "no redundant section eyebrows (Rule 11)" "! grep -qE 'PRINCIPAL INVESTIGATOR|SINGLE-CELL ATLAS|JOIN OUR LAB' public/index.html"
 
 echo "== 8. Scientific Core & Navigation =="
 chk "Nat Commun 2026 Phase II present" "grep -q 'Quizartinib and omacetaxine mepesuccinate' public/index.html"

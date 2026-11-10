@@ -29,7 +29,6 @@ stat_mentorship_count: "2"
 stat_mentorship_label: "哈佛 / 港大培养经历"
 
 pi_title: "副教授 / 博士生导师 / 逸仙学者"
-about_tag: "PRINCIPAL INVESTIGATOR"
 about_title: "导师简介与学术经历"
 about_intro_p1: "文卓谦博士，中山大学中山医学院副教授、博士生导师，中山大学引进人才、逸仙学者。"
 about_intro_p2: "2013 年获香港大学医学院血液学博士学位（导师：梁如鸿教授）；2015-2019 年在哈佛大学医学院/麻省总医院（MGH）再生医学中心开展博士后研究（合作导师：David T. Scadden 教授）；2019-2024 年任香港大学研究助理教授；2024 年加盟中山大学中山医学院组建独立课题组。"
@@ -37,12 +36,10 @@ about_intro_p3: "主要聚焦急性髓系白血病（AML）发生与复发的分
 about_timeline_title: "学术经历"
 btn_view_sysu_profile: "教师主页"
 
-research_tag: "RESEARCH & PLATFORMS"
 research_title: "研究方向与转化平台"
 research_lead: "立足基础生物学规律，面向血液肿瘤重大临床急需，构建机制解析、疾病模型到临床试验的全链条转化闭环。"
 platform_section_title: "核心技术平台"
 
-pub_tag: "PUBLICATIONS"
 pub_title: "代表论著"
 pub_lead: "精选基础原创与临床转化代表性成果："
 pub_filter_all: "全部"
@@ -55,7 +52,6 @@ pub_btn_doi: "DOI"
 pub_btn_abstract: "摘要"
 pub_btn_bibtex: "复制 BibTeX"
 
-fig_badge: "SINGLE-CELL ATLAS"
 fig_title: "单细胞转录组图谱解析白血病细胞状态异质性"
 fig_desc: "依托高通量单细胞 RNA 测序（scRNA-seq），绘制不同给药方案下 GFP 高表达白血病细胞的转录组景观。UMAP 嵌入将 25,252 个单细胞划分为原始粒细胞、单核细胞与未成熟中性粒细胞三类主要状态，提供单细胞分辨率下的克隆演变视角。"
 fig_click_hint: "点击查看高分辨率图谱"
@@ -65,17 +61,14 @@ fig_panel_b: "<strong>B. 给药组覆盖 (Treatment Coverage):</strong> 整合 v
 fig_thumb_alt: "白血病细胞单细胞转录组 UMAP 图谱"
 fig_btn_view: "查看图谱与注释"
 
-join_tag: "JOIN OUR LAB"
 join_title: "招贤纳士与研究生招收"
 join_lead: "实验室经费充裕、技术平台完善，与哈佛大学、香港大学及高水平附属医院深度合作，长期诚招青年才俊加盟。"
 join_contact_banner_title: "应聘与咨询"
 join_contact_banner_desc: "有意者请将个人详细简历发送至文卓谦老师电子邮箱，邮件主题注明：【岗位申请/研究生报考】姓名 + 专业。"
 btn_send_email: "发送应聘邮件"
 
-news_tag: "UPDATES"
 news_title: "新闻动态"
 
-contact_tag: "CONTACT"
 contact_title: "联系方式"
 contact_address_label: "实验室与办公室地址："
 contact_address_val: "广东省广州市越秀区中山二路74号 中山大学广州校区北校园 科技楼（病理生理学教研室）"

@@ -29,7 +29,6 @@ stat_mentorship_count: "2"
 stat_mentorship_label: "Harvard / HKU Mentorship"
 
 pi_title: "Associate Professor / Ph.D. Supervisor / Yat-sen Scholar"
-about_tag: "PRINCIPAL INVESTIGATOR"
 about_title: "Principal Investigator"
 about_intro_p1: "Dr. Chi-Hin Man is an Associate Professor and Ph.D. Supervisor at Sun Yat-sen University School of Medicine, supported by the SYSU Yat-sen Scholar Program."
 about_intro_p2: "He obtained his Ph.D. in Haematology from HKU in 2013 under Prof. Anskar Leung, completed postdoctoral training at Harvard Medical School / Massachusetts General Hospital (MGH) Center for Regenerative Medicine under Prof. David T. Scadden (2015-2019), served as Research Assistant Professor at HKU (2019-2024), and joined SYSU in 2024 to establish his independent laboratory."
@@ -37,12 +36,10 @@ about_intro_p3: "His research decodes the molecular governance of AML initiation
 about_timeline_title: "Academic Background"
 btn_view_sysu_profile: "Faculty Profile"
 
-research_tag: "RESEARCH & PLATFORMS"
 research_title: "Research Pillars & Platforms"
 research_lead: "Bridging fundamental mechanistic discoveries to prospective clinical trials for AML."
 platform_section_title: "Core Platforms"
 
-pub_tag: "PUBLICATIONS"
 pub_title: "Selected Publications"
 pub_lead: "Representative fundamental discoveries and translational trial reports:"
 pub_filter_all: "All"
@@ -55,7 +52,6 @@ pub_btn_doi: "DOI"
 pub_btn_abstract: "Abstract"
 pub_btn_bibtex: "Copy BibTeX"
 
-fig_badge: "SINGLE-CELL ATLAS"
 fig_title: "Single-Cell Transcriptomics Resolving Leukemic State Heterogeneity"
 fig_desc: "High-throughput scRNA-seq mapping 25,252 GFPhigh AML cells across five treatment groups. UMAP embedding distinctly categorizes cells into myeloblasts, monocytes, and immature neutrophils, resolving state transitions under therapeutic pressure."
 fig_click_hint: "Click to view full-resolution atlas"
@@ -65,17 +61,14 @@ fig_panel_b: "<strong>B. Treatment Coverage:</strong> Integrating vehicle, venet
 fig_thumb_alt: "Single-cell RNA-seq UMAP embedding of leukemic blast states"
 fig_btn_view: "View Atlas & Annotations"
 
-join_tag: "JOIN OUR LAB"
 join_title: "Open Positions"
 join_lead: "We welcome motivated postdocs, research assistants, and graduate students to join our translational hematology group."
 join_contact_banner_title: "How to Apply"
 join_contact_banner_desc: "Please email your curriculum vitae, research statement, and publication list to Dr. Chi-Hin Man with subject [Application] Name + Discipline."
 btn_send_email: "Email PI"
 
-news_tag: "UPDATES"
 news_title: "News & Updates"
 
-contact_tag: "CONTACT"
 contact_title: "Contact"
 contact_address_label: "Address:"
 contact_address_val: "Science & Technology Building, North Campus, Sun Yat-sen University, 74 Zhongshan 2nd Rd, Yuexiu District, Guangzhou, China"
