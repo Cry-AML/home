@@ -14,7 +14,7 @@
   weight = 30
 
 [[main]]
-  name = "Pedigree"
+  name = "Experience"
   url = "#pedigree"
   weight = 40
 

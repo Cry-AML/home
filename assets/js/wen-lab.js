@@ -16,19 +16,13 @@
   let lastActiveElement = null;
 
   function getThemePaletteColors() {
-    const isDark = document.documentElement.classList.contains('dark') || currentTheme === 'dark';
+    const isDark = document.documentElement.classList.contains('dark');
     if (isDark) {
-      return ['#38bdf8', '#34d399', '#f43f5e', '#a855f7'];
+      // Radix Indigo & Emerald Dark Steps (8, 9, 10, 11)
+      return ['#3d57d5', '#3e63dd', '#5472e4', '#9eb1ff', '#30a46c'];
     }
-    switch (currentTheme) {
-      case 'crimson':
-        return ['#8b1e2b', '#dc2626', '#f87171', '#fbbf24'];
-      case 'emerald':
-        return ['#0a523d', '#059669', '#34d399', '#6ee7b7'];
-      case 'navy':
-      default:
-        return ['#0f3a66', '#2563eb', '#38bdf8', '#93c5fd'];
-    }
+    // Radix Indigo & Emerald Light Steps (7, 8, 9, 10)
+    return ['#3e63dd', '#3358d4', '#8da4ef', '#abbdf9', '#30a46c'];
   }
 
   function updateCanvasThemeColors() {

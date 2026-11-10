@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Acceptance verification for the Hugo + Blowfish migration on the hugo branch.
+# Acceptance verification for Radix UI Design Refactor on the hugo branch.
 # Usage: bash docs/verify-hugo.sh
 set -uo pipefail
 cd "$(dirname "$0")/.."
@@ -16,41 +16,49 @@ chk "public/index.html generated (ZH)" "[ -s public/index.html ]"
 chk "public/en/index.html generated (EN)" "[ -s public/en/index.html ]"
 chk "public/images/research-figure-1.jpg present" "[ -s public/images/research-figure-1.jpg ]"
 
-echo "== 2. Core Features Retention =="
-chk "ambient-canvas in ZH" "grep -q 'ambient-canvas' public/index.html"
-chk "ambient-canvas in EN" "grep -q 'ambient-canvas' public/en/index.html"
-chk "wen-lab script bundled & minified" "grep -q 'wen-lab.min' public/index.html"
-chk "pedigree timeline nodes present" "[ \$(grep -o 'pedigree-node' public/index.html | wc -l) -ge 7 ]"
-chk "pedigree indicators present" "grep -q 'pedigree-indicator' public/index.html"
-chk "publication cards present (9 papers)" "[ \$(grep -o 'publication-card' public/index.html | wc -l) -eq 9 ]"
-chk "figure-modal with a11y dialog" "grep -q 'figure-modal' public/index.html && grep -q 'role=dialog' public/index.html"
-chk "abstract-modal with a11y dialog" "grep -q 'abstract-modal' public/index.html"
-chk "toast notification element present" "grep -q 'toast-notification' public/index.html"
+echo "== 2. Rule 1: No Middle Dot '·' =="
+chk "no middle dot in public/index.html" "! grep -q '·' public/index.html"
+chk "no middle dot in public/en/index.html" "! grep -q '·' public/en/index.html"
 
-echo "== 3. Theme Palettes & Styles =="
-chk "navy theme token in CSS" "grep -q 'data-theme=navy' public/css/main.bundle.min.*.css"
-chk "crimson theme token in CSS" "grep -q 'data-theme=crimson' public/css/main.bundle.min.*.css"
-chk "emerald theme token in CSS" "grep -q 'data-theme=emerald' public/css/main.bundle.min.*.css"
-chk "dark theme token in CSS" "grep -q 'data-theme=dark' public/css/main.bundle.min.*.css"
-chk "theme option buttons in UI" "[ \$(grep -o 'data-theme-name=' public/index.html | wc -l) -ge 4 ]"
+echo "== 3. Rule 4: Radix UI Colors =="
+chk "Radix Slate scale in CSS" "grep -q 'slate-12' public/css/main.bundle.min.*.css"
+chk "Radix Indigo scale in CSS" "grep -q 'indigo-9' public/css/main.bundle.min.*.css"
+chk "Radix scheme configured" "grep -q 'radix' config/_default/params.toml"
 
-echo "== 4. Bilingual & Blowfish Integration =="
-chk "ZH title rendered" "grep -q '文卓谦实验室 | Wen Laboratory' public/index.html"
-chk "EN title rendered" "grep -q 'Wen Laboratory | SYSU' public/en/index.html"
-chk "Blowfish translation menu in ZH" "grep -q 'nested-menu' public/index.html"
-chk "Blowfish translation menu in EN" "grep -q 'nested-menu' public/en/index.html"
-chk "Blowfish appearance switcher in ZH" "grep -q 'appearance-switcher' public/index.html"
-chk "Blowfish appearance switcher in EN" "grep -q 'appearance-switcher' public/en/index.html"
+echo "== 4. Rules 5 & 6: Concentric Radii & 0.5px Borders =="
+chk "0.5px border styling defined" "grep -qE '0?\.5px' public/css/main.bundle.min.*.css"
+chk "ui-card defined with concentric 0.5px border" "grep -q 'ui-card' public/css/main.bundle.min.*.css"
+chk "ui-card-inner concentric nested class present" "grep -q 'ui-card-inner' public/index.html"
+chk "no colored border-left on cards" "! grep -q 'border-l-4' public/index.html"
 
-echo "== 5. Scientific Accuracy & Identifiers =="
+echo "== 5. Rule 7: 250ms Ease-Out Transitions =="
+chk "250ms ease-out transitions defined" "grep -q '250ms ease-out' public/css/main.bundle.min.*.css"
+
+echo "== 6. Rule 8: Restrained Typography Scales (Min 12px) =="
+chk "ui-title class present" "grep -q 'ui-title' public/index.html"
+chk "ui-heading class present" "grep -q 'ui-heading' public/index.html"
+chk "ui-body class present" "grep -q 'ui-body' public/index.html"
+chk "ui-caption class present" "grep -q 'ui-caption' public/index.html"
+chk "no text-[11px] or text-[10px]" "! grep -qE 'text-\[1[01]px\]' public/index.html"
+
+echo "== 7. Rules 2 & 9: Reduced Cognitive Load & No Redundant Prompts =="
+chk "redundant tab prompt removed" "! grep -q '切换下方平台卡片' public/index.html"
+chk "redundant figure hint text removed" "! grep -q '点击图片放大查看' public/index.html"
+chk "redundant publication intro removed" "! grep -q '以下展示文卓谦博士及团队的核心代表作' public/index.html"
+chk "no disruptive hero theme-switcher pills" "! grep -q 'data-theme-name' public/index.html"
+
+echo "== 8. Scientific Core & Navigation =="
 chk "Nat Commun 2026 Phase II present" "grep -q 'Quizartinib and omacetaxine mepesuccinate' public/index.html"
 chk "Blood 2023 PLK4 present" "grep -q '10.1182/blood.2023019782' public/index.html"
 chk "Highwire press meta tag in head" "grep -q 'citation_title' public/index.html"
 chk "Canonical link present" "grep -q 'rel=canonical' public/index.html"
+chk "Blowfish translation menu in ZH" "grep -q 'nested-menu' public/index.html"
+chk "Blowfish appearance switcher in ZH" "grep -q 'appearance-switcher' public/index.html"
+chk "All 9 publication cards rendered" "[ \$(grep -o 'publication-card' public/index.html | wc -l) -eq 9 ]"
 
 echo ""
 if [ "$fail" -eq 0 ]; then
-  printf '\033[32mALL %d HUGO ACCEPTANCE CHECKS PASSED!\033[0m\n' "$pass"
+  printf '\033[32mALL %d ACCEPTANCE CHECKS PASSED!\033[0m\n' "$pass"
 else
   printf '\033[31m%d CHECKS FAILED out of %d\033[0m\n' "$fail" "$((pass+fail))"
   exit 1

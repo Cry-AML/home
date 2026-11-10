@@ -4,7 +4,7 @@
   weight = 10
 
 [[main]]
-  name = "研究与平台"
+  name = "研究方向"
   url = "#research"
   weight = 20
 
@@ -14,7 +14,7 @@
   weight = 30
 
 [[main]]
-  name = "导师与传承"
+  name = "学术经历"
   url = "#pedigree"
   weight = 40
 

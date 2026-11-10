@@ -9,11 +9,11 @@ title = "Wen Laboratory | SYSU"
   rtl = false
   dateFormat = "January 2, 2006"
   logo = "images/logo.png"
-  description = "Sun Yat-sen University Zhongshan School of Medicine · Leukemia Epigenetics, Metabolic Homeostasis & Tumor Immunology Laboratory"
+  description = "Sun Yat-sen University Zhongshan School of Medicine, Leukemia Epigenetics, Metabolic Homeostasis & Tumor Immunology Laboratory"
 
 [params.author]
   name = "Chi-Hin Man, Ph.D."
-  headline = "Associate Professor · Ph.D. Supervisor · Yat-sen Scholar"
+  headline = "Associate Professor / Ph.D. Supervisor / Yat-sen Scholar"
   bio = "Deciphering leukemogenesis and relapse mechanisms in acute myeloid leukemia (AML), interrogating epigenetic rewiring, proton partitioning/pHi dynamics, and metabolic vulnerabilities for clinical translation."
   links = [
     { email = "mailto:manzhq@mail.sysu.edu.cn" },
