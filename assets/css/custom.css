@@ -336,19 +336,29 @@ html.dark, [data-theme="dark"] {
   background-color: var(--primary);
 }
 
+/* Body reset to prevent h-screen scroll trapping */
+body {
+  height: auto !important;
+  min-height: 100vh !important;
+}
+
 /* --------------------------------------------------------------------------
-   7. Animation & Scroll Reveal
+   7. Animation & Scroll Reveal (Progressive Enhancement: Never Blank)
    -------------------------------------------------------------------------- */
 .reveal {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.js-pending {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transform: translateY(20px);
 }
 
 .reveal.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 /* Marquee track */

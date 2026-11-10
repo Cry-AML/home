@@ -1,6 +1,6 @@
 /**
  * Wen Laboratory (文卓谦实验室) - Blowfish Interactive Engine
- * Ambient Living Canvas, Modals, Publications Filter, BibTeX & Theme Integration
+ * Ambient Living Canvas, Modals, Publications Filter, BibTeX & Smooth Navigation
  */
 
 (function() {
@@ -10,34 +10,10 @@
   // 1. Global State & Theme Integration
   // ---------------------------------------------------------------------------
   let currentTheme = localStorage.getItem('wen_lab_theme') || 'navy';
-  
-  function applyTheme(theme) {
-    currentTheme = theme;
-    document.documentElement.setAttribute('data-theme', theme);
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem('wen_lab_theme', theme);
-    
-    // Sync active state in UI
-    document.querySelectorAll('.theme-option-btn').forEach(btn => {
-      const isSelected = btn.getAttribute('data-theme-name') === theme;
-      btn.classList.toggle('ring-2', isSelected);
-      btn.classList.toggle('ring-sky-500', isSelected);
-    });
-
-    if (typeof updateCanvasThemeColors === 'function') {
-      updateCanvasThemeColors();
-    }
-  }
-
-  // Initial theme sync
-  applyTheme(currentTheme);
-
-  // ---------------------------------------------------------------------------
-  // 2. Ambient Living Canvas (Hematopoiesis & Proton Flux Simulator)
-  // ---------------------------------------------------------------------------
   let canvas, ctx, particles = [], animationFrameId;
   let mousePos = { x: -1000, y: -1000 };
   let isCanvasVisible = true;
+  let lastActiveElement = null;
 
   function getThemePaletteColors() {
     const isDark = document.documentElement.classList.contains('dark') || currentTheme === 'dark';
@@ -56,142 +32,37 @@
   }
 
   function updateCanvasThemeColors() {
+    if (!particles.length) return;
     const colors = getThemePaletteColors();
     particles.forEach(p => {
       p.color = colors[Math.floor(Math.random() * colors.length)];
     });
   }
 
-  function initAmbientCanvas() {
-    canvas = document.getElementById('ambient-canvas');
-    if (!canvas) return;
-    ctx = canvas.getContext('2d');
-
-    const dpr = window.devicePixelRatio || 1;
-    let logicalWidth = window.innerWidth;
-    let logicalHeight = window.innerHeight;
-
-    function resize() {
-      logicalWidth = window.innerWidth;
-      logicalHeight = window.innerHeight;
-      canvas.width = logicalWidth * dpr;
-      canvas.height = logicalHeight * dpr;
-      canvas.style.width = logicalWidth + 'px';
-      canvas.style.height = logicalHeight + 'px';
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    window.addEventListener('mousemove', (e) => {
-      mousePos.x = e.clientX;
-      mousePos.y = e.clientY;
+  function applyTheme(theme) {
+    currentTheme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    try {
+      localStorage.setItem('wen_lab_theme', theme);
+    } catch (e) {}
+    
+    // Sync active state in UI
+    document.querySelectorAll('.theme-option-btn').forEach(btn => {
+      const isSelected = btn.getAttribute('data-theme-name') === theme;
+      btn.classList.toggle('ring-2', isSelected);
+      btn.classList.toggle('ring-sky-500', isSelected);
     });
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? Math.min(Math.floor(window.innerWidth / 40), 20) : Math.min(Math.floor(window.innerWidth / 28), 55);
-    const colors = getThemePaletteColors();
-
-    particles = [];
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * logicalWidth,
-        y: Math.random() * logicalHeight,
-        radius: Math.random() * 2.2 + 0.8,
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        alpha: Math.random() * 0.5 + 0.2
-      });
-    }
-
-    function drawParticles(animate = true) {
-      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
-
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        if (animate) {
-          p.x += p.vx;
-          p.y += p.vy;
-
-          if (p.x < 0) p.x = logicalWidth;
-          if (p.x > logicalWidth) p.x = 0;
-          if (p.y < 0) p.y = logicalHeight;
-          if (p.y > logicalHeight) p.y = 0;
-
-          // Mouse interactive deflection
-          const dx = mousePos.x - p.x;
-          const dy = mousePos.y - p.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
-            p.x -= (dx / dist) * 0.7;
-            p.y -= (dy / dist) * 0.7;
-          }
-        }
-
-        // Draw particle dot
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.alpha;
-        ctx.fill();
-
-        // Connect nearby particles (molecular/epigenetic interactions)
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const cdx = p.x - p2.x;
-          const cdy = p.y - p2.y;
-          const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
-          if (cdist < 130) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = p.color;
-            ctx.globalAlpha = (1 - cdist / 130) * 0.18;
-            ctx.lineWidth = 0.75;
-            ctx.stroke();
-          }
-        }
-      }
-      ctx.globalAlpha = 1.0;
-    }
-
-    if (prefersReducedMotion) {
-      drawParticles(false);
-      return;
-    }
-
-    function loop() {
-      if (isCanvasVisible) {
-        drawParticles(true);
-      }
-      animationFrameId = requestAnimationFrame(loop);
-    }
-    loop();
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      } else {
-        animationFrameId = requestAnimationFrame(loop);
-      }
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        isCanvasVisible = entry.isIntersecting;
-      });
-    }, { threshold: 0.05 });
-    observer.observe(canvas);
+    updateCanvasThemeColors();
   }
 
-  // ---------------------------------------------------------------------------
-  // 3. Modals & Focus Trapping
-  // ---------------------------------------------------------------------------
-  let lastActiveElement = null;
+  // Expose applyTheme globally
+  window.applyTheme = applyTheme;
 
+  // ---------------------------------------------------------------------------
+  // 2. Modals Management (Global)
+  // ---------------------------------------------------------------------------
   function trapFocus(modal) {
     const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
     if (!focusable.length) return;
@@ -243,10 +114,10 @@
     const pmidEl = document.getElementById('abstract-modal-pmid');
     const textEl = document.getElementById('abstract-modal-text');
 
-    if (titleEl) titleEl.textContent = title;
-    if (journalEl) journalEl.textContent = journal;
+    if (titleEl) titleEl.textContent = title || '';
+    if (journalEl) journalEl.textContent = journal || '';
     if (pmidEl) pmidEl.textContent = pmid ? 'PMID: ' + pmid : '';
-    if (textEl) textEl.textContent = abstractText;
+    if (textEl) textEl.textContent = abstractText || '';
 
     modal.classList.remove('hidden');
     modal.classList.add('flex');
@@ -277,19 +148,19 @@
   });
 
   // ---------------------------------------------------------------------------
-  // 4. BibTeX Copy & Toast Notification
+  // 3. BibTeX Copy & Toast Notification (Global)
   // ---------------------------------------------------------------------------
   window.copyBibtex = function(bibtex) {
-    if (!navigator.clipboard) {
-      // Fallback
+    if (!bibtex) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(bibtex);
+    } else {
       const ta = document.createElement('textarea');
       ta.value = bibtex;
       document.body.appendChild(ta);
       ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta);
-    } else {
-      navigator.clipboard.writeText(bibtex);
     }
 
     const toast = document.getElementById('toast-notification');
@@ -304,7 +175,23 @@
   };
 
   // ---------------------------------------------------------------------------
-  // 5. Publications Filtering & Live Search
+  // 4. Platform Tabs Switcher (Global)
+  // ---------------------------------------------------------------------------
+  window.switchPlatformTab = function(platformId, btnEl) {
+    document.querySelectorAll('.platform-tab-btn').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+
+    document.querySelectorAll('.platform-content-panel').forEach(panel => {
+      if (panel.id === 'platform-' + platformId) {
+        panel.classList.remove('hidden');
+      } else {
+        panel.classList.add('hidden');
+      }
+    });
+  };
+
+  // ---------------------------------------------------------------------------
+  // 5. Publications Filter & Live Search (Global)
   // ---------------------------------------------------------------------------
   window.filterPublications = function(filterCategory, btnEl) {
     document.querySelectorAll('.pub-filter-btn').forEach(b => b.classList.remove('active'));
@@ -347,50 +234,177 @@
   };
 
   // ---------------------------------------------------------------------------
-  // 6. Platform Tabs Switcher
+  // 6. Ambient Living Canvas Simulator
   // ---------------------------------------------------------------------------
-  window.switchPlatformTab = function(platformId, btnEl) {
-    document.querySelectorAll('.platform-tab-btn').forEach(b => b.classList.remove('active'));
-    if (btnEl) btnEl.classList.add('active');
+  function initAmbientCanvas() {
+    canvas = document.getElementById('ambient-canvas');
+    if (!canvas) return;
+    ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    document.querySelectorAll('.platform-content-panel').forEach(panel => {
-      if (panel.id === 'platform-' + platformId) {
-        panel.classList.remove('hidden');
+    const dpr = window.devicePixelRatio || 1;
+    let logicalWidth = window.innerWidth;
+    let logicalHeight = window.innerHeight;
+
+    function resize() {
+      logicalWidth = window.innerWidth;
+      logicalHeight = window.innerHeight;
+      canvas.width = logicalWidth * dpr;
+      canvas.height = logicalHeight * dpr;
+      canvas.style.width = logicalWidth + 'px';
+      canvas.style.height = logicalHeight + 'px';
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    window.addEventListener('mousemove', (e) => {
+      mousePos.x = e.clientX;
+      mousePos.y = e.clientY;
+    });
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? Math.min(Math.floor(window.innerWidth / 40), 20) : Math.min(Math.floor(window.innerWidth / 28), 50);
+    const colors = getThemePaletteColors();
+
+    particles = [];
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * logicalWidth,
+        y: Math.random() * logicalHeight,
+        radius: Math.random() * 2.2 + 0.8,
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: (Math.random() - 0.5) * 0.45,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: Math.random() * 0.5 + 0.2
+      });
+    }
+
+    function drawParticles(animate = true) {
+      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        if (animate) {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0) p.x = logicalWidth;
+          if (p.x > logicalWidth) p.x = 0;
+          if (p.y < 0) p.y = logicalHeight;
+          if (p.y > logicalHeight) p.y = 0;
+
+          const dx = mousePos.x - p.x;
+          const dy = mousePos.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            p.x -= (dx / dist) * 0.7;
+            p.y -= (dy / dist) * 0.7;
+          }
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const cdx = p.x - p2.x;
+          const cdy = p.y - p2.y;
+          const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
+          if (cdist < 130) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = p.color;
+            ctx.globalAlpha = (1 - cdist / 130) * 0.18;
+            ctx.lineWidth = 0.75;
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.globalAlpha = 1.0;
+    }
+
+    if (prefersReducedMotion) {
+      drawParticles(false);
+      return;
+    }
+
+    function loop() {
+      if (isCanvasVisible) {
+        drawParticles(true);
+      }
+      animationFrameId = requestAnimationFrame(loop);
+    }
+    loop();
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
       } else {
-        panel.classList.add('hidden');
+        animationFrameId = requestAnimationFrame(loop);
       }
     });
-  };
 
-  // ---------------------------------------------------------------------------
-  // 7. Scroll Reveal Observer
-  // ---------------------------------------------------------------------------
-  function initScrollReveal() {
-    const revealElements = document.querySelectorAll('.reveal');
-    if (!revealElements.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-revealed');
-        }
-      });
-    }, {
-      rootMargin: '0px 0px -60px 0px',
-      threshold: 0.1
-    });
-
-    revealElements.forEach(el => observer.observe(el));
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isCanvasVisible = entry.isIntersecting;
+        });
+      }, { threshold: 0.05 });
+      observer.observe(canvas);
+    }
   }
 
   // ---------------------------------------------------------------------------
-  // 8. Lifecycle Bootstrap
+  // 7. Smooth Anchor Scrolling & Navigation
   // ---------------------------------------------------------------------------
-  document.addEventListener('DOMContentLoaded', function() {
-    initAmbientCanvas();
-    initScrollReveal();
+  function initSmoothAnchorScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#' || href === '#main-content') return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          const headerOffset = 80;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-    // Theme selector listeners
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+
+          // If mobile menu was open, close it
+          const mobileToggle = document.getElementById('mobile-menu-toggle');
+          if (mobileToggle && mobileToggle.checked) {
+            mobileToggle.checked = false;
+          }
+        }
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // 8. Robust Lifecycle Bootloader (Never Blank)
+  // ---------------------------------------------------------------------------
+  function init() {
+    // 1. Initial theme sync
+    applyTheme(currentTheme);
+
+    // 2. Initialize Canvas
+    initAmbientCanvas();
+
+    // 3. Smooth anchor scroll
+    initSmoothAnchorScroll();
+
+    // 4. Bind theme option buttons
     document.querySelectorAll('.theme-option-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const theme = this.getAttribute('data-theme-name');
@@ -398,7 +412,7 @@
       });
     });
 
-    // Publications search listener
+    // 5. Search input listener
     const searchInput = document.getElementById('pub-search-input');
     if (searchInput) {
       searchInput.addEventListener('input', function() {
@@ -406,7 +420,7 @@
       });
     }
 
-    // Modal backdrop click-to-close
+    // 6. Modal backdrop clicks
     const figModal = document.getElementById('figure-modal');
     if (figModal) {
       figModal.addEventListener('click', function(e) {
@@ -419,6 +433,18 @@
         if (e.target === absModal) closeAbstractModal();
       });
     }
-  });
+
+    // 7. Ensure all reveals are fully visible
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.classList.add('is-revealed');
+    });
+  }
+
+  // Canonical safe bootstrap (handles both before and after DOMContentLoaded)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
 })();

@@ -1,34 +1,34 @@
 [[main]]
   name = "Home"
-  url = "/home/en/"
+  url = "/en/"
   weight = 10
 
 [[main]]
   name = "Research"
-  url = "/home/en/#research"
+  url = "#research"
   weight = 20
 
 [[main]]
   name = "Publications"
-  url = "/home/en/#publications"
+  url = "#publications"
   weight = 30
 
 [[main]]
   name = "Pedigree"
-  url = "/home/en/#pedigree"
+  url = "#pedigree"
   weight = 40
 
 [[main]]
   name = "News"
-  url = "/home/en/#news"
+  url = "#news"
   weight = 50
 
 [[main]]
   name = "Join Us"
-  url = "/home/en/#join"
+  url = "#join"
   weight = 60
 
 [[main]]
   name = "Contact"
-  url = "/home/en/#contact"
+  url = "#contact"
   weight = 70
