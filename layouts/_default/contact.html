@@ -1,0 +1,48 @@
+{{ define "main" }}
+{{ $isEn := eq .Site.Language.Lang "en" }}
+{{ $lab := hugo.Data.lab }}
+
+<div class="py-10 sm:py-14 mx-auto max-w-5xl">
+  <div class="mb-8">
+    <h1 class="ui-title">
+      {{ i18n "contact_title" }}
+    </h1>
+  </div>
+
+  <div class="ui-card">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div class="space-y-3 ui-body text-neutral-600 dark:text-neutral-300">
+        <div>
+          <span class="ui-heading block mb-0.5">{{ i18n "contact_address_label" }}</span>
+          <span>{{ i18n "contact_address_val" }}</span>
+        </div>
+        <div>
+          <span class="ui-heading block mb-0.5">{{ i18n "contact_email_label" }}</span>
+          <a href="mailto:{{ $lab.pi.email }}" class="ui-body font-mono text-indigo-600 dark:text-indigo-400 hover:underline">
+            {{ $lab.pi.email }}
+          </a>
+        </div>
+        <div>
+          <span class="ui-heading block mb-0.5">{{ i18n "contact_metro_label" }}</span>
+          <span>{{ i18n "contact_metro_val" }}</span>
+        </div>
+      </div>
+
+      <div class="ui-card-inner p-4 bg-neutral-50 dark:bg-neutral-900 flex flex-col justify-between">
+        <div>
+          <div class="ui-heading mb-1">{{ i18n "map_building_title" }}</div>
+          <div class="ui-caption text-neutral-500 dark:text-neutral-400">{{ i18n "contact_postal_code" }}</div>
+        </div>
+        <div class="mt-4">
+          <a href="https://maps.google.com/?q=Sun+Yat-sen+University+North+Campus+Guangzhou" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="ui-btn-secondary">
+            {{ i18n "btn_open_map" }} &nearr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

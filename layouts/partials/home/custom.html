@@ -2,12 +2,12 @@
 {{ $lab := hugo.Data.lab }}
 
 <!-- =========================================================================
-     HERO SECTION
+     HOMEPAGE HERO SECTION
      ========================================================================= -->
-<section class="py-12 sm:py-16">
+<section class="py-10 sm:py-16">
   <div class="mx-auto max-w-5xl">
     
-    <!-- Badges (Optical Alignment & Concentric Radii) -->
+    <!-- Identity Badges -->
     <div class="flex flex-wrap items-center gap-2 mb-6">
       <span class="ui-badge">
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
@@ -33,16 +33,16 @@
 
       <!-- Action Buttons -->
       <div class="flex flex-wrap items-center gap-3">
-        <a href="#research" class="ui-btn-primary">
+        <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ui-btn-primary">
           {{ i18n "btn_explore" }}
         </a>
-        <a href="#join" class="ui-btn-secondary">
+        <a href="{{ if $isEn }}/en/join/{{ else }}/join/{{ end }}" class="ui-btn-secondary">
           {{ i18n "btn_join_hero" }}
         </a>
       </div>
     </div>
 
-    <!-- Metrics Strip (4 Stat Tiles, 0.5px Border, Restrained Layout) -->
+    <!-- Metrics Strip (4 Stat Tiles, Concentric 8px/10px Radii, 0.5px Border) -->
     <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3">
       <div class="ui-card text-center">
         <div class="font-mono text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
@@ -82,169 +82,43 @@
 </section>
 
 <!-- =========================================================================
-     ACADEMIC BACKGROUND & PI
+     ABOUT PI & SCIENTIFIC OVERVIEW
      ========================================================================= -->
-<section id="pedigree" class="py-12 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
+<section class="py-10 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
   <div class="mx-auto max-w-5xl">
-    <div class="mb-8">
-      <h2 class="ui-title">
-        {{ i18n "about_title" }}
-      </h2>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-      <!-- PI Bio Box -->
-      <div class="md:col-span-5 ui-card">
-        <div class="mb-4">
-          <h3 class="ui-heading">
+    <div class="ui-card">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <div class="md:col-span-8">
+          <h2 class="ui-heading mb-1">
             {{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}
-          </h3>
-          <p class="ui-caption text-indigo-600 dark:text-indigo-400 mt-0.5">
-            {{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }}
+          </h2>
+          <p class="ui-caption text-indigo-600 dark:text-indigo-400 mb-3">
+            {{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }} &middot; {{ cond $isEn $lab.pi.institutionEn $lab.pi.institutionZh }}
           </p>
-          <p class="ui-caption text-neutral-500 dark:text-neutral-400 mt-0.5">
-            {{ cond $isEn $lab.pi.institutionEn $lab.pi.institutionZh }}
+          <p class="ui-body text-neutral-600 dark:text-neutral-300 mb-4">
+            {{ i18n "about_intro_p2" }}
           </p>
+          <div class="flex items-center gap-3">
+            <a href="{{ if $isEn }}/en/pedigree/{{ else }}/pedigree/{{ end }}" class="ui-btn-secondary text-xs">
+              {{ if $isEn }}View Academic Background &rarr;{{ else }}查看学术履历与师承 &rarr;{{ end }}
+            </a>
+          </div>
         </div>
 
-        <div class="space-y-3 ui-body text-neutral-600 dark:text-neutral-300">
-          <p>{{ i18n "about_intro_p1" }}</p>
-          <p>{{ i18n "about_intro_p2" }}</p>
-          <p>{{ i18n "about_intro_p3" }}</p>
-        </div>
-
-        <div class="mt-5 pt-4 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between" style="border-top-width: 0.5px;">
-          <span class="ui-caption font-mono text-neutral-500">
-            {{ $lab.pi.email }}
-          </span>
-          <a href="https://zssom.sysu.edu.cn" target="_blank" rel="noopener noreferrer" 
-             class="ui-caption font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
-            {{ i18n "btn_view_sysu_profile" }} &rarr;
-          </a>
-        </div>
-      </div>
-
-      <!-- Experience Timeline (0.5px Left Line, Concentric Marker) -->
-      <div class="md:col-span-7 ui-card">
-        <h3 class="ui-heading mb-6">
-          {{ i18n "about_timeline_title" }}
-        </h3>
-
-        <div>
-          {{ range $idx, $item := $lab.pi.pedigree }}
-            <div class="pedigree-node">
-              <span class="pedigree-indicator"></span>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="ui-badge-neutral font-mono">
-                  {{ cond $isEn $item.year $item.yearZh }}
-                </span>
-                {{ if $item.highlight }}
-                  <span class="ui-badge">
-                    Current
-                  </span>
-                {{ end }}
-              </div>
-              <div class="ui-heading text-neutral-900 dark:text-white mt-1">
-                {{ cond $isEn $item.roleEn $item.roleZh }}
-              </div>
-              <div class="ui-body text-neutral-500 dark:text-neutral-400 mt-0.5">
-                {{ cond $isEn $item.instEn $item.instZh }}
-              </div>
-            </div>
-          {{ end }}
+        <div class="md:col-span-4 ui-card-inner p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
+          <div class="font-mono text-xs text-neutral-500 mb-1">Affiliation</div>
+          <div class="ui-heading text-neutral-900 dark:text-white mb-2">Sun Yat-sen University</div>
+          <div class="ui-caption text-neutral-500 dark:text-neutral-400">{{ $lab.pi.email }}</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- =========================================================================
-     RESEARCH PILLARS & CORE PLATFORMS (Natural 3-Column Order, No Forced Tab)
-     ========================================================================= -->
-<section id="research" class="py-12 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
-  <div class="mx-auto max-w-5xl">
-    <div class="mb-8">
-      <h2 class="ui-title">
-        {{ i18n "research_title" }}
-      </h2>
-      <p class="ui-body text-neutral-600 dark:text-neutral-400 mt-2">
-        {{ i18n "research_lead" }}
-      </p>
-    </div>
-
-    <!-- 3 Pillars Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-      {{ range $item := $lab.researchPillars }}
-        <div class="ui-card flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="font-mono text-xs font-bold text-neutral-400">
-                {{ $item.number }}
-              </span>
-              <span class="ui-badge">
-                {{ cond $isEn $item.tagEn $item.tagZh }}
-              </span>
-            </div>
-            <h3 class="ui-heading mb-2">
-              {{ cond $isEn $item.titleEn $item.titleZh }}
-            </h3>
-            <p class="ui-body text-neutral-600 dark:text-neutral-300">
-              {{ cond $isEn $item.descEn $item.descZh }}
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-neutral-200 dark:border-neutral-800 ui-caption font-mono text-indigo-600 dark:text-indigo-400" style="border-top-width: 0.5px;">
-            {{ $item.highlightPaper }}
-          </div>
-        </div>
-      {{ end }}
-    </div>
-
-    <!-- Platforms Section: 3 Clear Cards In Direct View (Zero Click Friction) -->
-    <div class="mb-4">
-      <h3 class="ui-heading mb-4">
-        {{ i18n "platform_section_title" }}
-      </h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {{ range $plat := $lab.platforms }}
-          <div class="ui-card">
-            <span class="ui-badge-neutral mb-3">
-              {{ cond $isEn $plat.tagEn $plat.tagZh }}
-            </span>
-            <h4 class="ui-heading mb-2">
-              {{ cond $isEn $plat.nameEn $plat.nameZh }}
-            </h4>
-            <p class="ui-body text-neutral-600 dark:text-neutral-300 mb-4">
-              {{ cond $isEn $plat.descEn $plat.descZh }}
-            </p>
-            <ul class="space-y-1.5 ui-caption text-neutral-600 dark:text-neutral-400">
-              {{ if $isEn }}
-                {{ range $feat := $plat.featuresEn }}
-                  <li class="flex items-start gap-1.5">
-                    <span class="text-indigo-600 dark:text-indigo-400 font-bold">&bull;</span>
-                    <span>{{ $feat }}</span>
-                  </li>
-                {{ end }}
-              {{ else }}
-                {{ range $feat := $plat.featuresZh }}
-                  <li class="flex items-start gap-1.5">
-                    <span class="text-indigo-600 dark:text-indigo-400 font-bold">&bull;</span>
-                    <span>{{ $feat }}</span>
-                  </li>
-                {{ end }}
-              {{ end }}
-            </ul>
-          </div>
-        {{ end }}
-      </div>
-    </div>
-
   </div>
 </section>
 
 <!-- =========================================================================
      SELECTED RESEARCH SHOWCASE (BIOINFORMATICS UMAP FIGURE)
      ========================================================================= -->
-<section class="py-12 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
+<section class="py-10 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
   <div class="mx-auto max-w-5xl">
     <div class="ui-card">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
@@ -273,9 +147,14 @@
             </span>
           </div>
 
-          <button onclick="openFigureModal()" class="ui-btn-primary">
-            {{ i18n "fig_btn_view" }}
-          </button>
+          <div class="flex items-center gap-3">
+            <button onclick="openFigureModal()" class="ui-btn-primary">
+              {{ i18n "fig_btn_view" }}
+            </button>
+            <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ui-btn-secondary">
+              {{ if $isEn }}Explore Research & Platforms &rarr;{{ else }}深入研究方向与平台 &rarr;{{ end }}
+            </a>
+          </div>
         </div>
 
         <!-- Figure Image Container (Concentric 6px Radius, 0.5px Border) -->
@@ -297,254 +176,66 @@
 </section>
 
 <!-- =========================================================================
-     SELECTED PUBLICATIONS (Clean Layout, Search & Direction Filter)
+     SITE SECTIONS DIRECTORY (Clean Cards Leading to Dedicated Pages)
      ========================================================================= -->
-<section id="publications" class="py-12 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
+<section class="py-10 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
   <div class="mx-auto max-w-5xl">
-    <div class="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-      <div>
-        <h2 class="ui-title">
-          {{ i18n "pub_title" }}
-        </h2>
-      </div>
-
-      <!-- Search Input (Concentric 6px, 0.5px Border) -->
-      <div>
-        <input type="text" 
-               id="pub-search-input" 
-               placeholder="{{ i18n "pub_search_placeholder" }}" 
-               class="ui-card-inner px-3 py-1.5 ui-body bg-transparent w-full sm:w-64 focus:outline-none focus:border-indigo-600"
-               aria-label="Search publications">
-      </div>
-    </div>
-
-    <!-- Filter Pills (0.5px, 250ms ease-out) -->
-    <div class="mb-6 flex flex-wrap items-center gap-2">
-      <button class="pub-filter-btn active" data-filter="all" onclick="filterPublications('all', this)">
-        {{ i18n "pub_filter_all" }}
-      </button>
-      <button class="pub-filter-btn" data-filter="landmark" onclick="filterPublications('landmark', this)">
-        {{ i18n "pub_filter_landmark" }}
-      </button>
-      <button class="pub-filter-btn" data-filter="epigenetics" onclick="filterPublications('epigenetics', this)">
-        {{ i18n "pub_filter_epigenetics" }}
-      </button>
-      <button class="pub-filter-btn" data-filter="metabolism" onclick="filterPublications('metabolism', this)">
-        {{ i18n "pub_filter_metabolism" }}
-      </button>
-      <button class="pub-filter-btn" data-filter="resistance" onclick="filterPublications('resistance', this)">
-        {{ i18n "pub_filter_resistance" }}
-      </button>
-    </div>
-
-    <!-- Publications List -->
-    <div class="space-y-3">
-      {{ range $item := $lab.publications }}
-        <div class="publication-card ui-card" 
-             data-category="{{ $item.category }}" 
-             data-landmark="{{ $item.landmark }}">
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-            <div class="flex items-center gap-2">
-              <span class="ui-badge font-mono">
-                {{ $item.journal }}
-              </span>
-              <span class="ui-caption font-mono text-neutral-400">{{ $item.year }}</span>
-              {{ if $item.landmark }}
-                <span class="ui-badge-neutral text-amber-600 dark:text-amber-400">
-                  Landmark
-                </span>
-              {{ end }}
-            </div>
-            <span class="ui-caption font-mono text-neutral-500">{{ $item.impact }}</span>
-          </div>
-
-          <h3 class="ui-heading mb-1.5 text-neutral-900 dark:text-white">
-            {{ $item.title }}
-          </h3>
-
-          <p class="ui-caption text-neutral-600 dark:text-neutral-400 mb-3 font-normal">
-            {{ $item.authors }}
-          </p>
-
-          <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
-            <span class="ui-caption font-mono text-indigo-600 dark:text-indigo-400">
-              {{ cond $isEn $item.roleNote $item.roleNoteZh }}
-            </span>
-            
-            <div class="flex items-center gap-1.5">
-              {{ if $item.doiUrl }}
-                <a href="{{ $item.doiUrl }}" target="_blank" rel="noopener noreferrer" 
-                   class="ui-btn-sm inline-flex items-center gap-1">
-                  <span>DOI</span> &nearr;
-                </a>
-              {{ end }}
-              <button onclick="openAbstractModal('{{ $item.title }}', '{{ $item.journal }}', '{{ $item.pmid }}', '{{ if $isEn }}{{ $item.abstractEn }}{{ else }}{{ $item.abstractZh }}{{ end }}')" 
-                      class="ui-btn-sm">
-                {{ i18n "pub_btn_abstract" }}
-              </button>
-              <button onclick="copyBibtex({{ $item.bibtex }})" 
-                      class="ui-btn-sm">
-                {{ i18n "pub_btn_bibtex" }}
-              </button>
-            </div>
-          </div>
-        </div>
-      {{ end }}
-    </div>
-
-  </div>
-</section>
-
-<!-- =========================================================================
-     LAB UPDATES / NEWS
-     ========================================================================= -->
-<section id="news" class="py-12 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
-  <div class="mx-auto max-w-5xl">
-    <div class="mb-8">
-      <h2 class="ui-title">
-        {{ i18n "news_title" }}
-      </h2>
-    </div>
-
-    <div class="ui-card">
-      <div>
-        {{ range $idx, $item := $lab.news }}
-          <div class="pedigree-node">
-            <span class="pedigree-indicator"></span>
-            <span class="ui-badge-neutral font-mono mb-1">
-              {{ $item.date }}
-            </span>
-            <h3 class="ui-heading text-neutral-900 dark:text-white mt-1">
-              {{ cond $isEn $item.titleEn $item.titleZh }}
-            </h3>
-            <p class="ui-body text-neutral-600 dark:text-neutral-300 mt-1">
-              {{ cond $isEn $item.descEn $item.descZh }}
-            </p>
-          </div>
-        {{ end }}
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =========================================================================
-     JOIN OUR LAB
-     ========================================================================= -->
-<section id="join" class="py-12 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
-  <div class="mx-auto max-w-5xl">
-    <div class="mb-8">
-      <h2 class="ui-title">
-        {{ i18n "join_title" }}
-      </h2>
-      <p class="ui-body text-neutral-600 dark:text-neutral-400 mt-2">
-        {{ i18n "join_lead" }}
-      </p>
-    </div>
-
-    <!-- Position Cards (Concentric 8px, 0.5px Border) -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-      {{ range $pos := $lab.openPositions }}
-        <div class="ui-card flex flex-col justify-between">
-          <div>
-            <span class="ui-badge mb-3">
-              {{ cond $isEn $pos.statusEn $pos.statusZh }}
-            </span>
-            <h3 class="ui-heading mb-1.5">
-              {{ cond $isEn $pos.titleEn $pos.titleZh }}
-            </h3>
-            <p class="ui-caption font-mono text-indigo-600 dark:text-indigo-400 mb-3">
-              {{ cond $isEn $pos.salaryEn $pos.salaryZh }}
-            </p>
-            <ul class="space-y-1.5 ui-caption text-neutral-600 dark:text-neutral-300">
-              {{ if $isEn }}
-                {{ range $req := $pos.reqsEn }}
-                  <li class="flex items-start gap-1.5">
-                    <span class="text-indigo-600 dark:text-indigo-400 font-bold">&bull;</span>
-                    <span>{{ $req }}</span>
-                  </li>
-                {{ end }}
-              {{ else }}
-                {{ range $req := $pos.reqsZh }}
-                  <li class="flex items-start gap-1.5">
-                    <span class="text-indigo-600 dark:text-indigo-400 font-bold">&bull;</span>
-                    <span>{{ $req }}</span>
-                  </li>
-                {{ end }}
-              {{ end }}
-            </ul>
-          </div>
-
-          <div class="mt-4 pt-3 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
-            <a href="mailto:{{ $lab.pi.email }}?subject=Application_{{ $pos.type }}" 
-               class="ui-btn-secondary w-full text-center">
-              Apply ({{ $pos.type }})
-            </a>
-          </div>
-        </div>
-      {{ end }}
-    </div>
-
-    <!-- Application Banner -->
-    <div class="ui-card text-center p-6 sm:p-8">
-      <h3 class="ui-heading mb-2">
-        {{ i18n "join_contact_banner_title" }}
-      </h3>
-      <p class="ui-body text-neutral-600 dark:text-neutral-300 max-w-xl mx-auto mb-4">
-        {{ i18n "join_contact_banner_desc" }}
-      </p>
-      <a href="mailto:{{ $lab.pi.email }}" class="ui-btn-primary">
-        {{ i18n "btn_send_email" }}
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      
+      <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
+        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
+          {{ if $isEn }}Research Pillars & Platforms{{ else }}研究方向与平台{{ end }} &rarr;
+        </h3>
+        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
+          {{ if $isEn }}Epigenetics, proton homeostasis, and in vivo translational models.{{ else }}表观遗传、质子稳态与斑马鱼/PDX体内模型。{{ end }}
+        </p>
       </a>
-    </div>
 
-  </div>
-</section>
+      <a href="{{ if $isEn }}/en/publications/{{ else }}/publications/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
+        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
+          {{ if $isEn }}Selected Publications{{ else }}代表论著与论文{{ end }} &rarr;
+        </h3>
+        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
+          {{ if $isEn }}9 landmark works including Blood, Leukemia, and Nat Commun.{{ else }}Blood、Leukemia、Nature Communications 等代表成果。{{ end }}
+        </p>
+      </a>
 
-<!-- =========================================================================
-     CONTACT US & LOCATION
-     ========================================================================= -->
-<section id="contact" class="py-12 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
-  <div class="mx-auto max-w-5xl">
-    <div class="mb-8">
-      <h2 class="ui-title">
-        {{ i18n "contact_title" }}
-      </h2>
-    </div>
+      <a href="{{ if $isEn }}/en/pedigree/{{ else }}/pedigree/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
+        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
+          {{ if $isEn }}Academic Background{{ else }}学术履历与师承{{ end }} &rarr;
+        </h3>
+        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
+          {{ if $isEn }}Training journey across HKU, Harvard MGH, and SYSU.{{ else }}哈佛医学院/MGH、香港大学及中山大学学术历程。{{ end }}
+        </p>
+      </a>
 
-    <div class="ui-card">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-        <div class="space-y-3 ui-body text-neutral-600 dark:text-neutral-300">
-          <div>
-            <span class="ui-heading block mb-0.5">{{ i18n "contact_address_label" }}</span>
-            <span>{{ i18n "contact_address_val" }}</span>
-          </div>
-          <div>
-            <span class="ui-heading block mb-0.5">{{ i18n "contact_email_label" }}</span>
-            <a href="mailto:{{ $lab.pi.email }}" class="ui-body font-mono text-indigo-600 dark:text-indigo-400 hover:underline">
-              {{ $lab.pi.email }}
-            </a>
-          </div>
-          <div>
-            <span class="ui-heading block mb-0.5">{{ i18n "contact_metro_label" }}</span>
-            <span>{{ i18n "contact_metro_val" }}</span>
-          </div>
-        </div>
+      <a href="{{ if $isEn }}/en/news/{{ else }}/news/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
+        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
+          {{ if $isEn }}News & Updates{{ else }}新闻动态{{ end }} &rarr;
+        </h3>
+        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
+          {{ if $isEn }}Latest research milestones and laboratory news.{{ else }}最新科研突破、临床试验进展与学术动态。{{ end }}
+        </p>
+      </a>
 
-        <div class="ui-card-inner p-4 bg-neutral-50 dark:bg-neutral-900 flex flex-col justify-between">
-          <div>
-            <div class="ui-heading mb-1">{{ i18n "map_building_title" }}</div>
-            <div class="ui-caption text-neutral-500 dark:text-neutral-400">{{ i18n "contact_postal_code" }}</div>
-          </div>
-          <div class="mt-4">
-            <a href="https://maps.google.com/?q=Sun+Yat-sen+University+North+Campus+Guangzhou" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="ui-btn-secondary">
-              {{ i18n "btn_open_map" }} &nearr;
-            </a>
-          </div>
-        </div>
-      </div>
+      <a href="{{ if $isEn }}/en/join/{{ else }}/join/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
+        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
+          {{ if $isEn }}Open Positions{{ else }}招贤纳士与招生{{ end }} &rarr;
+        </h3>
+        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
+          {{ if $isEn }}Recruiting postdocs, graduate students, and research assistants.{{ else }}长期招收博士后、硕博研究生及科研助理。{{ end }}
+        </p>
+      </a>
+
+      <a href="{{ if $isEn }}/en/contact/{{ else }}/contact/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
+        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
+          {{ if $isEn }}Contact Us{{ else }}联系方式与地址{{ end }} &rarr;
+        </h3>
+        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
+          {{ if $isEn }}Guangzhou North Campus location, email, and transit.{{ else }}广州校区北校园科技楼地址、邮箱及交通指引。{{ end }}
+        </p>
+      </a>
+
     </div>
   </div>
 </section>

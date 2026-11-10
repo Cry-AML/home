@@ -5,30 +5,30 @@
 
 [[main]]
   name = "研究方向"
-  url = "#research"
+  url = "/research/"
   weight = 20
 
 [[main]]
   name = "代表论著"
-  url = "#publications"
+  url = "/publications/"
   weight = 30
 
 [[main]]
   name = "学术经历"
-  url = "#pedigree"
+  url = "/pedigree/"
   weight = 40
 
 [[main]]
   name = "新闻动态"
-  url = "#news"
+  url = "/news/"
   weight = 50
 
 [[main]]
   name = "招贤纳士"
-  url = "#join"
+  url = "/join/"
   weight = 60
 
 [[main]]
   name = "联系我们"
-  url = "#contact"
+  url = "/contact/"
   weight = 70

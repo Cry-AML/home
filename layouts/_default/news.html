@@ -1,0 +1,31 @@
+{{ define "main" }}
+{{ $isEn := eq .Site.Language.Lang "en" }}
+{{ $lab := hugo.Data.lab }}
+
+<div class="py-10 sm:py-14 mx-auto max-w-5xl">
+  <div class="mb-8">
+    <h1 class="ui-title">
+      {{ i18n "news_title" }}
+    </h1>
+  </div>
+
+  <div class="ui-card">
+    <div>
+      {{ range $idx, $item := $lab.news }}
+        <div class="pedigree-node">
+          <span class="pedigree-indicator"></span>
+          <span class="ui-badge-neutral font-mono mb-1">
+            {{ $item.date }}
+          </span>
+          <h2 class="ui-heading text-neutral-900 dark:text-white mt-1">
+            {{ cond $isEn $item.titleEn $item.titleZh }}
+          </h2>
+          <p class="ui-body text-neutral-600 dark:text-neutral-300 mt-1">
+            {{ cond $isEn $item.descEn $item.descZh }}
+          </p>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+{{ end }}

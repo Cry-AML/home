@@ -1,7 +1,7 @@
 locale = "en"
 label = "English"
 weight = 2
-title = "Wen Laboratory | SYSU"
+title = "Wen Laboratory, Sun Yat-sen University"
 
 [params]
   displayName = "English"

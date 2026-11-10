@@ -1,7 +1,7 @@
 locale = "zh-cn"
 label = "简体中文"
 weight = 1
-title = "文卓谦实验室 | Wen Laboratory"
+title = "文卓谦实验室 中山大学中山医学院"
 
 [params]
   displayName = "简体中文"

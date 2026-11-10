@@ -1,0 +1,71 @@
+{{ define "main" }}
+{{ $isEn := eq .Site.Language.Lang "en" }}
+{{ $lab := hugo.Data.lab }}
+
+<div class="py-10 sm:py-14 mx-auto max-w-5xl">
+  <div class="mb-8">
+    <h1 class="ui-title">
+      {{ i18n "join_title" }}
+    </h1>
+    <p class="ui-body text-neutral-600 dark:text-neutral-400 mt-2 max-w-3xl">
+      {{ i18n "join_lead" }}
+    </p>
+  </div>
+
+  <!-- Position Cards (Concentric 8px/10px, 0.5px Border) -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    {{ range $pos := $lab.openPositions }}
+      <div class="ui-card flex flex-col justify-between">
+        <div>
+          <span class="ui-badge mb-3">
+            {{ cond $isEn $pos.statusEn $pos.statusZh }}
+          </span>
+          <h2 class="ui-heading mb-1.5">
+            {{ cond $isEn $pos.titleEn $pos.titleZh }}
+          </h2>
+          <p class="ui-caption font-mono text-indigo-600 dark:text-indigo-400 mb-3">
+            {{ cond $isEn $pos.salaryEn $pos.salaryZh }}
+          </p>
+          <ul class="space-y-1.5 ui-caption text-neutral-600 dark:text-neutral-300">
+            {{ if $isEn }}
+              {{ range $req := $pos.reqsEn }}
+                <li class="flex items-start gap-1.5">
+                  <span class="text-indigo-600 dark:text-indigo-400 font-bold">&bull;</span>
+                  <span>{{ $req }}</span>
+                </li>
+              {{ end }}
+            {{ else }}
+              {{ range $req := $pos.reqsZh }}
+                <li class="flex items-start gap-1.5">
+                  <span class="text-indigo-600 dark:text-indigo-400 font-bold">&bull;</span>
+                  <span>{{ $req }}</span>
+                </li>
+              {{ end }}
+            {{ end }}
+          </ul>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
+          <a href="mailto:{{ $lab.pi.email }}?subject=Application_{{ $pos.type }}" 
+             class="ui-btn-secondary w-full text-center">
+            Apply ({{ $pos.type }})
+          </a>
+        </div>
+      </div>
+    {{ end }}
+  </div>
+
+  <!-- Application Banner -->
+  <div class="ui-card text-center p-6 sm:p-8">
+    <h2 class="ui-heading mb-2">
+      {{ i18n "join_contact_banner_title" }}
+    </h2>
+    <p class="ui-body text-neutral-600 dark:text-neutral-300 max-w-xl mx-auto mb-4">
+      {{ i18n "join_contact_banner_desc" }}
+    </p>
+    <a href="mailto:{{ $lab.pi.email }}" class="ui-btn-primary">
+      {{ i18n "btn_send_email" }}
+    </a>
+  </div>
+</div>
+{{ end }}
