@@ -4,3 +4,6 @@ dist/
 *.log
 .vscode/
 .idea/
+
+# Antigravity bridge run artifacts
+.agentboard/

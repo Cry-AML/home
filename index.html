@@ -2,6 +2,13 @@
 <html lang="zh-CN" data-theme="navy">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function() {
+      var theme = localStorage.getItem('wen_lab_theme') || 'navy';
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -10,14 +17,31 @@
   <meta name="description" content="文卓谦实验室（Wen Laboratory）立足中山大学中山医学院，聚焦急性髓系白血病（AML）发生与复发的表观遗传重塑、质子转运与代谢重编程机制，致力于开拓新型靶向干预与联合免疫疗法。">
   <meta name="keywords" content="文卓谦, Chi-Hin Man, 中山大学, 中山医学院, 急性髓系白血病, AML, 表观遗传学, 代谢重编程, cGAS-STING, David Scadden, 梁如鸿, Blood">
   <meta name="author" content="Chi-Hin Man, Ph.D.">
+  <link rel="canonical" href="https://zssom.sysu.edu.cn/teacher/WenZhuoqian">
+
+  <!-- Highwire Press Meta Tags -->
+  <meta name="citation_title" content="Inhibition of PLK4 remodels histone methylation and activates immune response via cGAS-STING pathway in TP53 mutated AML">
+  <meta name="citation_journal_title" content="Blood">
+  <meta name="citation_author" content="Man, Chi-Hin">
+  <meta name="citation_author" content="Lam, W">
+  <meta name="citation_author" content="Dang, CC">
+  <meta name="citation_author" content="Leung, AY">
+  <meta name="citation_publication_date" content="2023/12/07">
+  <meta name="citation_doi" content="10.1182/blood.2023019782">
 
   <!-- OpenGraph Metadata -->
   <meta property="og:title" content="文卓谦实验室 | Wen Laboratory - 中山大学中山医学院">
   <meta property="og:description" content="解析白血病恶性演变与复发本质，开拓表观遗传、代谢稳态与肿瘤免疫转化新前沿。">
   <meta property="og:type" content="website">
 
+  <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
   <!-- Tailwind CSS & Font Awesome -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Custom Academic Theme & Layout Styles -->
@@ -45,6 +69,9 @@
 </head>
 <body class="min-h-screen flex flex-col relative selection:bg-sky-500 selection:text-white">
 
+  <!-- Skip Link for Keyboard Accessibility -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-slate-900 focus:shadow-xl focus:border focus:rounded-lg">跳转到主内容 / Skip to content</a>
+
   <!-- Top Real-time Scroll Progress Bar -->
   <div id="scroll-progress-bar"></div>
 
@@ -62,8 +89,8 @@
       
       <!-- Logo & Lab Brand -->
       <a href="#" class="flex items-center space-x-3.5 group z-10">
-        <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-md theme-transition group-hover:scale-105"
-             style="background: linear-gradient(135deg, var(--primary), var(--accent));">
+        <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-bold text-xl shadow-md theme-transition group-hover:scale-105"
+             style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--text-on-primary);">
           <i class="fa-solid fa-dna text-lg"></i>
         </div>
         <div>
@@ -94,38 +121,40 @@
       <div class="flex items-center space-x-3 z-10">
         
         <!-- Multi-Theme Dropdown -->
-        <div class="relative group">
-          <button class="flex items-center space-x-2 text-xs font-bold px-3 py-1.5 rounded-full border theme-surface theme-transition hover:border-slate-400 shadow-sm"
+        <div class="relative">
+          <button id="theme-toggle" aria-haspopup="menu" aria-expanded="false"
+                  class="flex items-center space-x-2 text-xs font-bold px-3 py-1.5 rounded-full border theme-surface theme-transition hover:border-slate-400 shadow-sm"
                   style="border-color: var(--border);">
             <i class="fa-solid fa-palette text-xs" style="color: var(--primary);"></i>
             <span class="hidden sm:inline" data-i18n="theme_label">主题风格</span>
             <i class="fa-solid fa-chevron-down text-[10px] opacity-60"></i>
           </button>
           
-          <div class="absolute right-0 mt-2 w-52 rounded-2xl shadow-2xl border py-2 hidden group-hover:block z-50 theme-surface theme-transition"
+          <div id="theme-menu" role="menu"
+               class="absolute right-0 mt-2 w-52 rounded-2xl shadow-2xl border py-2 hidden z-50 theme-surface theme-transition"
                style="border-color: var(--border);">
             <div class="px-3.5 py-1.5 text-[10px] uppercase font-bold tracking-wider text-slate-400">
               Select Palette
             </div>
-            <button onclick="setTheme('navy')" 
+            <button role="menuitem" onclick="setTheme('navy')" 
                     class="theme-option w-full text-left px-3.5 py-2 text-xs flex items-center space-x-2.5 hover:bg-black/5 dark:hover:bg-white/5"
                     data-theme-name="navy">
               <span class="w-3.5 h-3.5 rounded-full bg-[#0f3a66] border border-white/20"></span>
               <span data-i18n="theme_navy">🏛️ 经典学术蓝 (Default)</span>
             </button>
-            <button onclick="setTheme('crimson')" 
+            <button role="menuitem" onclick="setTheme('crimson')" 
                     class="theme-option w-full text-left px-3.5 py-2 text-xs flex items-center space-x-2.5 hover:bg-black/5 dark:hover:bg-white/5"
                     data-theme-name="crimson">
               <span class="w-3.5 h-3.5 rounded-full bg-[#8b1e2b] border border-white/20"></span>
               <span data-i18n="theme_crimson">🔴 逸仙庄严红 (Yat-sen)</span>
             </button>
-            <button onclick="setTheme('emerald')" 
+            <button role="menuitem" onclick="setTheme('emerald')" 
                     class="theme-option w-full text-left px-3.5 py-2 text-xs flex items-center space-x-2.5 hover:bg-black/5 dark:hover:bg-white/5"
                     data-theme-name="emerald">
               <span class="w-3.5 h-3.5 rounded-full bg-[#0a523d] border border-white/20"></span>
               <span data-i18n="theme_emerald">🌿 生命科学绿 (Emerald)</span>
             </button>
-            <button onclick="setTheme('dark')" 
+            <button role="menuitem" onclick="setTheme('dark')" 
                     class="theme-option w-full text-left px-3.5 py-2 text-xs flex items-center space-x-2.5 hover:bg-black/5 dark:hover:bg-white/5"
                     data-theme-name="dark">
               <span class="w-3.5 h-3.5 rounded-full bg-[#38bdf8] border border-white/20"></span>
@@ -143,7 +172,7 @@
         </button>
 
         <!-- Mobile Menu Toggle Button -->
-        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-xl border theme-surface theme-transition" style="border-color: var(--border);">
+        <button id="mobile-menu-btn" aria-label="关闭 / Close" class="lg:hidden p-2 rounded-xl border theme-surface theme-transition" style="border-color: var(--border);">
           <i class="fa-solid fa-bars text-sm"></i>
         </button>
 
@@ -151,7 +180,7 @@
     </div>
 
     <!-- Mobile Drawer Menu -->
-    <div id="mobile-nav-drawer" class="hidden lg:hidden border-t px-6 py-5 space-y-3.5 text-sm font-bold theme-surface theme-transition"
+    <div id="mobile-nav-drawer" class="hidden lg:hidden border-t px-6 py-5 space-y-3.5 text-sm font-bold theme-surface theme-transition max-h-[calc(100vh-5rem)] overflow-y-auto"
          style="border-color: var(--border);">
       <a href="#about" class="block py-1 hover:text-sky-600" data-i18n="nav_about">导师与传承</a>
       <a href="#research" class="block py-1 hover:text-sky-600" data-i18n="nav_research">研究方向与平台</a>
@@ -161,6 +190,9 @@
       <a href="#contact" class="block py-1 hover:text-sky-600" data-i18n="nav_contact">联系我们</a>
     </div>
   </header>
+
+  <!-- Main Landmark Container -->
+  <main id="main">
 
   <!-- =========================================================================
        2. Hero Section (Harvard Scadden Lab Mission Narrative)
@@ -189,7 +221,7 @@
 
       <!-- Core Mission Statement (Editorial Masterwork Heading) -->
       <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.25] mb-8 max-w-5xl mx-auto">
-        <span class="font-editorial italic font-normal block sm:inline" data-i18n="hero_title_1">解析白血病恶性演变与复发本质，</span>
+        <span class="font-editorial font-normal block sm:inline" data-i18n="hero_title_1">解析白血病恶性演变与复发本质，</span>
         <span style="color: var(--primary);" class="theme-transition block sm:inline" data-i18n="hero_title_2">开拓表观遗传、代谢稳态与肿瘤免疫转化新前沿</span>
       </h1>
 
@@ -202,8 +234,8 @@
       <!-- Action Buttons -->
       <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
         <a href="#research" 
-           class="w-full sm:w-auto px-8 py-4 rounded-2xl text-white font-extrabold text-sm shadow-xl hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5"
-           style="background-color: var(--primary);">
+           class="w-full sm:w-auto px-8 py-4 rounded-2xl font-extrabold text-sm shadow-xl hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2.5"
+           style="background-color: var(--primary); color: var(--text-on-primary);">
           <i class="fa-solid fa-microscope text-base"></i>
           <span data-i18n="btn_explore">探索科研方向</span>
         </a>
@@ -218,20 +250,20 @@
       <!-- High-Impact Scientific Stats Counter Bar -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
         <div class="p-6 rounded-3xl theme-surface border theme-transition shadow-sm hover:shadow-md" style="border-color: var(--border);">
-          <div class="text-3xl sm:text-4xl font-extrabold font-mono" style="color: var(--primary);" data-i18n="stat_blood_count">5+ 篇</div>
-          <div class="text-xs font-semibold mt-1" style="color: var(--text-muted);" data-i18n="stat_blood_label">Blood 顶级学术论文</div>
+          <div class="text-3xl sm:text-4xl font-extrabold font-mono" style="color: var(--primary);" data-i18n="stat_blood_count">5</div>
+          <div class="text-xs font-semibold mt-1" style="color: var(--text-muted);" data-i18n="stat_blood_label">Blood 论文</div>
         </div>
         <div class="p-6 rounded-3xl theme-surface border theme-transition shadow-sm hover:shadow-md" style="border-color: var(--border);">
-          <div class="text-3xl sm:text-4xl font-extrabold font-mono" style="color: var(--primary);" data-i18n="stat_impact_count">10+ 篇</div>
-          <div class="text-xs font-semibold mt-1" style="color: var(--text-muted);" data-i18n="stat_impact_label">第一/通讯作者高影响力发表</div>
+          <div class="text-3xl sm:text-4xl font-extrabold font-mono" style="color: var(--primary);" data-i18n="stat_impact_count">9</div>
+          <div class="text-xs font-semibold mt-1" style="color: var(--text-muted);" data-i18n="stat_impact_label">代表性论著</div>
         </div>
         <div class="p-6 rounded-3xl theme-surface border theme-transition shadow-sm hover:shadow-md" style="border-color: var(--border);">
-          <div class="text-3xl sm:text-4xl font-extrabold font-mono" style="color: var(--primary);" data-i18n="stat_lineage_count">Top 2</div>
-          <div class="text-xs font-semibold mt-1" style="color: var(--text-muted);" data-i18n="stat_lineage_label">哈佛 MGH & 港大顶尖学术传承</div>
+          <div class="text-3xl sm:text-4xl font-extrabold font-mono" style="color: var(--primary);" data-i18n="stat_lineage_count">1</div>
+          <div class="text-xs font-semibold mt-1" style="color: var(--text-muted);" data-i18n="stat_lineage_label">Phase II 临床试验</div>
         </div>
         <div class="p-6 rounded-3xl theme-surface border theme-transition shadow-sm hover:shadow-md" style="border-color: var(--border);">
-          <div class="text-3xl sm:text-4xl font-extrabold font-mono" style="color: var(--primary);" data-i18n="stat_mentorship_count">100%</div>
-          <div class="text-xs font-semibold mt-1" style="color: var(--text-muted);" data-i18n="stat_mentorship_label">全力支持学生发展与课题深造</div>
+          <div class="text-3xl sm:text-4xl font-extrabold font-mono" style="color: var(--primary);" data-i18n="stat_mentorship_count">2</div>
+          <div class="text-xs font-semibold mt-1" style="color: var(--text-muted);" data-i18n="stat_mentorship_label">顶尖学术机构（哈佛 MGH · 港大）</div>
         </div>
       </div>
 
@@ -274,7 +306,7 @@
   <!-- =========================================================================
        3. About PI & Academic Pedigree (导师简介与传承)
        ========================================================================= -->
-  <section id="about" class="py-24 theme-surface border-b theme-transition z-10" style="border-color: var(--border);">
+  <section id="about" class="py-14 sm:py-20 lg:py-28 theme-surface border-b theme-transition z-10" style="border-color: var(--border);">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -286,7 +318,7 @@
             <div class="w-full h-full rounded-2xl flex flex-col items-center justify-center p-6 text-center"
                  style="background: linear-gradient(135deg, var(--accent-tint), var(--bg-subtle));">
               <div class="w-20 h-20 rounded-full flex items-center justify-center mb-4 text-3xl font-bold shadow-inner"
-                   style="background-color: var(--primary); color: #ffffff;">
+                   style="background-color: var(--primary); color: var(--text-on-primary);">
                 WM
               </div>
               <div class="text-lg font-black text-slate-900 dark:text-slate-100">
@@ -333,7 +365,7 @@
             </h2>
           </div>
 
-          <div class="space-y-4 text-sm leading-relaxed mb-8" style="color: var(--text-secondary);">
+          <div class="space-y-4 text-[15px] leading-[1.75] mb-8" style="color: var(--text-secondary);">
             <p data-i18n="about_intro_p1">
               文卓谦博士，中山大学中山医学院副教授、博士生导师，中山大学引进人才，“逸仙学者计划”新锐学者。
             </p>
@@ -367,7 +399,7 @@
   <!-- =========================================================================
        4. Research Pillars & Platforms (研究支柱与转化平台)
        ========================================================================= -->
-  <section id="research" class="py-24 border-b theme-transition z-10" style="border-color: var(--border);">
+  <section id="research" class="py-14 sm:py-20 lg:py-28 border-b theme-transition z-10" style="border-color: var(--border);">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Section Header -->
@@ -396,6 +428,7 @@
                onclick="openFigureModal()">
             <img src="assets/images/research-figure-1.jpg" 
                  alt="Leukemia HLA Epigenetics and DNA Repair Pathway Analysis" 
+                 data-i18n="fig_thumb_alt"
                  class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
                  title="点击查看高分辨率大图">
             <div class="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-2">
@@ -421,7 +454,7 @@
             <button onclick="openFigureModal()" 
                     class="text-xs font-bold underline flex items-center gap-1.5" style="color: var(--primary);">
               <i class="fa-solid fa-expand"></i>
-              <span>查看高清图谱与实验注释</span>
+              <span data-i18n="fig_btn_view">查看高清图谱与实验注释</span>
             </button>
           </div>
         </div>
@@ -452,7 +485,7 @@
   <!-- =========================================================================
        5. Publications & Contributions (学术成果与代表论著)
        ========================================================================= -->
-  <section id="publications" class="py-24 theme-surface border-b theme-transition z-10" style="border-color: var(--border);">
+  <section id="publications" class="py-14 sm:py-20 lg:py-28 theme-surface border-b theme-transition z-10" style="border-color: var(--border);">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Section Header -->
@@ -518,7 +551,7 @@
   <!-- =========================================================================
        6. Join Us / Career Opportunities (招贤纳士与研究生招收)
        ========================================================================= -->
-  <section id="join" class="py-24 border-b theme-transition z-10" style="border-color: var(--border);">
+  <section id="join" class="py-14 sm:py-20 lg:py-28 border-b theme-transition z-10" style="border-color: var(--border);">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Section Header -->
@@ -529,7 +562,7 @@
         <h2 class="text-3xl sm:text-4xl font-black tracking-tight mt-3 mb-4" data-i18n="join_title">
           招贤纳士与研究生招收
         </h2>
-        <p class="text-sm leading-relaxed" style="color: var(--text-muted);" data-i18n="join_lead">
+        <p class="text-[15px] leading-[1.75]" style="color: var(--text-muted);" data-i18n="join_lead">
           文卓谦实验室正处于快速发展阶段，科研经费充足，实验平台先进，与哈佛大学、香港大学及各大临床医院保持深度紧密合作。诚邀怀揣学术梦想的青年才俊加盟！
         </p>
       </div>
@@ -551,8 +584,8 @@
           </p>
           <div class="flex flex-wrap items-center gap-4">
             <a href="mailto:manzhq@mail.sysu.edu.cn?subject=[Wen Lab Application]" 
-               class="px-6 py-3 rounded-2xl text-white font-bold text-xs shadow-lg hover:opacity-90 active:scale-95 transition-all flex items-center gap-2"
-               style="background-color: var(--primary);">
+               class="px-6 py-3 rounded-2xl font-bold text-xs shadow-lg hover:opacity-90 active:scale-95 transition-all flex items-center gap-2"
+               style="background-color: var(--primary); color: var(--text-on-primary);">
               <i class="fa-solid fa-paper-plane"></i>
               <span data-i18n="btn_send_email">立即发送应聘邮件 (Email PI)</span>
             </a>
@@ -569,7 +602,7 @@
   <!-- =========================================================================
        7. News & Milestones (新闻动态)
        ========================================================================= -->
-  <section id="news" class="py-24 theme-surface border-b theme-transition z-10" style="border-color: var(--border);">
+  <section id="news" class="py-14 sm:py-20 lg:py-28 theme-surface border-b theme-transition z-10" style="border-color: var(--border);">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="mb-12">
@@ -591,7 +624,7 @@
   <!-- =========================================================================
        8. Contact & Campus Location (联系我们与交通位置)
        ========================================================================= -->
-  <section id="contact" class="py-24 border-b theme-transition z-10" style="border-color: var(--border);">
+  <section id="contact" class="py-14 sm:py-20 lg:py-28 border-b theme-transition z-10" style="border-color: var(--border);">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -610,7 +643,7 @@
                 <i class="fa-solid fa-location-dot" style="color: var(--primary);"></i>
                 <span data-i18n="contact_address_label">实验室与办公室地址：</span>
               </span>
-              <p class="mt-1 pl-5 text-xs" data-i18n="contact_address_val">
+              <p class="mt-1 pl-5 text-[15px] leading-[1.75]" data-i18n="contact_address_val">
                 中国广东省广州市越秀区中山二路74号 中山大学广州校区北校园 科技楼（病理生理学教研室）
               </p>
             </div>
@@ -618,7 +651,7 @@
             <div>
               <span class="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
                 <i class="fa-solid fa-envelope" style="color: var(--accent);"></i>
-                <span>电子邮箱 (E-mail)：</span>
+                <span data-i18n="contact_email_label">电子邮箱 (E-mail)：</span>
               </span>
               <p class="mt-1 pl-5 text-xs font-mono">
                 <a href="mailto:manzhq@mail.sysu.edu.cn" class="hover:underline" style="color: var(--primary);">
@@ -654,24 +687,24 @@
               </div>
               <div class="p-6 rounded-2xl border theme-surface text-center py-12" style="border-color: var(--border);">
                 <i class="fa-solid fa-hospital-user text-4xl mb-3 opacity-60" style="color: var(--primary);"></i>
-                <h4 class="text-base font-bold text-slate-900 dark:text-slate-100 mb-1">
+                <h4 class="text-base font-bold text-slate-900 dark:text-slate-100 mb-1" data-i18n="map_building_title">
                   中山大学中山医学院 · 科技楼
                 </h4>
                 <p class="text-xs text-slate-500 max-w-sm mx-auto mb-4">
                   Zhongshan School of Medicine, Sun Yat-sen University
                 </p>
                 <a href="https://maps.google.com/?q=中山大学中山医学院" target="_blank" rel="noopener noreferrer"
-                   class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-white shadow-md hover:scale-105 transition-transform"
-                   style="background-color: var(--primary);">
+                   class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold shadow-md hover:scale-105 transition-transform"
+                   style="background-color: var(--primary); color: var(--text-on-primary);">
                   <i class="fa-solid fa-location-arrow"></i>
-                  <span>在地图中查看 (Open in Map)</span>
+                  <span data-i18n="btn_open_map">在地图中查看 (Open in Map)</span>
                 </a>
               </div>
             </div>
 
             <div class="mt-4 pt-4 border-t flex items-center justify-between text-[11px] text-slate-400" style="border-color: var(--border);">
-              <span>邮编：510080</span>
-              <span>毗邻中山大学附属第一医院</span>
+              <span data-i18n="contact_postal_code">邮编：510080</span>
+              <span data-i18n="contact_adjacent">毗邻中山大学附属第一医院</span>
             </div>
           </div>
         </div>
@@ -680,6 +713,9 @@
 
     </div>
   </section>
+
+  <!-- End of Main Landmark Container -->
+  </main>
 
   <!-- =========================================================================
        9. Footer
@@ -711,10 +747,12 @@
        10. Interactive Modals: Abstract Reader & Figure Lightbox
        ========================================================================= -->
   <!-- Abstract Modal -->
-  <div id="abstract-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md hidden">
+  <div id="abstract-modal" role="dialog" aria-modal="true" aria-labelledby="modal-pub-title"
+       class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md hidden">
     <div class="theme-surface w-full max-w-2xl rounded-3xl shadow-2xl border p-6 sm:p-8 max-h-[85vh] overflow-y-auto relative theme-transition"
          style="border-color: var(--border);">
-      <button onclick="closeAbstractModal()" class="absolute right-5 top-5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
+      <button onclick="closeAbstractModal()" aria-label="Close" title="关闭 / Close"
+              class="absolute right-4 top-4 w-11 h-11 flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
 
@@ -737,16 +775,18 @@
   </div>
 
   <!-- Figure Lightbox Modal -->
-  <div id="figure-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-black/80 backdrop-blur-md hidden">
+  <div id="figure-modal" role="dialog" aria-modal="true" aria-labelledby="modal-figure-title"
+       class="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-8 bg-black/80 backdrop-blur-md hidden">
     <div class="theme-surface w-full max-w-5xl rounded-3xl shadow-2xl border p-6 max-h-[92vh] overflow-y-auto relative theme-transition"
          style="border-color: var(--border);">
-      <button onclick="closeFigureModal()" class="absolute right-5 top-5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 z-10">
+      <button onclick="closeFigureModal()" aria-label="Close" title="关闭 / Close"
+              class="absolute right-4 top-4 w-11 h-11 flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 z-10">
         <i class="fa-solid fa-xmark text-xl"></i>
       </button>
 
       <div class="mb-4">
         <span class="text-xs font-mono font-bold px-3 py-1 rounded-full theme-badge" data-i18n="modal_fig_title">科研图谱详解 (Research Figure View)</span>
-        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mt-2">
+        <h3 id="modal-figure-title" class="text-lg font-bold text-slate-900 dark:text-slate-100 mt-2" data-i18n="fig_modal_title">
           Panel A: THP-1 白血病细胞抗原呈递基因表达差异 / Panel B: DNA 修复通路 GSEA 富集分析
         </h3>
       </div>
@@ -754,19 +794,20 @@
       <div class="rounded-2xl overflow-hidden border bg-black/5 dark:bg-black/40 p-2 mb-4" style="border-color: var(--border);">
         <img src="assets/images/research-figure-1.jpg" 
              alt="High-resolution primary data heatmap and GSEA enrichment" 
+             data-i18n="fig_thumb_alt"
              class="w-full h-auto rounded-xl">
       </div>
 
       <div class="text-xs leading-relaxed space-y-2" style="color: var(--text-secondary);">
-        <p><strong>A. 热图分析 (Heatmap of Antigen Presentation):</strong> 在 THP-1 白血病敲降模型（THP-1_KD vs THP-1_SCR）中，HLA 复合体相关基因（包括 CD1D, HLA-C, HLA-DMA, HLA-B, HLA-H, HLA-A, HLA-DQB1, HLA-DRB1, HLA-E, HLA-DQA1 等）发生显著上调，提示靶向表观修饰能够重启免疫监控。</p>
-        <p><strong>B. GSEA / KEGG 通路富集分析 (Pathway Enrichment):</strong> 细胞错配修复（Mismatch repair, NES=2.23）、碱基切除修复（Base excision repair, NES=2.20）、核苷酸切除修复（Nucleotide excision repair, NES=2.02）以及双链断裂同源重组修复通路均呈现极显著富集，阐明了白血病细胞面对基因毒性与免疫激活时的适应性应激机制。</p>
+        <p data-i18n="fig_panel_a"><strong>A. 热图分析 (Heatmap of Antigen Presentation):</strong> 在 THP-1 白血病敲降模型（THP-1_KD vs THP-1_SCR）中，HLA 复合体相关基因（包括 CD1D, HLA-C, HLA-DMA, HLA-B, HLA-H, HLA-A, HLA-DQB1, HLA-DRB1, HLA-E, HLA-DQA1 等）发生显著上调，提示靶向表观修饰能够重启免疫监控。</p>
+        <p data-i18n="fig_panel_b"><strong>B. GSEA / KEGG 通路富集分析 (Pathway Enrichment):</strong> 细胞错配修复（Mismatch repair, NES=2.23）、碱基切除修复（Base excision repair, NES=2.20）、核苷酸切除修复（Nucleotide excision repair, NES=2.02）以及双链断裂同源重组修复通路均呈现极显著富集，阐明了白血病细胞面对基因毒性与免疫激活时的适应性应激机制。</p>
       </div>
     </div>
   </div>
 
   <!-- Toast Notification for BibTeX Copy -->
   <div id="toast-notification" 
-       class="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-bold opacity-0 pointer-events-none translate-y-4 theme-surface"
+       class="fixed bottom-6 right-6 z-[70] flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-bold opacity-0 pointer-events-none translate-y-4 theme-surface"
        style="border-color: var(--border); color: var(--text-main);">
     <i class="fa-solid fa-circle-check text-emerald-500 text-sm"></i>
     <span id="toast-message">BibTeX 引用已复制到剪贴板！</span>

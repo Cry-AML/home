@@ -17,6 +17,7 @@ let activePillarId = 'epigenetics';
 function setTheme(theme) {
   currentTheme = theme;
   document.documentElement.setAttribute('data-theme', theme);
+  document.documentElement.classList.toggle('dark', theme === 'dark');
   localStorage.setItem('wen_lab_theme', theme);
   
   // Highlight active theme dropdown option
@@ -45,7 +46,15 @@ function setLanguage(lang) {
   // Update text nodes
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (dict[key]) el.textContent = dict[key];
+    if (dict[key]) {
+      if (el.tagName === 'IMG') {
+        el.alt = dict[key];
+      } else if (dict[key].includes('<')) {
+        el.innerHTML = dict[key];
+      } else {
+        el.textContent = dict[key];
+      }
+    }
   });
 
   // Update placeholders
@@ -136,7 +145,7 @@ function renderAcademicTimeline() {
          style="border-color: ${item.highlight ? 'var(--primary)' : 'var(--border)'};">
       <span class="pedigree-indicator absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 flex items-center justify-center theme-transition"
             style="background-color: ${item.highlight ? 'var(--primary)' : 'var(--bg-surface)'}; border-color: var(--primary);">
-        ${item.highlight ? '<span class="w-1.5 h-1.5 rounded-full bg-white"></span>' : ''}
+        ${item.highlight ? '<span class="w-1.5 h-1.5 rounded-full" style="background-color: var(--text-on-primary)"></span>' : ''}
       </span>
       <div class="text-xs font-mono font-bold tracking-wider mb-1" style="color: var(--primary);">
         ${isZh ? item.yearZh : item.year}
@@ -205,7 +214,7 @@ function renderResearchPillars() {
             ${isZh ? pillar.titleZh : pillar.titleEn}
           </h3>
 
-          <p class="text-xs leading-relaxed mb-6" style="color: var(--text-muted);">
+          <p class="text-[15px] leading-[1.75] mb-6" style="color: var(--text-muted);">
             ${isZh ? pillar.descZh : pillar.descEn}
           </p>
 
@@ -343,9 +352,9 @@ function renderPublications() {
   container.innerHTML = filtered.map(pub => {
     // Highlight author names
     const highlightedAuthors = pub.authors
-      .replace(/Man CH/g, `<strong class="text-slate-900 dark:text-slate-100 underline decoration-2 decoration-sky-500 font-bold">Man CH</strong>`)
-      .replace(/Scadden DT/g, `<strong class="text-slate-900 dark:text-slate-100 font-semibold">Scadden DT</strong>`)
-      .replace(/Leung AY/g, `<strong class="text-slate-900 dark:text-slate-100 font-semibold">Leung AY</strong>`);
+      .replace(/\bMan CH(?![A-Za-z])/g, `<strong class="text-slate-900 dark:text-slate-100 underline decoration-2 decoration-sky-500 font-bold">Man CH</strong>`)
+      .replace(/\bScadden DT\b/g, `<strong class="text-slate-900 dark:text-slate-100 font-semibold">Scadden DT</strong>`)
+      .replace(/\bLeung AY(?![A-Za-z])/g, `<strong class="text-slate-900 dark:text-slate-100 font-semibold">Leung AY</strong>`);
 
     return `
       <div class="theme-card p-6 rounded-2xl relative transition-all duration-300" style="background-color: var(--bg-surface-elevated);">
@@ -375,11 +384,11 @@ function renderPublications() {
           ${pub.title}
         </h4>
 
-        <div class="text-xs leading-relaxed mb-3" style="color: var(--text-secondary);">
+        <div class="text-[15px] leading-[1.75] mb-3" style="color: var(--text-secondary);">
           ${highlightedAuthors}
         </div>
 
-        <div class="text-xs font-mono text-slate-400 mb-4">
+        <div class="text-[15px] leading-[1.75] font-mono text-slate-400 mb-4">
           ${pub.citation}
         </div>
 
@@ -476,7 +485,7 @@ function renderNews() {
       <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100 mb-2">
         ${isZh ? item.titleZh : item.titleEn}
       </h4>
-      <p class="text-xs leading-relaxed" style="color: var(--text-muted);">
+      <p class="text-[15px] leading-[1.75]" style="color: var(--text-muted);">
         ${isZh ? item.descZh : item.descEn}
       </p>
     </div>
@@ -486,6 +495,62 @@ function renderNews() {
 // -----------------------------------------------------------------------------
 // 5. Interactive Modals, Lightbox, Drafter, Toast
 // -----------------------------------------------------------------------------
+let lastFocusedElement = null;
+
+function trapFocus(modal, e) {
+  if (e.key !== 'Tab') return;
+  const focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+  if (focusables.length === 0) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+
+  if (e.shiftKey) {
+    if (document.activeElement === first) {
+      last.focus();
+      e.preventDefault();
+    }
+  } else {
+    if (document.activeElement === last) {
+      first.focus();
+      e.preventDefault();
+    }
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const abstractModal = document.getElementById('abstract-modal');
+    if (abstractModal && !abstractModal.classList.contains('hidden')) {
+      closeAbstractModal();
+      return;
+    }
+    const figureModal = document.getElementById('figure-modal');
+    if (figureModal && !figureModal.classList.contains('hidden')) {
+      closeFigureModal();
+      return;
+    }
+    const themeMenu = document.getElementById('theme-menu');
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeMenu && !themeMenu.classList.contains('hidden')) {
+      themeMenu.classList.add('hidden');
+      if (themeToggle) {
+        themeToggle.setAttribute('aria-expanded', 'false');
+        themeToggle.focus();
+      }
+    }
+  } else if (e.key === 'Tab') {
+    const abstractModal = document.getElementById('abstract-modal');
+    if (abstractModal && !abstractModal.classList.contains('hidden')) {
+      trapFocus(abstractModal, e);
+      return;
+    }
+    const figureModal = document.getElementById('figure-modal');
+    if (figureModal && !figureModal.classList.contains('hidden')) {
+      trapFocus(figureModal, e);
+      return;
+    }
+  }
+});
 
 function openAbstractModal(pubId) {
   const pub = LAB_DATA.publications.find(p => p.id === pubId);
@@ -497,6 +562,8 @@ function openAbstractModal(pubId) {
   const bodyEl = document.getElementById('modal-pub-body');
 
   if (!modal) return;
+
+  lastFocusedElement = document.activeElement;
 
   const isZh = currentLang === 'zh';
   titleEl.textContent = pub.title;
@@ -516,13 +583,19 @@ function openAbstractModal(pubId) {
 
   modal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
+  const closeBtn = modal.querySelector('button');
+  if (closeBtn) closeBtn.focus();
 }
 
 function closeAbstractModal() {
   const modal = document.getElementById('abstract-modal');
-  if (modal) {
+  if (modal && !modal.classList.contains('hidden')) {
     modal.classList.add('hidden');
     document.body.style.overflow = 'auto';
+    if (lastFocusedElement) {
+      lastFocusedElement.focus();
+      lastFocusedElement = null;
+    }
   }
 }
 
@@ -530,16 +603,23 @@ function closeAbstractModal() {
 function openFigureModal() {
   const modal = document.getElementById('figure-modal');
   if (modal) {
+    lastFocusedElement = document.activeElement;
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    const closeBtn = modal.querySelector('button');
+    if (closeBtn) closeBtn.focus();
   }
 }
 
 function closeFigureModal() {
   const modal = document.getElementById('figure-modal');
-  if (modal) {
+  if (modal && !modal.classList.contains('hidden')) {
     modal.classList.add('hidden');
     document.body.style.overflow = 'auto';
+    if (lastFocusedElement) {
+      lastFocusedElement.focus();
+      lastFocusedElement = null;
+    }
   }
 }
 
@@ -632,9 +712,19 @@ function initAmbientCanvas() {
   if (!canvas) return;
   ctx = canvas.getContext('2d');
 
+  const dpr = window.devicePixelRatio || 1;
+  let logicalWidth = window.innerWidth;
+  let logicalHeight = window.innerHeight;
+
   function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    logicalWidth = window.innerWidth;
+    logicalHeight = window.innerHeight;
+    canvas.width = logicalWidth * dpr;
+    canvas.height = logicalHeight * dpr;
+    canvas.style.width = logicalWidth + 'px';
+    canvas.style.height = logicalHeight + 'px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
   }
   window.addEventListener('resize', resize);
   resize();
@@ -644,14 +734,16 @@ function initAmbientCanvas() {
     mousePos.y = e.clientY;
   });
 
-  const particleCount = Math.min(Math.floor(window.innerWidth / 28), 55);
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.innerWidth < 768;
+  const particleCount = isMobile ? Math.min(Math.floor(window.innerWidth / 40), 20) : Math.min(Math.floor(window.innerWidth / 28), 55);
   const colors = getThemePaletteColors();
 
   particles = [];
   for (let i = 0; i < particleCount; i++) {
     particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
+      x: Math.random() * logicalWidth,
+      y: Math.random() * logicalHeight,
       radius: Math.random() * 2.2 + 0.8,
       vx: (Math.random() - 0.5) * 0.45,
       vy: (Math.random() - 0.5) * 0.45,
@@ -660,26 +752,28 @@ function initAmbientCanvas() {
     });
   }
 
-  function render() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  function drawParticles(animate = true) {
+    ctx.clearRect(0, 0, logicalWidth, logicalHeight);
 
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
-      p.x += p.vx;
-      p.y += p.vy;
+      if (animate) {
+        p.x += p.vx;
+        p.y += p.vy;
 
-      if (p.x < 0) p.x = canvas.width;
-      if (p.x > canvas.width) p.x = 0;
-      if (p.y < 0) p.y = canvas.height;
-      if (p.y > canvas.height) p.y = 0;
+        if (p.x < 0) p.x = logicalWidth;
+        if (p.x > logicalWidth) p.x = 0;
+        if (p.y < 0) p.y = logicalHeight;
+        if (p.y > logicalHeight) p.y = 0;
 
-      // Mouse interactive deflection
-      const dx = mousePos.x - p.x;
-      const dy = mousePos.y - p.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 100) {
-        p.x -= (dx / dist) * 0.7;
-        p.y -= (dy / dist) * 0.7;
+        // Mouse interactive deflection
+        const dx = mousePos.x - p.x;
+        const dy = mousePos.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          p.x -= (dx / dist) * 0.7;
+          p.y -= (dy / dist) * 0.7;
+        }
       }
 
       // Draw particle dot
@@ -706,10 +800,44 @@ function initAmbientCanvas() {
     }
 
     ctx.globalAlpha = 1.0;
+  }
+
+  // (b) if reduced motion, render ONE static frame and never start RAF loop
+  if (prefersReducedMotion) {
+    drawParticles(false);
+    return;
+  }
+
+  let isCanvasOnScreen = true;
+
+  function render() {
+    drawParticles(true);
     animationFrameId = requestAnimationFrame(render);
   }
 
-  render();
+  function syncAnimation() {
+    const shouldRun = !document.hidden && isCanvasOnScreen;
+    if (shouldRun && !animationFrameId) {
+      animationFrameId = requestAnimationFrame(render);
+    } else if (!shouldRun && animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+  }
+
+  // (c) pause on document.hidden via visibilitychange
+  document.addEventListener('visibilitychange', syncAnimation);
+
+  // (d) only animate while the canvas is on-screen (IntersectionObserver on the element)
+  const canvasObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      isCanvasOnScreen = entry.isIntersecting;
+      syncAnimation();
+    });
+  });
+  canvasObserver.observe(canvas);
+
+  syncAnimation();
 }
 
 // -----------------------------------------------------------------------------
@@ -754,6 +882,68 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileNavDrawer.classList.toggle('hidden');
     });
   }
+
+  // Auto-close mobile drawer when any anchor inside it is clicked (B8)
+  if (mobileNavDrawer) {
+    mobileNavDrawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNavDrawer.classList.add('hidden');
+      });
+    });
+  }
+
+  // Theme dropdown button interaction (B1)
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeMenu = document.getElementById('theme-menu');
+  if (themeToggle && themeMenu) {
+    themeToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = themeMenu.classList.contains('hidden');
+      if (isHidden) {
+        themeMenu.classList.remove('hidden');
+        themeToggle.setAttribute('aria-expanded', 'true');
+      } else {
+        themeMenu.classList.add('hidden');
+        themeToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!themeMenu.contains(e.target) && e.target !== themeToggle && !themeToggle.contains(e.target)) {
+        themeMenu.classList.add('hidden');
+        themeToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Close when clicking an option
+    themeMenu.querySelectorAll('.theme-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        themeMenu.classList.add('hidden');
+        themeToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // Scroll reveal IntersectionObserver (C6)
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('section:not(.hero-gradient-overlay) > div').forEach(div => {
+    div.classList.add('reveal');
+    if (prefersReduced) {
+      div.classList.add('is-revealed');
+    } else {
+      revealObserver.observe(div);
+    }
+  });
 
   // Close modals when clicking backdrop
   const modal = document.getElementById('abstract-modal');

@@ -184,13 +184,13 @@ const LAB_DATA = {
       authors: "Man CH*#, Lam W*, Dang CC*, Zeng X, Zheng L, Chan NM, Ng KL, Chan KC, Kwok TH, Ng TC, Leung WY, Huen SY, Wong CL, So CC, Dou Z, Goyama S, Bray MR, Mak TW, Leung AY",
       roleNote: "* Co-first author; # Corresponding author",
       roleNoteZh: "* 共同第一作者; # 通讯作者",
-      citation: "Blood. 2023 Dec 7;142(23):2002-2015. doi: 10.1182/blood.2023020021.",
-      doi: "10.1182/blood.2023020021",
-      doiUrl: "https://doi.org/10.1182/blood.2023020021",
-      pmid: "37756534",
+      citation: "Blood. 2023 Dec 7;142(23):2002-2015. doi: 10.1182/blood.2023019782.",
+      doi: "10.1182/blood.2023019782",
+      doiUrl: "https://doi.org/10.1182/blood.2023019782",
+      pmid: "37738460",
       abstractZh: "TP53 基因突变是导致 AML 恶性程度最高、耐药最严重且缺乏有效药物的亚型之一。本文首次揭示 Polo 样激酶 4（PLK4）在 TP53 突变白血病中特异性高表达并促使组蛋白三甲基化修饰异常。药理学抑制 PLK4 能重构染色质开放状态，释放微核并强力激活 cGAS-STING 介导的天然抗肿瘤免疫通路，显著诱导免疫监视清除，为难治性 TP53 突变白血病提供了全新的表观免疫干预靶点。",
       abstractEn: "TP53-mutated AML carries an exceptionally poor prognosis with resistance to conventional therapies. We demonstrated that PLK4 is aberrantly overexpressed in TP53-mutated AML and orchestrates repressive histone methylation. Inhibiting PLK4 disrupts this repressive epigenetic barrier, inducing cytosolic DNA and activating the cGAS-STING innate immune response to selectively eliminate leukemic cells.",
-      bibtex: `@article{Man2023Blood,\n  title={Inhibition of PLK4 remodels histone methylation and activates immune response via cGAS-STING pathway in TP53 mutated AML},\n  author={Man, Chi-Hin and Lam, W and Dang, CC and Zeng, X and Zheng, L and Chan, NM and Leung, AY},\n  journal={Blood},\n  volume={142},\n  number={23},\n  pages={2002--2015},\n  year={2023},\n  doi={10.1182/blood.2023020021}\n}`
+      bibtex: `@article{Man2023Blood,\n  title={Inhibition of PLK4 remodels histone methylation and activates immune response via cGAS-STING pathway in TP53 mutated AML},\n  author={Man, Chi-Hin and Lam, W and Dang, CC and Zeng, X and Zheng, L and Chan, NM and Leung, AY},\n  journal={Blood},\n  volume={142},\n  number={23},\n  pages={2002--2015},\n  year={2023},\n  doi={10.1182/blood.2023019782}\n}`
     },
     {
       id: "pub-2023-adv",
@@ -206,7 +206,7 @@ const LAB_DATA = {
       citation: "Adv Exp Med Biol. 2023:1442:45-64.",
       doi: "10.1007/978-981-99-7471-9_4",
       doiUrl: "https://doi.org/10.1007/978-981-99-7471-9_4",
-      pmid: "38166548",
+      pmid: "38228958",
       abstractZh: "系统阐述造血干细胞干性维持、分化成熟过程中的能量代谢与氧化还原稳态网络，并深度总结白血病恶性转化中线粒体代谢、糖酵解、质子稳态与氨基酸代谢的重构机理及靶向治疗潜力。",
       abstractEn: "A comprehensive review outlining how metabolic checkpoints govern normal hematopoietic stem cell self-renewal and lineage commitment, and discussing metabolic vulnerabilities that arise during leukemogenesis.",
       bibtex: `@incollection{Zeng2023Metabolism,\n  title={Metabolism in Hematopoiesis and Its Malignancy},\n  author={Zeng, X and Wang, YP and Man, Chi-Hin},\n  booktitle={Adv Exp Med Biol},\n  volume={1442},\n  pages={45--64},\n  year={2023},\n  publisher={Springer}\n}`
@@ -225,7 +225,7 @@ const LAB_DATA = {
       citation: "Leukemia. 2022 Aug;36(8):1990-2001. doi: 10.1038/s41375-022-01606-0.",
       doi: "10.1038/s41375-022-01606-0",
       doiUrl: "https://doi.org/10.1038/s41375-022-01606-0",
-      pmid: "35688975",
+      pmid: "35624145",
       abstractZh: "本工作阐明了激酶激活型白血病细胞（如 FLT3-ITD 与 KIT 突变）如何精密调控质子转运蛋白以维持异常的胞内偏碱微环境。质子外排的阻断不仅引发剧烈的胞内酸化与活性氧堆积，更选择性诱导白血病干细胞凋亡，证实干扰质子分配是打击激酶驱动型 AML 的有效策略。",
       abstractEn: "We characterized how kinase-activating oncogenes reprogram proton flux to sustain an alkaline intracellular pH that fuels leukemic cell survival. Genetic or pharmacological disruption of proton export triggered lethal cellular acidification and oxidative stress selectively in leukemic blasts.",
       bibtex: `@article{Man2022Leukemia,\n  title={Regulation of proton partitioning in kinase-activating acute myeloid leukemia and its therapeutic implication},\n  author={Man, Chi-Hin and Zeng, X and Lam, W and Ng, TC and Leung, AY},\n  journal={Leukemia},\n  volume={36},\n  number={8},\n  pages={1990--2001},\n  year={2022},\n  doi={10.1038/s41375-022-01606-0}\n}`
@@ -244,7 +244,7 @@ const LAB_DATA = {
       citation: "Blood. 2022 Jan 27;139(4):502-522. doi: 10.1182/blood.2021011563.",
       doi: "10.1182/blood.2021011563",
       doiUrl: "https://doi.org/10.1182/blood.2021011563",
-      pmid: "34492695",
+      pmid: "34610101",
       abstractZh: "正常造血干细胞分化为造血祖细胞的过程中，必须历经剧烈的代谢与能量重构。在哈佛大学麻省总医院期间，文卓谦博士发现质子外排泵激活所引起的胞内碱化，是重塑碳代谢流、驱动造血祖细胞迅速扩增的生化总开关。该里程碑研究奠定了细胞内 pH 作为代谢信号调控干细胞稳态的全新理论框架。",
       abstractEn: "Stem and progenitor cells rely on coordinated metabolic adaptations during hematopoietic specification. We uncovered that proton export elevates intracellular pH, serving as an essential metabolic rheostat that redirects carbon fluxes into biosynthetic pathways to drive progenitor cell expansion.",
       bibtex: `@article{Man2022BloodHSC,\n  title={Proton export alkalinizes intracellular pH and reprograms carbon metabolism to drive hematopoietic progenitor growth},\n  author={Man, Chi-Hin and Mercier, Francois E and Liu, N and Scadden, David T},\n  journal={Blood},\n  volume={139},\n  number={4},\n  pages={502--522},\n  year={2022},\n  doi={10.1182/blood.2021011563}\n}`
@@ -263,7 +263,7 @@ const LAB_DATA = {
       citation: "Blood. 2015 Jun 18;125(25):3928-3936. doi: 10.1182/blood-2014-06-580993.",
       doi: "10.1182/blood-2014-06-580993",
       doiUrl: "https://doi.org/10.1182/blood-2014-06-580993",
-      pmid: "25934475",
+      pmid: "25940713",
       abstractZh: "发现转录因子 SOX7 在原代白血病患者中因启动子高甲基化而被广泛表观沉默，恢复 SOX7 表达可强力抑制白血病细胞增殖并阻断 Wnt/β-catenin 信号通路的异常激活，证实其关键抑癌基因功能。",
       abstractEn: "Demonstrated that SOX7 is silenced by aberrant promoter hypermethylation in primary AML. Restoring SOX7 expression repressed Wnt/beta-catenin signaling and curtailed leukemic growth in vivo, establishing its tumor-suppressive function.",
       bibtex: `@article{Man2015BloodSOX7,\n  title={Suppression of SOX7 by DNA methylation and its tumor suppressive role in acute myeloid leukemia},\n  author={Man, Chi-Hin and Wan, HX and Fung, TK and Leung, AY},\n  journal={Blood},\n  volume={125},\n  number={25},\n  pages={3928--3936},\n  year={2015},\n  doi={10.1182/blood-2014-06-580993}\n}`
@@ -279,13 +279,13 @@ const LAB_DATA = {
       authors: "Gill H*, Man CH*, Ip AH, Choi WW, Chow HC, Kwong YL, Leung AY",
       roleNote: "* Co-first author",
       roleNoteZh: "* 共同第一作者",
-      citation: "Haematologica. 2015 Oct;100(10):e406-e410. doi: 10.3324/haematol.2014.123034.",
+      citation: "Haematologica. 2015 Jul;100(7):e250-e253. doi: 10.3324/haematol.2014.123034.",
       doi: "10.3324/haematol.2014.123034",
       doiUrl: "https://doi.org/10.3324/haematol.2014.123034",
-      pmid: "26092787",
+      pmid: "25820334",
       abstractZh: "临床前与临床证据证实阿扎胞苷（去甲基化药物）作为巩固维持方案，可显著延缓索拉非尼治疗 FLT3-ITD 阳性白血病缓解后的微小残留病变（MRD）复发。",
       abstractEn: "Demonstrated the efficacy of azacitidine maintenance post-remission in preventing relapse among FLT3-ITD-positive AML patients treated with sorafenib.",
-      bibtex: `@article{Gill2015Haematologica,\n  title={Azacitidine as post-remission consolidation for sorafenib-induced remission of FLT3-ITD AML},\n  author={Gill, H and Man, Chi-Hin and Leung, AY},\n  journal={Haematologica},\n  volume={100},\n  number={10},\n  pages={e406--e410},\n  year={2015}\n}`
+      bibtex: `@article{Gill2015Haematologica,\n  title={Azacitidine as post-remission consolidation for sorafenib-induced remission of FLT3-ITD AML},\n  author={Gill, H and Man, Chi-Hin and Leung, AY},\n  journal={Haematologica},\n  volume={100},\n  number={7},\n  pages={e250--e253},\n  year={2015},\n  doi={10.3324/haematol.2014.123034}\n}`
     },
     {
       id: "pub-2014-blood-tescalcin",
@@ -301,7 +301,7 @@ const LAB_DATA = {
       citation: "Blood. 2014 Apr 17;123(16):2530-2539. doi: 10.1182/blood-2013-07-512194.",
       doi: "10.1182/blood-2013-07-512194",
       doiUrl: "https://doi.org/10.1182/blood-2013-07-512194",
-      pmid: "24599957",
+      pmid: "24608976",
       abstractZh: "首次发现了 Tescalcin 蛋白与钠氢交换蛋白（NHE1）形成的离子交换偶联轴是导致白血病索拉非尼获得性耐药的核心开关，靶向该轴可逆转耐药并恢复靶向敏感性。",
       abstractEn: "Discovered that the Tescalcin-NHE1 axis is a crucial driver of acquired sorafenib resistance in FLT3-ITD AML, providing an actionable target to sensitize resistant leukemic clones.",
       bibtex: `@article{Man2014BloodTescalcin,\n  title={A novel tescalcin-sodium/hydrogen exchange axis underlying sorafenib resistance in FLT3-ITD AML},\n  author={Man, Chi-Hin and Lam, SS and Leung, AY},\n  journal={Blood},\n  volume={123},\n  number={16},\n  pages={2530--2539},\n  year={2014}\n}`
@@ -320,7 +320,7 @@ const LAB_DATA = {
       citation: "Blood. 2012 May 31;119(22):5133-5143. doi: 10.1182/blood-2011-06-363960.",
       doi: "10.1182/blood-2011-06-363960",
       doiUrl: "https://doi.org/10.1182/blood-2011-06-363960",
-      pmid: "22496155",
+      pmid: "22368270",
       abstractZh: "系统剖析了靶向药物索拉非尼治疗难治复发 FLT3-ITD AML 的初始显著疗效及其后出现继发性耐药的分子演进通路，为后续一系列抗耐药联合研究奠定了基石。",
       abstractEn: "Pioneered the clinical and mechanistic characterization of sorafenib therapy in FLT3-ITD+ AML, tracing initial tumor debulking and subsequent resistance evolution.",
       bibtex: `@article{Man2012BloodSorafenib,\n  title={Sorafenib treatment of FLT3-ITD+ acute myeloid leukemia: favorable initial outcome and mechanisms of subsequent non-responsiveness},\n  author={Man, Chi-Hin and Fung, TK and Leung, AY},\n  journal={Blood},\n  volume={119},\n  number={22},\n  pages={5133--5143},\n  year={2012}\n}`
