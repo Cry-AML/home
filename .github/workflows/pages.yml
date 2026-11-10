@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, hugo]
   workflow_dispatch:
 
 permissions:
@@ -18,23 +18,43 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      # Publish only the website itself: no R analysis files, no .ai source, no agent artifacts.
-      - name: Stage site
-        run: |
-          mkdir -p _site
-          cp index.html _site/
-          cp -r assets _site/
-          touch _site/.nojekyll
-          echo "--- staged ---"
-          find _site -type f | head -30
-          du -sh _site
-
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          path: _site
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build site
+        run: |
+          if [ -d "themes/blowfish" ]; then
+            echo "Building with Hugo + Blowfish theme..."
+            hugo --gc --minify
+            touch public/.nojekyll
+            echo "--- Hugo build complete ---"
+            du -sh public
+          else
+            echo "Staging static site..."
+            mkdir -p public
+            cp index.html public/
+            cp -r assets public/
+            touch public/.nojekyll
+            echo "--- Static site staged ---"
+            du -sh public
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
 
   deploy:
     needs: build
@@ -43,5 +63,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
