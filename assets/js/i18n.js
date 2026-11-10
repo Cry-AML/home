@@ -79,15 +79,15 @@ const I18N_DICTIONARY = {
     pub_counter_suffix: "篇文献（总共 9 篇）",
 
     // Figure Showcase
-    fig_badge: "LAB EXPERIMENTAL SHOWCASE",
-    fig_title: "单细胞多组学与高通量生物信息学分析",
-    fig_desc: "课题组常态化开展人类白血病细胞系（如 THP-1）与原代临床白血病样本的高通量 RNA-seq、ChIP-seq 及代谢流检测，精准解析抗原呈递分子（HLA 基因家族）在表观调控下的转录激活以及 DNA 损伤修复通路的富集演进规律。",
-    fig_click_hint: "点击图片放大查看高分辨率科研图谱与生物学注释",
-    fig_modal_title: "Panel A: THP-1 白血病细胞抗原呈递基因表达差异 / Panel B: DNA 修复通路 GSEA 富集分析",
-    fig_panel_a: "<strong>A. 热图分析 (Heatmap of Antigen Presentation):</strong> 在 THP-1 白血病敲降模型（THP-1_KD vs THP-1_SCR）中，HLA 复合体相关基因（包括 CD1D, HLA-C, HLA-DMA, HLA-B, HLA-H, HLA-A, HLA-DQB1, HLA-DRB1, HLA-E, HLA-DQA1 等）发生显著上调，提示靶向表观修饰能够重启免疫监控。",
-    fig_panel_b: "<strong>B. GSEA / KEGG 通路富集分析 (Pathway Enrichment):</strong> 细胞错配修复（Mismatch repair, NES=2.23）、碱基切除修复（Base excision repair, NES=2.20）、核苷酸切除修复（Nucleotide excision repair, NES=2.02）以及双链断裂同源重组修复通路均呈现极显著富集，阐明了白血病细胞面对基因毒性与免疫激活时的适应性应激机制。",
-    fig_thumb_alt: "白血病HLA表观调控与DNA修复通路分析科研图谱",
-    fig_btn_view: "查看高清图谱与实验注释",
+    fig_badge: "SINGLE-CELL ATLAS SHOWCASE",
+    fig_title: "单细胞转录组图谱解析白血病细胞状态异质性",
+    fig_desc: "依托高通量单细胞 RNA 测序（scRNA-seq），课题组系统绘制不同给药方案下 GFP 高表达（GFPhigh）白血病细胞的转录组图谱。UMAP 嵌入将 25,252 个细胞清晰划分为原始粒细胞、单核细胞与未成熟中性粒细胞三类主要状态，为解析药物应答与耐药克隆演化提供单细胞分辨率的视角。",
+    fig_click_hint: "点击图片放大查看高分辨率单细胞 UMAP 图谱",
+    fig_modal_title: "GFPhigh 白血病细胞单细胞转录组 UMAP 图谱（5 个给药组 · 25,252 个细胞）",
+    fig_panel_a: "<strong>A. 细胞状态全景 (Cell-State Landscape):</strong> UMAP 将 25,252 个 GFPhigh 细胞划分为三类主要状态：原始粒细胞（Myeloblast，77.2%）、单核细胞（Monocyte，17.1%）与未成熟中性粒细胞（Immature neutrophil，5.6%）。各状态在嵌入空间中形成边界清晰、内部连续的细胞簇，提示其在转录组层面具有稳定的身份特征。",
+    fig_panel_b: "<strong>B. 给药组覆盖 (Treatment Coverage):</strong> 图谱整合 vehicle、venetoclax_1st、combo_1st、combo_2nd 与 hpk1i 共 5 个给药组，可在同一参考嵌入空间内比较不同处理下细胞状态的分布迁移，为联合用药机制与耐药演化研究提供统一的坐标参照。",
+    fig_thumb_alt: "白血病细胞单细胞转录组 UMAP 图谱，按原始粒细胞、单核细胞与未成熟中性粒细胞三类状态着色",
+    fig_btn_view: "查看高清单细胞图谱与注释",
 
     // Open Positions
     join_tag: "JOIN OUR LAB",
@@ -206,15 +206,15 @@ const I18N_DICTIONARY = {
     pub_counter_suffix: "publications (9 total)",
 
     // Figure Showcase
-    fig_badge: "LAB EXPERIMENTAL SHOWCASE",
-    fig_title: "Single-Cell Multi-Omics & High-Throughput Bioinformatics",
-    fig_desc: "The laboratory routinely conducts high-throughput RNA-seq, ChIP-seq, and metabolic flux tracing on human leukemia lines (e.g., THP-1) and primary AML patient samples, dissecting HLA gene activation and DNA damage repair pathways under epigenetic perturbation.",
-    fig_click_hint: "Click figure to enlarge high-resolution diagram with scientific annotations",
-    fig_modal_title: "Panel A: Differential HLA Expression in THP-1 / Panel B: GSEA DNA Repair Pathway Enrichment",
-    fig_panel_a: "<strong>A. Heatmap Analysis:</strong> In the THP-1 leukemia knockdown model (THP-1_KD vs THP-1_SCR), HLA complex genes (including CD1D, HLA-C, HLA-DMA, HLA-B, HLA-H, HLA-A, HLA-DQB1, HLA-DRB1, HLA-E, HLA-DQA1) are markedly upregulated, indicating targeted epigenetic remodeling reactivates immune surveillance.",
-    fig_panel_b: "<strong>B. GSEA / KEGG Pathway Enrichment:</strong> Mismatch repair (NES=2.23), base excision repair (NES=2.20), nucleotide excision repair (NES=2.02), and double-strand break homologous recombination repair pathways exhibit significant enrichment, delineating the adaptive stress response of leukemic cells upon genotoxic and immune activation.",
-    fig_thumb_alt: "Leukemia HLA Epigenetics and DNA Repair Pathway Analysis",
-    fig_btn_view: "View High-Resolution Figure & Annotations",
+    fig_badge: "SINGLE-CELL ATLAS SHOWCASE",
+    fig_title: "Single-Cell Transcriptomic Atlas of Leukemic Cell States",
+    fig_desc: "Using high-throughput single-cell RNA sequencing (scRNA-seq), the laboratory maps the transcriptional landscape of GFPhigh leukemic cells across treatment arms. The UMAP embedding resolves 25,252 cells into three major states—myeloblasts, monocytes and immature neutrophils—offering single-cell resolution for dissecting drug response and the evolution of resistant clones.",
+    fig_click_hint: "Click figure to enlarge the high-resolution single-cell UMAP",
+    fig_modal_title: "Single-Cell UMAP Atlas of GFPhigh Leukemic Cells (5 treatment arms · 25,252 cells)",
+    fig_panel_a: "<strong>A. Cell-State Landscape:</strong> UMAP partitions 25,252 GFPhigh cells into three major states—myeloblasts (77.2%), monocytes (17.1%) and immature neutrophils (5.6%). Each state forms a sharply bounded yet internally continuous cluster, indicating a stable transcriptional identity.",
+    fig_panel_b: "<strong>B. Treatment Coverage:</strong> The atlas integrates five treatment arms (vehicle, venetoclax_1st, combo_1st, combo_2nd and hpk1i), enabling cell-state shifts to be compared within a single reference embedding—a shared coordinate system for studying combination therapy and resistance evolution.",
+    fig_thumb_alt: "Single-cell UMAP atlas of leukemic cells coloured by myeloblast, monocyte and immature neutrophil states",
+    fig_btn_view: "View High-Resolution Single-Cell Atlas",
 
     // Open Positions
     join_tag: "JOIN OUR LAB",

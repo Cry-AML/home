@@ -427,34 +427,34 @@
                style="border-color: var(--border);"
                onclick="openFigureModal()">
             <img src="assets/images/research-figure-1.jpg" 
-                 alt="Leukemia HLA Epigenetics and DNA Repair Pathway Analysis" 
+                 alt="Single-cell UMAP atlas of leukemic cells coloured by myeloblast, monocyte and immature neutrophil states" 
                  data-i18n="fig_thumb_alt"
                  class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
                  title="点击查看高分辨率大图">
             <div class="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-2">
               <i class="fa-solid fa-magnifying-glass-plus text-base"></i>
-              <span data-i18n="fig_click_hint">点击图片放大查看高分辨率科研图谱与生物学注释</span>
+              <span data-i18n="fig_click_hint">点击图片放大查看高分辨率单细胞 UMAP 图谱</span>
             </div>
           </div>
           <div class="lg:col-span-5">
             <span class="text-xs font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full theme-badge" data-i18n="fig_badge">
-              LAB EXPERIMENTAL SHOWCASE
+              SINGLE-CELL ATLAS SHOWCASE
             </span>
             <h3 class="text-xl font-bold mt-3 mb-3 text-slate-900 dark:text-slate-100" data-i18n="fig_title">
-              单细胞多组学与高通量生物信息学分析
+              单细胞转录组图谱解析白血病细胞状态异质性
             </h3>
             <p class="text-xs leading-relaxed mb-4" style="color: var(--text-muted);" data-i18n="fig_desc">
-              课题组常态化开展人类白血病细胞系（如 THP-1）与原代临床白血病样本的高通量 RNA-seq、ChIP-seq 及代谢流检测，精准解析抗原呈递分子（HLA 基因家族）在表观调控下的转录激活以及 DNA 损伤修复通路的富集演进规律。
+              依托高通量单细胞 RNA 测序（scRNA-seq），课题组系统绘制不同给药方案下 GFP 高表达（GFPhigh）白血病细胞的转录组图谱。UMAP 嵌入将 25,252 个细胞清晰划分为原始粒细胞、单核细胞与未成熟中性粒细胞三类主要状态，为解析药物应答与耐药克隆演化提供单细胞分辨率的视角。
             </p>
             <div class="flex flex-wrap gap-2 text-[11px] font-mono mb-4">
-              <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/5 border" style="border-color: var(--border);">THP-1 KD vs SCR</span>
-              <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/5 border" style="border-color: var(--border);">HLA Cluster Upregulation</span>
-              <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/5 border" style="border-color: var(--border);">GO / KEGG GSEA</span>
+              <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/5 border" style="border-color: var(--border);">scRNA-seq · 25,252 cells</span>
+              <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/5 border" style="border-color: var(--border);">Myeloblast / Monocyte / Neutrophil</span>
+              <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/5 border" style="border-color: var(--border);">5 Treatment Arms</span>
             </div>
             <button onclick="openFigureModal()" 
                     class="text-xs font-bold inline-flex items-center gap-1.5 px-3 py-2.5 -mx-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" style="color: var(--primary);">
               <i class="fa-solid fa-expand"></i>
-              <span data-i18n="fig_btn_view">查看高清图谱与实验注释</span>
+              <span data-i18n="fig_btn_view">查看高清单细胞图谱与注释</span>
             </button>
           </div>
         </div>
@@ -787,20 +787,20 @@
       <div class="mb-4">
         <span class="text-xs font-mono font-bold px-3 py-1 rounded-full theme-badge" data-i18n="modal_fig_title">科研图谱详解 (Research Figure View)</span>
         <h3 id="modal-figure-title" class="text-lg font-bold text-slate-900 dark:text-slate-100 mt-2" data-i18n="fig_modal_title">
-          Panel A: THP-1 白血病细胞抗原呈递基因表达差异 / Panel B: DNA 修复通路 GSEA 富集分析
+          GFPhigh 白血病细胞单细胞转录组 UMAP 图谱（5 个给药组 · 25,252 个细胞）
         </h3>
       </div>
 
       <div class="rounded-2xl overflow-hidden border bg-black/5 dark:bg-black/40 p-2 mb-4" style="border-color: var(--border);">
         <img src="assets/images/research-figure-1.jpg" 
-             alt="High-resolution primary data heatmap and GSEA enrichment" 
+             alt="High-resolution single-cell UMAP atlas of leukemic cell states" 
              data-i18n="fig_thumb_alt"
              class="w-full h-auto rounded-xl">
       </div>
 
       <div class="text-xs leading-relaxed space-y-2" style="color: var(--text-secondary);">
-        <p data-i18n="fig_panel_a"><strong>A. 热图分析 (Heatmap of Antigen Presentation):</strong> 在 THP-1 白血病敲降模型（THP-1_KD vs THP-1_SCR）中，HLA 复合体相关基因（包括 CD1D, HLA-C, HLA-DMA, HLA-B, HLA-H, HLA-A, HLA-DQB1, HLA-DRB1, HLA-E, HLA-DQA1 等）发生显著上调，提示靶向表观修饰能够重启免疫监控。</p>
-        <p data-i18n="fig_panel_b"><strong>B. GSEA / KEGG 通路富集分析 (Pathway Enrichment):</strong> 细胞错配修复（Mismatch repair, NES=2.23）、碱基切除修复（Base excision repair, NES=2.20）、核苷酸切除修复（Nucleotide excision repair, NES=2.02）以及双链断裂同源重组修复通路均呈现极显著富集，阐明了白血病细胞面对基因毒性与免疫激活时的适应性应激机制。</p>
+        <p data-i18n="fig_panel_a"><strong>A. 细胞状态全景 (Cell-State Landscape):</strong> UMAP 将 25,252 个 GFPhigh 细胞划分为三类主要状态：原始粒细胞（Myeloblast，77.2%）、单核细胞（Monocyte，17.1%）与未成熟中性粒细胞（Immature neutrophil，5.6%）。各状态在嵌入空间中形成边界清晰、内部连续的细胞簇，提示其在转录组层面具有稳定的身份特征。</p>
+        <p data-i18n="fig_panel_b"><strong>B. 给药组覆盖 (Treatment Coverage):</strong> 图谱整合 vehicle、venetoclax_1st、combo_1st、combo_2nd 与 hpk1i 共 5 个给药组，可在同一参考嵌入空间内比较不同处理下细胞状态的分布迁移，为联合用药机制与耐药演化研究提供统一的坐标参照。</p>
       </div>
     </div>
   </div>

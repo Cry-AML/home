@@ -78,10 +78,10 @@ const I18N_DICTIONARY = {
     pub_counter_suffix: "篇文献（总共 9 篇）",
 
     // Figure Showcase
-    fig_badge: "LAB EXPERIMENTAL SHOWCASE",
-    fig_title: "单细胞多组学与高通量生物信息学分析",
-    fig_desc: "课题组常态化开展人类白血病细胞系（如 THP-1）与原代临床白血病样本的高通量 RNA-seq、ChIP-seq 及代谢流检测，精准解析抗原呈递分子（HLA 基因家族）在表观调控下的转录激活以及 DNA 损伤修复通路的富集演进规律。",
-    fig_click_hint: "点击图片放大查看高分辨率科研图谱与生物学注释",
+    fig_badge: "SINGLE-CELL ATLAS SHOWCASE",
+    fig_title: "单细胞转录组图谱解析白血病细胞状态异质性",
+    fig_desc: "依托高通量单细胞 RNA 测序（scRNA-seq），课题组系统绘制不同给药方案下 GFP 高表达（GFPhigh）白血病细胞的转录组图谱。UMAP 嵌入将 25,252 个细胞清晰划分为原始粒细胞、单核细胞与未成熟中性粒细胞三类主要状态，为解析药物应答与耐药克隆演化提供单细胞分辨率的视角。",
+    fig_click_hint: "点击图片放大查看高分辨率单细胞 UMAP 图谱",
 
     // Open Positions
     join_tag: "JOIN OUR LAB",
@@ -194,10 +194,10 @@ const I18N_DICTIONARY = {
     pub_counter_suffix: "publications (9 total)",
 
     // Figure Showcase
-    fig_badge: "LAB EXPERIMENTAL SHOWCASE",
-    fig_title: "Single-Cell Multi-Omics & High-Throughput Bioinformatics",
-    fig_desc: "The laboratory routinely conducts high-throughput RNA-seq, ChIP-seq, and metabolic flux tracing on human leukemia lines (e.g., THP-1) and primary AML patient samples, dissecting HLA gene activation and DNA damage repair pathways under epigenetic perturbation.",
-    fig_click_hint: "Click figure to enlarge high-resolution diagram with scientific annotations",
+    fig_badge: "SINGLE-CELL ATLAS SHOWCASE",
+    fig_title: "Single-Cell Transcriptomic Atlas of Leukemic Cell States",
+    fig_desc: "Using high-throughput single-cell RNA sequencing (scRNA-seq), the laboratory maps the transcriptional landscape of GFPhigh leukemic cells across treatment arms. The UMAP embedding resolves 25,252 cells into three major states—myeloblasts, monocytes and immature neutrophils—offering single-cell resolution for dissecting drug response and the evolution of resistant clones.",
+    fig_click_hint: "Click figure to enlarge the high-resolution single-cell UMAP",
 
     // Open Positions
     join_tag: "JOIN OUR LAB",

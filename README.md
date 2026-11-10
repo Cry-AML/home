@@ -21,7 +21,7 @@
    - 支持全站一键切换 `中文 / English`，包括菜单、核心理念、科学方向、学术论文摘要及招聘要求，偏好自动保存至本地 `localStorage`。
 4. **科研交互工具库**：
    - **核心技术平台切换器**：支持在【斑马鱼疾病模型】、【人源 PDX 骨髓微环境】和【单细胞多组学药敏平台】之间进行选项卡切换与深度参数查阅。
-   - **科研图谱 Lightbox 弹窗**：展示原代白血病细胞（THP-1）HLA 簇与 DNA 损伤修复（GSEA/KEGG）的组学分析结果，点击可查看超清大图与生物学注释。
+   - **科研图谱 Lightbox 弹窗**：展示 GFPhigh 白血病细胞单细胞转录组 UMAP 图谱（5 个给药组、25,252 个细胞，三类髓系状态），点击可查看超清大图与图谱注释。
    - **论文检索与筛选**：支持按代表作 (Landmark)、研究方向（表观免疫/代谢pH/靶向耐药）或关键词（如 `PLK4`, `FLT3`, `Blood`, `2026` 等）实时过滤，附带当前文献统计徽章。
    - **摘要弹窗 (Abstract Modal)**：点击即刻展开中英双语摘要详情。
    - **一键复制 BibTeX**：文献卡片内置剪贴板交互，附带柔和动画 Toast 提示。
@@ -42,12 +42,14 @@ himm/
 │   │   ├── i18n.js              # 中英双语完整字典与语言切换驱动
 │   │   └── main.js              # 应用控制器 (主题/双语切换、论文过滤搜索、BibTeX复制、模态窗)
 │   └── images/
-│       └── research-figure-1.jpg# 实验室代表性科研成果拼图 (HLA基因表达与GSEA通路分析)
+│       └── research-figure-1.jpg# 实验室代表性科研成果图 (GFPhigh 单细胞转录组 UMAP 图谱)
 ├── designs/
 │   └── wen-lab/                 # baoyu-design 标准设计资产目录
 │       ├── _d_meta.json         # 设计资产元数据
 │       ├── index.html           # 设计工作副本
 │       └── assets/              # 本地自包含静态资源
+├── tools/
+│   └── make_research_figure.py  # 由 Wenyan_SC 单细胞坐标重绘 research-figure-1.jpg
 ├── package.json                 # 现代前端依赖与脚本配置
 └── README.md                    # 项目部署与运维指南
 ```
