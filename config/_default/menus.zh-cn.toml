@@ -1,6 +1,6 @@
 [[main]]
   name = "首页"
-  url = "/"
+  url = "/home/"
   weight = 10
 
 [[main]]
