@@ -1,0 +1,654 @@
+{{ $isEn := eq .Site.Language.Lang "en" }}
+{{ $lab := hugo.Data.lab }}
+
+<!-- =========================================================================
+     HERO SECTION
+     ========================================================================= -->
+<section class="relative isolate overflow-hidden pt-12 pb-16 sm:pt-20 sm:pb-24 lg:pb-32">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    
+    <!-- Top Badges -->
+    <div class="flex flex-wrap items-center justify-center gap-3 mb-8 reveal">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide border theme-surface border-neutral-200 dark:border-neutral-800 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>{{ i18n "hero_badge_scholar" }}</span>
+      </div>
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide border theme-surface border-neutral-200 dark:border-neutral-800 shadow-sm">
+        <span class="text-primary-600 dark:text-primary-400">🏛️</span>
+        <span>{{ i18n "hero_badge_pedigree" }}</span>
+      </div>
+    </div>
+
+    <!-- Main Headings -->
+    <div class="text-center max-w-4xl mx-auto">
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-neutral-900 dark:text-white leading-[1.15] mb-6 reveal">
+        {{ i18n "hero_title_1" }}<br>
+        <span class="text-primary-600 dark:text-primary-400 font-editorial font-normal">
+          {{ i18n "hero_title_2" | safeHTML }}
+        </span>
+      </h1>
+
+      <p class="mt-6 text-base sm:text-lg leading-relaxed text-neutral-600 dark:text-neutral-300 max-w-3xl mx-auto reveal">
+        {{ i18n "hero_lead" }}
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-4 reveal">
+        <a href="#research" 
+           class="px-6 py-3.5 rounded-full text-sm font-bold bg-primary-600 hover:bg-primary-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
+          {{ i18n "btn_explore" }}
+        </a>
+        <a href="#join" 
+           class="px-6 py-3.5 rounded-full text-sm font-bold border border-neutral-300 dark:border-neutral-700 hover:border-primary-500 text-neutral-800 dark:text-neutral-200 theme-surface shadow-sm hover:-translate-y-0.5 transition-all">
+          {{ i18n "btn_join_hero" }}
+        </a>
+      </div>
+
+      <!-- Theme Palette Selector Bar -->
+      <div class="mt-12 flex items-center justify-center gap-2 reveal">
+        <span class="text-xs font-mono text-neutral-400 uppercase tracking-wider mr-2">{{ i18n "theme_label" }}:</span>
+        <button class="theme-option-btn text-xs font-medium px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-800 theme-surface hover:border-primary-500 transition-all flex items-center gap-1.5" 
+                data-theme-name="navy" title="Classic Academic Navy">
+          <span>🏛️</span><span>Navy</span>
+        </button>
+        <button class="theme-option-btn text-xs font-medium px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-800 theme-surface hover:border-primary-500 transition-all flex items-center gap-1.5" 
+                data-theme-name="crimson" title="Sun Yat-sen Crimson">
+          <span>🔴</span><span>Crimson</span>
+        </button>
+        <button class="theme-option-btn text-xs font-medium px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-800 theme-surface hover:border-primary-500 transition-all flex items-center gap-1.5" 
+                data-theme-name="emerald" title="Life Sciences Emerald">
+          <span>🌿</span><span>Emerald</span>
+        </button>
+        <button class="theme-option-btn text-xs font-medium px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-800 theme-surface hover:border-primary-500 transition-all flex items-center gap-1.5" 
+                data-theme-name="dark" title="Confocal Microscopy Dark">
+          <span>🌌</span><span>Dark</span>
+        </button>
+      </div>
+
+      <!-- Scientific Stat Tiles -->
+      <div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 reveal">
+        <div class="theme-card p-5 rounded-2xl text-center">
+          <div class="text-3xl sm:text-4xl font-black text-primary-600 dark:text-primary-400 font-mono">
+            {{ i18n "stat_blood_count" }}
+          </div>
+          <div class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mt-1 uppercase tracking-wider">
+            {{ i18n "stat_blood_label" }}
+          </div>
+        </div>
+        <div class="theme-card p-5 rounded-2xl text-center">
+          <div class="text-3xl sm:text-4xl font-black text-primary-600 dark:text-primary-400 font-mono">
+            {{ i18n "stat_impact_count" }}
+          </div>
+          <div class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mt-1 uppercase tracking-wider">
+            {{ i18n "stat_impact_label" }}
+          </div>
+        </div>
+        <div class="theme-card p-5 rounded-2xl text-center">
+          <div class="text-3xl sm:text-4xl font-black text-primary-600 dark:text-primary-400 font-mono">
+            {{ i18n "stat_lineage_count" }}
+          </div>
+          <div class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mt-1 uppercase tracking-wider">
+            {{ i18n "stat_lineage_label" }}
+          </div>
+        </div>
+        <div class="theme-card p-5 rounded-2xl text-center">
+          <div class="text-3xl sm:text-4xl font-black text-primary-600 dark:text-primary-400 font-mono">
+            {{ i18n "stat_mentorship_count" }}
+          </div>
+          <div class="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mt-1 uppercase tracking-wider">
+            {{ i18n "stat_mentorship_label" }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     ACADEMIC PEDIGREE & ABOUT PI
+     ========================================================================= -->
+<section id="pedigree" class="py-14 sm:py-20 border-t border-neutral-200/80 dark:border-neutral-800/80">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+      <span class="text-xs font-mono font-bold tracking-widest uppercase text-primary-600 dark:text-primary-400">
+        {{ i18n "about_tag" }}
+      </span>
+      <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-neutral-900 dark:text-white mt-2">
+        {{ i18n "about_title" }}
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- PI Bio Box -->
+      <div class="lg:col-span-5 theme-card p-6 sm:p-8 rounded-3xl reveal">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-primary-600 to-sky-400 flex items-center justify-center text-white text-2xl font-black shadow-md flex-shrink-0">
+            {{ if $isEn }}MCH{{ else }}文{{ end }}
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-neutral-900 dark:text-white">
+              {{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}
+            </h3>
+            <p class="text-xs font-medium text-primary-600 dark:text-primary-400 mt-0.5">
+              {{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }}
+            </p>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+              {{ cond $isEn $lab.pi.institutionEn $lab.pi.institutionZh }}
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 font-editorial">
+          <p>{{ i18n "about_intro_p1" }}</p>
+          <p>{{ i18n "about_intro_p2" }}</p>
+          <p>{{ i18n "about_intro_p3" }}</p>
+        </div>
+
+        <div class="mt-6 pt-6 border-t border-neutral-200 dark:border-neutral-800 flex flex-wrap items-center justify-between gap-3">
+          <div class="text-xs font-mono text-neutral-500">
+            <span class="block">Email: {{ $lab.pi.email }}</span>
+          </div>
+          <a href="https://zssom.sysu.edu.cn" target="_blank" rel="noopener noreferrer" 
+             class="text-xs font-bold text-primary-600 dark:text-primary-400 hover:underline inline-flex items-center gap-1">
+            <span>{{ i18n "btn_view_sysu_profile" }}</span> →
+          </a>
+        </div>
+      </div>
+
+      <!-- Pedigree Timeline -->
+      <div class="lg:col-span-7 theme-card p-6 sm:p-8 rounded-3xl reveal">
+        <h3 class="text-lg font-bold text-neutral-900 dark:text-white mb-6 flex items-center gap-2">
+          <span>🎓</span>
+          <span>{{ i18n "about_timeline_title" }}</span>
+        </h3>
+
+        <div class="space-y-0">
+          {{ range $idx, $item := $lab.pi.pedigree }}
+            <div class="pedigree-node">
+              <span class="pedigree-indicator"></span>
+              <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
+                <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full theme-badge">
+                  {{ cond $isEn $item.year $item.yearZh }}
+                </span>
+                {{ if $item.highlight }}
+                  <span class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
+                    Current Appointment
+                  </span>
+                {{ end }}
+              </div>
+              <h4 class="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100 mt-1">
+                {{ cond $isEn $item.roleEn $item.roleZh }}
+              </h4>
+              <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 mt-1">
+                {{ cond $isEn $item.instEn $item.instZh }}
+              </p>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     RESEARCH PILLARS & TECHNICAL PLATFORMS
+     ========================================================================= -->
+<section id="research" class="py-14 sm:py-20 border-t border-neutral-200/80 dark:border-neutral-800/80">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+      <span class="text-xs font-mono font-bold tracking-widest uppercase text-primary-600 dark:text-primary-400">
+        {{ i18n "research_tag" }}
+      </span>
+      <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-neutral-900 dark:text-white mt-2">
+        {{ i18n "research_title" }}
+      </h2>
+      <p class="mt-4 text-sm sm:text-base text-neutral-600 dark:text-neutral-400">
+        {{ i18n "research_lead" }}
+      </p>
+    </div>
+
+    <!-- 3 Pillars Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-14">
+      {{ range $item := $lab.researchPillars }}
+        <div class="theme-card p-6 sm:p-8 rounded-3xl flex flex-col justify-between reveal">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-2xl font-black font-mono text-primary-600/40 dark:text-primary-400/40">
+                {{ $item.number }}
+              </span>
+              <span class="text-xs font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full theme-badge">
+                {{ cond $isEn $item.tagEn $item.tagZh }}
+              </span>
+            </div>
+            <h3 class="text-lg font-bold text-neutral-900 dark:text-white mb-3">
+              {{ cond $isEn $item.titleEn $item.titleZh }}
+            </h3>
+            <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 font-editorial">
+              {{ cond $isEn $item.descEn $item.descZh }}
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-neutral-200 dark:border-neutral-800 text-xs font-mono text-primary-600 dark:text-primary-400 flex items-center gap-1.5">
+            <span>📄</span>
+            <span>{{ $item.highlightPaper }}</span>
+          </div>
+        </div>
+      {{ end }}
+    </div>
+
+    <!-- Translational Platforms -->
+    <div class="theme-card p-6 sm:p-10 rounded-3xl reveal">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-white">
+            {{ i18n "platform_section_title" }}
+          </h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
+            {{ i18n "platform_tab_prompt" }}
+          </p>
+        </div>
+        
+        <!-- Platform Switch Tabs -->
+        <div class="flex flex-wrap gap-2">
+          {{ range $idx, $plat := $lab.platforms }}
+            <button class="platform-tab-btn {{ if eq $idx 0 }}active{{ end }}" 
+                    onclick="switchPlatformTab('{{ $plat.id }}', this)">
+              <span>{{ cond $isEn $plat.tagEn $plat.tagZh }}</span>
+            </button>
+          {{ end }}
+        </div>
+      </div>
+
+      <!-- Platform Panels -->
+      {{ range $idx, $plat := $lab.platforms }}
+        <div id="platform-{{ $plat.id }}" class="platform-content-panel {{ if ne $idx 0 }}hidden{{ end }} grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7">
+            <div class="inline-block px-3 py-1 rounded-full theme-badge text-xs font-mono font-bold mb-3">
+              {{ cond $isEn $plat.tagEn $plat.tagZh }}
+            </div>
+            <h4 class="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white mb-3">
+              {{ cond $isEn $plat.nameEn $plat.nameZh }}
+            </h4>
+            <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 font-editorial mb-6">
+              {{ cond $isEn $plat.descEn $plat.descZh }}
+            </p>
+            <ul class="space-y-2 text-xs sm:text-sm text-neutral-700 dark:text-neutral-300">
+              {{ if $isEn }}
+                {{ range $feat := $plat.featuresEn }}
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-500 font-bold">✓</span>
+                    <span>{{ $feat }}</span>
+                  </li>
+                {{ end }}
+              {{ else }}
+                {{ range $feat := $plat.featuresZh }}
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-500 font-bold">✓</span>
+                    <span>{{ $feat }}</span>
+                  </li>
+                {{ end }}
+              {{ end }}
+            </ul>
+          </div>
+          <div class="lg:col-span-5 bg-neutral-100 dark:bg-neutral-800/60 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-700 text-center">
+            <div class="text-4xl mb-3">🔬</div>
+            <div class="text-sm font-bold text-neutral-900 dark:text-white mb-1">State-of-the-Art In Vivo Facilities</div>
+            <div class="text-xs text-neutral-500 dark:text-neutral-400">Sun Yat-sen University School of Medicine Core Laboratories</div>
+          </div>
+        </div>
+      {{ end }}
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================================
+     SELECTED RESEARCH SHOWCASE (BIOINFORMATICS UMAP FIGURE)
+     ========================================================================= -->
+<section class="py-14 sm:py-20 border-t border-neutral-200/80 dark:border-neutral-800/80">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="theme-card p-6 sm:p-10 rounded-3xl reveal">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <!-- Figure Details -->
+        <div class="lg:col-span-6">
+          <span class="text-xs font-mono font-bold tracking-wider uppercase text-primary-600 dark:text-primary-400">
+            {{ i18n "fig_badge" }}
+          </span>
+          <h2 class="text-xl sm:text-3xl font-black text-neutral-900 dark:text-white mt-2 mb-4 leading-snug">
+            {{ i18n "fig_title" }}
+          </h2>
+          <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-300 font-editorial mb-6">
+            {{ i18n "fig_desc" }}
+          </p>
+
+          <!-- Cell-State Chips -->
+          <div class="flex flex-wrap gap-2 mb-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono border theme-surface border-neutral-200 dark:border-neutral-700">
+              <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+              <span>原始粒细胞 Myeloblast (77.2%)</span>
+            </div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono border theme-surface border-neutral-200 dark:border-neutral-700">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+              <span>单核细胞 Monocyte (17.1%)</span>
+            </div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono border theme-surface border-neutral-200 dark:border-neutral-700">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <span>未成熟中性 Immature neutrophil (5.6%)</span>
+            </div>
+          </div>
+
+          <button onclick="openFigureModal()" 
+                  class="px-6 py-3 rounded-full text-xs sm:text-sm font-bold bg-primary-600 hover:bg-primary-700 text-white shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2">
+            <span>🔍</span>
+            <span>{{ i18n "fig_btn_view" }}</span>
+          </button>
+        </div>
+
+        <!-- Figure Image Container -->
+        <div class="lg:col-span-6">
+          <div class="relative group cursor-pointer overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-950 shadow-xl" 
+               onclick="openFigureModal()" 
+               role="button" 
+               tabindex="0"
+               onkeydown="if(event.key==='Enter'||event.key===' ')openFigureModal()"
+               aria-label="{{ i18n "fig_click_hint" }}">
+            <img src="{{ "images/research-figure-1.jpg" | relURL }}" 
+                 alt="{{ i18n "fig_thumb_alt" }}" 
+                 class="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-500">
+            <div class="absolute inset-0 bg-neutral-900/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <span class="px-4 py-2 rounded-full bg-black/75 text-white text-xs font-mono tracking-wider backdrop-blur-sm">
+                {{ i18n "fig_click_hint" }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     PUBLICATIONS & SCIENCE
+     ========================================================================= -->
+<section id="publications" class="py-14 sm:py-20 border-t border-neutral-200/80 dark:border-neutral-800/80">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-10 reveal">
+      <span class="text-xs font-mono font-bold tracking-widest uppercase text-primary-600 dark:text-primary-400">
+        {{ i18n "pub_tag" }}
+      </span>
+      <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-neutral-900 dark:text-white mt-2">
+        {{ i18n "pub_title" }}
+      </h2>
+      <p class="mt-4 text-sm sm:text-base text-neutral-600 dark:text-neutral-400">
+        {{ i18n "pub_lead" }}
+      </p>
+    </div>
+
+    <!-- Filter Pills & Search Bar -->
+    <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 reveal">
+      <div class="flex flex-wrap items-center gap-2">
+        <button class="pub-filter-btn active" data-filter="all" onclick="filterPublications('all', this)">
+          {{ i18n "pub_filter_all" }}
+        </button>
+        <button class="pub-filter-btn" data-filter="landmark" onclick="filterPublications('landmark', this)">
+          {{ i18n "pub_filter_landmark" }}
+        </button>
+        <button class="pub-filter-btn" data-filter="epigenetics" onclick="filterPublications('epigenetics', this)">
+          {{ i18n "pub_filter_epigenetics" }}
+        </button>
+        <button class="pub-filter-btn" data-filter="metabolism" onclick="filterPublications('metabolism', this)">
+          {{ i18n "pub_filter_metabolism" }}
+        </button>
+        <button class="pub-filter-btn" data-filter="resistance" onclick="filterPublications('resistance', this)">
+          {{ i18n "pub_filter_resistance" }}
+        </button>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <input type="text" 
+               id="pub-search-input" 
+               placeholder="{{ i18n "pub_search_placeholder" }}" 
+               class="px-4 py-2.5 rounded-full text-xs border border-neutral-200 dark:border-neutral-800 theme-surface focus:outline-none focus:border-primary-500 w-full sm:w-64 shadow-sm"
+               aria-label="Search publications">
+        <span class="text-xs font-mono text-neutral-400 whitespace-nowrap">
+          <span id="pub-count-display">{{ len $lab.publications }}</span> / {{ len $lab.publications }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Publications List -->
+    <div class="space-y-4">
+      {{ range $item := $lab.publications }}
+        <div class="publication-card theme-card p-6 sm:p-7 rounded-2xl reveal" 
+             data-category="{{ $item.category }}" 
+             data-landmark="{{ $item.landmark }}">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full theme-badge">
+                {{ $item.journal }}
+              </span>
+              <span class="text-xs font-mono text-neutral-400">{{ $item.year }}</span>
+              {{ if $item.landmark }}
+                <span class="text-[11px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-200 dark:border-amber-800">
+                  ★ Landmark
+                </span>
+              {{ end }}
+            </div>
+            <span class="text-xs font-mono text-neutral-500">{{ $item.impact }}</span>
+          </div>
+
+          <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-white mb-2 leading-snug">
+            {{ $item.title }}
+          </h3>
+
+          <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 font-editorial mb-4">
+            {{ $item.authors }}
+          </p>
+
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-neutral-200 dark:border-neutral-800">
+            <div class="text-xs font-mono text-primary-600 dark:text-primary-400">
+              {{ cond $isEn $item.roleNote $item.roleNoteZh }}
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-2">
+              {{ if $item.doiUrl }}
+                <a href="{{ $item.doiUrl }}" target="_blank" rel="noopener noreferrer" 
+                   class="px-3 py-1.5 rounded-lg text-xs font-bold border border-neutral-200 dark:border-neutral-700 hover:border-primary-500 theme-surface transition-colors flex items-center gap-1">
+                  <span>DOI</span> ↗
+                </a>
+              {{ end }}
+              <button onclick="openAbstractModal('{{ $item.title }}', '{{ $item.journal }}', '{{ $item.pmid }}', '{{ if $isEn }}{{ $item.abstractEn }}{{ else }}{{ $item.abstractZh }}{{ end }}')" 
+                      class="px-3 py-1.5 rounded-lg text-xs font-bold border border-neutral-200 dark:border-neutral-700 hover:border-primary-500 theme-surface transition-colors">
+                {{ i18n "pub_btn_abstract" }}
+              </button>
+              <button onclick="copyBibtex({{ $item.bibtex }})" 
+                      class="px-3 py-1.5 rounded-lg text-xs font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-800 dark:text-neutral-200 transition-colors">
+                {{ i18n "pub_btn_bibtex" }}
+              </button>
+            </div>
+          </div>
+        </div>
+      {{ end }}
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================================
+     LAB NEWS TIMELINE
+     ========================================================================= -->
+<section id="news" class="py-14 sm:py-20 border-t border-neutral-200/80 dark:border-neutral-800/80">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+      <span class="text-xs font-mono font-bold tracking-widest uppercase text-primary-600 dark:text-primary-400">
+        {{ i18n "news_tag" }}
+      </span>
+      <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-neutral-900 dark:text-white mt-2">
+        {{ i18n "news_title" }}
+      </h2>
+    </div>
+
+    <div class="max-w-4xl mx-auto theme-card p-6 sm:p-10 rounded-3xl reveal">
+      <div class="space-y-0">
+        {{ range $idx, $item := $lab.news }}
+          <div class="pedigree-node">
+            <span class="pedigree-indicator"></span>
+            <div class="mb-1">
+              <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full theme-badge">
+                {{ $item.date }}
+              </span>
+            </div>
+            <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-white mt-2">
+              {{ cond $isEn $item.titleEn $item.titleZh }}
+            </h3>
+            <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 font-editorial mt-2 leading-relaxed">
+              {{ cond $isEn $item.descEn $item.descZh }}
+            </p>
+          </div>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     JOIN OUR LAB (OPEN POSITIONS)
+     ========================================================================= -->
+<section id="join" class="py-14 sm:py-20 border-t border-neutral-200/80 dark:border-neutral-800/80">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+      <span class="text-xs font-mono font-bold tracking-widest uppercase text-primary-600 dark:text-primary-400">
+        {{ i18n "join_tag" }}
+      </span>
+      <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-neutral-900 dark:text-white mt-2">
+        {{ i18n "join_title" }}
+      </h2>
+      <p class="mt-4 text-sm sm:text-base text-neutral-600 dark:text-neutral-400">
+        {{ i18n "join_lead" }}
+      </p>
+    </div>
+
+    <!-- Positions Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12">
+      {{ range $pos := $lab.openPositions }}
+        <div class="theme-card p-6 sm:p-8 rounded-3xl flex flex-col justify-between reveal">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full theme-badge">
+                {{ cond $isEn $pos.statusEn $pos.statusZh }}
+              </span>
+            </div>
+            <h3 class="text-lg font-bold text-neutral-900 dark:text-white mb-2">
+              {{ cond $isEn $pos.titleEn $pos.titleZh }}
+            </h3>
+            <p class="text-xs text-primary-600 dark:text-primary-400 font-mono mb-4">
+              {{ cond $isEn $pos.salaryEn $pos.salaryZh }}
+            </p>
+            <ul class="space-y-2 text-xs text-neutral-600 dark:text-neutral-300">
+              {{ if $isEn }}
+                {{ range $req := $pos.reqsEn }}
+                  <li class="flex items-start gap-1.5">
+                    <span class="text-primary-500 font-bold">•</span>
+                    <span>{{ $req }}</span>
+                  </li>
+                {{ end }}
+              {{ else }}
+                {{ range $req := $pos.reqsZh }}
+                  <li class="flex items-start gap-1.5">
+                    <span class="text-primary-500 font-bold">•</span>
+                    <span>{{ $req }}</span>
+                  </li>
+                {{ end }}
+              {{ end }}
+            </ul>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-neutral-200 dark:border-neutral-800">
+            <a href="mailto:{{ $lab.pi.email }}?subject=Application_{{ $pos.type }}" 
+               class="w-full py-2.5 rounded-xl text-xs font-bold border border-neutral-200 dark:border-neutral-700 hover:border-primary-500 theme-surface transition-colors flex items-center justify-center gap-1.5">
+              <span>✉️</span>
+              <span>Apply for {{ $pos.type }}</span>
+            </a>
+          </div>
+        </div>
+      {{ end }}
+    </div>
+
+    <!-- Application Contact Banner -->
+    <div class="theme-card p-6 sm:p-8 rounded-3xl text-center max-w-3xl mx-auto reveal">
+      <h3 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-white mb-2">
+        {{ i18n "join_contact_banner_title" }}
+      </h3>
+      <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 font-editorial mb-6 max-w-2xl mx-auto">
+        {{ i18n "join_contact_banner_desc" }}
+      </p>
+      <a href="mailto:{{ $lab.pi.email }}" 
+         class="px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold bg-primary-600 hover:bg-primary-700 text-white shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2">
+        <span>✉️</span>
+        <span>{{ i18n "btn_send_email" }}</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================================
+     CONTACT US & CAMPUS LOCATION
+     ========================================================================= -->
+<section id="contact" class="py-14 sm:py-20 border-t border-neutral-200/80 dark:border-neutral-800/80">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+      <span class="text-xs font-mono font-bold tracking-widest uppercase text-primary-600 dark:text-primary-400">
+        {{ i18n "contact_tag" }}
+      </span>
+      <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-neutral-900 dark:text-white mt-2">
+        {{ i18n "contact_title" }}
+      </h2>
+    </div>
+
+    <div class="max-w-4xl mx-auto theme-card p-6 sm:p-10 rounded-3xl reveal">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-lg font-bold text-neutral-900 dark:text-white mb-4">
+            {{ i18n "map_building_title" }}
+          </h3>
+          <div class="space-y-4 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300">
+            <div>
+              <span class="font-bold text-neutral-900 dark:text-white block mb-0.5">{{ i18n "contact_address_label" }}</span>
+              <span>{{ i18n "contact_address_val" }}</span>
+            </div>
+            <div>
+              <span class="font-bold text-neutral-900 dark:text-white block mb-0.5">{{ i18n "contact_email_label" }}</span>
+              <a href="mailto:{{ $lab.pi.email }}" class="text-primary-600 dark:text-primary-400 hover:underline font-mono">
+                {{ $lab.pi.email }}
+              </a>
+            </div>
+            <div>
+              <span class="font-bold text-neutral-900 dark:text-white block mb-0.5">{{ i18n "contact_metro_label" }}</span>
+              <span>{{ i18n "contact_metro_val" }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-neutral-100 dark:bg-neutral-800/60 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-700 flex flex-col justify-between">
+          <div>
+            <div class="text-3xl mb-2">📍</div>
+            <div class="text-sm font-bold text-neutral-900 dark:text-white mb-1">Guangdong, China · Guangzhou</div>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400">
+              {{ i18n "contact_postal_code" }} · {{ i18n "contact_adjacent" }}
+            </p>
+          </div>
+          <div class="mt-6">
+            <a href="https://maps.google.com/?q=Sun+Yat-sen+University+North+Campus+Guangzhou" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="px-5 py-2.5 rounded-xl text-xs font-bold bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:opacity-90 transition-all inline-flex items-center gap-1.5">
+              <span>🗺️</span>
+              <span>{{ i18n "btn_open_map" }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

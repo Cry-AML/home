@@ -1,0 +1,34 @@
+[[main]]
+  name = "Home"
+  url = "/en/"
+  weight = 10
+
+[[main]]
+  name = "Research"
+  url = "/en/#research"
+  weight = 20
+
+[[main]]
+  name = "Publications"
+  url = "/en/#publications"
+  weight = 30
+
+[[main]]
+  name = "Pedigree"
+  url = "/en/#pedigree"
+  weight = 40
+
+[[main]]
+  name = "News"
+  url = "/en/#news"
+  weight = 50
+
+[[main]]
+  name = "Join Us"
+  url = "/en/#join"
+  weight = 60
+
+[[main]]
+  name = "Contact"
+  url = "/en/#contact"
+  weight = 70

@@ -1,0 +1,34 @@
+[[main]]
+  name = "首页"
+  url = "/"
+  weight = 10
+
+[[main]]
+  name = "研究与平台"
+  url = "#research"
+  weight = 20
+
+[[main]]
+  name = "代表论著"
+  url = "#publications"
+  weight = 30
+
+[[main]]
+  name = "导师与传承"
+  url = "#pedigree"
+  weight = 40
+
+[[main]]
+  name = "新闻动态"
+  url = "#news"
+  weight = 50
+
+[[main]]
+  name = "招贤纳士"
+  url = "#join"
+  weight = 60
+
+[[main]]
+  name = "联系我们"
+  url = "#contact"
+  weight = 70

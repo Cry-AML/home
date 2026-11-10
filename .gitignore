@@ -7,3 +7,8 @@ dist/
 
 # Antigravity bridge run artifacts
 .agentboard/
+
+# Hugo build artifacts
+public/
+resources/_gen/
+.hugo_build.lock

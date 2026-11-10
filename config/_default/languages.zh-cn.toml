@@ -1,0 +1,21 @@
+locale = "zh-cn"
+label = "简体中文"
+weight = 1
+title = "文卓谦实验室 | Wen Laboratory"
+
+[params]
+  displayName = "简体中文"
+  isoCode = "zh-cn"
+  rtl = false
+  dateFormat = "2006年1月2日"
+  logo = "images/logo.png"
+  description = "中山大学中山医学院 · 白血病表观遗传、代谢稳态与肿瘤免疫研究组"
+
+[params.author]
+  name = "文卓谦 博士"
+  headline = "副教授 · 博士生导师 · 中山大学“逸仙学者”"
+  bio = "聚焦急性髓系白血病（AML）发生与复发机制，解析表观遗传重塑、质子转运/细胞内pH与代谢重编程的协同调控，开发靶向免疫与代谢联合挽救疗法。"
+  links = [
+    { email = "mailto:manzhq@mail.sysu.edu.cn" },
+    { link = "https://zssom.sysu.edu.cn" }
+  ]
