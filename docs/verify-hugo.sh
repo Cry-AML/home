@@ -23,6 +23,8 @@ for page in research publications pedigree news join contact; do
 done
 
 echo "== 3. Navigation Links Point to Pages (No Anchor-Only Singlepage) =="
+chk "fixed header at top" "grep -q 'fixed top-0 inset-x-0' public/index.html"
+chk "no floating capsule pill" "! grep -q 'top-3 sm:top-5' public/index.html"
 chk "menu links point to /research/" "grep -q '/home/research/' public/index.html"
 chk "menu links point to /publications/" "grep -q '/home/publications/' public/index.html"
 chk "menu links point to /pedigree/" "grep -q '/home/pedigree/' public/index.html"

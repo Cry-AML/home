@@ -167,7 +167,31 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   3. Concentric Radii & 0.5px Precision Borders
+   3. Fixed Header Bar & Navigation Tabs (No Floating Capsule)
+   -------------------------------------------------------------------------- */
+.main-menu > a:first-child {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--slate-12);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.main-menu nav a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--slate-11);
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: color 250ms ease-out, background-color 250ms ease-out;
+}
+.main-menu nav a:hover {
+  color: var(--slate-12);
+  background-color: var(--slate-3);
+}
+
+/* --------------------------------------------------------------------------
+   4. Concentric Radii & 0.5px Precision Borders
    -------------------------------------------------------------------------- */
 .ui-card {
   background-color: var(--bg-surface);

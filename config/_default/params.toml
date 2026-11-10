@@ -22,7 +22,7 @@ hotlinkFeatureImage = false
 fingerprintAlgorithm = "sha512"
 
 [header]
-  layout = "floating" # valid options: basic, fixed, fixed-fill, fixed-gradient, fixed-fill-blur, floating
+  layout = "fixed" # Fixed header bar at top, no floating capsule
   mobileMenuStyle = "dropdown" # valid options: fullscreen, dropdown
 
 [footer]
