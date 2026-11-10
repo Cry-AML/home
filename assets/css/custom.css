@@ -212,29 +212,37 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   4. Concentric Radii & 0.5px Precision Borders
+   4. Academic Document Flow & Minimal Dividers (No Heavy Cards)
    -------------------------------------------------------------------------- */
+.ui-entry {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 0.5px solid var(--border-subtle);
+  transition: border-color 250ms ease-out;
+}
+.ui-entry:last-child {
+  border-bottom-color: transparent;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 .ui-card {
-  background-color: var(--bg-surface);
+  background-color: transparent;
   border: 0.5px solid var(--border-subtle);
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-  transition: border-color 250ms ease-out, box-shadow 250ms ease-out, transform 250ms ease-out;
+  transition: border-color 250ms ease-out;
 }
 @media (min-width: 640px) {
   .ui-card {
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 20px;
   }
 }
-
 .ui-card:hover {
   border-color: var(--border-component);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* Concentric nested element inside card: R_inner = 10 - (20 - 16) ≈ 6px */
 .ui-card-inner {
   border-radius: 6px;
   border: 0.5px solid var(--border-subtle);

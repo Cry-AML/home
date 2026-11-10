@@ -3,45 +3,39 @@
 {{ $lab := hugo.Data.lab }}
 
 <div class="ui-container py-10 sm:py-14">
-  <div class="mb-8">
+  <div class="mb-10">
     <h1 class="ui-title">
       {{ i18n "contact_title" }}
     </h1>
   </div>
 
-  <div class="ui-card">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-      <div class="space-y-3 ui-body text-neutral-600 dark:text-neutral-300">
-        <div>
-          <span class="ui-heading block mb-0.5">{{ i18n "contact_address_label" }}</span>
-          <span>{{ i18n "contact_address_val" }}</span>
-        </div>
-        <div>
-          <span class="ui-heading block mb-0.5">{{ i18n "contact_email_label" }}</span>
-          <a href="mailto:{{ $lab.pi.email }}" class="ui-body font-mono text-indigo-600 dark:text-indigo-400 hover:underline">
-            {{ $lab.pi.email }}
-          </a>
-        </div>
-        <div>
-          <span class="ui-heading block mb-0.5">{{ i18n "contact_metro_label" }}</span>
-          <span>{{ i18n "contact_metro_val" }}</span>
-        </div>
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+    <div class="md:col-span-7 space-y-4 ui-body text-neutral-600 dark:text-neutral-300">
+      <div>
+        <span class="ui-heading block mb-1 text-neutral-900 dark:text-white">{{ i18n "contact_address_label" }}</span>
+        <span>{{ i18n "contact_address_val" }}</span>
       </div>
+      <div>
+        <span class="ui-heading block mb-1 text-neutral-900 dark:text-white">{{ i18n "contact_email_label" }}</span>
+        <a href="mailto:{{ $lab.pi.email }}" class="ui-body font-mono text-indigo-600 dark:text-indigo-400 hover:underline">
+          {{ $lab.pi.email }}
+        </a>
+      </div>
+      <div>
+        <span class="ui-heading block mb-1 text-neutral-900 dark:text-white">{{ i18n "contact_metro_label" }}</span>
+        <span>{{ i18n "contact_metro_val" }}</span>
+      </div>
+    </div>
 
-      <div class="ui-card-inner p-4 bg-neutral-50 dark:bg-neutral-900 flex flex-col justify-between">
-        <div>
-          <div class="ui-heading mb-1">{{ i18n "map_building_title" }}</div>
-          <div class="ui-caption text-neutral-500 dark:text-neutral-400">{{ i18n "contact_postal_code" }}</div>
-        </div>
-        <div class="mt-4">
-          <a href="https://maps.google.com/?q=Sun+Yat-sen+University+North+Campus+Guangzhou" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             class="ui-btn-secondary">
-            {{ i18n "btn_open_map" }} &nearr;
-          </a>
-        </div>
-      </div>
+    <div class="md:col-span-5 pt-4 md:pt-0 md:border-l border-neutral-200 dark:border-neutral-800 md:pl-8" style="border-left-width: 0.5px;">
+      <div class="ui-heading text-neutral-900 dark:text-white mb-1">{{ i18n "map_building_title" }}</div>
+      <div class="ui-caption text-neutral-500 dark:text-neutral-400 mb-4">{{ i18n "contact_postal_code" }}</div>
+      <a href="https://maps.google.com/?q=Sun+Yat-sen+University+North+Campus+Guangzhou" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="ui-btn-secondary">
+        {{ i18n "btn_open_map" }} &nearr;
+      </a>
     </div>
   </div>
 </div>

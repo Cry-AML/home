@@ -3,7 +3,7 @@
 {{ $lab := hugo.Data.lab }}
 
 <div class="ui-container py-10 sm:py-14">
-  <div class="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+  <div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
     <div>
       <h1 class="ui-title">
         {{ i18n "pub_title" }}
@@ -13,18 +13,19 @@
       </p>
     </div>
 
-    <!-- Search Input (Concentric 6px, 0.5px Border) -->
+    <!-- Search Input (Clean Line / Border) -->
     <div>
       <input type="text" 
              id="pub-search-input" 
              placeholder="{{ i18n "pub_search_placeholder" }}" 
-             class="ui-card-inner px-3 py-1.5 ui-body bg-transparent w-full sm:w-64 focus:outline-none focus:border-indigo-600"
+             class="px-3 py-1.5 ui-body bg-transparent w-full sm:w-64 border border-neutral-300 dark:border-neutral-700 rounded focus:outline-none focus:border-indigo-600"
+             style="border-width: 0.5px;"
              aria-label="Search publications">
     </div>
   </div>
 
-  <!-- Filter Pills (0.5px, 250ms ease-out) -->
-  <div class="mb-6 flex flex-wrap items-center gap-2">
+  <!-- Filter Pills (0.5px Border, 250ms ease-out) -->
+  <div class="mb-8 flex flex-wrap items-center gap-2">
     <button class="pub-filter-btn active" data-filter="all" onclick="filterPublications('all', this)">
       {{ i18n "pub_filter_all" }}
     </button>
@@ -42,13 +43,13 @@
     </button>
   </div>
 
-  <!-- Publications List -->
-  <div class="space-y-3">
+  <!-- Publications List: Clean Editorial Entries (No Heavy Boxes) -->
+  <div class="space-y-0">
     {{ range $item := $lab.publications }}
-      <div class="publication-card ui-card" 
+      <div class="publication-card ui-entry" 
            data-category="{{ $item.category }}" 
            data-landmark="{{ $item.landmark }}">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
           <div class="flex items-center gap-2">
             <span class="ui-badge font-mono">
               {{ $item.journal }}
@@ -63,15 +64,15 @@
           <span class="ui-caption font-mono text-neutral-500">{{ $item.impact }}</span>
         </div>
 
-        <h2 class="ui-heading mb-1.5 text-neutral-900 dark:text-white">
+        <h2 class="ui-heading mb-1 text-neutral-900 dark:text-white">
           {{ $item.title }}
         </h2>
 
-        <p class="ui-caption text-neutral-600 dark:text-neutral-400 mb-3 font-normal">
+        <p class="ui-caption text-neutral-600 dark:text-neutral-400 mb-2.5 font-normal">
           {{ $item.authors }}
         </p>
 
-        <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
+        <div class="flex flex-wrap items-center justify-between gap-2">
           <span class="ui-caption font-mono text-indigo-600 dark:text-indigo-400">
             {{ cond $isEn $item.roleNote $item.roleNoteZh }}
           </span>
