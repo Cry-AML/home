@@ -2,101 +2,101 @@
 {{ $lab := hugo.Data.lab }}
 
 <!-- =========================================================================
-     HOMEPAGE (Clean Typography, Aligned, Zero Clutter, No Cards)
+     HOMEPAGE (Looseleaf Tactile Craft, Award-Tier Inked Typography)
      ========================================================================= -->
 <div class="ui-container py-12 sm:py-20">
   
-  <!-- Identity Badges -->
+  <!-- Identity Inked Stamps -->
   <div class="flex flex-wrap items-center gap-2 mb-6">
-    <span class="ui-badge">
-      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+    <span class="ll-badge">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400"></span>
       <span>{{ i18n "hero_badge_scholar" }}</span>
     </span>
-    <span class="ui-badge-neutral">
+    <span class="ll-badge-neutral">
       <span>{{ i18n "hero_badge_pedigree" }}</span>
     </span>
   </div>
 
-  <!-- Main Mission & Headings -->
+  <!-- Main Mission & Inked Headings (Zero Boxes) -->
   <div class="max-w-3xl">
-    <h1 class="ui-title mb-4">
+    <h1 class="ui-title mb-5">
       {{ i18n "hero_title_1" }}<br>
-      <span class="text-indigo-600 dark:text-indigo-400 font-normal">
+      <span class="text-indigo-700 dark:text-indigo-400 font-normal ll-highlighter">
         {{ i18n "hero_title_2" | safeHTML }}
       </span>
     </h1>
 
-    <p class="ui-body mb-8 text-neutral-600 dark:text-neutral-300">
+    <p class="ui-body mb-8 text-neutral-700 dark:text-neutral-300">
       {{ i18n "hero_lead" }}
     </p>
 
-    <!-- Action Buttons -->
+    <!-- Looseleaf Marker & Inked Actions -->
     <div class="flex flex-wrap items-center gap-3">
-      <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ui-btn-primary">
+      <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ll-btn-marker">
         {{ i18n "btn_explore" }}
       </a>
-      <a href="{{ if $isEn }}/en/join/{{ else }}/join/{{ end }}" class="ui-btn-secondary">
+      <a href="{{ if $isEn }}/en/join/{{ else }}/join/{{ end }}" class="ll-btn-outline">
         {{ i18n "btn_join_hero" }}
       </a>
     </div>
   </div>
 
-  <!-- Key Metrics Row (Minimal Stats, 0.5px Divider, No Cards) -->
-  <div class="mt-14 pt-8 border-t border-neutral-200 dark:border-neutral-800 grid grid-cols-2 sm:grid-cols-4 gap-6" style="border-top-width: 0.5px;">
+  <!-- Key Metrics (Inked Monospace Row, 0.5px Ruled Divider, No Boxes) -->
+  <div class="mt-14 pt-8 border-t border-neutral-300 dark:border-neutral-800 grid grid-cols-2 sm:grid-cols-4 gap-6" style="border-top-width: 0.5px;">
     <div>
-      <div class="font-mono text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+      <div class="font-mono text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
         {{ i18n "stat_blood_count" }}
       </div>
-      <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
+      <div class="ui-caption font-mono text-neutral-500 dark:text-neutral-400 mt-1">
         {{ i18n "stat_blood_label" }}
       </div>
     </div>
     <div>
-      <div class="font-mono text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+      <div class="font-mono text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
         {{ i18n "stat_impact_count" }}
       </div>
-      <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
+      <div class="ui-caption font-mono text-neutral-500 dark:text-neutral-400 mt-1">
         {{ i18n "stat_impact_label" }}
       </div>
     </div>
     <div>
-      <div class="font-mono text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+      <div class="font-mono text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
         {{ i18n "stat_lineage_count" }}
       </div>
-      <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
+      <div class="ui-caption font-mono text-neutral-500 dark:text-neutral-400 mt-1">
         {{ i18n "stat_lineage_label" }}
       </div>
     </div>
     <div>
-      <div class="font-mono text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+      <div class="font-mono text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
         {{ i18n "stat_mentorship_count" }}
       </div>
-      <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
+      <div class="ui-caption font-mono text-neutral-500 dark:text-neutral-400 mt-1">
         {{ i18n "stat_mentorship_label" }}
       </div>
     </div>
   </div>
 
-  <!-- Principal Investigator Profile (Typography & Structured Text, No Cards) -->
-  <div class="mt-14 pt-8 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
+  <!-- Principal Investigator Profile (Pure Inked Typography, No Boxes) -->
+  <div class="mt-14 pt-8 border-t border-neutral-300 dark:border-neutral-800" style="border-top-width: 0.5px;">
     <div class="max-w-3xl">
       <h2 class="ui-heading mb-1 text-neutral-900 dark:text-white">
         {{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}
       </h2>
-      <p class="ui-caption text-indigo-600 dark:text-indigo-400 mb-4">
+      <p class="ui-caption font-mono text-indigo-700 dark:text-indigo-400 mb-4">
         {{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }} &mdash; {{ cond $isEn $lab.pi.institutionEn $lab.pi.institutionZh }}
       </p>
-      <div class="space-y-3 ui-body text-neutral-600 dark:text-neutral-300">
+      <div class="space-y-3 ui-body text-neutral-700 dark:text-neutral-300">
         <p>{{ i18n "about_intro_p1" }}</p>
         <p>{{ i18n "about_intro_p2" }}</p>
         <p>{{ i18n "about_intro_p3" }}</p>
       </div>
       <div class="mt-6 flex flex-wrap items-center gap-4">
-        <a href="{{ if $isEn }}/en/pedigree/{{ else }}/pedigree/{{ end }}" class="ui-btn-secondary text-xs">
-          {{ if $isEn }}View Academic Background &rarr;{{ else }}查看学术经历与师承 &rarr;{{ end }}
+        <a href="{{ if $isEn }}/en/pedigree/{{ else }}/pedigree/{{ end }}" class="ll-btn-outline text-xs">
+          {{ if $isEn }}Academic Background &rarr;{{ else }}学术经历与师承 &rarr;{{ end }}
         </a>
-        <a href="{{ if $isEn }}/en/publications/{{ else }}/publications/{{ end }}" class="ui-btn-secondary text-xs">
-          {{ if $isEn }}View Publications &rarr;{{ else }}查看代表论著 &rarr;{{ end }}
+        <a href="{{ if $isEn }}/en/publications/{{ else }}/publications/{{ end }}" class="ll-btn-outline text-xs">
+          {{ if $isEn }}Selected Publications &rarr;{{ else }}代表论著 &rarr;{{ end }}
         </a>
       </div>
     </div>

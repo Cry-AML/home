@@ -1,9 +1,10 @@
 <!-- Ambient Living Canvas (Hematopoiesis & Proton Flux Simulator) -->
 <canvas id="ambient-canvas" class="fixed inset-0 pointer-events-none -z-20"></canvas>
 
-<!-- Toast Notification for BibTeX Copy -->
+<!-- Toast Notification for BibTeX Copy (Looseleaf Index Slip) -->
 <div id="toast-notification" 
-     class="hidden fixed bottom-6 right-6 z-[70] bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 px-4 py-2.5 rounded-md shadow-sm flex items-center gap-2.5 transition-all duration-250 ease-out opacity-0 translate-y-2 ui-caption font-mono" 
+     class="hidden fixed bottom-6 right-6 z-[70] bg-[#2a2420] text-[#f8f5ee] dark:bg-[#f5f2eb] dark:text-[#16181b] px-4 py-2.5 rounded shadow-md flex items-center gap-2.5 transition-all duration-250 ease-out opacity-0 translate-y-2 ui-caption font-mono border border-neutral-700/30" 
+     style="border-width: 0.5px;"
      role="status" 
      aria-live="polite">
   <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -27,7 +28,7 @@
       </div>
       <button id="close-abstract-modal" 
               onclick="closeAbstractModal()" 
-              class="ui-btn-sm flex-shrink-0" 
+              class="ll-btn-sm flex-shrink-0" 
               aria-label="Close modal">
         &times;
       </button>

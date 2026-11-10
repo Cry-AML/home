@@ -13,13 +13,13 @@
     {{ range $idx, $item := $lab.news }}
       <div class="pedigree-node">
         <span class="pedigree-indicator"></span>
-        <span class="ui-badge-neutral font-mono mb-1">
+        <span class="ll-badge-neutral mb-1">
           {{ $item.date }}
         </span>
         <h2 class="ui-heading text-neutral-900 dark:text-white mt-1">
           {{ cond $isEn $item.titleEn $item.titleZh }}
         </h2>
-        <p class="ui-body text-neutral-600 dark:text-neutral-300 mt-1">
+        <p class="ui-body text-neutral-700 dark:text-neutral-300 mt-1">
           {{ cond $isEn $item.descEn $item.descZh }}
         </p>
       </div>

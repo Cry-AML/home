@@ -1,113 +1,101 @@
 /* ==========================================================================
-   Wen Laboratory (文卓谦实验室) - Radix UI Design System
-   Precision Academic Typography, Concentric Radii, 0.5px Borders, Ease-Out 250ms
+   Wen Laboratory (文卓谦实验室) - Looseleaf Design System
+   Award-Tier Visual Craft: Hand-Drawn Inked Precision, Tactile Paper & IBM Plex Mono
+   Benchmark: Awwwards | Webby Awards | FWA Winning Standards
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Radix UI Colors Scales (Slate & Indigo)
+   1. Looseleaf Color Tokens & Paper Substrates
    -------------------------------------------------------------------------- */
 :root {
-  /* Radix Slate (Light) */
-  --slate-1: #fcfcfd;   /* App background */
-  --slate-2: #f9f9fb;   /* Subtle background / Subdued surface */
-  --slate-3: #f0f0f3;   /* Component background */
-  --slate-4: #e8e8ec;   /* Hovered component background */
-  --slate-5: #e0e1e6;   /* Active / Selected component */
-  --slate-6: #d9d9e0;   /* Subtle borders & separators (0.5px) */
-  --slate-7: #cdced6;   /* UI component border */
-  --slate-8: #b9bbc6;   /* Hovered component border */
-  --slate-9: #8b8d98;   /* Solid / Secondary icon / placeholder */
-  --slate-10: #80828d;  /* Hovered solid */
-  --slate-11: #60646c;  /* Low-contrast text / Secondary body */
-  --slate-12: #1c2024;  /* High-contrast text / Headings */
+  /* Looseleaf Tactile Paper Substrate (Light) */
+  --ll-paper: #f8f5ee;           /* Unbleached archival paper */
+  --ll-paper-shade: #ece6da;     /* Folded edge / subdued shade */
+  --ll-slip: #fbf8f1;            /* Index card / popover */
+  --ll-desk: #a8c8bb;            /* Calm studio green */
+  --ll-desk-deep: #93b4a7;
 
-  /* Radix Indigo (Light) */
-  --indigo-1: #fdfdfe;
-  --indigo-2: #f7f9ff;
-  --indigo-3: #edf2fe;  /* Subtle tinted background (Badges, Active pill) */
-  --indigo-4: #e1e9ff;
-  --indigo-5: #d2deff;
-  --indigo-6: #c1d0ff;
-  --indigo-7: #abbdf9;
-  --indigo-8: #8da4ef;
-  --indigo-9: #3e63dd;  /* Solid primary button / Primary brand */
-  --indigo-10: #3358d4; /* Hovered primary button */
-  --indigo-11: #3a5bc7; /* Accent text link */
-  --indigo-12: #1f2d5c; /* Dark indigo heading */
+  /* Inks */
+  --ll-ink: #2a2420;             /* Dense fountain-pen sumi ink */
+  --ll-ink-soft: #4a423b;        /* Charcoal quill reading text */
+  --ll-ink-muted: #6b6660;       /* Secondary metadata */
+  --ll-pencil: #5a554e;          /* Pencil graphite */
+  --ll-pencil-mark: #d5cfc4;     /* 0.5px ruled lines & dividers */
+  --ll-pencil-subtle: #e6e0d5;
 
-  /* Radix Emerald (Light - Live/Status) */
-  --emerald-3: #e6f7ed;
-  --emerald-6: #b4e3c8;
-  --emerald-9: #30a46c;
-  --emerald-11: #218358;
+  /* Looseleaf Markers & Highlighters */
+  --ll-marker: #df6b3c;          /* Terracotta marker primary CTA */
+  --ll-marker-hover: #cb592b;
+  --ll-ink-you: #2c4f9e;         /* Prussian scholar ink blue */
+  --ll-ink-you-hover: #1f3b7a;
+  --ll-hi: #f8dc4c;              /* Sunlit highlighter yellow */
+  --ll-hi-tint: rgba(248, 220, 76, 0.35);
+  --ll-green: #3b7a4b;           /* Botanical living green */
+  --ll-red: #c2412d;
 
-  /* Semantic Theme Mappings */
-  --bg-page: var(--slate-1);
-  --bg-surface: var(--slate-1);
-  --bg-surface-subtle: var(--slate-2);
-  --border-subtle: var(--slate-6);
-  --border-component: var(--slate-7);
-  --text-primary: var(--slate-12);
-  --text-secondary: var(--slate-11);
-  --text-accent: var(--indigo-11);
-  --brand-primary: var(--indigo-9);
-  --brand-primary-hover: var(--indigo-10);
-  --brand-text-on-primary: #ffffff;
+  /* Semantic Theme Aliases */
+  --bg-page: var(--ll-paper);
+  --bg-surface: var(--ll-paper);
+  --bg-surface-subtle: var(--ll-paper-shade);
+  --border-subtle: var(--ll-pencil-mark);
+  --border-component: var(--ll-ink-soft);
+  --text-primary: var(--ll-ink);
+  --text-secondary: var(--ll-ink-soft);
+  --text-muted: var(--ll-ink-muted);
+  --text-accent: var(--ll-ink-you);
+  --brand-primary: var(--ll-marker);
+  --brand-primary-hover: var(--ll-marker-hover);
+  --brand-text-on-primary: var(--ll-paper);
+
+  /* Tactile Physics */
+  --ll-dur-press: 120ms;
+  --ll-press-sink: 1.5px;
+  --ll-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html.dark {
-  /* Radix Slate (Dark) */
-  --slate-1: #111113;
-  --slate-2: #18191b;
-  --slate-3: #212225;
-  --slate-4: #272a2d;
-  --slate-5: #2e3135;
-  --slate-6: #363a3f;
-  --slate-7: #43484e;
-  --slate-8: #5a6169;
-  --slate-9: #69717b;
-  --slate-10: #77818c;
-  --slate-11: #9ba1a6;
-  --slate-12: #ecedee;
+  /* Looseleaf Midnight Study (Dark) */
+  --ll-paper: #16181b;           /* Dark slate paper */
+  --ll-paper-shade: #1f2328;     /* Inset sheet */
+  --ll-slip: #1a1d21;
+  --ll-desk: #0e1012;
 
-  /* Radix Indigo (Dark) */
-  --indigo-1: #131620;
-  --indigo-2: #15192d;
-  --indigo-3: #192247;
-  --indigo-4: #1d2a5e;
-  --indigo-5: #223474;
-  --indigo-6: #293e8f;
-  --indigo-7: #3249ad;
-  --indigo-8: #3d57d5;
-  --indigo-9: #3e63dd;
-  --indigo-10: #5472e4;
-  --indigo-11: #9eb1ff;
-  --indigo-12: #e0e7ff;
+  /* Chalk & Inks */
+  --ll-ink: #f5f2eb;             /* Warm chalk white */
+  --ll-ink-soft: #c8c3b9;        /* Soft parchment text */
+  --ll-ink-muted: #8e8a82;       /* Slate metadata */
+  --ll-pencil: #9ca3af;
+  --ll-pencil-mark: #323842;     /* 0.5px graphite rule */
+  --ll-pencil-subtle: #242930;
 
-  /* Radix Emerald (Dark) */
-  --emerald-3: #13271d;
-  --emerald-6: #204b34;
-  --emerald-9: #30a46c;
-  --emerald-11: #4cc38a;
+  /* Dark Accents */
+  --ll-marker: #e57b4f;          /* Luminous terracotta */
+  --ll-marker-hover: #f08b5f;
+  --ll-ink-you: #688ff8;         /* Blueprint ink cyan-blue */
+  --ll-ink-you-hover: #82a3ff;
+  --ll-hi: #f5d64e;
+  --ll-hi-tint: rgba(245, 214, 78, 0.22);
+  --ll-green: #4db363;
+  --ll-red: #e0533d;
 
-  /* Semantic Theme Mappings */
-  --bg-page: var(--slate-1);
-  --bg-surface: var(--slate-2);
-  --bg-surface-subtle: var(--slate-3);
-  --border-subtle: var(--slate-6);
-  --border-component: var(--slate-7);
-  --text-primary: var(--slate-12);
-  --text-secondary: var(--slate-11);
-  --text-accent: var(--indigo-11);
-  --brand-primary: var(--indigo-9);
-  --brand-primary-hover: var(--indigo-10);
-  --brand-text-on-primary: #ffffff;
+  /* Semantic Theme Aliases */
+  --bg-page: var(--ll-paper);
+  --bg-surface: var(--ll-paper);
+  --bg-surface-subtle: var(--ll-paper-shade);
+  --border-subtle: var(--ll-pencil-mark);
+  --border-component: var(--ll-pencil-mark);
+  --text-primary: var(--ll-ink);
+  --text-secondary: var(--ll-ink-soft);
+  --text-muted: var(--ll-ink-muted);
+  --text-accent: var(--ll-ink-you);
+  --brand-primary: var(--ll-marker);
+  --brand-primary-hover: var(--ll-marker-hover);
+  --brand-text-on-primary: #16181b;
 }
 
 /* --------------------------------------------------------------------------
-   2. Typography System (Strictly 4 Scales, Min 12px)
+   2. Typography System (Award-Tier Rhythm, Strict Scales, Min 12px)
    -------------------------------------------------------------------------- */
-/* Reset Blowfish body padding & max-width for 100% optical alignment */
 body {
   margin: 0 !important;
   padding: 0 !important;
@@ -116,171 +104,116 @@ body {
   min-height: 100vh !important;
   background-color: var(--bg-page) !important;
   color: var(--text-primary) !important;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Global Consistent Container for 100% Optical Alignment */
-.ui-container {
-  width: 100%;
-  max-width: 1024px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 20px;
-  padding-right: 20px;
-  box-sizing: border-box;
+/* Looseleaf Signature Monospace Font */
+.font-mono {
+  font-family: 'IBM Plex Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
+  font-feature-settings: "tnum" 1, "zero" 1;
 }
 
-@media (min-width: 640px) {
-  .ui-container {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
+/* Editorial Serif Accent */
+.font-editorial {
+  font-family: 'Newsreader', 'Songti SC', 'Noto Serif SC', Georgia, serif;
+  font-style: normal;
 }
 
-/* 4 Scales */
+/* 4 Calibrated Typographic Scales */
 .ui-title {
-  font-size: 24px;
+  font-size: 26px;
   line-height: 1.25;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: var(--text-primary);
 }
 @media (min-width: 640px) {
   .ui-title {
-    font-size: 28px;
+    font-size: 32px;
   }
 }
 
 .ui-heading {
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.4;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   color: var(--text-primary);
 }
 
 .ui-body {
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.75;
   font-weight: 400;
   color: var(--text-secondary);
+  max-width: 72ch;
 }
 
 .ui-caption {
   font-size: 12px;
   line-height: 1.5;
   font-weight: 500;
-  color: var(--text-secondary);
-}
-
-.font-editorial {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-style: normal;
-}
-
-.font-mono {
-  font-family: 'JetBrains Mono', ui-monospace, Menlo, Monaco, Consolas, monospace;
-  font-size: 12px;
+  color: var(--text-muted);
 }
 
 /* --------------------------------------------------------------------------
-   3. Fixed Header Bar & Navigation Tabs (No Floating Capsule)
+   3. Optical Alignment & Strict Layout Container
+   -------------------------------------------------------------------------- */
+.ui-container {
+  width: 100%;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+@media (min-width: 640px) {
+  .ui-container {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Fixed Header Bar & Inked Tabs (Zero Floating Capsule)
    -------------------------------------------------------------------------- */
 .main-menu > a:first-child {
   font-size: 15px;
   font-weight: 600;
-  color: var(--slate-12);
-  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  letter-spacing: -0.015em;
   text-decoration: none;
 }
 .main-menu nav a {
   font-size: 14px;
   font-weight: 500;
-  color: var(--slate-11);
+  color: var(--text-secondary);
   padding: 4px 8px;
   border-radius: 4px;
   text-decoration: none;
-  transition: color 250ms ease-out, background-color 250ms ease-out;
+  transition: color 200ms var(--ll-ease-out), background-color 200ms var(--ll-ease-out);
 }
 .main-menu nav a:hover {
-  color: var(--slate-12);
-  background-color: var(--slate-3);
+  color: var(--text-primary);
+  background-color: var(--ll-paper-shade);
 }
 
 /* --------------------------------------------------------------------------
-   4. Academic Document Flow & Minimal Dividers (No Heavy Cards)
+   5. Looseleaf Inked Components: Buttons, Badges, Dividers & Swashes
    -------------------------------------------------------------------------- */
-.ui-entry {
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  border-bottom: 0.5px solid var(--border-subtle);
-  transition: border-color 250ms ease-out;
-}
-.ui-entry:last-child {
-  border-bottom-color: transparent;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.ui-card {
-  background-color: transparent;
-  border: 0.5px solid var(--border-subtle);
-  border-radius: 8px;
-  padding: 16px;
-  transition: border-color 250ms ease-out;
-}
-@media (min-width: 640px) {
-  .ui-card {
-    border-radius: 8px;
-    padding: 20px;
-  }
-}
-.ui-card:hover {
-  border-color: var(--border-component);
-}
-
-.ui-card-inner {
-  border-radius: 6px;
-  border: 0.5px solid var(--border-subtle);
-}
-
-.ui-badge {
-  font-size: 12px;
-  line-height: 1;
-  font-weight: 600;
-  padding: 4px 8px;
-  border-radius: 4px;
-  background-color: var(--indigo-3);
-  color: var(--indigo-11);
-  border: 0.5px solid var(--indigo-6);
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.ui-badge-neutral {
-  font-size: 12px;
-  line-height: 1;
-  font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 4px;
-  background-color: var(--slate-3);
-  color: var(--slate-12);
-  border: 0.5px solid var(--slate-6);
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.ui-btn-primary {
+/* Marker-Filled Primary Button (Press Sink Feedback) */
+.ll-btn-marker {
+  position: relative;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 6px;
+  padding: 8px 18px;
+  border-radius: 5px;
   background-color: var(--brand-primary);
   color: var(--brand-text-on-primary);
   border: 0.5px solid transparent;
@@ -289,18 +222,24 @@ body {
   justify-content: center;
   gap: 6px;
   cursor: pointer;
-  transition: background-color 250ms ease-out, transform 250ms ease-out;
+  transition: background-color 200ms var(--ll-ease-out), transform var(--ll-dur-press) var(--ll-ease-out);
 }
-.ui-btn-primary:hover {
+.ll-btn-marker:hover {
   background-color: var(--brand-primary-hover);
 }
+.ll-btn-marker:active {
+  transform: translateY(var(--ll-press-sink));
+}
 
-.ui-btn-secondary {
+/* Inked Outline Secondary Button */
+.ll-btn-outline {
+  position: relative;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 6px;
-  background-color: var(--bg-surface);
+  padding: 8px 18px;
+  border-radius: 5px;
+  background-color: transparent;
   color: var(--text-primary);
   border: 0.5px solid var(--border-subtle);
   display: inline-flex;
@@ -308,61 +247,122 @@ body {
   justify-content: center;
   gap: 6px;
   cursor: pointer;
-  transition: border-color 250ms ease-out, background-color 250ms ease-out;
+  transition: border-color 200ms var(--ll-ease-out), background-color 200ms var(--ll-ease-out), transform var(--ll-dur-press) var(--ll-ease-out);
 }
-.ui-btn-secondary:hover {
+.ll-btn-outline:hover {
   border-color: var(--border-component);
-  background-color: var(--slate-3);
+  background-color: var(--ll-paper-shade);
+}
+.ll-btn-outline:active {
+  transform: translateY(var(--ll-press-sink));
 }
 
-.ui-btn-sm {
+.ll-btn-sm {
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
   font-weight: 500;
   padding: 4px 10px;
   border-radius: 4px;
   border: 0.5px solid var(--border-subtle);
-  background-color: var(--bg-surface);
+  background-color: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: border-color 250ms ease-out, color 250ms ease-out;
+  transition: border-color 200ms var(--ll-ease-out), color 200ms var(--ll-ease-out);
 }
-.ui-btn-sm:hover {
+.ll-btn-sm:hover {
   border-color: var(--border-component);
   color: var(--text-primary);
 }
 
+/* Looseleaf Badges: Subtle Inked Stamps */
+.ll-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: rgba(44, 79, 158, 0.08);
+  color: var(--ll-ink-you);
+  border: 0.5px solid rgba(44, 79, 158, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+html.dark .ll-badge {
+  background-color: rgba(104, 143, 248, 0.12);
+  color: var(--ll-ink-you);
+  border-color: rgba(104, 143, 248, 0.3);
+}
+
+.ll-badge-neutral {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: var(--ll-paper-shade);
+  color: var(--text-secondary);
+  border: 0.5px solid var(--border-subtle);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Looseleaf Highlighter Swash on Text */
+.ll-highlighter {
+  background: linear-gradient(120deg, var(--ll-hi-tint) 0%, var(--ll-hi-tint) 100%) no-repeat 0 85% / 100% 0.38em;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
 /* --------------------------------------------------------------------------
-   4. Publications Filter Pills (0.5px, 250ms ease-out)
+   6. Academic Stream Entries (Zero Obvious Boxes / Pure Dividers)
    -------------------------------------------------------------------------- */
+.ui-entry {
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 0.5px solid var(--border-subtle);
+  transition: border-color 200ms var(--ll-ease-out);
+}
+.ui-entry:last-child {
+  border-bottom-color: transparent;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Publication Filters (Looseleaf Tabs) */
 .pub-filter-btn {
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
   font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 6px;
+  padding: 5px 12px;
+  border-radius: 4px;
   border: 0.5px solid var(--border-subtle);
-  background-color: var(--bg-surface);
+  background-color: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: border-color 250ms ease-out, background-color 250ms ease-out, color 250ms ease-out;
+  transition: border-color 200ms var(--ll-ease-out), background-color 200ms var(--ll-ease-out), color 200ms var(--ll-ease-out);
 }
 .pub-filter-btn:hover {
   border-color: var(--border-component);
   color: var(--text-primary);
 }
 .pub-filter-btn.active {
-  background-color: var(--indigo-3);
-  color: var(--indigo-11);
-  border-color: var(--indigo-7);
+  background-color: var(--ll-paper-shade);
+  color: var(--ll-ink-you);
+  border-color: var(--ll-ink-you);
   font-weight: 600;
 }
 
 /* --------------------------------------------------------------------------
-   5. Clean Academic Timeline (No colored side bars, subtle 0.5px line)
+   7. Academic Pedigree Timeline (Pencil Line & Stamp Dot)
    -------------------------------------------------------------------------- */
 .pedigree-node {
   position: relative;
-  padding-left: 18px;
-  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-bottom: 24px;
   border-left: 0.5px solid var(--border-subtle);
 }
 .pedigree-node:last-child {
@@ -372,18 +372,18 @@ body {
 .pedigree-indicator {
   position: absolute;
   left: -4px;
-  top: 5px;
+  top: 6px;
   width: 8px;
   height: 8px;
   border-radius: 4px;
-  background-color: var(--slate-8);
+  background-color: var(--ll-pencil-mark);
 }
 .pedigree-node:first-child .pedigree-indicator {
-  background-color: var(--indigo-9);
+  background-color: var(--ll-marker);
 }
 
 /* --------------------------------------------------------------------------
-   6. Ambient Canvas & Micro Transitions (250ms ease-out)
+   8. Living Ink Canvas (Diffuse Molecular Stream)
    -------------------------------------------------------------------------- */
 #ambient-canvas {
   position: fixed;
@@ -393,26 +393,15 @@ body {
   height: 100vh;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.45;
-  transition: opacity 250ms ease-out;
-}
-
-.theme-card {
-  background-color: var(--bg-surface);
-  border: 0.5px solid var(--border-subtle);
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-  transition: border-color 250ms ease-out, box-shadow 250ms ease-out;
-}
-.theme-card:hover {
-  border-color: var(--border-component);
+  opacity: 0.38;
+  transition: opacity 250ms var(--ll-ease-out);
 }
 
 /* --------------------------------------------------------------------------
-   7. Accessibility Focus Ring (Radix Indigo 7)
+   9. Accessibility & Reduced Motion
    -------------------------------------------------------------------------- */
 :focus-visible {
-  outline: 2px solid var(--indigo-8);
+  outline: 2px solid var(--ll-ink-you);
   outline-offset: 2px;
   border-radius: 4px;
 }

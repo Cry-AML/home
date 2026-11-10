@@ -18,11 +18,11 @@
   function getThemePaletteColors() {
     const isDark = document.documentElement.classList.contains('dark');
     if (isDark) {
-      // Radix Indigo & Emerald Dark Steps (8, 9, 10, 11)
-      return ['#3d57d5', '#3e63dd', '#5472e4', '#9eb1ff', '#30a46c'];
+      // Looseleaf Midnight Palette: Chalk white, blueprint ink, luminous terracotta, botanical green
+      return ['#f5f2eb', '#688ff8', '#e57b4f', '#4db363', '#9ca3af'];
     }
-    // Radix Indigo & Emerald Light Steps (7, 8, 9, 10)
-    return ['#3e63dd', '#3358d4', '#8da4ef', '#abbdf9', '#30a46c'];
+    // Looseleaf Paper Palette: Prussian blue, terracotta marker, sumi ink, graphite, botanical green
+    return ['#2c4f9e', '#df6b3c', '#2a2420', '#3b7a4b', '#8e887f'];
   }
 
   function updateCanvasThemeColors() {

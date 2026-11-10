@@ -13,18 +13,18 @@
       </p>
     </div>
 
-    <!-- Search Input (Clean Line / Border) -->
+    <!-- Search Input (Looseleaf Ruled Line) -->
     <div>
       <input type="text" 
              id="pub-search-input" 
              placeholder="{{ i18n "pub_search_placeholder" }}" 
-             class="px-3 py-1.5 ui-body bg-transparent w-full sm:w-64 border border-neutral-300 dark:border-neutral-700 rounded focus:outline-none focus:border-indigo-600"
+             class="px-3 py-1.5 font-mono text-xs bg-transparent w-full sm:w-64 border border-neutral-300 dark:border-neutral-700 rounded focus:outline-none focus:border-indigo-600"
              style="border-width: 0.5px;"
              aria-label="Search publications">
     </div>
   </div>
 
-  <!-- Filter Pills (0.5px Border, 250ms ease-out) -->
+  <!-- Filter Pills (Looseleaf Inked Tabs, 0.5px Border) -->
   <div class="mb-8 flex flex-wrap items-center gap-2">
     <button class="pub-filter-btn active" data-filter="all" onclick="filterPublications('all', this)">
       {{ i18n "pub_filter_all" }}
@@ -43,7 +43,7 @@
     </button>
   </div>
 
-  <!-- Publications List: Clean Editorial Entries (No Heavy Boxes) -->
+  <!-- Publications List: Looseleaf Scholarly Entry Stream (No Boxes) -->
   <div class="space-y-0">
     {{ range $item := $lab.publications }}
       <div class="publication-card ui-entry" 
@@ -51,12 +51,12 @@
            data-landmark="{{ $item.landmark }}">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
           <div class="flex items-center gap-2">
-            <span class="ui-badge font-mono">
+            <span class="ll-badge">
               {{ $item.journal }}
             </span>
             <span class="ui-caption font-mono text-neutral-400">{{ $item.year }}</span>
             {{ if $item.landmark }}
-              <span class="ui-badge-neutral text-amber-600 dark:text-amber-400">
+              <span class="ll-badge-neutral text-amber-700 dark:text-amber-400 font-semibold">
                 Landmark
               </span>
             {{ end }}
@@ -73,23 +73,23 @@
         </p>
 
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <span class="ui-caption font-mono text-indigo-600 dark:text-indigo-400">
+          <span class="ui-caption font-mono text-indigo-700 dark:text-indigo-400">
             {{ cond $isEn $item.roleNote $item.roleNoteZh }}
           </span>
           
           <div class="flex items-center gap-1.5">
             {{ if $item.doiUrl }}
               <a href="{{ $item.doiUrl }}" target="_blank" rel="noopener noreferrer" 
-                 class="ui-btn-sm inline-flex items-center gap-1">
+                 class="ll-btn-sm inline-flex items-center gap-1">
                 <span>DOI</span> &nearr;
               </a>
             {{ end }}
             <button onclick="openAbstractModal('{{ $item.title }}', '{{ $item.journal }}', '{{ $item.pmid }}', '{{ if $isEn }}{{ $item.abstractEn }}{{ else }}{{ $item.abstractZh }}{{ end }}')" 
-                    class="ui-btn-sm">
+                    class="ll-btn-sm">
               {{ i18n "pub_btn_abstract" }}
             </button>
             <button onclick="copyBibtex({{ $item.bibtex }})" 
-                    class="ui-btn-sm">
+                    class="ll-btn-sm">
               {{ i18n "pub_btn_bibtex" }}
             </button>
           </div>

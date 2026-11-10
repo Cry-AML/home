@@ -12,23 +12,23 @@
     </p>
   </div>
 
-  <!-- 3 Research Pillars: Clean Academic Stream (No Closed Boxes) -->
+  <!-- 3 Research Pillars: Looseleaf Document Stream (No Boxes) -->
   <div class="mb-14">
     {{ range $item := $lab.researchPillars }}
       <div class="ui-entry grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
         <div class="md:col-span-4">
           <div class="flex items-center gap-2 mb-2">
-            <span class="font-mono text-sm font-bold text-neutral-400">
+            <span class="font-mono text-sm font-semibold text-neutral-400">
               {{ $item.number }}
             </span>
-            <span class="ui-badge">
+            <span class="ll-badge">
               {{ cond $isEn $item.tagEn $item.tagZh }}
             </span>
           </div>
           <h2 class="ui-heading text-neutral-900 dark:text-white">
             {{ cond $isEn $item.titleEn $item.titleZh }}
           </h2>
-          <div class="ui-caption font-mono text-indigo-600 dark:text-indigo-400 mt-2">
+          <div class="ui-caption font-mono text-indigo-700 dark:text-indigo-400 mt-2">
             {{ $item.highlightPaper }}
           </div>
         </div>
@@ -41,8 +41,8 @@
     {{ end }}
   </div>
 
-  <!-- Core Platforms: Clean Section Stream (No Closed Boxes) -->
-  <div class="pt-8 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
+  <!-- Core Platforms: Ruled Technical List (No Boxes) -->
+  <div class="pt-8 border-t border-neutral-300 dark:border-neutral-800" style="border-top-width: 0.5px;">
     <h2 class="ui-heading mb-6">
       {{ i18n "platform_section_title" }}
     </h2>
@@ -50,7 +50,7 @@
       {{ range $plat := $lab.platforms }}
         <div class="ui-entry grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
           <div class="md:col-span-4">
-            <span class="ui-badge-neutral mb-2">
+            <span class="ll-badge-neutral mb-2">
               {{ cond $isEn $plat.tagEn $plat.tagZh }}
             </span>
             <h3 class="ui-heading mt-1">
