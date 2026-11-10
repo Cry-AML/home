@@ -17,7 +17,9 @@ chk "text-on-primary token present in all 4 themes" "[ \$(grep -c -- '--text-on-
 chk "dark token is dark ink (#04121f)" "grep -A40 'data-theme=\"dark\"' assets/css/styles.css | grep -q 'text-on-primary: *#04121f'"
 chk "no text-white left on var(--primary) CTA" "! grep -q 'text-white[^\"]*\" *style=\"background-color: var(--primary)' index.html"
 chk "active pill uses --text-on-primary" "grep -q 'color: var(--text-on-primary) !important' assets/css/styles.css"
-chk "tailwind darkMode:class set" "grep -q \"darkMode: *'class'\" index.html"
+chk "tailwind darkMode:class set" "grep -q \"darkMode: *'class'\" tailwind.config.js"
+chk "tailwind compiled locally (no CDN)" "! grep -q 'cdn.tailwindcss.com' index.html"
+chk "tailwind.css present" "[ -s assets/css/tailwind.css ]"
 chk "dark class synced in setTheme" "grep -q \"classList.toggle('dark'\" assets/js/main.js"
 chk "inline theme bootstrap before stylesheet" "awk '/wen_lab_theme/{f=1} /styles.css/{if(f)print \"ok\"}' index.html | grep -q ok"
 chk "blood2023 doi corrected" "grep -q '10.1182/blood.2023019782' assets/js/data.js"
@@ -75,6 +77,11 @@ if(miss.length){console.error('missing:',miss);process.exit(1);}
 \""
 chk "marquee stops under reduced-motion" "awk '/prefers-reduced-motion/,/^}/' assets/css/styles.css | grep -q 'marquee-track'"
 chk "no bg-white in JS templates" "! grep -q 'bg-white' assets/js/main.js"
+
+chk "CJK compound terms protected" "grep -q 'cjk-nowrap' assets/js/i18n.js"
+chk "reveal failsafe present" "grep -q 'never allowed to stay invisible' assets/js/main.js"
+chk "pub action touch targets" "grep -q '.pub-action' assets/css/styles.css"
+chk "preconnect + font fallback stack" "grep -q 'Songti SC' assets/css/styles.css"
 
 echo "== D. Syntax =="
 for f in assets/js/data.js assets/js/i18n.js assets/js/main.js; do

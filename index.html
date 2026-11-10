@@ -39,9 +39,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
 
-  <!-- Tailwind CSS & Font Awesome -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { darkMode: 'class' };</script>
+  <!-- Compiled Tailwind (local build, no CDN dependency) -->
+  <link rel="stylesheet" href="assets/css/tailwind.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Custom Academic Theme & Layout Styles -->
@@ -85,22 +84,22 @@
        1. Top Sticky Navbar (Header)
        ========================================================================= -->
   <header class="sticky top-0 z-50 glass-panel theme-transition">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
       
       <!-- Logo & Lab Brand -->
-      <a href="#" class="flex items-center space-x-3.5 group z-10">
-        <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-bold text-xl shadow-md theme-transition group-hover:scale-105"
+      <a href="#" class="flex items-center gap-2.5 sm:gap-3.5 group z-10 min-w-0 flex-1 lg:flex-none">
+        <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl flex-shrink-0 flex items-center justify-center font-bold text-xl shadow-md theme-transition group-hover:scale-105"
              style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--text-on-primary);">
-          <i class="fa-solid fa-dna text-lg"></i>
+          <i class="fa-solid fa-dna text-base sm:text-lg"></i>
         </div>
-        <div>
-          <div class="font-extrabold text-base sm:text-lg tracking-tight flex items-center gap-2">
-            <span data-i18n="brand_name">文卓谦实验室</span>
-            <span class="text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-mono font-medium theme-badge theme-transition">
+        <div class="min-w-0">
+          <div class="font-extrabold text-sm sm:text-lg tracking-[-0.01em] flex items-center gap-1.5 sm:gap-2 min-w-0">
+            <span class="truncate" data-i18n="brand_name">文卓谦实验室</span>
+            <span class="hidden sm:inline text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-mono font-medium theme-badge theme-transition flex-shrink-0">
               SYSU / ZSSOM
             </span>
           </div>
-          <div class="text-[11px] sm:text-xs font-medium tracking-tight truncate max-w-[210px] sm:max-w-md theme-transition" 
+          <div class="hidden sm:block text-[11px] sm:text-xs font-medium tracking-tight truncate max-w-[210px] lg:max-w-md theme-transition" 
                style="color: var(--text-muted);" data-i18n="brand_sub">
             中山大学中山医学院 · 白血病表观遗传与代谢免疫研究组
           </div>
@@ -108,7 +107,7 @@
       </a>
 
       <!-- Desktop Navigation Menu -->
-      <nav class="hidden lg:flex items-center space-x-7 text-xs font-bold tracking-wide z-10">
+      <nav class="hidden lg:flex items-center space-x-7 text-xs font-bold tracking-wide z-10" aria-label="Main">
         <a href="#about" class="hover:text-sky-600 transition-colors" data-i18n="nav_about">导师与传承</a>
         <a href="#research" class="hover:text-sky-600 transition-colors" data-i18n="nav_research">研究方向与平台</a>
         <a href="#publications" class="hover:text-sky-600 transition-colors" data-i18n="nav_publications">代表论著</a>
@@ -118,7 +117,7 @@
       </nav>
 
       <!-- Action Controls: Theme Selector + Language Switcher -->
-      <div class="flex items-center space-x-3 z-10">
+      <div class="flex items-center gap-1.5 sm:gap-3 z-10 flex-shrink-0">
         
         <!-- Multi-Theme Dropdown -->
         <div class="relative">
@@ -168,7 +167,8 @@
                 class="flex items-center space-x-1.5 text-xs font-extrabold px-3.5 py-1.5 rounded-full border theme-surface theme-transition hover:border-slate-400 shadow-sm"
                 style="border-color: var(--border);">
           <i class="fa-solid fa-globe text-xs" style="color: var(--accent);"></i>
-          <span id="langIndicator">EN / 中文</span>
+          <span id="langIndicator" class="hidden sm:inline">EN / 中文</span>
+          <span id="langIndicatorShort" class="sm:hidden font-bold">EN</span>
         </button>
 
         <!-- Mobile Menu Toggle Button -->
@@ -220,9 +220,9 @@
       </div>
 
       <!-- Core Mission Statement (Editorial Masterwork Heading) -->
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.25] mb-8 max-w-5xl mx-auto">
-        <span class="font-editorial font-normal block sm:inline" data-i18n="hero_title_1">解析白血病恶性演变与复发本质，</span>
-        <span style="color: var(--primary);" class="theme-transition block sm:inline" data-i18n="hero_title_2">开拓表观遗传、代谢稳态与肿瘤免疫转化新前沿</span>
+      <h1 class="hero-headline text-3xl sm:text-[2.75rem] lg:text-[3.35rem] font-black leading-[1.28] sm:leading-[1.22] mb-8 max-w-5xl mx-auto">
+        <span class="font-editorial font-normal block" data-i18n="hero_title_1">解析白血病恶性演变与复发本质，</span>
+        <span style="color: var(--primary);" class="theme-transition block" data-i18n="hero_title_2">开拓表观遗传、代谢稳态与肿瘤免疫转化新前沿</span>
       </h1>
 
       <!-- Subtitle Description -->
@@ -263,7 +263,7 @@
         </div>
         <div class="p-6 rounded-3xl theme-surface border theme-transition shadow-sm hover:shadow-md" style="border-color: var(--border);">
           <div class="text-3xl sm:text-4xl font-extrabold font-mono" style="color: var(--primary);" data-i18n="stat_mentorship_count">2</div>
-          <div class="text-xs font-semibold mt-1" style="color: var(--text-muted);" data-i18n="stat_mentorship_label">顶尖学术机构（哈佛 MGH · 港大）</div>
+          <div class="text-[11px] sm:text-xs font-semibold mt-1 leading-snug" style="color: var(--text-muted); text-wrap: balance;" data-i18n="stat_mentorship_label">顶尖学术机构（哈佛 MGH · 港大）</div>
         </div>
       </div>
 
@@ -309,10 +309,10 @@
   <section id="about" class="py-14 sm:py-20 lg:py-28 theme-surface border-b theme-transition z-10" style="border-color: var(--border);">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
         
-        <!-- Left: PI Profile Card -->
-        <div class="lg:col-span-5 flex flex-col items-center text-center">
+        <!-- Left: PI Profile Card (sticky on desktop so the tall bio column doesn't leave a void) -->
+        <div class="lg:col-span-5 flex flex-col items-center text-center lg:sticky lg:top-28">
           <div class="relative w-64 h-64 rounded-3xl overflow-hidden p-1.5 border shadow-2xl theme-transition mb-6"
                style="border-color: var(--border); background-color: var(--bg-surface-elevated);">
             <div class="w-full h-full rounded-2xl flex flex-col items-center justify-center p-6 text-center"
@@ -452,7 +452,7 @@
               <span class="px-2 py-1 rounded bg-black/5 dark:bg-white/5 border" style="border-color: var(--border);">GO / KEGG GSEA</span>
             </div>
             <button onclick="openFigureModal()" 
-                    class="text-xs font-bold underline flex items-center gap-1.5" style="color: var(--primary);">
+                    class="text-xs font-bold inline-flex items-center gap-1.5 px-3 py-2.5 -mx-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" style="color: var(--primary);">
               <i class="fa-solid fa-expand"></i>
               <span data-i18n="fig_btn_view">查看高清图谱与实验注释</span>
             </button>
@@ -489,8 +489,8 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Section Header -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-        <div>
+      <div class="mb-10">
+        <div class="max-w-2xl">
           <span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full theme-badge" data-i18n="pub_tag">
             PUBLICATIONS & SCIENCE
           </span>
@@ -503,7 +503,7 @@
         </div>
 
         <!-- Filter Controls -->
-        <div class="flex flex-wrap items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2 mt-6">
           <button class="pub-filter-btn active" data-filter="all" onclick="setPublicationFilter('all')">
             <span data-i18n="pub_filter_all">全部论文 (All)</span>
           </button>
@@ -734,10 +734,10 @@
 
       <div class="flex flex-wrap items-center gap-6 font-medium">
         <span class="opacity-50" data-i18n="footer_quick_links">友情链接：</span>
-        <a href="https://www.sysu.edu.cn/" target="_blank" class="hover:underline" data-i18n="footer_link_sysu">中山大学</a>
-        <a href="https://zssom.sysu.edu.cn/" target="_blank" class="hover:underline" data-i18n="footer_link_zssom">中山医学院</a>
-        <a href="https://scaddenlab.com/" target="_blank" class="hover:underline" data-i18n="footer_link_scadden">Harvard Scadden Lab</a>
-        <a href="https://theleunglab.hku.hk/" target="_blank" class="hover:underline" data-i18n="footer_link_leung">HKU The Leung Lab</a>
+        <a href="https://www.sysu.edu.cn/" target="_blank" class="hover:underline inline-flex items-center min-h-[44px] py-1" data-i18n="footer_link_sysu">中山大学</a>
+        <a href="https://zssom.sysu.edu.cn/" target="_blank" class="hover:underline inline-flex items-center min-h-[44px] py-1" data-i18n="footer_link_zssom">中山医学院</a>
+        <a href="https://scaddenlab.com/" target="_blank" class="hover:underline inline-flex items-center min-h-[44px] py-1" data-i18n="footer_link_scadden">Harvard Scadden Lab</a>
+        <a href="https://theleunglab.hku.hk/" target="_blank" class="hover:underline inline-flex items-center min-h-[44px] py-1" data-i18n="footer_link_leung">HKU The Leung Lab</a>
       </div>
 
     </div>

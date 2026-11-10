@@ -71,6 +71,10 @@ function setLanguage(lang) {
   if (langIndicator) {
     langIndicator.textContent = lang === 'zh' ? 'EN / 中文' : '中文 / EN';
   }
+  const langShort = document.getElementById('langIndicatorShort');
+  if (langShort) {
+    langShort.textContent = lang === 'zh' ? 'EN' : '中';
+  }
 
   // Re-render localized dynamic components
   renderAcademicTimeline();
@@ -110,7 +114,7 @@ function updateWorldClocks() {
 
   const isZh = currentLang === 'zh';
   clockContainer.innerHTML = `
-    <div class="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-[11px] font-mono tracking-tight" style="color: var(--text-muted);">
+    <div class="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-4 text-[11px] font-mono tracking-tight" style="color: var(--text-muted);">
       <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border theme-surface" style="border-color: var(--border);">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         <span class="font-bold text-slate-800 dark:text-slate-200">${isZh ? '广州·中大北校园' : 'Guangzhou · SYSU'}:</span>
@@ -395,19 +399,19 @@ function renderPublications() {
         <!-- Action buttons -->
         <div class="flex flex-wrap items-center gap-3 pt-3 border-t text-xs font-medium" style="border-color: var(--border);">
           <a href="${pub.doiUrl}" target="_blank" rel="noopener noreferrer" 
-             class="hover:underline flex items-center gap-1.5 font-bold" style="color: var(--primary);">
+             class="pub-action font-bold" style="color: var(--primary);">
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
             <span>${I18N_DICTIONARY[currentLang].pub_btn_doi}</span>
           </a>
 
           <button onclick="openAbstractModal('${pub.id}')" 
-                  class="hover:underline flex items-center gap-1.5 font-semibold" style="color: var(--text-muted);">
+                  class="pub-action font-semibold" style="color: var(--text-muted);">
             <i class="fa-solid fa-align-left"></i>
             <span>${I18N_DICTIONARY[currentLang].pub_btn_abstract}</span>
           </button>
 
           <button onclick="copyBibTeX('${pub.id}')" 
-                  class="hover:underline flex items-center gap-1.5 ml-auto font-mono text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
+                  class="pub-action ml-auto font-mono text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
             <i class="fa-solid fa-quote-right"></i>
             <span>${I18N_DICTIONARY[currentLang].pub_btn_bibtex}</span>
           </button>
@@ -936,7 +940,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('section:not(.hero-gradient-overlay) > div').forEach(div => {
+  const revealTargets = document.querySelectorAll('section:not(.hero-gradient-overlay) > div');
+  revealTargets.forEach(div => {
     div.classList.add('reveal');
     if (prefersReduced) {
       div.classList.add('is-revealed');
@@ -944,6 +949,17 @@ document.addEventListener('DOMContentLoaded', () => {
       revealObserver.observe(div);
     }
   });
+
+  // Failsafe: reveal anything the observer never saw. Covers slow observers,
+  // print/full-page capture, and browsers with broken IntersectionObserver.
+  // Content is never allowed to stay invisible.
+  setTimeout(() => {
+    revealTargets.forEach(div => {
+      if (!div.classList.contains('is-revealed')) {
+        div.classList.add('is-revealed');
+      }
+    });
+  }, 1200);
 
   // Close modals when clicking backdrop
   const modal = document.getElementById('abstract-modal');

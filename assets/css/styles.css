@@ -443,3 +443,49 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
     scroll-behavior: auto;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Hero headline: CJK-aware line breaking
+   Chinese has no word spaces, so the browser will happily split a compound
+   term across lines (e.g. 表观遗传 -> 表观 / 遗传). Balance the lines and keep
+   the key scientific terms intact.
+   -------------------------------------------------------------------------- */
+.hero-headline {
+  text-wrap: balance;
+  line-break: strict;
+  word-break: normal;
+  letter-spacing: -0.015em;
+}
+.hero-headline > span:last-child {
+  /* Give the long second clause a slightly tighter optical rhythm */
+  letter-spacing: -0.02em;
+}
+html[lang^="en"] .hero-headline {
+  letter-spacing: -0.025em;
+}
+/* Terms that must never be split mid-compound */
+.cjk-nowrap { white-space: nowrap; }
+
+/* Publication action row: real 44px touch targets with a hover affordance,
+   without inflating the visual weight of the text. */
+.pub-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.5rem 0.6rem;
+  margin: -0.35rem -0.15rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease;
+}
+.pub-action:hover {
+  background-color: var(--bg-subtle);
+}
+
+/* Desktop navigation: 44px hit area while keeping the 12px visual type size. */
+header nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}

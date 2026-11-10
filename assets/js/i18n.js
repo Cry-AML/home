@@ -30,7 +30,7 @@ const I18N_DICTIONARY = {
     hero_badge_scholar: "中山大学“逸仙学者计划”新锐学者",
     hero_badge_pedigree: "港大博士 · 哈佛医学院/MGH 博士后",
     hero_title_1: "解析白血病恶性演变与复发本质",
-    hero_title_2: "开拓表观遗传、代谢稳态与肿瘤免疫转化新前沿",
+    hero_title_2: "开拓<span class=\"cjk-nowrap\">表观遗传</span>、<span class=\"cjk-nowrap\">代谢稳态</span>与<span class=\"cjk-nowrap\">肿瘤免疫</span>转化<span class=\"cjk-nowrap\">新前沿</span>",
     hero_lead: "文卓谦实验室依托中山大学中山医学院，聚焦急性髓系白血病（AML）发生与复发的深层分子机理，深入探索表观修饰重构、质子转运/细胞内pH与代谢重编程的交互调控，致力于从基础分子机制跨越至临床挽救性联合疗法。",
     btn_explore: "探索科研方向",
     btn_join_hero: "加入我们 (招收博后/博硕/助理)",
@@ -41,9 +41,9 @@ const I18N_DICTIONARY = {
     stat_impact_count: "9",
     stat_impact_label: "代表性论著",
     stat_lineage_count: "1",
-    stat_lineage_label: "Phase II 临床试验",
+    stat_lineage_label: "II 期临床试验",
     stat_mentorship_count: "2",
-    stat_mentorship_label: "顶尖学术机构（哈佛 MGH · 港大）",
+    stat_mentorship_label: "哈佛 MGH · 港大",
 
     // About PI
     pi_title: "副教授 · 博士生导师 · 逸仙学者",
