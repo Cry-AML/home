@@ -2,240 +2,104 @@
 {{ $lab := hugo.Data.lab }}
 
 <!-- =========================================================================
-     HOMEPAGE HERO SECTION
+     HOMEPAGE (Clean Typography, Aligned, Zero Clutter, No Cards)
      ========================================================================= -->
-<section class="py-10 sm:py-16">
-  <div class="mx-auto max-w-5xl">
-    
-    <!-- Identity Badges -->
-    <div class="flex flex-wrap items-center gap-2 mb-6">
-      <span class="ui-badge">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-        <span>{{ i18n "hero_badge_scholar" }}</span>
-      </span>
-      <span class="ui-badge-neutral">
-        <span>{{ i18n "hero_badge_pedigree" }}</span>
-      </span>
-    </div>
+<div class="ui-container py-12 sm:py-20">
+  
+  <!-- Identity Badges -->
+  <div class="flex flex-wrap items-center gap-2 mb-6">
+    <span class="ui-badge">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+      <span>{{ i18n "hero_badge_scholar" }}</span>
+    </span>
+    <span class="ui-badge-neutral">
+      <span>{{ i18n "hero_badge_pedigree" }}</span>
+    </span>
+  </div>
 
-    <!-- Main Headings -->
+  <!-- Main Mission & Headings -->
+  <div class="max-w-3xl">
+    <h1 class="ui-title mb-4">
+      {{ i18n "hero_title_1" }}<br>
+      <span class="text-indigo-600 dark:text-indigo-400 font-normal">
+        {{ i18n "hero_title_2" | safeHTML }}
+      </span>
+    </h1>
+
+    <p class="ui-body mb-8 text-neutral-600 dark:text-neutral-300">
+      {{ i18n "hero_lead" }}
+    </p>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap items-center gap-3">
+      <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ui-btn-primary">
+        {{ i18n "btn_explore" }}
+      </a>
+      <a href="{{ if $isEn }}/en/join/{{ else }}/join/{{ end }}" class="ui-btn-secondary">
+        {{ i18n "btn_join_hero" }}
+      </a>
+    </div>
+  </div>
+
+  <!-- Key Metrics Row (Minimal Stats, 0.5px Divider, No Cards) -->
+  <div class="mt-14 pt-8 border-t border-neutral-200 dark:border-neutral-800 grid grid-cols-2 sm:grid-cols-4 gap-6" style="border-top-width: 0.5px;">
+    <div>
+      <div class="font-mono text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+        {{ i18n "stat_blood_count" }}
+      </div>
+      <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
+        {{ i18n "stat_blood_label" }}
+      </div>
+    </div>
+    <div>
+      <div class="font-mono text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+        {{ i18n "stat_impact_count" }}
+      </div>
+      <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
+        {{ i18n "stat_impact_label" }}
+      </div>
+    </div>
+    <div>
+      <div class="font-mono text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+        {{ i18n "stat_lineage_count" }}
+      </div>
+      <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
+        {{ i18n "stat_lineage_label" }}
+      </div>
+    </div>
+    <div>
+      <div class="font-mono text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+        {{ i18n "stat_mentorship_count" }}
+      </div>
+      <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
+        {{ i18n "stat_mentorship_label" }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Principal Investigator Profile (Typography & Structured Text, No Cards) -->
+  <div class="mt-14 pt-8 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
     <div class="max-w-3xl">
-      <h1 class="ui-title mb-4">
-        {{ i18n "hero_title_1" }}<br>
-        <span class="text-indigo-600 dark:text-indigo-400 font-normal">
-          {{ i18n "hero_title_2" | safeHTML }}
-        </span>
-      </h1>
-
-      <p class="ui-body mb-8 text-neutral-600 dark:text-neutral-300">
-        {{ i18n "hero_lead" }}
+      <h2 class="ui-heading mb-1 text-neutral-900 dark:text-white">
+        {{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}
+      </h2>
+      <p class="ui-caption text-indigo-600 dark:text-indigo-400 mb-4">
+        {{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }} &mdash; {{ cond $isEn $lab.pi.institutionEn $lab.pi.institutionZh }}
       </p>
-
-      <!-- Action Buttons -->
-      <div class="flex flex-wrap items-center gap-3">
-        <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ui-btn-primary">
-          {{ i18n "btn_explore" }}
+      <div class="space-y-3 ui-body text-neutral-600 dark:text-neutral-300">
+        <p>{{ i18n "about_intro_p1" }}</p>
+        <p>{{ i18n "about_intro_p2" }}</p>
+        <p>{{ i18n "about_intro_p3" }}</p>
+      </div>
+      <div class="mt-6 flex flex-wrap items-center gap-4">
+        <a href="{{ if $isEn }}/en/pedigree/{{ else }}/pedigree/{{ end }}" class="ui-btn-secondary text-xs">
+          {{ if $isEn }}View Academic Background &rarr;{{ else }}查看学术经历与师承 &rarr;{{ end }}
         </a>
-        <a href="{{ if $isEn }}/en/join/{{ else }}/join/{{ end }}" class="ui-btn-secondary">
-          {{ i18n "btn_join_hero" }}
+        <a href="{{ if $isEn }}/en/publications/{{ else }}/publications/{{ end }}" class="ui-btn-secondary text-xs">
+          {{ if $isEn }}View Publications &rarr;{{ else }}查看代表论著 &rarr;{{ end }}
         </a>
       </div>
     </div>
-
-    <!-- Metrics Strip (4 Stat Tiles, Concentric 8px/10px Radii, 0.5px Border) -->
-    <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3">
-      <div class="ui-card text-center">
-        <div class="font-mono text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
-          {{ i18n "stat_blood_count" }}
-        </div>
-        <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
-          {{ i18n "stat_blood_label" }}
-        </div>
-      </div>
-      <div class="ui-card text-center">
-        <div class="font-mono text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
-          {{ i18n "stat_impact_count" }}
-        </div>
-        <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
-          {{ i18n "stat_impact_label" }}
-        </div>
-      </div>
-      <div class="ui-card text-center">
-        <div class="font-mono text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
-          {{ i18n "stat_lineage_count" }}
-        </div>
-        <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
-          {{ i18n "stat_lineage_label" }}
-        </div>
-      </div>
-      <div class="ui-card text-center">
-        <div class="font-mono text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
-          {{ i18n "stat_mentorship_count" }}
-        </div>
-        <div class="ui-caption text-neutral-500 dark:text-neutral-400 mt-1">
-          {{ i18n "stat_mentorship_label" }}
-        </div>
-      </div>
-    </div>
-
   </div>
-</section>
 
-<!-- =========================================================================
-     ABOUT PI & SCIENTIFIC OVERVIEW
-     ========================================================================= -->
-<section class="py-10 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
-  <div class="mx-auto max-w-5xl">
-    <div class="ui-card">
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-        <div class="md:col-span-8">
-          <h2 class="ui-heading mb-1">
-            {{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}
-          </h2>
-          <p class="ui-caption text-indigo-600 dark:text-indigo-400 mb-3">
-            {{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }} &middot; {{ cond $isEn $lab.pi.institutionEn $lab.pi.institutionZh }}
-          </p>
-          <p class="ui-body text-neutral-600 dark:text-neutral-300 mb-4">
-            {{ i18n "about_intro_p2" }}
-          </p>
-          <div class="flex items-center gap-3">
-            <a href="{{ if $isEn }}/en/pedigree/{{ else }}/pedigree/{{ end }}" class="ui-btn-secondary text-xs">
-              {{ if $isEn }}View Academic Background &rarr;{{ else }}查看学术履历与师承 &rarr;{{ end }}
-            </a>
-          </div>
-        </div>
-
-        <div class="md:col-span-4 ui-card-inner p-4 bg-neutral-50 dark:bg-neutral-900 text-center">
-          <div class="font-mono text-xs text-neutral-500 mb-1">Affiliation</div>
-          <div class="ui-heading text-neutral-900 dark:text-white mb-2">Sun Yat-sen University</div>
-          <div class="ui-caption text-neutral-500 dark:text-neutral-400">{{ $lab.pi.email }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =========================================================================
-     SELECTED RESEARCH SHOWCASE (BIOINFORMATICS UMAP FIGURE)
-     ========================================================================= -->
-<section class="py-10 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
-  <div class="mx-auto max-w-5xl">
-    <div class="ui-card">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-        <!-- Figure Context -->
-        <div class="lg:col-span-6">
-          <h2 class="ui-title mb-3">
-            {{ i18n "fig_title" }}
-          </h2>
-          <p class="ui-body text-neutral-600 dark:text-neutral-300 mb-4">
-            {{ i18n "fig_desc" }}
-          </p>
-
-          <!-- Cell-State Chips (0.5px Border, Concentric 4px Radius) -->
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="ui-badge-neutral">
-              <span class="w-2 h-2 rounded-full bg-sky-500"></span>
-              <span>原始粒细胞 Myeloblast (77.2%)</span>
-            </span>
-            <span class="ui-badge-neutral">
-              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-              <span>单核细胞 Monocyte (17.1%)</span>
-            </span>
-            <span class="ui-badge-neutral">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span>未成熟中性 Immature neutrophil (5.6%)</span>
-            </span>
-          </div>
-
-          <div class="flex items-center gap-3">
-            <button onclick="openFigureModal()" class="ui-btn-primary">
-              {{ i18n "fig_btn_view" }}
-            </button>
-            <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ui-btn-secondary">
-              {{ if $isEn }}Explore Research & Platforms &rarr;{{ else }}深入研究方向与平台 &rarr;{{ end }}
-            </a>
-          </div>
-        </div>
-
-        <!-- Figure Image Container (Concentric 6px Radius, 0.5px Border) -->
-        <div class="lg:col-span-6">
-          <div class="ui-card-inner overflow-hidden cursor-pointer bg-neutral-950" 
-               onclick="openFigureModal()" 
-               role="button" 
-               tabindex="0"
-               onkeydown="if(event.key==='Enter'||event.key===' ')openFigureModal()"
-               aria-label="{{ i18n "fig_click_hint" }}">
-            <img src="{{ "images/research-figure-1.jpg" | relURL }}" 
-                 alt="{{ i18n "fig_thumb_alt" }}" 
-                 class="w-full h-auto object-cover hover:opacity-95 transition-opacity duration-250">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =========================================================================
-     SITE SECTIONS DIRECTORY (Clean Cards Leading to Dedicated Pages)
-     ========================================================================= -->
-<section class="py-10 border-t border-neutral-200 dark:border-neutral-800" style="border-top-width: 0.5px;">
-  <div class="mx-auto max-w-5xl">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      
-      <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
-        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
-          {{ if $isEn }}Research Pillars & Platforms{{ else }}研究方向与平台{{ end }} &rarr;
-        </h3>
-        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
-          {{ if $isEn }}Epigenetics, proton homeostasis, and in vivo translational models.{{ else }}表观遗传、质子稳态与斑马鱼/PDX体内模型。{{ end }}
-        </p>
-      </a>
-
-      <a href="{{ if $isEn }}/en/publications/{{ else }}/publications/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
-        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
-          {{ if $isEn }}Selected Publications{{ else }}代表论著与论文{{ end }} &rarr;
-        </h3>
-        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
-          {{ if $isEn }}9 landmark works including Blood, Leukemia, and Nat Commun.{{ else }}Blood、Leukemia、Nature Communications 等代表成果。{{ end }}
-        </p>
-      </a>
-
-      <a href="{{ if $isEn }}/en/pedigree/{{ else }}/pedigree/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
-        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
-          {{ if $isEn }}Academic Background{{ else }}学术履历与师承{{ end }} &rarr;
-        </h3>
-        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
-          {{ if $isEn }}Training journey across HKU, Harvard MGH, and SYSU.{{ else }}哈佛医学院/MGH、香港大学及中山大学学术历程。{{ end }}
-        </p>
-      </a>
-
-      <a href="{{ if $isEn }}/en/news/{{ else }}/news/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
-        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
-          {{ if $isEn }}News & Updates{{ else }}新闻动态{{ end }} &rarr;
-        </h3>
-        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
-          {{ if $isEn }}Latest research milestones and laboratory news.{{ else }}最新科研突破、临床试验进展与学术动态。{{ end }}
-        </p>
-      </a>
-
-      <a href="{{ if $isEn }}/en/join/{{ else }}/join/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
-        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
-          {{ if $isEn }}Open Positions{{ else }}招贤纳士与招生{{ end }} &rarr;
-        </h3>
-        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
-          {{ if $isEn }}Recruiting postdocs, graduate students, and research assistants.{{ else }}长期招收博士后、硕博研究生及科研助理。{{ end }}
-        </p>
-      </a>
-
-      <a href="{{ if $isEn }}/en/contact/{{ else }}/contact/{{ end }}" class="ui-card block hover:border-indigo-600 transition-colors">
-        <h3 class="ui-heading mb-1 text-indigo-600 dark:text-indigo-400">
-          {{ if $isEn }}Contact Us{{ else }}联系方式与地址{{ end }} &rarr;
-        </h3>
-        <p class="ui-caption text-neutral-600 dark:text-neutral-400">
-          {{ if $isEn }}Guangzhou North Campus location, email, and transit.{{ else }}广州校区北校园科技楼地址、邮箱及交通指引。{{ end }}
-        </p>
-      </a>
-
-    </div>
-  </div>
-</section>
+</div>

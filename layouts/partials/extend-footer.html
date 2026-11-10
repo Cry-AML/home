@@ -10,47 +10,13 @@
   <span>{{ i18n "toast_copied" }}</span>
 </div>
 
-<!-- Figure Showcase Modal -->
-<div id="figure-modal" 
-     class="hidden fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm items-center justify-center p-4" 
-     role="dialog" 
-     aria-modal="true" 
-     aria-labelledby="figure-modal-title">
-  <div class="ui-card max-w-4xl w-full max-h-[90vh] overflow-y-auto flex flex-col p-5 sm:p-6 relative bg-white dark:bg-neutral-900" style="border-width: 0.5px;">
-    <div class="flex items-start justify-between pb-3 border-b border-neutral-200 dark:border-neutral-800" style="border-bottom-width: 0.5px;">
-      <div>
-        <h3 id="figure-modal-title" class="ui-heading">
-          {{ i18n "fig_modal_title" }}
-        </h3>
-      </div>
-      <button id="close-figure-modal" 
-              onclick="closeFigureModal()" 
-              class="ui-btn-sm" 
-              aria-label="Close modal">
-        &times;
-      </button>
-    </div>
-    
-    <div class="my-4 ui-card-inner bg-neutral-950 overflow-hidden flex items-center justify-center" style="border-width: 0.5px;">
-      <img src="{{ "images/research-figure-1.jpg" | relURL }}" 
-           alt="{{ i18n "fig_thumb_alt" }}" 
-           class="max-h-[55vh] w-auto object-contain">
-    </div>
-
-    <div class="space-y-2.5 ui-body text-neutral-600 dark:text-neutral-300 border-t border-neutral-200 dark:border-neutral-800 pt-3" style="border-top-width: 0.5px;">
-      <p>{{ i18n "fig_panel_a" | safeHTML }}</p>
-      <p>{{ i18n "fig_panel_b" | safeHTML }}</p>
-    </div>
-  </div>
-</div>
-
-<!-- Publication Abstract Modal -->
+<!-- Publication Abstract Modal (for /publications/) -->
 <div id="abstract-modal" 
      class="hidden fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm items-center justify-center p-4" 
      role="dialog" 
      aria-modal="true" 
      aria-labelledby="abstract-modal-title">
-  <div class="ui-card max-w-2xl w-full max-h-[85vh] overflow-y-auto flex flex-col p-5 sm:p-6 relative bg-white dark:bg-neutral-900" style="border-width: 0.5px;">
+  <div class="max-w-2xl w-full max-h-[85vh] overflow-y-auto flex flex-col p-5 sm:p-6 relative bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-800" style="border-width: 0.5px;">
     <div class="flex items-start justify-between pb-3 border-b border-neutral-200 dark:border-neutral-800" style="border-bottom-width: 0.5px;">
       <div class="pr-4">
         <div class="flex items-center gap-2 mb-1">
