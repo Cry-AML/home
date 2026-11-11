@@ -103,6 +103,53 @@ def check_banner(lang, path):
     return problems
 
 
+# ---------------------------------------------------------------------------
+# Sweep: no mailto anywhere in the built site may carry a raw space, a "+" for
+# a space, or a bare %0A line break. This catches templates beyond Join that
+# someone adds later, and the legacy static pages copied into public/.
+# ---------------------------------------------------------------------------
+ANY_LINK = re.compile(r'href="(mailto:[^"]*)"|href=(mailto:[^"\s>]+)')
+
+
+def _match_url(m):
+    return m.group(1) or m.group(2)
+
+
+def sweep():
+    problems = []
+    for f in sorted(PUBLIC.rglob('*.html')):
+        rel = f.relative_to(PUBLIC)
+        for m in ANY_LINK.finditer(f.read_text(errors='ignore')):
+            url = html.unescape(_match_url(m))
+            if '?' not in url:
+                continue  # bare mailto:addr needs no encoding
+            query = url.split('?', 1)[1]
+            if ' ' in query:
+                problems.append(f'{rel}: raw space in mailto query ({url[:90]})')
+            if '+' in query:
+                problems.append(f'{rel}: "+" for space in mailto query ({url[:90]})')
+            if '%0A' in query.replace('%0D%0A', ''):
+                problems.append(f'{rel}: bare %0A line break ({url[:90]})')
+    return problems
+
+
+def sweep_legacy_js():
+    """The pre-Hugo static site still ships two main.js files that build a
+    mailto by hand. They are not part of the Hugo build, but they live on the
+    branch and would reintroduce the bug if ever served."""
+    problems = []
+    for rel in ('assets/js/main.js', 'designs/wen-lab/assets/js/main.js'):
+        path = ROOT / rel
+        if not path.exists():
+            continue
+        js = path.read_text(errors='ignore')
+        if 'mailto:' not in js:
+            continue
+        if '%0D%0A' not in js and 'crlf' not in js.lower() and "'\\r\\n'" not in js:
+            problems.append(f'{rel}: builds a mailto body without CRLF normalisation')
+    return problems
+
+
 def main():
     if not PUBLIC.exists():
         sys.exit('public/ missing — run hugo first')
@@ -111,6 +158,8 @@ def main():
     for lang, path in PAGES.items():
         problems.extend(check(lang, path))
         problems.extend(check_banner(lang, path))
+    problems.extend(sweep())
+    problems.extend(sweep_legacy_js())
 
     for p in problems:
         print('FAIL', p)

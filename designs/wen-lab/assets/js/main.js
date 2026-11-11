@@ -553,11 +553,14 @@ function openEmailDrafter(roleType) {
   };
   const roleName = roles[roleType] || (isZh ? "岗位应聘" : "Application");
   const subject = encodeURIComponent(`[Wen Lab ${isZh ? '应聘' : 'Application'}] - ${roleName} - [Your Name]`);
-  const body = encodeURIComponent(
+  const rawBody = (
     isZh 
       ? `尊敬的文卓谦老师：\n\n您好！我从文卓谦实验室官方网站获悉课题组招募信息，对贵组在白血病表观遗传、代谢调控与免疫微环境领域的研究方向深感向往。特此呈上个人申请材料，有意应聘【${roleName}】。\n\n【个人简要概况】\n- 毕业院校及专业：\n- 目前学历 / 预计毕业时间：\n- 主要科研方向及代表成果：\n\n个人简历与代表作已以附件形式呈送，期待能有机会向您当面或线上汇报！\n\n祝好，\n[您的姓名]\n[联系电话]`
       : `Dear Dr. Man,\n\nI am writing to express my enthusiastic interest in joining the Wen Laboratory as a ${roleName}. Having learned about your cutting-edge work on leukemia epigenetics, proton partitioning, and metabolic rewiring, I believe my background aligns closely with your research mission.\n\nBrief Summary:\n- Institution & Major:\n- Current Degree & Expected Date:\n- Research Highlights / Publications:\n\nPlease find attached my CV and summary of research accomplishments.\n\nSincerely,\n[Your Name]\n[Contact Information]`
   );
+  // RFC 6068 calls for %0D%0A between body lines; encodeURIComponent
+  // leaves a bare %0A for \n, which some mail clients drop.
+  const body = encodeURIComponent(rawBody.replace(/\r\n|\n/g, '\r\n'));
   window.location.href = `mailto:manzhq@mail.sysu.edu.cn?subject=${subject}&body=${body}`;
 }
 
