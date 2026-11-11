@@ -12,3 +12,30 @@ dist/
 public/
 resources/_gen/
 .hugo_build.lock
+
+# ---- Leaked lab / analysis artifacts (never part of the website) ----
+# Spreadsheets, design sources and R outputs are never needed to build the
+# site, so block them everywhere.
+*.pdf
+*.ai
+*.xlsx
+*.xls
+*.Rproj
+*.Rhistory
+*.RData
+*.rdata
+*.Rds
+*.rds
+
+# R analysis scripts
+*.R
+*.r
+*.Rmd
+*.rmd
+
+# Raster/vector media leaked at the repo root. Scope these to the root so the
+# site's own images under assets/, static/ and designs/ stay tracked.
+/*.jpg
+/*.jpeg
+/*.png
+/*.svg
