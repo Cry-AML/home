@@ -220,6 +220,8 @@ chk "brand wordmark uses fluid scale" "grep -q 'clamp(15px, 1.4vw, 20px)' assets
 chk "hero note divider uses real border-left" "grep -A12 '\.ll-hero-note::before {' assets/css/custom.css | grep -q 'border-left: 0.5px solid'"
 chk "header drawer breakpoint matches brand scale" "grep -q '@media (max-width: 1140px)' assets/css/custom.css"
 chk "both marks are zoom-eligible (no .nozoom)" "! sed -n '/ll-brand__mark/p;/ll-footer-mark/p' layouts/partials/header/basic.html layouts/partials/footer.html | grep -q 'nozoom'"
+chk "dark mode brand mark filter defined" "grep -A3 'html.dark .ll-brand__mark {' assets/css/custom.css | grep -q 'brightness'"
+chk "dark mode footer mark filter defined" "grep -A3 'html.dark .ll-footer-mark {' assets/css/custom.css | grep -q 'invert'"
 chk "header mark rendered once per page" "[ \$(grep -o 'll-brand__mark' public/index.html | wc -l) -eq 1 ]"
 
 

@@ -684,6 +684,14 @@ body {
   flex: none;
   object-fit: contain;
   opacity: 0.92;
+  transition: filter var(--ll-dur-hover) var(--ll-ease-out),
+              opacity var(--ll-dur-hover) var(--ll-ease-out);
+}
+/* In dark appearance, lift the brick-red stamp so it reads cleanly against
+   the dark surface without breaking medium-zoom */
+html.dark .ll-brand__mark {
+  filter: brightness(2.8) contrast(1.15);
+  opacity: 0.96;
 }
 .ll-brand__name {
   font-family: var(--font-hand);
@@ -2021,6 +2029,13 @@ h1, h2, h3 {
   object-fit: contain;
   opacity: 0.55;
   flex: none;
+  transition: filter var(--ll-dur-hover) var(--ll-ease-out),
+              opacity var(--ll-dur-hover) var(--ll-ease-out);
+}
+/* In dark appearance, invert the dark ink stamp to a soft chalk mark */
+html.dark .ll-footer-mark {
+  filter: invert(0.9) brightness(1.2);
+  opacity: 0.72;
 }
 
 /* ==========================================================================
@@ -2237,6 +2252,12 @@ h1, h2, h3 {
   width: 58%;
   height: auto;
   opacity: 0.5;
+  transition: filter var(--ll-dur-hover) var(--ll-ease-out),
+              opacity var(--ll-dur-hover) var(--ll-ease-out);
+}
+html.dark .ll-avatar__placeholder img {
+  filter: brightness(2.8) contrast(1.15);
+  opacity: 0.88;
 }
 
 /* --- people grids -------------------------------------------------------- */
