@@ -410,7 +410,7 @@ body {
   overflow: visible;
   background-color: var(--ll-paper);
   border-radius: 2px;
-  padding: 24px 20px;
+  padding: 22px 18px;
   box-shadow: var(--ll-shadow-paper);
   rotate: clamp(calc(var(--ll-tilt-max) * -1), var(--ll-tilt, 0deg), var(--ll-tilt-max));
   transition: rotate var(--ll-dur-sheet) var(--ll-ease-settle),
@@ -1133,7 +1133,6 @@ img, svg, video, canvas { max-width: 100%; }
 @media (max-width: 639px) {
   :root { --ll-tilt-max: 0deg; }
 
-  .ll-sheet { padding: 22px 18px; }
   .ui-container { padding-inline: 16px; }
   .main-menu > a:first-child { font-size: 20px !important; }
 
