@@ -449,5 +449,38 @@
       "captionZh": "课题组组会",
       "captionEn": "Weekly lab meeting"
     }
-  ]
+  ],
+  "team": {
+    "group": {
+      "real": "images/team/group-real.jpg",
+      "illustrated": "images/team/group-illustrated.jpg",
+      "captionZh": "文卓谦实验室全体成员，2026 年秋",
+      "captionEn": "MCH Laboratory, autumn 2026",
+      "placeZh": "中山大学广州校区北校园",
+      "placeEn": "SYSU North Campus"
+    },
+    "members": [
+      {
+        "id": "zyh",
+        "nameZh": "郑焱华",
+        "nameEn": "Yanhua Zheng",
+        "roleZh": "博士研究生",
+        "roleEn": "Ph.D. Candidate",
+        "group": "students",
+        "since": "2024",
+        "photoReal": "images/team/zyh-real.jpg",
+        "photoIllustrated": "images/team/zyh-illustrated.jpg",
+        "keywordsZh": [
+          "单细胞组学",
+          "AML 分型"
+        ],
+        "keywordsEn": [
+          "Single-Cell Omics",
+          "AML Topotypes"
+        ],
+        "email": "",
+        "links": []
+      }
+    ]
+  }
 }

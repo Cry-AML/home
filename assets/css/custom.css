@@ -1998,3 +1998,407 @@ h1, h2, h3 {
   opacity: 0.55;
   flex: none;
 }
+
+/* ==========================================================================
+   Team page — photographs as prints pasted into the lab notebook
+   ========================================================================== */
+
+/* --- page head + the one global control ---------------------------------- */
+.ll-team-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px 32px;
+  margin-bottom: 28px;
+}
+.ll-team-head .ll-measure { flex: 1 1 22em; }
+
+.ll-mode {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  border-radius: 9px;
+  background-color: var(--md-surface-container-high);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+}
+.ll-mode__opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--md-on-surface-variant);
+  cursor: pointer;
+  transition: color var(--ll-dur-hover) var(--ll-ease-out),
+              background-color var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-mode__opt:hover { color: var(--md-on-surface); }
+.ll-mode__opt.is-current {
+  color: var(--md-on-secondary-container);
+  background-color: var(--md-secondary-container);
+  font-weight: 600;
+}
+
+/* --- sheet sub-head: an ordinal plus a label, used on every team sheet ---- */
+.ll-sheet-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.ll-sheet-ord {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--md-primary);
+  font-variant-numeric: tabular-nums;
+}
+.ll-sheet-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--md-on-surface-variant);
+}
+
+/* the sheets below the group portrait sit on the desk with a gap */
+.ll-sheet--group + .ll-sheet,
+.ll-sheet + .ll-sheet { margin-top: 24px; }
+
+/* --- the group portrait -------------------------------------------------- */
+.ll-portrait { margin: 0; }
+.ll-portrait-frame {
+  position: relative;
+  border-radius: 3px;
+  overflow: hidden;
+  background-color: var(--md-surface-container);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+  /* the paper-white print border of a pasted photograph */
+  padding: 8px;
+}
+.ll-portrait__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  border-radius: 2px;
+  position: absolute;
+  inset: 8px;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  opacity: 0;
+  transition: opacity var(--ll-dur-fade) var(--ll-ease-out);
+}
+.ll-portrait__img.is-visible { opacity: 1; }
+/* the first image participates in layout so the frame has a height */
+.ll-portrait__img--real {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  opacity: 1;
+}
+.ll-portrait__img--art {
+  clip-path: inset(0 0 0 100%);
+  opacity: 1;
+  transition: clip-path var(--ll-dur-sheet) var(--ll-ease-out);
+}
+/* the range input is the comparison handle: invisible, but focusable */
+.ll-portrait__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 3;
+}
+.ll-portrait__seam {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 100%;
+  width: 2px;
+  background-color: var(--md-surface-lowest);
+  box-shadow: 0 0 0 0.5px var(--md-outline);
+  transform: translateX(-1px);
+  pointer-events: none;
+  z-index: 2;
+  transition: left var(--ll-dur-sheet) var(--ll-ease-out);
+}
+.ll-portrait__seam::after {
+  content: '⇄';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 12px;
+  color: var(--md-on-surface);
+  background-color: var(--md-surface-lowest);
+  box-shadow: var(--ll-shadow-loose);
+}
+.ll-portrait__cap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 18px;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--md-on-surface-variant);
+}
+.ll-portrait__place { color: var(--md-outline); }
+
+/* --- PI row -------------------------------------------------------------- */
+.ll-pi-row {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: start;
+}
+.ll-pi-body { min-width: 0; }
+.ll-pi-body .ui-body { max-width: 46em; }
+.ll-pi-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* --- portrait frames ----------------------------------------------------- */
+.ll-avatar {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 3px;
+  background-color: var(--md-surface-low);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.ll-avatar--pi { aspect-ratio: 1 / 1; }
+.ll-avatar__placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--md-surface-container);
+}
+.ll-avatar__placeholder img {
+  width: 58%;
+  height: auto;
+  opacity: 0.5;
+}
+
+/* --- people grids -------------------------------------------------------- */
+.ll-people { display: grid; gap: 24px; }
+.ll-people--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ll-people--four  { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+
+.ll-person { min-width: 0; }
+
+/* the frame is a button: it owns the flip, the keyboard and the focus ring */
+.ll-person__frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 6px;
+  border: 0;
+  border-radius: 3px;
+  background-color: var(--md-surface-lowest);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+  cursor: pointer;
+  overflow: hidden;
+  transition: box-shadow var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-person__frame:hover { box-shadow: inset 0 0 0 0.5px var(--md-outline); }
+
+.ll-person__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity var(--ll-dur-fade) var(--ll-ease-out);
+}
+.ll-person__img--real {
+  position: relative;
+  opacity: 1;
+}
+.ll-person__img--art {
+  position: absolute;
+  inset: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+}
+/* one class on the card swaps both layers; no opacity animation on the
+   photograph itself, so the switch cannot flash the paper underneath */
+.ll-person.is-art .ll-person__img--real { opacity: 0; }
+.ll-person.is-art .ll-person__img--art  { opacity: 1; }
+
+.ll-person__blank {
+  background-color: var(--md-surface-container);
+  background-image: repeating-linear-gradient(135deg,
+    transparent 0 7px,
+    color-mix(in srgb, var(--md-outline-variant) 55%, transparent) 7px 8px);
+}
+
+.ll-person__swap {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 12px;
+  color: var(--md-on-surface);
+  background-color: color-mix(in srgb, var(--md-surface-lowest) 88%, transparent);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.18);
+  transition: transform var(--ll-dur-hover) var(--ll-ease-out),
+              background-color var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-person__frame:hover .ll-person__swap { transform: rotate(180deg); }
+.ll-person.is-art .ll-person__swap {
+  background-color: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+
+.ll-person__name {
+  font-family: var(--font-hand);
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--md-on-surface);
+  margin: 12px 0 3px;
+}
+.ll-person__role {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--md-on-surface-variant);
+  margin: 0;
+}
+.ll-person__since {
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--md-secondary);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+}
+.ll-person__kw {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ll-person__kw li {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 7px;
+  border-radius: 4px;
+  color: var(--md-on-surface-variant);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+}
+.ll-person__mail {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--md-secondary);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.ll-person__mail:hover { text-decoration: underline; }
+
+/* --- the open seat ------------------------------------------------------- */
+.ll-seat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 6px 6px 14px;
+  border-radius: 3px;
+  color: var(--md-outline);
+  text-decoration: none;
+  box-shadow: inset 0 0 0 1px transparent;
+  transition: color var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-seat__frame {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 3px;
+  border: 1px dashed var(--md-outline-variant);
+  background-color: transparent;
+}
+.ll-seat__frame svg { width: 58%; height: auto; }
+.ll-seat__title {
+  font-family: var(--font-hand);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--md-on-surface);
+}
+.ll-seat .ll-caption {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--md-secondary);
+}
+.ll-seat:hover { color: var(--md-primary); }
+.ll-seat:hover .ll-seat__frame { border-color: var(--md-primary); }
+
+/* --- responsive ---------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .ll-people--four { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .ll-people--three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ll-pi-row { grid-template-columns: 110px minmax(0, 1fr); }
+}
+@media (max-width: 720px) {
+  .ll-mode { width: 100%; }
+  .ll-mode__opt { flex: 1; justify-content: center; }
+  .ll-people--three,
+  .ll-people--four { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .ll-pi-row { grid-template-columns: minmax(0, 1fr); }
+  .ll-avatar--pi { max-width: 110px; }
+  .ll-person__name { font-size: 15px; }
+  .ll-seat__title { font-size: 15px; }
+}
+@media (max-width: 420px) {
+  .ll-people--three,
+  .ll-people--four { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-portrait__img--art,
+  .ll-portrait__seam { transition: none; }
+  .ll-person__frame:hover .ll-person__swap { transform: none; }
+}

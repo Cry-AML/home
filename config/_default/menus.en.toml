@@ -14,6 +14,11 @@
   weight = 30
 
 [[main]]
+  name = "Team"
+  url = "/team/"
+  weight = 35
+
+[[main]]
   name = "Experience"
   url = "/pedigree/"
   weight = 40

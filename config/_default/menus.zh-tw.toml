@@ -14,6 +14,11 @@
   weight = 30
 
 [[main]]
+  name = "團隊成員"
+  url = "/zh-tw/team/"
+  weight = 35
+
+[[main]]
   name = "學術經歷"
   url = "/zh-tw/pedigree/"
   weight = 40

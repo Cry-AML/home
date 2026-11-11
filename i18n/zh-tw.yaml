@@ -62,6 +62,22 @@ join_contact_banner_desc: "有意者請將個人詳細簡歷發送至文卓謙�
 btn_send_email: "發送應聘郵件"
 
 news_snapshots: "實驗室掠影"
+team_title: "團隊成員"
+team_lead: "一支小而專注的團隊，只追問一個問題：急性髓系白血病為何復發。"
+team_mode_label: "頭像樣式"
+team_mode_real: "檔案照片"
+team_mode_art: "手繪插畫"
+team_compare_label: "拖動比較原始照片與手繪插畫"
+team_group_label: "實驗室全體合影"
+team_pi_label: "學術帶頭人"
+team_pi_note: "我們把染色質生物學、代謝通量與單細胞分辨率放在一起研究，並把課題組保持在每個人都能獨立負責一個問題的規模。"
+team_pi_more: "完整學術經歷"
+team_postdoc_label: "博士後與專職科研人員"
+team_student_label: "博士與碩士研究生"
+team_open_seat: "開放崗位"
+team_open_seat_title: "虛位以待"
+team_open_seat_cta: "長期招募中"
+
 news_title: "新聞動態"
 
 contact_title: "聯繫方式"

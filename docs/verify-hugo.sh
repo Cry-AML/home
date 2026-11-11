@@ -213,6 +213,24 @@ chk "wordmark is still the home link" "grep -q 'class=ll-brand__name' public/ind
 chk "both marks are zoom-eligible (no .nozoom)" "! sed -n '/ll-brand__mark/p;/ll-footer-mark/p' layouts/partials/header/basic.html layouts/partials/footer.html | grep -q 'nozoom'"
 chk "header mark rendered once per page" "[ \$(grep -o 'll-brand__mark' public/index.html | wc -l) -eq 1 ]"
 
+
+echo "== 18. Team page =="
+chk "team page built (EN)" "[ -s public/team/index.html ]"
+chk "team page built (ZH-CN)" "[ -s public/zh-cn/team/index.html ]"
+chk "team page built (ZH-TW)" "[ -s public/zh-tw/team/index.html ]"
+chk "team in the main menu (EN)" "grep -q 'name = \"Team\"' config/_default/menus.en.toml"
+chk "team in the main menu (ZH-CN)" "grep -q '团队成员' config/_default/menus.zh-cn.toml"
+chk "team in the main menu (ZH-TW)" "grep -q '團隊成員' config/_default/menus.zh-tw.toml"
+chk "group portrait ships both variants" "grep -q 'group-real.jpg' public/team/index.html && grep -q 'group-illustrated.jpg' public/team/index.html"
+chk "global portrait switch present" "grep -q 'll-mode__opt' public/team/index.html"
+chk "comparison slider present" "grep -q 'data-compare-range' public/team/index.html"
+chk "member portraits ship both variants" "grep -q 'zyh-real.jpg' public/team/index.html && grep -q 'zyh-illustrated.jpg' public/team/index.html"
+chk "every member card has a flip control" "[ \$(grep -o 'data-person-toggle' public/team/index.html | wc -l) -eq \$(grep -o 'data-person>' public/team/index.html | wc -l) ]"
+chk "open seat card present" "grep -q 'll-seat' public/team/index.html"
+chk "team script shipped" "grep -q 'team.min' public/team/index.html"
+chk "student role reads Ph.D. Candidate" "grep -q 'Ph.D. Candidate' public/team/index.html"
+chk "student role localized" "grep -q '博士研究生' public/zh-cn/team/index.html && grep -q '博士研究生' public/zh-tw/team/index.html"
+
 echo ""
 if [ "$fail" -eq 0 ]; then
   printf '\033[32mALL %d ACCEPTANCE CHECKS PASSED!\033[0m\n' "$pass"

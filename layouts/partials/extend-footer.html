@@ -42,6 +42,12 @@
   <script src="{{ $inkMin.RelPermalink }}" integrity="{{ $inkMin.Data.Integrity }}" defer></script>
 {{ end }}
 
+{{ $teamJS := resources.Get "js/team.js" }}
+{{ if $teamJS }}
+  {{ $teamMin := $teamJS | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $teamMin.RelPermalink }}" integrity="{{ $teamMin.Data.Integrity }}" defer></script>
+{{ end }}
+
 {{ $script := resources.Get "js/wen-lab.js" }}
 {{ if $script }}
   {{ $minified := $script | resources.Minify | resources.Fingerprint }}

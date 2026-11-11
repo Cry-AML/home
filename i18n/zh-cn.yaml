@@ -62,6 +62,22 @@ join_contact_banner_desc: "有意者请将个人详细简历发送至文卓谦�
 btn_send_email: "发送应聘邮件"
 
 news_snapshots: "实验室掠影"
+team_title: "团队成员"
+team_lead: "一支小而专注的团队，只追问一个问题：急性髓系白血病为何复发。"
+team_mode_label: "头像样式"
+team_mode_real: "档案照片"
+team_mode_art: "手绘插画"
+team_compare_label: "拖动比较原始照片与手绘插画"
+team_group_label: "实验室全体合影"
+team_pi_label: "学术带头人"
+team_pi_note: "我们把染色质生物学、代谢通量与单细胞分辨率放在一起研究，并把课题组保持在每个人都能独立负责一个问题的规模。"
+team_pi_more: "完整学术经历"
+team_postdoc_label: "博士后与专职科研人员"
+team_student_label: "博士与硕士研究生"
+team_open_seat: "开放岗位"
+team_open_seat_title: "虚位以待"
+team_open_seat_cta: "长期招募中"
+
 news_title: "新闻动态"
 
 contact_title: "联系方式"

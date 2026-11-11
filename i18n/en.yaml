@@ -62,6 +62,22 @@ join_contact_banner_desc: "Please email your curriculum vitae, research statemen
 btn_send_email: "Email PI"
 
 news_snapshots: "Lab snapshots"
+team_title: "Our Team"
+team_lead: "A small group working on one hard problem: why acute myeloid leukemia comes back."
+team_mode_label: "Portrait style"
+team_mode_real: "Documentary"
+team_mode_art: "Illustrated"
+team_compare_label: "Drag to compare the photograph with the illustration"
+team_group_label: "Lab Portrait"
+team_pi_label: "Principal Investigator"
+team_pi_note: "We combine chromatin biology, metabolic flux and single-cell resolution — and we keep the lab small enough that everyone owns a question."
+team_pi_more: "Full biography"
+team_postdoc_label: "Postdoctoral Fellows & Research Associates"
+team_student_label: "Ph.D. & M.Sc. Candidates"
+team_open_seat: "Open position"
+team_open_seat_title: "Future Colleague"
+team_open_seat_cta: "We are recruiting"
+
 news_title: "News & Updates"
 
 contact_title: "Contact"

@@ -1,0 +1,130 @@
+{{ define "main" }}
+{{ partial "labdata.html" . }}
+{{ $isEn := eq .Site.Language.Lang "en" }}
+{{ $lab := .Scratch.Get "lab" }}
+{{ $team := $lab.team }}
+{{ $zh := or (eq .Site.Language.Lang "zh-cn") (eq .Site.Language.Lang "zh-tw") }}
+
+<div class="ui-container pt-12 pb-20 sm:pt-16">
+
+  {{/* The page head carries the one control that governs every photograph. */}}
+  <div class="ll-team-head">
+    <div class="ll-measure">
+      <h1 class="ui-title">{{ i18n "team_title" }}</h1>
+      <p class="ui-body mt-3">{{ i18n "team_lead" }}</p>
+    </div>
+
+    <div class="ll-mode" role="group" aria-label="{{ i18n "team_mode_label" }}">
+      <button type="button" class="ll-mode__opt is-current" data-mode="real" aria-pressed="true">
+        <span aria-hidden="true">📷</span><span>{{ i18n "team_mode_real" }}</span>
+      </button>
+      <button type="button" class="ll-mode__opt" data-mode="illustrated" aria-pressed="false">
+        <span aria-hidden="true">✨</span><span>{{ i18n "team_mode_art" }}</span>
+      </button>
+    </div>
+  </div>
+
+  {{/* ---- the group portrait: a print pasted onto the sheet ---------------- */}}
+  {{ with $team.group }}
+    <div class="ll-sheet ll-sheet--group" style="--ll-tilt:-0.14deg; --ll-sheet-i:0">
+      <div class="ll-sheet-head">
+        <span class="ll-sheet-ord">00</span>
+        <span class="ll-sheet-label">{{ i18n "team_group_label" }}</span>
+      </div>
+
+      <figure class="ll-portrait" data-compare>
+        <div class="ll-portrait-frame">
+          <img class="ll-portrait__img ll-portrait__img--real is-visible"
+               src="{{ .real | relURL }}" alt="{{ cond $isEn .captionEn .captionZh }}"
+               width="1800" height="771" decoding="async">
+          <img class="ll-portrait__img ll-portrait__img--art"
+               src="{{ .illustrated | relURL }}" alt="" aria-hidden="true"
+               width="1800" height="771" decoding="async">
+          {{/* the drag handle sits at the seam; it is a range input so it also
+               works with a keyboard and a screen reader */}}
+          <input class="ll-portrait__range" type="range" min="0" max="100" value="100"
+                 aria-label="{{ i18n "team_compare_label" }}" data-compare-range>
+          <span class="ll-portrait__seam" data-compare-seam aria-hidden="true"></span>
+        </div>
+        <figcaption class="ll-portrait__cap">
+          <span>{{ $lab.team.group.captionZh }}</span>
+          <span class="ll-portrait__place">{{ cond $isEn .placeEn .placeZh }}</span>
+        </figcaption>
+      </figure>
+    </div>
+  {{ end }}
+
+  {{/* ---- 01 · the PI, as a single wide entry ------------------------------ */}}
+  {{ with $lab.pi }}
+    <div class="ll-sheet" style="--ll-tilt:0.12deg; --ll-sheet-i:1">
+      <div class="ll-sheet-head">
+        <span class="ll-sheet-ord">01</span>
+        <span class="ll-sheet-label">{{ i18n "team_pi_label" }}</span>
+      </div>
+
+      <div class="ll-pi-row">
+        <div class="ll-avatar ll-avatar--pi" data-member-photo="pi">
+          {{/* no PI portrait has been supplied yet: the plate shows the mark */}}
+          <span class="ll-avatar__placeholder" aria-hidden="true">
+            <img src="{{ "images/mark.png" | relURL }}" alt="" width="64" height="64">
+          </span>
+        </div>
+        <div class="ll-pi-body">
+          <h2 class="ui-heading">{{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}</h2>
+          <p class="ui-caption mt-1">{{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }}</p>
+          <p class="ui-body mt-3">{{ i18n "team_pi_note" }}</p>
+          <div class="ll-pi-links">
+            <a href="mailto:{{ $lab.pi.email }}" class="ll-btn ll-btn--outline ll-btn--sm">
+              {{ $lab.pi.email }}
+            </a>
+            <a href="{{ "pedigree/" | relLangURL }}" class="ll-btn ll-btn--ghost ll-btn">
+              {{ i18n "team_pi_more" }} →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{ end }}
+
+  {{/* ---- 02 · postdocs & research associates ------------------------------ */}}
+  {{ $postdocs := where $team.members "group" "postdocs" }}
+  {{ $students := where $team.members "group" "students" }}
+  {{ $assistants := where $team.members "group" "assistants" }}
+
+  {{ if or $postdocs $assistants }}
+    <div class="ll-sheet" style="--ll-tilt:-0.1deg; --ll-sheet-i:2">
+      <div class="ll-sheet-head">
+        <span class="ll-sheet-ord">02</span>
+        <span class="ll-sheet-label">{{ i18n "team_postdoc_label" }}</span>
+      </div>
+      <div class="ll-people ll-people--three">
+        {{ range $postdocs }}{{ partial "team-card.html" (dict "m" . "isEn" $isEn) }}{{ end }}
+        {{ range $assistants }}{{ partial "team-card.html" (dict "m" . "isEn" $isEn) }}{{ end }}
+      </div>
+    </div>
+  {{ end }}
+
+  {{/* ---- 03 · graduate students, with the open seat last ------------------ */}}
+  <div class="ll-sheet" style="--ll-tilt:0.1deg; --ll-sheet-i:3">
+    <div class="ll-sheet-head">
+      <span class="ll-sheet-ord">03</span>
+      <span class="ll-sheet-label">{{ i18n "team_student_label" }}</span>
+    </div>
+    <div class="ll-people ll-people--four">
+      {{ range $students }}{{ partial "team-card.html" (dict "m" . "isEn" $isEn) }}{{ end }}
+      <a class="ll-seat" href="{{ "join/" | relLangURL }}">
+        <span class="ll-seat__frame" aria-hidden="true">
+          <svg viewBox="0 0 100 125" fill="none">
+            <circle cx="50" cy="46" r="17" stroke="currentColor" stroke-width="2" stroke-dasharray="4 5"/>
+            <path d="M20 112c0-17 13-29 30-29s30 12 30 29" stroke="currentColor" stroke-width="2" stroke-dasharray="4 5"/>
+          </svg>
+        </span>
+        <span class="ll-stamp ll-stamp--marker">{{ i18n "team_open_seat" }}</span>
+        <span class="ll-seat__title">{{ i18n "team_open_seat_title" }}</span>
+        <span class="ll-caption">{{ i18n "team_open_seat_cta" }}</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+{{ end }}
