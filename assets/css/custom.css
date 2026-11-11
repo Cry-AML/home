@@ -706,6 +706,8 @@ html.dark .ll-brand__mark {
   text-overflow: ellipsis;
 }
 .ll-brand__name:hover { color: var(--md-primary); }
+.ll-brand__short { display: none; }
+.ll-brand__full  { display: inline; }
 
 .main-menu nav a {
   position: relative;
@@ -1225,6 +1227,24 @@ img, svg, video, canvas { max-width: 100%; }
   .ui-container { padding-inline: 16px; }
   .ll-brand__name { font-size: 15px; }
   .ll-brand__mark { width: 22px; height: 22px; }
+  /* On mobile small screens, display the concise brand name ("xxx实验室") */
+  .ll-brand__short { display: inline; }
+  .ll-brand__full  { display: none; }
+
+  /* Keep right navigation items from shrinking */
+  .main-menu > .ms-auto { flex: none; }
+  .mobile-header-row { gap: 8px; }
+  #appearance-switcher-mobile,
+  label[for="mobile-menu-toggle"] {
+    width: 32px;
+    height: 32px;
+    flex: none;
+  }
+  #appearance-switcher-mobile svg,
+  label[for="mobile-menu-toggle"] svg {
+    width: 18px;
+    height: 18px;
+  }
 
   /* Touch targets stay >= 40px */
   .ll-btn,
@@ -1246,9 +1266,7 @@ img, svg, video, canvas { max-width: 100%; }
   }
 }
 
-@media (max-width: 379px) {
-  .ll-brand__name { max-width: 13ch; }
-}
+/* Short name at <=639px renders comfortably down to 320px */
 
 /* --------------------------------------------------------------------------
    19. Preference & environment fallbacks
@@ -2018,8 +2036,84 @@ h1, h2, h3 {
   background-color: var(--md-secondary-container);
   font-weight: 600;
 }
+/* Mobile pure-CSS language dropdown pill */
+.ll-langmenu { display: none; }
 @media (max-width: 639px) {
-  .ll-langswitch__opt { min-width: 26px; padding-inline: 6px; }
+  /* Hide desktop segmented control on mobile */
+  .ll-langswitch { display: none !important; }
+
+  .ll-langmenu {
+    display: inline-block;
+    position: relative;
+    flex: none;
+  }
+  .ll-langmenu summary { list-style: none; }
+  .ll-langmenu summary::-webkit-details-marker { display: none; }
+
+  .ll-langmenu__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 28px;
+    padding-inline: 9px 7px;
+    border-radius: 7px;
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+    transition: background-color var(--ll-dur-hover) var(--ll-ease-out),
+                color var(--ll-dur-hover) var(--ll-ease-out);
+  }
+  .ll-langmenu__btn:hover {
+    background-color: var(--md-secondary);
+    color: var(--md-on-secondary);
+  }
+  .ll-langmenu__arrow {
+    opacity: 0.75;
+    transition: transform 150ms ease-out;
+  }
+  .ll-langmenu[open] .ll-langmenu__arrow {
+    transform: rotate(180deg);
+  }
+
+  .ll-langmenu__pop {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 130px;
+    padding: 6px;
+    background-color: var(--md-surface-container);
+    border-radius: 10px;
+    box-shadow: var(--ll-shadow-loose);
+    border: 0.5px solid var(--md-outline-variant);
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .ll-langmenu__item {
+    display: flex;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--md-on-surface-variant);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color var(--ll-dur-hover) var(--ll-ease-out),
+                color var(--ll-dur-hover) var(--ll-ease-out);
+  }
+  .ll-langmenu__item:hover,
+  .ll-langmenu__item.is-current {
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+    font-weight: 600;
+  }
 }
 
 /* Footer signature: the mark at 22px, aligned with the copyright baseline */

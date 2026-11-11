@@ -8,10 +8,19 @@
     footer mark, which sits outside any link, zoomed correctly. Keeping them
     side by side gives both marks the same behaviour, and leaves the wordmark
     as the single, explicit way home.
+
+    On mobile (<640px), the title adapts cleanly:
+    - Short label: "文卓谦实验室" / "文卓謙實驗室" / "MCH Laboratory"
+    - Full title:  "文卓谦实验室 中山大学中山医学院" / "MCH Laboratory, Sun Yat-sen University"
+    This allows all header controls (language dropdown pill, theme switcher,
+    hamburger menu) to display without cramped truncation on small screens.
   */}}
   <div class="ll-brand">
     <img class="ll-brand__mark" src="{{ "images/mark.png" | relURL }}" width="26" height="26" alt="" aria-hidden="true" decoding="async">
-    <a href="{{ "" | relLangURL }}" class="ll-brand__name">{{ .Site.Title | markdownify }}</a>
+    <a href="{{ "" | relLangURL }}" class="ll-brand__name" title="{{ .Site.Title | markdownify }}">
+      <span class="ll-brand__short">{{ i18n "brand_name" }}</span>
+      <span class="ll-brand__full">{{ .Site.Title | markdownify }}</span>
+    </a>
   </div>
 
   <div class="flex items-center ms-auto">
