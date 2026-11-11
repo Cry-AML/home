@@ -32,3 +32,28 @@
   name = "Contact"
   url = "/en/contact/"
   weight = 70
+
+[[footer]]
+  name = "Wen Laboratory"
+  url = "/en/"
+  weight = 10
+
+[[footer]]
+  name = "Research"
+  url = "/en/research/"
+  weight = 20
+
+[[footer]]
+  name = "Publications"
+  url = "/en/publications/"
+  weight = 30
+
+[[footer]]
+  name = "Experience"
+  url = "/en/pedigree/"
+  weight = 40
+
+[[footer]]
+  name = "Contact"
+  url = "/en/contact/"
+  weight = 50

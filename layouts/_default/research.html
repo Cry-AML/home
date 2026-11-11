@@ -2,87 +2,53 @@
 {{ $isEn := eq .Site.Language.Lang "en" }}
 {{ $lab := hugo.Data.lab }}
 
-<div class="ui-container py-10 sm:py-14">
-  <div class="mb-10">
-    <h1 class="ui-title">
-      {{ i18n "research_title" }}
-    </h1>
-    <p class="ui-body text-neutral-600 dark:text-neutral-400 mt-2 max-w-3xl">
-      {{ i18n "research_lead" }}
-    </p>
+<div class="ui-container pt-12 pb-20 sm:pt-16">
+  <div class="mb-8 ll-measure">
+    <h1 class="ui-title">{{ i18n "research_title" }}</h1>
+    <p class="ui-body mt-3">{{ i18n "research_lead" }}</p>
   </div>
 
-  <!-- 3 Research Pillars: Looseleaf Document Stream (No Boxes) -->
-  <div class="mb-14">
-    {{ range $item := $lab.researchPillars }}
-      <div class="ui-entry grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+  <div class="ll-sheet" style="--ll-tilt:-0.22deg; --ll-sheet-i:0">
+    <!-- Pillars -->
+    {{ range $i, $item := $lab.researchPillars }}
+      <div class="ll-entry grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-3">
         <div class="md:col-span-4">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="font-mono text-sm font-semibold text-neutral-400">
-              {{ $item.number }}
-            </span>
-            <span class="ll-badge">
-              {{ cond $isEn $item.tagEn $item.tagZh }}
-            </span>
+          <div class="flex items-baseline gap-2.5 mb-1.5">
+            <span class="font-mono ll-body-sm ll-text-pencil">{{ $item.number }}</span>
+            <span class="ll-stamp">{{ cond $isEn $item.tagEn $item.tagZh }}</span>
           </div>
-          <h2 class="ui-heading text-neutral-900 dark:text-white">
-            {{ cond $isEn $item.titleEn $item.titleZh }}
-          </h2>
-          <div class="ui-caption font-mono text-indigo-700 dark:text-indigo-400 mt-2">
-            {{ $item.highlightPaper }}
-          </div>
+          <h2 class="ui-heading">{{ cond $isEn $item.titleEn $item.titleZh }}</h2>
+          <p class="ui-caption mt-2">{{ $item.highlightPaper }}</p>
         </div>
         <div class="md:col-span-8">
-          <p class="ui-body text-neutral-600 dark:text-neutral-300">
-            {{ cond $isEn $item.descEn $item.descZh }}
-          </p>
+          <p class="ui-body">{{ cond $isEn $item.descEn $item.descZh }}</p>
+        </div>
+      </div>
+    {{ end }}
+
+    <hr class="ll-rule my-9">
+
+    <h2 class="ui-heading mb-1">{{ i18n "platform_section_title" }}</h2>
+    {{ range $plat := $lab.platforms }}
+      <div class="ll-entry grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-3">
+        <div class="md:col-span-4">
+          <span class="ll-stamp ll-stamp--muted mb-2">{{ cond $isEn $plat.tagEn $plat.tagZh }}</span>
+          <h3 class="ui-heading mt-1.5">{{ cond $isEn $plat.nameEn $plat.nameZh }}</h3>
+        </div>
+        <div class="md:col-span-8">
+          <p class="ui-body mb-3">{{ cond $isEn $plat.descEn $plat.descZh }}</p>
+          <ul class="space-y-1.5 ui-caption">
+            {{ $feats := cond $isEn $plat.featuresEn $plat.featuresZh }}
+            {{ range $feats }}
+              <li class="flex items-start gap-2">
+                <span class="ll-text-marker leading-5">·</span>
+                <span class="ll-text-soft">{{ . }}</span>
+              </li>
+            {{ end }}
+          </ul>
         </div>
       </div>
     {{ end }}
   </div>
-
-  <!-- Core Platforms: Ruled Technical List (No Boxes) -->
-  <div class="pt-8 border-t border-neutral-300 dark:border-neutral-800" style="border-top-width: 0.5px;">
-    <h2 class="ui-heading mb-6">
-      {{ i18n "platform_section_title" }}
-    </h2>
-    <div class="space-y-6">
-      {{ range $plat := $lab.platforms }}
-        <div class="ui-entry grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-          <div class="md:col-span-4">
-            <span class="ll-badge-neutral mb-2">
-              {{ cond $isEn $plat.tagEn $plat.tagZh }}
-            </span>
-            <h3 class="ui-heading mt-1">
-              {{ cond $isEn $plat.nameEn $plat.nameZh }}
-            </h3>
-          </div>
-          <div class="md:col-span-8">
-            <p class="ui-body text-neutral-600 dark:text-neutral-300 mb-3">
-              {{ cond $isEn $plat.descEn $plat.descZh }}
-            </p>
-            <ul class="space-y-1.5 ui-caption text-neutral-600 dark:text-neutral-400">
-              {{ if $isEn }}
-                {{ range $feat := $plat.featuresEn }}
-                  <li class="flex items-start gap-1.5">
-                    <span class="text-indigo-600 dark:text-indigo-400 font-bold">&bull;</span>
-                    <span>{{ $feat }}</span>
-                  </li>
-                {{ end }}
-              {{ else }}
-                {{ range $feat := $plat.featuresZh }}
-                  <li class="flex items-start gap-1.5">
-                    <span class="text-indigo-600 dark:text-indigo-400 font-bold">&bull;</span>
-                    <span>{{ $feat }}</span>
-                  </li>
-                {{ end }}
-              {{ end }}
-            </ul>
-          </div>
-        </div>
-      {{ end }}
-    </div>
-  </div>
-
 </div>
 {{ end }}

@@ -9,7 +9,6 @@
   // ---------------------------------------------------------------------------
   // 1. Global State & Theme Integration
   // ---------------------------------------------------------------------------
-  let currentTheme = localStorage.getItem('wen_lab_theme') || 'navy';
   let canvas, ctx, particles = [], animationFrameId;
   let mousePos = { x: -1000, y: -1000 };
   let isCanvasVisible = true;
@@ -18,11 +17,9 @@
   function getThemePaletteColors() {
     const isDark = document.documentElement.classList.contains('dark');
     if (isDark) {
-      // Looseleaf Midnight Palette: Chalk white, blueprint ink, luminous terracotta, botanical green
-      return ['#f5f2eb', '#688ff8', '#e57b4f', '#4db363', '#9ca3af'];
+      return ['#e8834f', '#8aa9ff', '#f2efe8', '#5cb874', '#f4d84a'];
     }
-    // Looseleaf Paper Palette: Prussian blue, terracotta marker, sumi ink, graphite, botanical green
-    return ['#2c4f9e', '#df6b3c', '#2a2420', '#3b7a4b', '#8e887f'];
+    return ['#2c4f9e', '#df6b3c', '#2a2420', '#3b7a4b', '#f8dc4c'];
   }
 
   function updateCanvasThemeColors() {
@@ -33,26 +30,22 @@
     });
   }
 
-  function applyTheme(theme) {
-    currentTheme = theme;
-    document.documentElement.setAttribute('data-theme', theme);
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    try {
-      localStorage.setItem('wen_lab_theme', theme);
-    } catch (e) {}
-    
-    // Sync active state in UI
-    document.querySelectorAll('.theme-option-btn').forEach(btn => {
-      const isSelected = btn.getAttribute('data-theme-name') === theme;
-      btn.classList.toggle('ring-2', isSelected);
-      btn.classList.toggle('ring-sky-500', isSelected);
-    });
-
+  // Blowfish owns light/dark. We only mirror its state onto the ink canvas.
+  function syncCanvasToAppearance() {
     updateCanvasThemeColors();
   }
 
-  // Expose applyTheme globally
-  window.applyTheme = applyTheme;
+  // Kept as a no-op shim for any legacy inline handler.
+  window.applyTheme = function () {
+    syncCanvasToAppearance();
+  };
+
+  // Mirror Blowfish's appearance flips onto the ink palette.
+  const appearanceObserver = new MutationObserver(() => syncCanvasToAppearance());
+  appearanceObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
 
   // ---------------------------------------------------------------------------
   // 2. Modals Management (Global)
@@ -75,27 +68,14 @@
     });
   }
 
-  window.openFigureModal = function() {
-    lastActiveElement = document.activeElement;
-    const modal = document.getElementById('figure-modal');
-    if (!modal) return;
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-    const closeBtn = document.getElementById('close-figure-modal');
-    if (closeBtn) closeBtn.focus();
-    trapFocus(modal);
-  };
-
-  window.closeFigureModal = function() {
-    const modal = document.getElementById('figure-modal');
-    if (!modal) return;
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    document.body.style.overflow = '';
-    if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
-      lastActiveElement.focus();
-    }
+  window.openAbstractFromEl = function(el) {
+    if (!el || !el.dataset) return;
+    window.openAbstractModal(
+      el.dataset.abstractTitle || '',
+      el.dataset.abstractJournal || '',
+      el.dataset.abstractPmid || '',
+      el.dataset.abstractText || ''
+    );
   };
 
   window.openAbstractModal = function(title, journal, pmid, abstractText) {
@@ -135,10 +115,7 @@
 
   // Close modals on Escape key
   window.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeFigureModal();
-      closeAbstractModal();
-    }
+    if (e.key === 'Escape') closeAbstractModal();
   });
 
   // ---------------------------------------------------------------------------
@@ -166,22 +143,6 @@
         setTimeout(() => toast.classList.add('hidden'), 300);
       }, 2500);
     }
-  };
-
-  // ---------------------------------------------------------------------------
-  // 4. Platform Tabs Switcher (Global)
-  // ---------------------------------------------------------------------------
-  window.switchPlatformTab = function(platformId, btnEl) {
-    document.querySelectorAll('.platform-tab-btn').forEach(b => b.classList.remove('active'));
-    if (btnEl) btnEl.classList.add('active');
-
-    document.querySelectorAll('.platform-content-panel').forEach(panel => {
-      if (panel.id === 'platform-' + platformId) {
-        panel.classList.remove('hidden');
-      } else {
-        panel.classList.add('hidden');
-      }
-    });
   };
 
   // ---------------------------------------------------------------------------
@@ -389,22 +350,14 @@
   // 8. Robust Lifecycle Bootloader (Never Blank)
   // ---------------------------------------------------------------------------
   function init() {
-    // 1. Initial theme sync
-    applyTheme(currentTheme);
+    // 1. Ink palette follows the current appearance
+    syncCanvasToAppearance();
 
     // 2. Initialize Canvas
     initAmbientCanvas();
 
     // 3. Smooth anchor scroll
     initSmoothAnchorScroll();
-
-    // 4. Bind theme option buttons
-    document.querySelectorAll('.theme-option-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const theme = this.getAttribute('data-theme-name');
-        applyTheme(theme);
-      });
-    });
 
     // 5. Search input listener
     const searchInput = document.getElementById('pub-search-input');
@@ -414,13 +367,7 @@
       });
     }
 
-    // 6. Modal backdrop clicks
-    const figModal = document.getElementById('figure-modal');
-    if (figModal) {
-      figModal.addEventListener('click', function(e) {
-        if (e.target === figModal) closeFigureModal();
-      });
-    }
+    // 6. Modal backdrop click
     const absModal = document.getElementById('abstract-modal');
     if (absModal) {
       absModal.addEventListener('click', function(e) {

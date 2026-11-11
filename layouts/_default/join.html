@@ -2,70 +2,44 @@
 {{ $isEn := eq .Site.Language.Lang "en" }}
 {{ $lab := hugo.Data.lab }}
 
-<div class="ui-container py-10 sm:py-14">
-  <div class="mb-10">
-    <h1 class="ui-title">
-      {{ i18n "join_title" }}
-    </h1>
-    <p class="ui-body text-neutral-600 dark:text-neutral-400 mt-2 max-w-3xl">
-      {{ i18n "join_lead" }}
-    </p>
+<div class="ui-container pt-12 pb-20 sm:pt-16">
+  <div class="mb-8 ll-measure">
+    <h1 class="ui-title">{{ i18n "join_title" }}</h1>
+    <p class="ui-body mt-3">{{ i18n "join_lead" }}</p>
   </div>
 
-  <!-- Position Openings: Looseleaf Editorial Entries (No Boxes) -->
-  <div class="space-y-8 mb-14">
+  <div class="ll-sheet" style="--ll-tilt:0.2deg; --ll-sheet-i:0">
     {{ range $pos := $lab.openPositions }}
-      <div class="ui-entry grid grid-cols-1 md:grid-cols-12 gap-6 items-start pb-8">
+      <div class="ll-entry grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-4">
         <div class="md:col-span-5">
-          <span class="ll-badge mb-2">
-            {{ cond $isEn $pos.statusEn $pos.statusZh }}
-          </span>
-          <h2 class="ui-heading mt-1 mb-1.5">
-            {{ cond $isEn $pos.titleEn $pos.titleZh }}
-          </h2>
-          <p class="ui-caption font-mono text-indigo-700 dark:text-indigo-400 mb-4">
-            {{ cond $isEn $pos.salaryEn $pos.salaryZh }}
-          </p>
-          <a href="mailto:{{ $lab.pi.email }}?subject=Application_{{ $pos.type }}" 
-             class="ll-btn-outline text-xs">
-            Apply ({{ $pos.type }}) &rarr;
+          <span class="ll-stamp">{{ cond $isEn $pos.statusEn $pos.statusZh }}</span>
+          <h2 class="ui-heading mt-2">{{ cond $isEn $pos.titleEn $pos.titleZh }}</h2>
+          <p class="ui-caption mt-2">{{ cond $isEn $pos.salaryEn $pos.salaryZh }}</p>
+          <a href="mailto:{{ $lab.pi.email }}?subject=Application_{{ $pos.type }}" class="ll-btn ll-btn--xs mt-3 inline-flex">
+            Apply — {{ $pos.type }} →
           </a>
         </div>
-
         <div class="md:col-span-7">
-          <ul class="space-y-2 ui-body text-neutral-700 dark:text-neutral-300">
-            {{ if $isEn }}
-              {{ range $req := $pos.reqsEn }}
-                <li class="flex items-start gap-2">
-                  <span class="text-indigo-600 dark:text-indigo-400 font-bold">&bull;</span>
-                  <span>{{ $req }}</span>
-                </li>
-              {{ end }}
-            {{ else }}
-              {{ range $req := $pos.reqsZh }}
-                <li class="flex items-start gap-2">
-                  <span class="text-indigo-600 dark:text-indigo-400 font-bold">&bull;</span>
-                  <span>{{ $req }}</span>
-                </li>
-              {{ end }}
+          <ul class="space-y-2 ll-body-sm ll-text-soft">
+            {{ $reqs := cond $isEn $pos.reqsEn $pos.reqsZh }}
+            {{ range $reqs }}
+              <li class="flex items-start gap-2">
+                <span class="ll-text-marker leading-6">·</span>
+                <span>{{ . }}</span>
+              </li>
             {{ end }}
           </ul>
         </div>
       </div>
     {{ end }}
-  </div>
 
-  <!-- Application Guidelines (Pure Typography, No Box) -->
-  <div class="pt-8 border-t border-neutral-300 dark:border-neutral-800 max-w-2xl" style="border-top-width: 0.5px;">
-    <h2 class="ui-heading mb-2">
-      {{ i18n "join_contact_banner_title" }}
-    </h2>
-    <p class="ui-body text-neutral-700 dark:text-neutral-300 mb-5">
-      {{ i18n "join_contact_banner_desc" }}
-    </p>
-    <a href="mailto:{{ $lab.pi.email }}" class="ll-btn-marker">
-      {{ i18n "btn_send_email" }}
-    </a>
+    <hr class="ll-rule my-8">
+
+    <div class="ll-measure">
+      <h2 class="ui-heading mb-2">{{ i18n "join_contact_banner_title" }}</h2>
+      <p class="ui-body mb-5">{{ i18n "join_contact_banner_desc" }}</p>
+      <a href="mailto:{{ $lab.pi.email }}" class="ll-btn ll-btn--marker">{{ i18n "btn_send_email" }}</a>
+    </div>
   </div>
 </div>
 {{ end }}

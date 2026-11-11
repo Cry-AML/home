@@ -2,26 +2,18 @@
 {{ $isEn := eq .Site.Language.Lang "en" }}
 {{ $lab := hugo.Data.lab }}
 
-<div class="ui-container py-10 sm:py-14">
-  <div class="mb-10">
-    <h1 class="ui-title">
-      {{ i18n "news_title" }}
-    </h1>
+<div class="ui-container pt-12 pb-20 sm:pt-16">
+  <div class="mb-8 ll-measure">
+    <h1 class="ui-title">{{ i18n "news_title" }}</h1>
   </div>
 
-  <div class="max-w-3xl">
-    {{ range $idx, $item := $lab.news }}
+  <div class="ll-sheet ll-measure-wide" style="--ll-tilt:-0.18deg; --ll-sheet-i:0">
+    {{ range $item := $lab.news }}
       <div class="pedigree-node">
         <span class="pedigree-indicator"></span>
-        <span class="ll-badge-neutral mb-1">
-          {{ $item.date }}
-        </span>
-        <h2 class="ui-heading text-neutral-900 dark:text-white mt-1">
-          {{ cond $isEn $item.titleEn $item.titleZh }}
-        </h2>
-        <p class="ui-body text-neutral-700 dark:text-neutral-300 mt-1">
-          {{ cond $isEn $item.descEn $item.descZh }}
-        </p>
+        <span class="ll-stamp ll-stamp--muted">{{ $item.date }}</span>
+        <h2 class="ui-heading ll-h-18 mt-2">{{ cond $isEn $item.titleEn $item.titleZh }}</h2>
+        <p class="ui-body mt-1.5">{{ cond $isEn $item.descEn $item.descZh }}</p>
       </div>
     {{ end }}
   </div>

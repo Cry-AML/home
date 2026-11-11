@@ -2,101 +2,67 @@
 {{ $isEn := eq .Site.Language.Lang "en" }}
 {{ $lab := hugo.Data.lab }}
 
-<div class="ui-container py-10 sm:py-14">
-  <div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-    <div>
-      <h1 class="ui-title">
-        {{ i18n "pub_title" }}
-      </h1>
-      <p class="ui-body text-neutral-600 dark:text-neutral-400 mt-2">
-        {{ i18n "pub_lead" }}
-      </p>
+<div class="ui-container pt-12 pb-20 sm:pt-16">
+  <div class="mb-7 flex flex-col sm:flex-row sm:items-end justify-between gap-5">
+    <div class="ll-measure">
+      <h1 class="ui-title">{{ i18n "pub_title" }}</h1>
+      <p class="ui-body mt-3">{{ i18n "pub_lead" }}</p>
     </div>
-
-    <!-- Search Input (Looseleaf Ruled Line) -->
-    <div>
-      <input type="text" 
-             id="pub-search-input" 
-             placeholder="{{ i18n "pub_search_placeholder" }}" 
-             class="px-3 py-1.5 font-mono text-xs bg-transparent w-full sm:w-64 border border-neutral-300 dark:border-neutral-700 rounded focus:outline-none focus:border-indigo-600"
-             style="border-width: 0.5px;"
-             aria-label="Search publications">
+    <div class="w-full sm:w-60">
+      <input type="text"
+             id="pub-search-input"
+             placeholder="{{ i18n "pub_search_placeholder" }}"
+             class="ll-input"
+             aria-label="{{ i18n "pub_search_placeholder" }}">
     </div>
   </div>
 
-  <!-- Filter Pills (Looseleaf Inked Tabs, 0.5px Border) -->
-  <div class="mb-8 flex flex-wrap items-center gap-2">
-    <button class="pub-filter-btn active" data-filter="all" onclick="filterPublications('all', this)">
-      {{ i18n "pub_filter_all" }}
-    </button>
-    <button class="pub-filter-btn" data-filter="landmark" onclick="filterPublications('landmark', this)">
-      {{ i18n "pub_filter_landmark" }}
-    </button>
-    <button class="pub-filter-btn" data-filter="epigenetics" onclick="filterPublications('epigenetics', this)">
-      {{ i18n "pub_filter_epigenetics" }}
-    </button>
-    <button class="pub-filter-btn" data-filter="metabolism" onclick="filterPublications('metabolism', this)">
-      {{ i18n "pub_filter_metabolism" }}
-    </button>
-    <button class="pub-filter-btn" data-filter="resistance" onclick="filterPublications('resistance', this)">
-      {{ i18n "pub_filter_resistance" }}
-    </button>
+  <div class="mb-6 flex flex-wrap items-center gap-2">
+    <button class="pub-filter-btn active" data-filter="all" onclick="filterPublications('all', this)">{{ i18n "pub_filter_all" }}</button>
+    <button class="pub-filter-btn" data-filter="landmark" onclick="filterPublications('landmark', this)">{{ i18n "pub_filter_landmark" }}</button>
+    <button class="pub-filter-btn" data-filter="epigenetics" onclick="filterPublications('epigenetics', this)">{{ i18n "pub_filter_epigenetics" }}</button>
+    <button class="pub-filter-btn" data-filter="metabolism" onclick="filterPublications('metabolism', this)">{{ i18n "pub_filter_metabolism" }}</button>
+    <button class="pub-filter-btn" data-filter="resistance" onclick="filterPublications('resistance', this)">{{ i18n "pub_filter_resistance" }}</button>
   </div>
 
-  <!-- Publications List: Looseleaf Scholarly Entry Stream (No Boxes) -->
-  <div class="space-y-0">
+  <div class="ll-sheet" style="--ll-tilt:0.16deg; --ll-sheet-i:0">
     {{ range $item := $lab.publications }}
-      <div class="publication-card ui-entry" 
-           data-category="{{ $item.category }}" 
+      <div class="publication-card ll-entry"
+           data-category="{{ $item.category }}"
            data-landmark="{{ $item.landmark }}">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-          <div class="flex items-center gap-2">
-            <span class="ll-badge">
-              {{ $item.journal }}
-            </span>
-            <span class="ui-caption font-mono text-neutral-400">{{ $item.year }}</span>
+        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="ll-stamp">{{ $item.journal }}</span>
+            <span class="ui-caption">{{ $item.year }}</span>
             {{ if $item.landmark }}
-              <span class="ll-badge-neutral text-amber-700 dark:text-amber-400 font-semibold">
-                Landmark
-              </span>
+              <span class="ll-stamp ll-stamp--landmark">Landmark</span>
             {{ end }}
           </div>
-          <span class="ui-caption font-mono text-neutral-500">{{ $item.impact }}</span>
+          <span class="ui-caption">{{ $item.impact }}</span>
         </div>
 
-        <h2 class="ui-heading mb-1 text-neutral-900 dark:text-white">
-          {{ $item.title }}
-        </h2>
+        <h2 class="ui-heading mb-1.5 ll-measure-tight">{{ $item.title }}</h2>
+        <p class="ui-caption mb-3 leading-relaxed">{{ $item.authors }}</p>
 
-        <p class="ui-caption text-neutral-600 dark:text-neutral-400 mb-2.5 font-normal">
-          {{ $item.authors }}
-        </p>
-
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <span class="ui-caption font-mono text-indigo-700 dark:text-indigo-400">
-            {{ cond $isEn $item.roleNote $item.roleNoteZh }}
-          </span>
-          
-          <div class="flex items-center gap-1.5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <span class="ui-caption ll-text-accent">{{ cond $isEn $item.roleNote $item.roleNoteZh }}</span>
+          <div class="flex flex-wrap items-center gap-1.5">
             {{ if $item.doiUrl }}
-              <a href="{{ $item.doiUrl }}" target="_blank" rel="noopener noreferrer" 
-                 class="ll-btn-sm inline-flex items-center gap-1">
-                <span>DOI</span> &nearr;
-              </a>
+              <a href="{{ $item.doiUrl }}" target="_blank" rel="noopener noreferrer" class="ll-btn ll-btn--xs">DOI ↗</a>
             {{ end }}
-            <button onclick="openAbstractModal('{{ $item.title }}', '{{ $item.journal }}', '{{ $item.pmid }}', '{{ if $isEn }}{{ $item.abstractEn }}{{ else }}{{ $item.abstractZh }}{{ end }}')" 
-                    class="ll-btn-sm">
-              {{ i18n "pub_btn_abstract" }}
-            </button>
-            <button onclick="copyBibtex({{ $item.bibtex }})" 
-                    class="ll-btn-sm">
-              {{ i18n "pub_btn_bibtex" }}
-            </button>
+            <button data-abstract-title="{{ $item.title }}"
+                    data-abstract-journal="{{ $item.journal }}"
+                    data-abstract-pmid="{{ $item.pmid }}"
+                    data-abstract-text="{{ if $isEn }}{{ $item.abstractEn }}{{ else }}{{ $item.abstractZh }}{{ end }}"
+                    onclick="openAbstractFromEl(this)"
+                    class="ll-btn ll-btn--xs">{{ i18n "pub_btn_abstract" }}</button>
+            <button data-bibtex="{{ $item.bibtex }}"
+                    onclick="copyBibtex(this.dataset.bibtex)"
+                    class="ll-btn ll-btn--xs">{{ i18n "pub_btn_bibtex" }}</button>
           </div>
         </div>
       </div>
     {{ end }}
   </div>
-
 </div>
 {{ end }}

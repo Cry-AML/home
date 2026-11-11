@@ -1,0 +1,34 @@
+<footer id="site-footer" class="print:hidden" style="padding-block: 40px 48px;">
+  <div class="ui-container">
+    <hr class="ll-rule mb-6" style="border-top-color: var(--ll-pencil-faint);">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      {{/* Copyright */}}
+      {{ if .Site.Params.footer.showCopyright | default true }}
+        <p class="ui-caption">
+          {{- $custom := i18n "footer_text" -}}
+          {{- if $custom -}}
+            {{ $custom }}
+          {{- else -}}
+            &copy; {{ now.Format "2006" }} {{ .Site.Params.Author.name | markdownify }}
+          {{- end }}
+        </p>
+      {{ end }}
+
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        {{ if .Site.Menus.footer }}
+          {{ range .Site.Menus.footer }}
+            <a href="{{ .URL }}" title="{{ .Title }}" class="ui-caption" style="text-decoration: none;">
+              {{ .Name | markdownify }}
+            </a>
+          {{ end }}
+        {{ end }}
+        {{ if .Site.Params.footer.showThemeAttribution | default false }}
+          <span class="ui-caption">Hugo + Blowfish</span>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+  {{ if templates.Exists "partials/extend-footer.html" }}
+    {{ partialCached "extend-footer.html" . }}
+  {{ end }}
+</footer>

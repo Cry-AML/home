@@ -32,3 +32,28 @@
   name = "联系我们"
   url = "/contact/"
   weight = 70
+
+[[footer]]
+  name = "文卓谦实验室"
+  url = "/"
+  weight = 10
+
+[[footer]]
+  name = "研究方向"
+  url = "/research/"
+  weight = 20
+
+[[footer]]
+  name = "代表论著"
+  url = "/publications/"
+  weight = 30
+
+[[footer]]
+  name = "学术经历"
+  url = "/pedigree/"
+  weight = 40
+
+[[footer]]
+  name = "联系方式"
+  url = "/contact/"
+  weight = 50
