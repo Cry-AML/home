@@ -7,7 +7,7 @@
   fit on one row at every width, so that is what this is.
 */}}
 {{ if .IsTranslated }}
-  <div class="ll-langswitch" role="group" aria-label="{{ i18n "global.language" }}">
+  <div class="ll-langswitch" role="group" aria-label="{{ i18n "lang_switch_label" }}">
     {{- $order := slice "en" "zh-cn" "zh-tw" -}}
     {{- range $order -}}
       {{- $code := . -}}

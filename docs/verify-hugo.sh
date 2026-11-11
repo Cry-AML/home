@@ -185,6 +185,22 @@ chk "zh-tw menus point at /zh-tw/" "grep -q '/zh-tw/research/' config/_default/m
 chk "traditional generator committed" "[ -s tools/gen-zh-tw.py ]"
 chk "pillar figure is on the right at desktop" "python3 -c \"import re,pathlib;s=pathlib.Path('layouts/_default/research.html').read_text();i=s.index('ll-pillar-text');j=s.index('ll-diagram');raise SystemExit(0 if i<j else 1)\""
 
+
+echo "== 16. Branding, photos & accessibility polish =="
+chk "header brand mark rendered" "grep -q 'll-brand__mark' public/index.html"
+chk "brand mark asset exists" "[ -s public/images/mark.png ]"
+chk "footer signature rendered" "grep -q 'll-footer-mark' public/index.html"
+chk "news uses the two real photos" "grep -q 'lab-outside.jpg' public/news/index.html && grep -q 'lab-meeting.jpg' public/news/index.html"
+chk "news has exactly two snapshot frames" "[ \$(grep -o 'll-snap-frame' public/news/index.html | wc -l) -eq 2 ]"
+chk "contact uses the campus map photo" "grep -q 'lab-map.jpg' public/contact/index.html"
+chk "map pin present" "grep -q 'll-map-pin' public/contact/index.html"
+chk "language switch has an accessible name" "grep -q 'aria-label=Language' public/index.html"
+chk "zh-cn switch label localized" "grep -q 'aria-label=语言' public/zh-cn/index.html"
+chk "zh-tw switch label localized" "grep -q 'aria-label=語言' public/zh-tw/index.html"
+chk "no legacy MHC anywhere in build" "! grep -rq 'MHC' public/index.html public/zh-cn/index.html public/zh-tw/index.html"
+chk "Traditional data generated" "[ -s data/lab-zh-tw.json ] && grep -q '文卓謙' data/lab-zh-tw.json"
+chk "generator is reproducible" "[ -s tools/gen-zh-tw.py ]"
+
 echo ""
 if [ "$fail" -eq 0 ]; then
   printf '\033[32mALL %d ACCEPTANCE CHECKS PASSED!\033[0m\n' "$pass"
