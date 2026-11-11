@@ -161,6 +161,12 @@ chk "back-to-top JS wired" "grep -q 'initBackToTop' assets/js/wen-lab.js"
 chk "copy stamp implemented" "grep -q 'stampOn' assets/js/wen-lab.js && grep -q 'll-stamp-mark' assets/css/custom.css"
 chk "copy passes source element" "grep -q 'copyBibtex(this.dataset.bibtex, this)' layouts/_default/publications.html"
 chk "highlighter wipe present" "grep -q 'll-hi-wipe' assets/css/custom.css"
+# Regression: a clip-path on a wrapping inline element is resolved against the
+# first line box in Chrome, which erased every following line of the hero.
+# The wipe must animate the band, never clip the text.
+chk "highlighter never clips text (Chrome drops wrapped lines)" "! sed -n '/^\\.ll-hi {/,/^}/p' assets/css/custom.css | grep -v '^ *\\*' | grep -v '^ *\\*/' | grep -q 'clip-path:'"
+chk "highlighter keyframes never clip text" "! sed -n '/@keyframes ll-hi-wipe/,/^}/p' assets/css/custom.css | grep -q 'clip-path:'"
+chk "highlighter wipe animates the band" "sed -n '/@keyframes ll-hi-wipe/,/^}/p' assets/css/custom.css | grep -q 'background-size'"
 chk "inked hover retrace present" "grep -q 'll-retrace' assets/css/custom.css"
 chk "timeline ink fill wired" "grep -q 'initTimelineInk' assets/js/wen-lab.js"
 chk "abstract accordion wired" "grep -q 'toggleAbstract' assets/js/wen-lab.js && grep -q 'll-abstract' public/publications/index.html"

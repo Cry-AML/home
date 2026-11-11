@@ -513,8 +513,11 @@ body {
   margin-inline: -0.06em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  /* the wipe reveals the band that is already painted, so the text never
-     flashes without its highlight */
+  /* The wipe grows the marker band left-to-right instead of clipping the
+     element. A clip-path on an inline element that wraps is resolved against
+     the FIRST line box only, so Chrome erased every line after the first —
+     Firefox unions the fragments and looked fine. Never clip text here; the
+     text is always painted, only the band is animated. */
   animation: ll-hi-wipe 620ms cubic-bezier(0.22, 1, 0.36, 1) 260ms both;
 }
 
@@ -1853,11 +1856,11 @@ h1, h2, h3 {
    once, on load, and is disabled under reduced motion.
    -------------------------------------------------------------------------- */
 @keyframes ll-hi-wipe {
-  from { clip-path: inset(0 100% 0 0); }
-  to   { clip-path: inset(0 -2% 0 0); }
+  from { background-size: 0% 0.5em; }
+  to   { background-size: 100% 0.5em; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ll-hi { animation: none; clip-path: none; }
+  .ll-hi { animation: none; }
 }
 
 /* --------------------------------------------------------------------------
