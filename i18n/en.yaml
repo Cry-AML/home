@@ -73,3 +73,9 @@ footer_text: "Wen Laboratory, Zhongshan School of Medicine, Sun Yat-sen Universi
 modal_abstract_title: "Abstract"
 modal_close: "Close"
 toast_copied: "BibTeX citation copied to clipboard"
+
+error:
+  404_title: "Page not found"
+  404_error: "404"
+  404_description: "This link may have moved, or the address was mistyped."
+  404_home: "Back to home"

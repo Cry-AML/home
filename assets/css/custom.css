@@ -1284,3 +1284,32 @@ h1, h2, h3 {
 .ll-sheet a:not(.ll-btn):not(.ll-btn--xs):hover {
   text-decoration-color: var(--md-secondary);
 }
+
+/* --------------------------------------------------------------------------
+   21. 404 — an oversized mark set as a marginal note
+   -------------------------------------------------------------------------- */
+.ll-notfound {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+.ll-notfound-mark {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.06em;
+  font-family: var(--font-mono);
+  font-size: clamp(56px, 13vw, 150px);
+  line-height: 0.9;
+  font-weight: 500;
+  color: var(--md-primary-container);
+  letter-spacing: -0.04em;
+  user-select: none;
+}
+.ll-notfound-mark span:nth-child(2) {
+  color: var(--md-tertiary-container);
+}
+@media (max-width: 760px) {
+  .ll-notfound { grid-template-columns: minmax(0, 1fr); }
+  .ll-notfound-mark { justify-content: flex-start; order: -1; }
+}

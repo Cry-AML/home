@@ -73,3 +73,9 @@ footer_text: "中山大学中山医学院 文卓谦实验室 版权所有 © 202
 modal_abstract_title: "论文摘要"
 modal_close: "关闭"
 toast_copied: "BibTeX 引用已复制到剪贴板"
+
+error:
+  404_title: "找不到这一页"
+  404_error: "404"
+  404_description: "链接可能已经失效，或者地址输入有误。"
+  404_home: "返回首页"

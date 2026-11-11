@@ -104,6 +104,28 @@ chk "single sheet on homepage" "[ \$(grep -c 'div class=ll-sheet' public/index.h
 chk "desktop container fills viewport" "grep -q 'min-width: 1680px' assets/css/custom.css"
 chk "no duplicate rule blocks" "[ \$(python3 -c \"import re,pathlib,sys; s=re.sub(r'/\\*[\\s\\S]*?\\*/','',pathlib.Path('assets/css/custom.css').read_text()); d=0;b='';sel=[]; [ (sel.append(b.strip()) if d==0 else None, None)[0] for ch in s for _ in [0] ] ; print(0)\") -eq 0 ]"
 
+
+echo "== 11. Link Integrity (no 404s) =="
+chk "all internal links resolve and return <400" "python3 tools/link-audit.py"
+chk "no hardcoded absolute paths in templates" "! grep -rqE '(href|src)=\"/[^\"]*\"' layouts/ --include='*.html'"
+chk "no language-branched URL paths in templates" "python3 tools/check-urls.py"
+chk "all 9 DOI links present" "[ \$(grep -o 'https://doi.org/' public/publications/index.html | wc -l) -eq 9 ]"
+chk "no in-page anchor is dangling" "python3 tools/check-anchors.py"
+chk "site.webmanifest present" "[ -s public/site.webmanifest ]"
+chk "favicons present" "[ -s public/favicon-32x32.png ] && [ -s public/favicon-16x16.png ] && [ -s public/apple-touch-icon.png ]"
+chk "fonts reachable" "[ -s public/fonts/KevinSans-Regular.woff2 ]"
+
+
+echo "== 12. 404 & Manifest =="
+chk "404 page built (ZH)" "[ -s public/404.html ]"
+chk "404 page built (EN)" "[ -s public/en/404.html ]"
+chk "404 uses site shell" "grep -q 'll-sheet' public/404.html"
+chk "404 links home via baseURL" "grep -q 'href=/home/' public/404.html"
+chk "manifest icons resolve relative to manifest" "! grep -q '\"src\": *\"/' public/site.webmanifest"
+chk "manifest has a real name" "! grep -q '\"name\": *\"\"' public/site.webmanifest"
+chk "manifest icons exist" "[ -s public/android-chrome-192x192.png ] && [ -s public/android-chrome-512x512.png ]"
+chk "all site URLs under baseURL are built" "python3 tools/linkcheck.py"
+
 echo ""
 if [ "$fail" -eq 0 ]; then
   printf '\033[32mALL %d ACCEPTANCE CHECKS PASSED!\033[0m\n' "$pass"

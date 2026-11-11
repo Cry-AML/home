@@ -1,0 +1,25 @@
+{{ define "main" }}
+<div class="ui-container pt-12 pb-20 sm:pt-16">
+  <div class="ll-sheet" style="--ll-tilt:-0.2deg; --ll-sheet-i:0">
+    <div class="ll-notfound">
+      <div>
+        <span class="ll-stamp ll-stamp--marker">404</span>
+        <h1 class="ui-title mt-5 mb-4">{{ i18n "error.404_title" | emojify }}</h1>
+        <p class="ui-body mb-8">{{ i18n "error.404_description" | emojify }}</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="{{ "" | relLangURL }}" class="ll-btn ll-btn--marker">
+            {{ i18n "error.404_home" }}
+          </a>
+          <a href="{{ "research/" | relLangURL }}" class="ll-btn ll-btn--outline">
+            {{ i18n "nav_research" }}
+          </a>
+        </div>
+      </div>
+
+      <aside class="ll-notfound-mark" aria-hidden="true">
+        <span>4</span><span>0</span><span>4</span>
+      </aside>
+    </div>
+  </div>
+</div>
+{{ end }}

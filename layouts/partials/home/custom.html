@@ -26,10 +26,10 @@
         </p>
 
         <div class="flex flex-wrap items-center gap-3">
-          <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ll-btn ll-btn--marker">
+          <a href="{{ "research/" | relLangURL }}" class="ll-btn ll-btn--marker">
             {{ i18n "btn_explore" }}
           </a>
-          <a href="{{ if $isEn }}/en/join/{{ else }}/join/{{ end }}" class="ll-btn ll-btn--outline">
+          <a href="{{ "join/" | relLangURL }}" class="ll-btn ll-btn--outline">
             {{ i18n "btn_join_hero" }}
           </a>
         </div>
@@ -46,10 +46,10 @@
         <p class="ui-body ll-note-body">{{ i18n "about_intro_p1" }}</p>
 
         <div class="ll-note-links">
-          <a href="{{ if $isEn }}/en/pedigree/{{ else }}/pedigree/{{ end }}" class="ll-btn--ghost ll-btn">
+          <a href="{{ "pedigree/" | relLangURL }}" class="ll-btn--ghost ll-btn">
             {{ if $isEn }}Academic background{{ else }}学术经历与师承{{ end }} →
           </a>
-          <a href="{{ if $isEn }}/en/publications/{{ else }}/publications/{{ end }}" class="ll-btn--ghost ll-btn">
+          <a href="{{ "publications/" | relLangURL }}" class="ll-btn--ghost ll-btn">
             {{ if $isEn }}Publications{{ else }}代表论著{{ end }} →
           </a>
         </div>
