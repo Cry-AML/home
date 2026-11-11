@@ -143,9 +143,9 @@ chk "manifest uses MCH" "grep -q 'MCH Lab' public/site.webmanifest"
 
 
 echo "== 14. Pillar Figures, Snapshots, Map, Micro-interactions =="
-chk "three pillar diagrams built" "[ \$(grep -o 'll-fig' public/research/index.html | wc -l) -eq 3 ]"
-chk "diagrams have rough filters" "[ \$(grep -o 'rough-0[123]' public/research/index.html | sort -u | wc -l) -eq 3 ]"
-chk "diagram SVG in bounds (220x140)" "[ \$(grep -c 'viewBox=.0 0 220 140.' public/research/index.html) -eq 3 ]"
+chk "no figure plates remain on research" "! grep -q 'll-fig\|ll-diagram' public/research/index.html"
+chk "three pillar rows present" "[ \$(grep -o 'll-pillar-margin' public/research/index.html | wc -l) -eq 3 ]"
+chk "citation rail present" "[ \$(grep -o 'll-pillar-ref' public/research/index.html | wc -l) -eq 3 ]"
 chk "PI author emphasised" "[ \$(grep -c 'll-author-self' public/publications/index.html) -eq 9 ]"
 chk "no false-positive author emphasis" "! grep -q 'll-author-self>Leung' public/publications/index.html"
 chk "news snapshots column present" "grep -q 'll-news-snapshots' public/news/index.html"
@@ -183,7 +183,7 @@ chk "en has no /en/ prefix anymore" "! grep -q 'href=/home/en/' public/index.htm
 chk "zh-cn menus point at /zh-cn/" "grep -q '/zh-cn/research/' config/_default/menus.zh-cn.toml"
 chk "zh-tw menus point at /zh-tw/" "grep -q '/zh-tw/research/' config/_default/menus.zh-tw.toml"
 chk "traditional generator committed" "[ -s tools/gen-zh-tw.py ]"
-chk "pillar figure is on the right at desktop" "python3 -c \"import re,pathlib;s=pathlib.Path('layouts/_default/research.html').read_text();i=s.index('ll-pillar-text');j=s.index('ll-diagram');raise SystemExit(0 if i<j else 1)\""
+chk "pillar prose precedes its citation rail" "python3 -c \"import pathlib;s=pathlib.Path('layouts/_default/research.html').read_text();raise SystemExit(0 if s.index('ll-pillar-text')<s.index('ll-pillar-ref') else 1)\""
 
 
 echo "== 16. Branding, photos & accessibility polish =="
