@@ -9,47 +9,60 @@
     <p class="ui-body mt-3">{{ i18n "research_lead" }}</p>
   </div>
 
-  <div class="ll-sheet" style="--ll-tilt:-0.22deg; --ll-sheet-i:0">
-    <!-- Pillars -->
+  {{/*  Two sheets, not one.  The pillars are an argument; the platforms are
+        infrastructure.  Splitting them lets each own its own rhythm instead of
+        stacking six identical horizontal rows inside a single frame.  Both use
+        the same sheet padding, so their text columns share one left edge.  */}}
+  <div class="ll-sheet" style="--ll-tilt:-0.18deg; --ll-sheet-i:0">
     {{ range $i, $item := $lab.researchPillars }}
       <div class="ll-entry ll-pillar">
-        <div class="ll-pillar-margin">
-          <span class="font-mono ll-body-sm ll-text-pencil">{{ $item.number }}</span>
-          <span class="ll-stamp">{{ cond $isEn $item.tagEn $item.tagZh }}</span>
+        <div class="ll-pillar-lead">
+          <div class="ll-pillar-crumb">
+            <span class="ll-pillar-num">{{ $item.number }}</span>
+            <span class="ll-stamp">{{ cond $isEn $item.tagEn $item.tagZh }}</span>
+          </div>
+          <h2 class="ll-pillar-title">{{ cond $isEn $item.titleEn $item.titleZh }}</h2>
+          <a class="ll-cite" href="{{ $item.doiUrl }}">
+            <span class="ll-cite__icon" aria-hidden="true">↗</span>
+            <span>{{ $item.highlightPaper }}</span>
+          </a>
         </div>
-        <div class="ll-pillar-text">
-          <h2 class="ui-heading">{{ cond $isEn $item.titleEn $item.titleZh }}</h2>
-          <p class="ui-body mt-3">{{ cond $isEn $item.descEn $item.descZh }}</p>
-        </div>
-        <div class="ll-pillar-ref">
-          <span class="ui-caption">{{ $item.highlightPaper }}</span>
-        </div>
-      </div>
-    {{ end }}
 
-    <hr class="ll-rule my-9">
-
-    <h2 class="ui-heading mb-1">{{ i18n "platform_section_title" }}</h2>
-    {{ range $plat := $lab.platforms }}
-      <div class="ll-entry grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-3">
-        <div class="md:col-span-4">
-          <span class="ll-stamp ll-stamp--muted mb-2">{{ cond $isEn $plat.tagEn $plat.tagZh }}</span>
-          <h3 class="ui-heading mt-1.5">{{ cond $isEn $plat.nameEn $plat.nameZh }}</h3>
-        </div>
-        <div class="md:col-span-8">
-          <p class="ui-body mb-3">{{ cond $isEn $plat.descEn $plat.descZh }}</p>
-          <ul class="space-y-1.5 ui-caption">
-            {{ $feats := cond $isEn $plat.featuresEn $plat.featuresZh }}
-            {{ range $feats }}
-              <li class="flex items-start gap-2">
-                <span class="ll-text-marker leading-5">·</span>
-                <span class="ll-text-soft">{{ . }}</span>
-              </li>
+        <div class="ll-pillar-body">
+          <p class="ui-body">{{ cond $isEn $item.descEn $item.descZh }}</p>
+          <ul class="ll-keywords" aria-label="{{ i18n "research_keywords" }}">
+            {{ range (cond $isEn $item.keywordsEn $item.keywordsZh) }}
+              <li class="ll-keyword">{{ . }}</li>
             {{ end }}
           </ul>
         </div>
       </div>
     {{ end }}
+  </div>
+
+  <div class="ll-sheet ll-sheet--platforms" style="--ll-tilt:-0.18deg; --ll-sheet-i:1">
+    <div class="ll-section-head">
+      <h2 class="ll-section-title">{{ i18n "platform_section_title" }}</h2>
+      <p class="ll-section-note">{{ i18n "platform_section_note" }}</p>
+    </div>
+
+    <div class="ll-platform-grid">
+      {{ range $plat := $lab.platforms }}
+        <article class="ll-platform">
+          <div class="ll-platform-head">
+            <span class="ll-platform-ord">{{ $plat.number }}</span>
+            <span class="ll-platform-tag">{{ cond $isEn $plat.tagEn $plat.tagZh }}</span>
+          </div>
+          <h3 class="ll-platform-name">{{ cond $isEn $plat.nameEn $plat.nameZh }}</h3>
+          <p class="ll-platform-desc">{{ cond $isEn $plat.descEn $plat.descZh }}</p>
+          <ul class="ll-platform-feats">
+            {{ range (cond $isEn $plat.featuresEn $plat.featuresZh) }}
+              <li>{{ . }}</li>
+            {{ end }}
+          </ul>
+        </article>
+      {{ end }}
+    </div>
   </div>
 </div>
 {{ end }}

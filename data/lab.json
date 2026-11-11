@@ -56,7 +56,18 @@
       "tagEn": "Mechanisms & Immunotherapy",
       "descZh": "急性髓系白血病（AML）常伴随复杂的基因突变（如 TP53 变异）和染色质表观状态异常。我们重点探究白血病细胞如何通过组蛋白甲基化与染色质重塑沉默自身抗原呈递及 cGAS-STING 天然免疫防御通路，进而介导免疫逃逸。以此为突破口，我们正在开发针对 PLK4 等关键分子的靶向表观-免疫双重活化疗法。",
       "descEn": "Acute Myeloid Leukemia (AML) is characterized by recurrent driver mutations (e.g., TP53) coupled with aberrant epigenetic reprogramming. We focus on dissecting how leukemic blasts exploit histone methylation remodeling to silence intrinsic antigen presentation and the cGAS-STING innate surveillance pathway. We develop novel targeted interventions, such as PLK4 inhibition, to trigger epigenetic-immune reactivation.",
-      "highlightPaper": "Blood 2023; 142(23):2002-2015"
+      "highlightPaper": "Blood 2023; 142(23):2002-2015",
+      "keywordsEn": [
+        "TP53 Mutation",
+        "cGAS-STING",
+        "PLK4 Inhibition"
+      ],
+      "keywordsZh": [
+        "TP53 突变",
+        "cGAS-STING",
+        "PLK4 抑制"
+      ],
+      "doiUrl": "https://doi.org/10.1182/blood.2023019782"
     },
     {
       "id": "metabolism",
@@ -68,7 +79,18 @@
       "tagEn": "Stem Cells & Metabolism",
       "descZh": "细胞内酸碱平衡与碳代谢通量深刻控制着正常造血与白血病干/祖细胞的增殖与命运抉择。在前期与哈佛大学 David Scadden 实验室的紧密合作中，我们揭示了质子外运介导的胞内微环境碱化是驱动碳代谢重编程、促进造血祖细胞生长的核心动力。目前团队进一步拓展激酶激活型 AML 细胞特异性质子调控网络，精准打击其代谢脆弱点。",
       "descEn": "Intracellular acid-base homeostasis and carbon flux governance critically dictate hematopoietic stem/progenitor cell fate and leukemogenesis. Building upon pioneering work at Harvard MGH, we demonstrated that proton export alkalinizes intracellular pH to rewire carbon metabolism and fuel progenitor proliferation. We are decoding the precise proton partitioning axes in kinase-activated AML to target metabolic vulnerabilities.",
-      "highlightPaper": "Blood 2022; 139(4):502-522 & Leukemia 2022"
+      "highlightPaper": "Blood 2022; 139(4):502-522 & Leukemia 2022",
+      "keywordsEn": [
+        "Intracellular pHi",
+        "Carbon Flux",
+        "Stem-Cell Metabolism"
+      ],
+      "keywordsZh": [
+        "胞内 pHi",
+        "碳代谢流",
+        "干细胞代谢"
+      ],
+      "doiUrl": "https://doi.org/10.1182/blood.2021011563"
     },
     {
       "id": "resistance",
@@ -80,7 +102,18 @@
       "tagEn": "Translational Medicine & Trials",
       "descZh": "靶向抑制剂（如针对 FLT3-ITD 的索拉非尼、奎扎替尼）在临床治疗初期虽有显著疗效，但极易诱发继发性耐药导致复发。实验室依托多年深耕的抗药机制研究（如 Tescalcin-Na+/H+ 交换轴），积极探索克服耐药的新策略，最新推动了奎扎替尼联合高三杉酯碱（Omacetaxine）的 II 期临床试验，为难治复发白血病患者提供全新治疗希望。",
       "descEn": "While tyrosine kinase inhibitors against FLT3-ITD achieve impressive initial responses, secondary resistance invariably leads to fatal relapse. Leveraging our discoveries of resistance axes (e.g., the Tescalcin-NHE1 regulatory axis), our lab translates mechanistic findings into actionable regimens, including a successful Phase II clinical trial evaluating Quizartinib combined with Omacetaxine mepesuccinate.",
-      "highlightPaper": "Nat Commun 2026; doi:10.1038/s41467-026-71186-5"
+      "highlightPaper": "Nat Commun 2026; doi:10.1038/s41467-026-71186-5",
+      "keywordsEn": [
+        "FLT3-ITD",
+        "Tescalcin-NHE1",
+        "Phase II Trial"
+      ],
+      "keywordsZh": [
+        "FLT3-ITD",
+        "Tescalcin-NHE1",
+        "II 期临床试验"
+      ],
+      "doiUrl": "https://doi.org/10.1038/s41467-026-71186-5"
     }
   ],
   "platforms": [
@@ -102,7 +135,8 @@
         "High-throughput phenotypic and compound screening on hundreds of embryos daily",
         "In vivo dynamic fluorescence tracking of leukemic stem/progenitor niche homing",
         "Rapid functional genetics using CRISPR/Cas9 and Tol2 transgenesis"
-      ]
+      ],
+      "number": "01"
     },
     {
       "id": "pdx",
@@ -122,7 +156,8 @@
         "Curated primary AML/MDS biobank for precision in vivo transplantation",
         "Preclinical evaluation of novel monotherapies and synergistic combinations",
         "Multiparametric flow cytometry analysis of bone marrow stromal/immune interactions"
-      ]
+      ],
+      "number": "02"
     },
     {
       "id": "singlecell",
@@ -142,7 +177,8 @@
         "Single-cell resolution tracking of epigenetic transitions and metabolic reprogramming",
         "Automated 96/384-well primary blast drug screening with synergy quantification",
         "Advanced bioinformatics pipeline decoding key driver targets and prognostic biomarkers"
-      ]
+      ],
+      "number": "03"
     }
   ],
   "publications": [

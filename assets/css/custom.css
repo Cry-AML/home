@@ -1439,70 +1439,249 @@ h1, h2, h3 {
   margin-bottom: 18px;
 }
 
-/* Each pillar is a marginal note beside its argument: number and tag hold the
-   left rail, prose takes the body. No figure — the text is the content, and a
-   plate in the margin would only have competed with it. */
-/* A manuscript text block, not a full-bleed row.
-   Three rails — number/tag, prose, citation — inside a centred column capped
-   at 1020px. The cap is what keeps the measure near 40em on a wide screen;
-   without it the prose would run to 75em and the eye loses the line.
-   The column is centred so the leftover paper reads as a margin, not a hole. */
+/* --------------------------------------------------------------------------
+   Research — a narrative flow above, a three-card grid below
+
+   Both sheets share the same inner padding, so `01` and the first platform
+   card start on one vertical line. The pillar is a 38/62 split: the argument
+   in the narrow rail (number, tag, title, citation) and the evidence in the
+   wide one (prose, keyword chips). Nothing is centred, so no rail collapses.
+   -------------------------------------------------------------------------- */
 .ll-pillar {
   display: grid;
-  grid-template-columns: 172px minmax(0, 1fr) 210px;
-  gap: clamp(20px, 3vw, 48px);
+  grid-template-columns: minmax(0, 38fr) minmax(0, 62fr);
+  gap: clamp(24px, 4vw, 56px);
   align-items: start;
-  max-width: 1020px;
-  margin-inline: auto;
 }
-.ll-pillar-margin {
+.ll-pillar-lead,
+.ll-pillar-body { min-width: 0; }
+
+.ll-pillar-crumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.ll-pillar-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--md-outline);
+  font-variant-numeric: tabular-nums;
+}
+/* the tag must never wrap into a block: nowrap + shrink-to-fit */
+.ll-pillar-crumb .ll-stamp {
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ll-pillar-title {
+  font-family: var(--font-hand);
+  font-size: 20px;
+  line-height: 1.34;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  color: var(--md-on-surface);
+  text-wrap: balance;
+  margin: 0 0 16px;
+}
+
+/* citation pill: a small, quiet link, not a third column */
+.ll-cite {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 7px;
+  max-width: 100%;
+  padding: 7px 12px;
+  border-radius: 7px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--md-on-surface-variant);
+  background-color: var(--md-surface-container-high);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+  text-decoration: none;
+  transition: color var(--ll-dur-hover) var(--ll-ease-out),
+              box-shadow var(--ll-dur-hover) var(--ll-ease-out),
+              background-color var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-cite__icon {
+  flex: none;
+  color: var(--md-primary);
+  line-height: 1.45;
+}
+.ll-cite:hover {
+  color: var(--md-on-primary-container);
+  background-color: var(--md-primary-container);
+  box-shadow: inset 0 0 0 0.5px transparent;
+}
+
+.ll-pillar-body .ui-body { max-width: 46em; }
+
+/* keyword chips close the wide rail and echo the citation's baseline */
+.ll-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ll-keyword {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+  padding: 5px 9px;
+  border-radius: 5px;
+  color: var(--md-on-surface-variant);
+  background-color: transparent;
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+}
+
+/* --- platforms: a section head plus three equal cards --------------------- */
+/* the second sheet sits 28px below the first, on the desk */
+.ll-sheet--platforms {
+  margin-top: 28px;
+}
+
+.ll-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+  border-bottom: 0.5px solid var(--md-outline);
+}
+.ll-section-title {
+  position: relative;
+  font-family: var(--font-hand);
+  font-size: clamp(20px, 1.6vw, 26px);
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--md-on-surface);
+  margin: 0;
+  padding-left: 14px;
+}
+/* the deep-red bar: a section rule, not a card border */
+.ll-section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.18em;
+  bottom: 0.18em;
+  width: 3px;
+  border-radius: 2px;
+  background-color: var(--md-primary);
+}
+.ll-section-note {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--md-on-surface-variant);
+  margin: 0;
+  max-width: 46ch;
+}
+
+.ll-platform-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.ll-platform {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  padding: 20px 18px;
+  border-radius: 8px;
+  background-color: var(--md-surface-low);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+}
+.ll-platform-head {
+  display: flex;
+  align-items: baseline;
   gap: 10px;
-  padding-top: 2px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
 }
-/* The body fills its rail rather than leaving a hole beside the citation; the
-   citation rail itself bounds the measure, which is what a journal grid does. */
-.ll-pillar-text { min-width: 0; }
-.ll-pillar-text .ui-body { max-width: none; }
-
-.ll-pillar-ref {
-  padding-top: 3px;
-  padding-left: 16px;
-  border-left: 0.5px solid var(--md-outline-variant);
+.ll-platform-ord {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--md-primary);
+  font-variant-numeric: tabular-nums;
 }
-.ll-pillar-ref .ui-caption { line-height: 1.5; }
+.ll-platform-tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  color: var(--md-secondary);
+}
+.ll-platform-name {
+  font-family: var(--font-hand);
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--md-on-surface);
+  margin: 0 0 10px;
+  text-wrap: balance;
+}
+.ll-platform-desc {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ll-ink-soft);
+  margin: 0 0 16px;
+}
+/* the capabilities sit below a dashed rule, so the card reads as two halves */
+.ll-platform-feats {
+  margin: auto 0 0;
+  padding: 14px 0 0;
+  list-style: none;
+  border-top: 1px dashed var(--md-outline-variant);
+  display: grid;
+  gap: 8px;
+}
+.ll-platform-feats li {
+  position: relative;
+  padding-left: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--md-on-surface-variant);
+}
+.ll-platform-feats li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background-color: var(--md-primary);
+  opacity: 0.55;
+}
 
-/* Below 1100px the citation rail costs more than it gives: fold it under the
-   prose, keeping the left margin. */
+/* --- responsive ----------------------------------------------------------- */
 @media (max-width: 1100px) {
-  .ll-pillar {
-    grid-template-columns: 172px minmax(0, 1fr);
-    max-width: none;
-  }
-  .ll-pillar-ref {
-    grid-column: 2;
-    padding-left: 0;
-    border-left: 0;
-    margin-top: 14px;
-  }
+  .ll-platform-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ll-platform:last-child { grid-column: 1 / -1; }
 }
-
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .ll-pillar {
     grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
+    gap: 18px;
   }
-  .ll-pillar-margin {
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-  }
-  .ll-pillar-ref {
-    grid-column: 1;
-    margin-top: 10px;
-  }
+}
+@media (max-width: 720px) {
+  .ll-platform-grid { grid-template-columns: minmax(0, 1fr); }
+  .ll-platform:last-child { grid-column: auto; }
+  .ll-section-title { font-size: 20px; }
 }
 
 /* --------------------------------------------------------------------------

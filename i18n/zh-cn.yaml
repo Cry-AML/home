@@ -40,6 +40,9 @@ research_title: "研究方向与转化平台"
 research_lead: "立足基础生物学规律，面向血液肿瘤重大临床急需，构建机制解析、疾病模型到临床试验的全链条转化闭环。"
 platform_section_title: "核心技术平台"
 
+research_keywords: "关键词"
+platform_section_note: "三套模型，把机制从实验台推进到临床决策。"
+
 pub_title: "代表论著"
 pub_lead: "精选基础原创与临床转化代表性成果："
 pub_filter_all: "全部"

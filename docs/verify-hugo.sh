@@ -144,8 +144,12 @@ chk "manifest uses MCH" "grep -q 'MCH Lab' public/site.webmanifest"
 
 echo "== 14. Pillar Figures, Snapshots, Map, Micro-interactions =="
 chk "no figure plates remain on research" "! grep -q 'll-fig\|ll-diagram' public/research/index.html"
-chk "three pillar rows present" "[ \$(grep -o 'll-pillar-margin' public/research/index.html | wc -l) -eq 3 ]"
-chk "citation rail present" "[ \$(grep -o 'll-pillar-ref' public/research/index.html | wc -l) -eq 3 ]"
+chk "three pillar rows present" "[ \$(grep -o 'll-pillar-lead' public/research/index.html | wc -l) -eq 3 ]"
+chk "citation pills link to the papers" "[ \$(grep -o 'class=ll-cite href=https://doi.org/' public/research/index.html | wc -l) -eq 3 ]"
+chk "keyword chips present (3 per pillar)" "[ \$(grep -o 'class=ll-keyword>' public/research/index.html | wc -l) -eq 9 ]"
+chk "platforms are a three-card grid" "[ \$(grep -o '<article class=ll-platform>' public/research/index.html | wc -l) -eq 3 ]"
+chk "pillars and platforms are separate sheets" "[ \$(grep -o 'll-sheet' public/research/index.html | wc -l) -ge 2 ]"
+chk "section head has its own scale" "grep -q 'll-section-title' public/research/index.html"
 chk "PI author emphasised" "[ \$(grep -c 'll-author-self' public/publications/index.html) -eq 9 ]"
 chk "no false-positive author emphasis" "! grep -q 'll-author-self>Leung' public/publications/index.html"
 chk "news snapshots column present" "grep -q 'll-news-snapshots' public/news/index.html"
@@ -183,7 +187,7 @@ chk "en has no /en/ prefix anymore" "! grep -q 'href=/home/en/' public/index.htm
 chk "zh-cn menus point at /zh-cn/" "grep -q '/zh-cn/research/' config/_default/menus.zh-cn.toml"
 chk "zh-tw menus point at /zh-tw/" "grep -q '/zh-tw/research/' config/_default/menus.zh-tw.toml"
 chk "traditional generator committed" "[ -s tools/gen-zh-tw.py ]"
-chk "pillar prose precedes its citation rail" "python3 -c \"import pathlib;s=pathlib.Path('layouts/_default/research.html').read_text();raise SystemExit(0 if s.index('ll-pillar-text')<s.index('ll-pillar-ref') else 1)\""
+chk "pillar lead precedes its body" "python3 -c \"import pathlib;s=pathlib.Path('layouts/_default/research.html').read_text();raise SystemExit(0 if s.index('ll-pillar-lead')<s.index('ll-pillar-body') else 1)\""
 
 
 echo "== 16. Branding, photos & accessibility polish =="
