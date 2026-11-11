@@ -107,3 +107,72 @@ error:
   404_error: "404"
   404_description: "This link may have moved, or the address was mistyped."
   404_home: "Back to home"
+
+# Join Us auto-filled application mail templates
+apply_btn: "Apply for this Position →"
+apply_subject_postdoc: "[Postdoc Application] Your Name - University/Specialty"
+apply_body_postdoc: |
+    Dear Dr. Cheuk-Him Man,
+    
+    I am writing to express my strong interest in the Postdoctoral Research Fellow position in your laboratory at Sun Yat-sen University School of Medicine.
+    
+    1. Current Affiliation & Degree: [University, Ph.D. Expected/Obtained Date]
+    2. Research Focus & Technical Expertise: [e.g., AML, Epigenetics, Metabolism, Single-cell Omics]
+    3. Representative Publications: [Key 1st-author papers, DOI or PMID]
+    4. Available Start Date: [Month, Year]
+    
+    Attached please find my curriculum vitae, research summary, and contact information for 2-3 references. I look forward to discussing potential research directions with you.
+    
+    Sincerely,
+    [Your Name]
+    [Phone / WeChat]
+    [Personal Website or Google Scholar Profile, if any]
+apply_subject_graduate: "[Graduate Admissions Inquiry] Your Name - Current Institution"
+apply_body_graduate: |
+    Dear Dr. Cheuk-Him Man,
+    
+    I am writing to inquire about Ph.D. / M.Sc. admissions opportunities in your laboratory at Sun Yat-sen University School of Medicine.
+    
+    1. Current Institution & Major: [University, Major, Current Year/Degree]
+    2. GPA / Academic Ranking: [Top X% / GPA]
+    3. English Proficiency: [CET-6 / TOEFL / IELTS score]
+    4. Research Experience & Publications: [Brief description of undergraduate thesis, lab rotations, or publications]
+    5. Proposed Entry Year: [e.g., Fall 2025 / 2026]
+    
+    Attached please find my CV and undergraduate transcripts. Thank you very much for your time and consideration.
+    
+    Sincerely,
+    [Your Name]
+    [Phone / WeChat]
+apply_subject_ra: "[Research Assistant Application] Your Name - Specialty"
+apply_body_ra: |
+    Dear Dr. Cheuk-Him Man,
+    
+    I am writing to apply for the Research Assistant / Laboratory Technician position in your group at Sun Yat-sen University.
+    
+    1. Degree & Major: [B.S. / M.S. in Biology, Medicine, or related field]
+    2. Hands-on Laboratory Techniques: [e.g., Cell culture, Western blot, PCR, Mouse handling, Flow cytometry]
+    3. Available Start Date & Commitment: [Expected start date, planned duration e.g., 1-2 years]
+    4. Career Plan: [e.g., Planning for subsequent Ph.D. studies or long-term lab management]
+    
+    Attached please find my resume. I look forward to hearing from you.
+    
+    Sincerely,
+    [Your Name]
+    [Phone / WeChat]
+apply_subject_intern: "[Undergraduate Internship Application] Your Name - Current University & Major"
+apply_body_intern: |
+    Dear Dr. Cheuk-Him Man,
+    
+    I am an undergraduate student interested in joining your laboratory as a research intern / graduation thesis student.
+    
+    1. University, School & Major: [University, Current Year, Major]
+    2. GPA & Core Courses: [Relevant courses e.g., Molecular Biology, Biochemistry, Oncology]
+    3. Available Time: [e.g., X days per week, starting from Month/Year]
+    4. Research Interests: [Topics in AML biology, epigenetics, or translational medicine that interest you]
+    
+    Attached please find my CV. Thank you for your guidance.
+    
+    Sincerely,
+    [Your Name]
+    [Student ID & Contact Details]

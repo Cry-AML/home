@@ -222,6 +222,12 @@ chk "header drawer breakpoint matches brand scale" "grep -q '@media (max-width: 
 chk "both marks are zoom-eligible (no .nozoom)" "! sed -n '/ll-brand__mark/p;/ll-footer-mark/p' layouts/partials/header/basic.html layouts/partials/footer.html | grep -q 'nozoom'"
 chk "dark mode brand mark filter defined" "grep -A3 'html.dark .ll-brand__mark {' assets/css/custom.css | grep -q 'brightness'"
 chk "dark mode footer mark filter defined" "grep -A3 'html.dark .ll-footer-mark {' assets/css/custom.css | grep -q 'invert'"
+chk "join page has 4 open positions in data" "[ $(grep -o '"type":' data/lab.json | wc -l) -ge 4 ]"
+chk "join page has 4 apply buttons in EN" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/join/index.html | wc -l) -eq 4 ]"
+chk "join page has 4 apply buttons in ZH-CN" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/zh-cn/join/index.html | wc -l) -eq 4 ]"
+chk "join page has 4 apply buttons in ZH-TW" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/zh-tw/join/index.html | wc -l) -eq 4 ]"
+chk "apply mailto includes pre-filled body in all langs" "grep -q '&amp;body=' public/join/index.html && grep -q '&amp;body=' public/zh-cn/join/index.html && grep -q '&amp;body=' public/zh-tw/join/index.html"
+chk "apply mailto pre-fills Traditional Chinese in ZH-TW" "grep -q '文卓謙老師' public/zh-tw/join/index.html"
 chk "header mark rendered once per page" "[ \$(grep -o 'll-brand__mark' public/index.html | wc -l) -eq 1 ]"
 
 

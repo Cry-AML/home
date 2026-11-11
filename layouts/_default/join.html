@@ -11,13 +11,19 @@
 
   <div class="ll-sheet" style="--ll-tilt:0.2deg; --ll-sheet-i:0">
     {{ range $pos := $lab.openPositions }}
+      {{ $subjectKey := printf "apply_subject_%s" $pos.type }}
+      {{ $bodyKey := printf "apply_body_%s" $pos.type }}
+      {{ $subject := i18n $subjectKey }}
+      {{ $body := i18n $bodyKey }}
+      {{ $mailto := printf "mailto:%s?subject=%s&body=%s" $lab.pi.email ($subject | urlquery) ($body | urlquery) }}
+
       <div class="ll-entry grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-4">
         <div class="md:col-span-5">
           <span class="ll-stamp">{{ cond $isEn $pos.statusEn $pos.statusZh }}</span>
           <h2 class="ui-heading mt-2">{{ cond $isEn $pos.titleEn $pos.titleZh }}</h2>
           <p class="ui-caption mt-2">{{ cond $isEn $pos.salaryEn $pos.salaryZh }}</p>
-          <a href="mailto:{{ $lab.pi.email }}?subject=Application_{{ $pos.type }}" class="ll-btn ll-btn--xs mt-3 inline-flex">
-            Apply — {{ $pos.type }} →
+          <a href="{{ $mailto | safeURL }}" class="ll-btn ll-btn--xs mt-3 inline-flex">
+            {{ i18n "apply_btn" }}
           </a>
         </div>
         <div class="md:col-span-7">
