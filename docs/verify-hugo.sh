@@ -234,10 +234,11 @@ chk "join page has 5 pre-filled mail buttons in EN (4 positions + 1 inquiry)" "[
 chk "join page has 5 pre-filled mail buttons in ZH-CN" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/zh-cn/join/index.html | wc -l) -eq 5 ]"
 chk "join page has 5 pre-filled mail buttons in ZH-TW" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/zh-tw/join/index.html | wc -l) -eq 5 ]"
 chk "apply mailto includes pre-filled body in all langs" "grep -q '&amp;body=' public/join/index.html && grep -q '&amp;body=' public/zh-cn/join/index.html && grep -q '&amp;body=' public/zh-tw/join/index.html"
+# RFC 6068: mailto uses %20 for spaces, never "+". Go's urlquery applies the
+# HTML-form rule, which made the letter arrive as "Dear+Dr.+Cheuk-Him+Man,".
+chk "mailto links follow RFC 6068 (no + for spaces)" "python3 tools/check-mailto.py"
+chk "mailto is built by the shared partial" "grep -q 'partial \"mailto.html\"' layouts/_default/join.html"
 chk "apply mailto pre-fills Traditional Chinese in ZH-TW" "grep -q '文卓謙老師' public/zh-tw/join/index.html"
-chk "join bottom banner button has pre-filled mail template in EN" "grep -A3 'class=\"ll-btn ll-btn--marker\"' public/join/index.html | grep -q 'Lab+Recruitment' || grep -B1 'class=\"ll-btn ll-btn--marker\"' public/join/index.html | grep -q 'Lab+Recruitment'"
-chk "join bottom banner button has pre-filled mail template in ZH-CN" "grep -B1 'class=\"ll-btn ll-btn--marker\"' public/zh-cn/join/index.html | grep -q '%E5%B2%97%E4%BD%8D%E5%BA%94%E8%81%98%E4%B8%8E%E5%92%A8%E8%AF%A2'"
-chk "join bottom banner button has pre-filled mail template in ZH-TW" "grep -B1 'class=\"ll-btn ll-btn--marker\"' public/zh-tw/join/index.html | grep -q '%E5%B4%97%E4%BD%8D%E6%87%89%E8%81%98%E8%88%87%E8%AB%AE%E8%A9%A2'"
 chk "header mark rendered once per page" "[ \$(grep -o 'll-brand__mark' public/index.html | wc -l) -eq 1 ]"
 
 

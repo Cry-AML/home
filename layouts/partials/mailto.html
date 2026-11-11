@@ -1,0 +1,30 @@
+{{/*
+  Build a mailto: URI that mail clients actually decode.
+
+  RFC 6068 defines the scheme: a space is %20 and a body line break is %0D%0A.
+  Hugo's `urlquery` follows Go's url.QueryEscape, which encodes a space as "+".
+  That is the rule for an HTML form body (application/x-www-form-urlencoded),
+  not for a URI. Clients that honour RFC 6068 — which is all of them — do not
+  treat "+" as a space inside mailto:, so the prefilled letter arrived as
+  "Dear+Dr.+Cheuk-Him+Man," with every space turned into a plus.
+
+  QueryEscape never emits a bare "+" for a literal plus sign (that becomes
+  %2B), so any remaining "+" in its output is a space and is safe to rewrite.
+
+  Newlines are normalised to CRLF before encoding: RFC 6068 calls for %0D%0A
+  between lines, and some clients drop a bare %0A.
+
+  Call as:  partial "mailto.html" (dict "email" $addr "subject" $s "body" $b)
+  Returns the complete URI.
+*/}}
+{{- $email := .email -}}
+{{- $subject := .subject -}}
+{{- $body := .body -}}
+
+{{- $crlf := replace (replace $body "\r\n" "\n") "\n" "\r\n" -}}
+
+{{- /* urlquery escapes for a query *value*; swap its "+" for %20 */ -}}
+{{- $encSubject := replace (urlquery $subject) "+" "%20" -}}
+{{- $encBody := replace (urlquery $crlf) "+" "%20" -}}
+
+{{- return (printf "mailto:%s?subject=%s&body=%s" $email $encSubject $encBody) -}}

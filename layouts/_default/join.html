@@ -15,7 +15,7 @@
       {{ $bodyKey := printf "apply_body_%s" $pos.type }}
       {{ $subject := i18n $subjectKey }}
       {{ $body := i18n $bodyKey }}
-      {{ $mailto := printf "mailto:%s?subject=%s&body=%s" $lab.pi.email ($subject | urlquery) ($body | urlquery) }}
+      {{ $mailto := partial "mailto.html" (dict "email" $lab.pi.email "subject" $subject "body" $body) }}
 
       <div class="ll-entry grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-4">
         <div class="md:col-span-5">
@@ -47,7 +47,7 @@
       <p class="ui-body mb-5">{{ i18n "join_contact_banner_desc" }}</p>
       {{ $inquirySubject := i18n "apply_subject_inquiry" }}
       {{ $inquiryBody := i18n "apply_body_inquiry" }}
-      {{ $inquiryMailto := printf "mailto:%s?subject=%s&body=%s" $lab.pi.email ($inquirySubject | urlquery) ($inquiryBody | urlquery) }}
+      {{ $inquiryMailto := partial "mailto.html" (dict "email" $lab.pi.email "subject" $inquirySubject "body" $inquiryBody) }}
       <a href="{{ $inquiryMailto | safeURL }}" class="ll-btn ll-btn--marker">{{ i18n "btn_send_email" }}</a>
     </div>
   </div>
