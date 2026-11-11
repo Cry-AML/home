@@ -237,6 +237,9 @@ chk "seat census: 2 intern seats" "grep -q 'll-sheet-count>2' public/team/index.
 chk "vacant desks rendered" "[ \$(grep -o 'll-person--vacant' public/team/index.html | wc -l) -eq 10 ]"
 chk "open-seat cards rendered" "[ \$(grep -o '<a class=ll-seat' public/team/index.html | wc -l) -eq 3 ]"
 chk "grid rows are equal height" "grep -q 'grid-auto-rows: 1fr' assets/css/custom.css"
+chk "team portraits excluded from the lightbox" "[ \$(grep -o 'll-person__img[^\"]*nozoom' layouts/partials/team-card.html | wc -l) -eq 2 ]"
+chk "group portraits excluded from the lightbox" "[ \$(grep -o 'll-portrait__img[^\"]*nozoom' layouts/_default/team.html | wc -l) -eq 2 ]"
+chk "hidden portrait layer cannot take the click" "python3 -c \"import pathlib,re;s=pathlib.Path('assets/css/custom.css').read_text();b=re.search(r'\\.ll-person__img--art \\{[^}]*\\}',s);raise SystemExit(0 if b and 'pointer-events: none' in b.group(0) else 1)\""
 
 echo ""
 if [ "$fail" -eq 0 ]; then

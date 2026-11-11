@@ -13,14 +13,14 @@
   <button type="button" class="ll-person__frame" data-person-toggle
           aria-label="{{ if $isEn }}Toggle illustrated portrait{{ else }}切换插画头像{{ end }}">
     {{ with $real }}
-      <img class="ll-person__img ll-person__img--real is-visible"
+      <img class="ll-person__img ll-person__img--real is-visible nozoom"
            src="{{ . | relURL }}" alt="{{ cond $isEn $m.nameEn $m.nameZh }}"
            width="640" height="800" loading="lazy" decoding="async">
     {{ else }}
       <span class="ll-person__img ll-person__img--real is-visible ll-person__blank" aria-hidden="true"></span>
     {{ end }}
     {{ with $art }}
-      <img class="ll-person__img ll-person__img--art"
+      <img class="ll-person__img ll-person__img--art nozoom"
            src="{{ . | relURL }}" alt="" aria-hidden="true"
            width="640" height="800" loading="lazy" decoding="async">
     {{ else }}

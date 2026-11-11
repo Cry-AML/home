@@ -42,10 +42,10 @@
 
       <figure class="ll-portrait" data-compare>
         <div class="ll-portrait-frame">
-          <img class="ll-portrait__img ll-portrait__img--real is-visible"
+          <img class="ll-portrait__img ll-portrait__img--real is-visible nozoom"
                src="{{ .real | relURL }}" alt="{{ cond $isEn .captionEn .captionZh }}"
                width="1800" height="771" decoding="async">
-          <img class="ll-portrait__img ll-portrait__img--art"
+          <img class="ll-portrait__img ll-portrait__img--art nozoom"
                src="{{ .illustrated | relURL }}" alt="" aria-hidden="true"
                width="1800" height="771" decoding="async">
           <input class="ll-portrait__range" type="range" min="0" max="100" value="100"
@@ -72,7 +72,7 @@
       <div class="ll-pi-row">
         <div class="ll-avatar ll-avatar--pi">
           <span class="ll-avatar__placeholder" aria-hidden="true">
-            <img src="{{ "images/mark.png" | relURL }}" alt="" width="64" height="64">
+            <img src="{{ "images/mark.png" | relURL }}" alt="" width="64" height="64" class="nozoom">
           </span>
         </div>
         <div class="ll-pi-body">

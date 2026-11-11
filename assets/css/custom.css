@@ -2092,6 +2092,7 @@ h1, h2, h3 {
   padding: 8px;
 }
 .ll-portrait__img {
+  pointer-events: none;
   display: block;
   width: 100%;
   height: auto;
@@ -2269,6 +2270,8 @@ h1, h2, h3 {
   inset: 6px;
   width: calc(100% - 12px);
   height: calc(100% - 12px);
+  /* the hidden layer must not intercept the click that flips the card */
+  pointer-events: none;
 }
 /* one class on the card swaps both layers; no opacity animation on the
    photograph itself, so the switch cannot flash the paper underneath */
