@@ -139,6 +139,27 @@ chk "EN output has no legacy names" "! grep -q 'Chi-Hin\|Wen Laboratory' public/
 chk "ZH output keeps Chinese name" "grep -q '文卓谦实验室' public/index.html"
 chk "manifest uses MHC" "! grep -q 'Wen Lab' public/site.webmanifest"
 
+
+echo "== 14. Pillar Figures, Snapshots, Map, Micro-interactions =="
+chk "three pillar diagrams built" "[ \$(grep -o 'll-fig' public/research/index.html | wc -l) -eq 3 ]"
+chk "diagrams have rough filters" "[ \$(grep -o 'rough-0[123]' public/research/index.html | sort -u | wc -l) -eq 3 ]"
+chk "diagram SVG in bounds (220x140)" "[ \$(grep -c 'viewBox=.0 0 220 140.' public/research/index.html) -eq 3 ]"
+chk "PI author emphasised" "[ \$(grep -c 'll-author-self' public/publications/index.html) -eq 9 ]"
+chk "no false-positive author emphasis" "! grep -q 'll-author-self>Leung' public/publications/index.html"
+chk "news snapshots column present" "grep -q 'll-news-snapshots' public/news/index.html"
+chk "snapshot placeholder frames" "[ \$(grep -o 'll-snap-frame' public/news/index.html | wc -l) -eq 3 ]"
+chk "contact map plate present" "grep -q 'rough-map' public/contact/index.html"
+chk "back-to-top is an index tab" "grep -q 'll-to-top' layouts/partials/scroll-to-top.html"
+chk "back-to-top JS wired" "grep -q 'initBackToTop' assets/js/wen-lab.js"
+chk "copy stamp implemented" "grep -q 'stampOn' assets/js/wen-lab.js && grep -q 'll-stamp-mark' assets/css/custom.css"
+chk "copy passes source element" "grep -q 'copyBibtex(this.dataset.bibtex, this)' layouts/_default/publications.html"
+chk "highlighter wipe present" "grep -q 'll-hi-wipe' assets/css/custom.css"
+chk "inked hover retrace present" "grep -q 'll-retrace' assets/css/custom.css"
+chk "timeline ink fill wired" "grep -q 'initTimelineInk' assets/js/wen-lab.js"
+chk "abstract accordion wired" "grep -q 'toggleAbstract' assets/js/wen-lab.js && grep -q 'll-abstract' public/publications/index.html"
+chk "accordion uses aria-expanded" "[ \$(grep -o 'aria-expanded=false' public/publications/index.html | wc -l) -ge 9 ]"
+chk "no hidden attr on accordion (kills transition)" "! grep -q 'class=\"ll-abstract\" data-open=\"false\" hidden' public/publications/index.html"
+
 echo ""
 if [ "$fail" -eq 0 ]; then
   printf '\033[32mALL %d ACCEPTANCE CHECKS PASSED!\033[0m\n' "$pass"

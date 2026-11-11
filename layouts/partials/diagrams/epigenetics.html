@@ -1,0 +1,40 @@
+{{/*
+  Pillar 01 — chromatin remodelling and immune evasion.
+  Three groups only, on a 220×140 plate:
+    · nucleus (left, centred) with one nucleosome inside
+    · methyl marks on the upper rim — two being stripped (primary)
+    · a T-cell docking from the right, bridged by a receptor
+  Geometry is exact; the hand-drawn edge comes from a displacement filter.
+*/}}
+<svg viewBox="0 0 220 140" fill="none" aria-hidden="true" class="ll-fig">
+  <defs>
+    <filter id="rough-01" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.032" numOctaves="3" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#rough-01)" stroke-linecap="round" stroke-linejoin="round">
+    <!-- 1 · nucleus -->
+    <ellipse cx="80" cy="76" rx="44" ry="42"
+             fill="var(--md-surface-container-high)" stroke="var(--md-outline)" stroke-width="2.6"/>
+    <!-- 2 · nucleosome: core bead + one turn of DNA -->
+    <ellipse cx="76" cy="80" rx="16" ry="14"
+             fill="var(--md-surface)" stroke="var(--md-outline)" stroke-width="2.4"/>
+    <path d="M48 96 C 40 72, 56 54, 78 58 C 98 62, 104 84, 92 98"
+          stroke="var(--md-outline)" stroke-width="2.4" opacity="0.55"/>
+    <!-- 3 · marks on the rim: one kept, two stripped -->
+    <circle cx="66" cy="42" r="7.5" fill="var(--md-outline)" opacity="0.45"/>
+    <circle cx="104" cy="48" r="7.5" fill="var(--md-primary)"/>
+    <circle cx="44" cy="102" r="7.5" fill="var(--md-primary)"/>
+    <!-- the stripping, drawn as a short pen flick leaving the rim -->
+    <path d="M104 40 L 116 24" stroke="var(--md-primary)" stroke-width="3"/>
+    <path d="M116 24 L 109 26 M116 24 L 114 31" stroke="var(--md-primary)" stroke-width="3"/>
+
+    <!-- 4 · T-cell docking -->
+    <circle cx="176" cy="88" r="26"
+            fill="var(--md-secondary-container)" stroke="var(--md-outline)" stroke-width="2.6"/>
+    <circle cx="176" cy="88" r="10" fill="var(--md-secondary)" opacity="0.38"/>
+    <path d="M150 88 L 126 88" stroke="var(--md-primary)" stroke-width="3.4"/>
+  </g>
+</svg>

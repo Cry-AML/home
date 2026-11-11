@@ -7,15 +7,41 @@
     <h1 class="ui-title">{{ i18n "news_title" }}</h1>
   </div>
 
-  <div class="ll-sheet ll-measure-wide" style="--ll-tilt:-0.18deg; --ll-sheet-i:0">
-    {{ range $item := $lab.news }}
-      <div class="pedigree-node">
-        <span class="pedigree-indicator"></span>
-        <span class="ll-stamp ll-stamp--muted">{{ $item.date }}</span>
-        <h2 class="ui-heading ll-h-18 mt-2">{{ cond $isEn $item.titleEn $item.titleZh }}</h2>
-        <p class="ui-body mt-1.5">{{ cond $isEn $item.descEn $item.descZh }}</p>
+  <div class="ll-sheet" style="--ll-tilt:-0.16deg; --ll-sheet-i:0">
+    <div class="ll-news-grid">
+
+      <!-- the timeline -->
+      <div class="ll-news-timeline">
+        {{ range $i, $item := $lab.news }}
+          <div class="pedigree-node">
+            <span class="pedigree-indicator"></span>
+            <span class="ll-stamp ll-stamp--muted">{{ $item.date }}</span>
+            <h2 class="ui-heading ll-h-18 mt-2">{{ cond $isEn $item.titleEn $item.titleZh }}</h2>
+            <p class="ui-body mt-1.5">{{ cond $isEn $item.descEn $item.descZh }}</p>
+          </div>
+        {{ end }}
       </div>
-    {{ end }}
+
+      <!-- the margin: frames for lab photographs -->
+      <aside class="ll-news-snapshots" aria-label="{{ i18n "news_snapshots" }}">
+        <div class="ui-caption ll-snap-title">{{ i18n "news_snapshots" }}</div>
+        {{ range $item := $lab.snapshots }}
+          <figure class="ll-snap">
+            <div class="ll-snap-frame">
+              {{ with .image }}
+                <img src="{{ . | relURL }}" alt="{{ cond $isEn $item.captionEn $item.captionZh }}" loading="lazy" decoding="async">
+              {{ else }}
+                <span class="ll-snap-empty" aria-hidden="true"></span>
+              {{ end }}
+            </div>
+            <figcaption class="ui-caption ll-snap-cap">
+              {{ cond $isEn .captionEn .captionZh }}
+            </figcaption>
+          </figure>
+        {{ end }}
+      </aside>
+
+    </div>
   </div>
 </div>
 {{ end }}

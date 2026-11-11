@@ -11,17 +11,18 @@
   <div class="ll-sheet" style="--ll-tilt:-0.22deg; --ll-sheet-i:0">
     <!-- Pillars -->
     {{ range $i, $item := $lab.researchPillars }}
-      <div class="ll-entry grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-3">
-        <div class="md:col-span-4">
-          <div class="flex items-baseline gap-2.5 mb-1.5">
-            <span class="font-mono ll-body-sm ll-text-pencil">{{ $item.number }}</span>
-            <span class="ll-stamp">{{ cond $isEn $item.tagEn $item.tagZh }}</span>
-          </div>
-          <h2 class="ui-heading">{{ cond $isEn $item.titleEn $item.titleZh }}</h2>
-          <p class="ui-caption mt-2">{{ $item.highlightPaper }}</p>
+      <div class="ll-entry ll-pillar">
+        <div class="ll-pillar-head">
+          <span class="font-mono ll-body-sm ll-text-pencil">{{ $item.number }}</span>
+          <span class="ll-stamp">{{ cond $isEn $item.tagEn $item.tagZh }}</span>
         </div>
-        <div class="md:col-span-8">
-          <p class="ui-body">{{ cond $isEn $item.descEn $item.descZh }}</p>
+        <div class="ll-pillar-body">
+          <figure class="ll-diagram" aria-hidden="true">{{ partial (printf "diagrams/%s.html" $item.id) . }}</figure>
+          <div class="ll-pillar-text">
+            <h2 class="ui-heading">{{ cond $isEn $item.titleEn $item.titleZh }}</h2>
+            <p class="ui-body mt-3">{{ cond $isEn $item.descEn $item.descZh }}</p>
+            <p class="ui-caption mt-4">{{ $item.highlightPaper }}</p>
+          </div>
         </div>
       </div>
     {{ end }}

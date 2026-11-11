@@ -7,9 +7,10 @@
     <h1 class="ui-title">{{ i18n "contact_title" }}</h1>
   </div>
 
-  <div class="ll-sheet" style="--ll-tilt:-0.15deg; --ll-sheet-i:0">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-x-10 gap-y-7">
-      <div class="md:col-span-7 space-y-5">
+  <div class="ll-sheet" style="--ll-tilt:-0.12deg; --ll-sheet-i:0">
+    <div class="ll-contact-grid">
+
+      <div class="ll-contact-text">
         <div>
           <div class="ui-caption mb-1">{{ i18n "contact_address_label" }}</div>
           <p class="ui-body">{{ i18n "contact_address_val" }}</p>
@@ -24,14 +25,61 @@
         </div>
       </div>
 
-      <div class="md:col-span-5 md:border-l md:pl-9" style="border-left-width: 0.5px; border-color: var(--ll-pencil-faint)">
-        <div class="ui-heading ll-h-18">{{ i18n "map_building_title" }}</div>
-        <div class="ui-caption mt-1.5">{{ i18n "contact_postal_code" }}</div>
-        <a href="https://maps.google.com/?q=Sun+Yat-sen+University+North+Campus+Guangzhou"
-           target="_blank" rel="noopener noreferrer" class="ll-btn ll-btn--outline mt-5">
-          {{ i18n "btn_open_map" }} ↗
-        </a>
+      <div class="ll-contact-map">
+        <!-- a hand-drawn plate: campus block, two metro stops, a dotted walk -->
+        <figure class="ll-map" aria-hidden="true">
+          <svg viewBox="0 0 260 220" fill="none" class="ll-fig">
+            <defs>
+              <filter id="rough-map" x="-8%" y="-8%" width="116%" height="116%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="5" result="n"/>
+                <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+              </filter>
+            </defs>
+            <g filter="url(#rough-map)" stroke-linecap="round" stroke-linejoin="round">
+              <!-- the campus block -->
+              <path d="M96 34 H 214 V 128 H 96 Z"
+                    fill="var(--md-surface-container)" stroke="var(--md-outline)" stroke-width="2.4"/>
+              <!-- interior blocks -->
+              <path d="M112 52 H 168 V 78 H 112 Z" stroke="var(--md-outline-variant)" stroke-width="1.6"/>
+              <path d="M112 92 H 150 V 114 H 112 Z" stroke="var(--md-outline-variant)" stroke-width="1.6"/>
+              <path d="M182 92 H 202 V 114 H 182 Z" stroke="var(--md-outline-variant)" stroke-width="1.6"/>
+
+              <!-- the lab: primary marker on the block -->
+              <circle cx="140" cy="65" r="9" fill="var(--md-primary)"/>
+              <circle cx="140" cy="65" r="17" stroke="var(--md-primary)" stroke-width="2" opacity="0.5"/>
+
+              <!-- metro line -->
+              <path d="M18 196 H 244" stroke="var(--md-outline)" stroke-width="3"/>
+              <path d="M52 196 V 210 M120 196 V 210 M196 196 V 210"
+                    stroke="var(--md-outline-variant)" stroke-width="1.6"/>
+
+              <!-- two stations -->
+              <circle cx="76" cy="196" r="7" fill="var(--md-secondary)"/>
+              <circle cx="180" cy="196" r="7" fill="var(--md-secondary)"/>
+
+              <!-- walking routes: dotted -->
+              <path d="M76 189 C 92 168, 116 150, 140 132" stroke="var(--md-secondary)" stroke-width="2.2"
+                    stroke-dasharray="5 5" opacity="0.85"/>
+              <path d="M180 189 C 170 166, 156 150, 146 130" stroke="var(--md-secondary)" stroke-width="2.2"
+                    stroke-dasharray="5 5" opacity="0.85"/>
+            </g>
+          </svg>
+          <figcaption class="ui-caption ll-map-cap">
+            <span class="ll-map-key"><span class="ll-key-dot ll-key-lab"></span>{{ if $isEn }}Lab{{ else }}实验室{{ end }}</span>
+            <span class="ll-map-key"><span class="ll-key-dot ll-key-metro"></span>{{ if $isEn }}Metro{{ else }}地铁站{{ end }}</span>
+          </figcaption>
+        </figure>
+
+        <div class="ll-map-meta">
+          <div class="ui-heading ll-h-18">{{ i18n "map_building_title" }}</div>
+          <div class="ui-caption mt-1.5">{{ i18n "contact_postal_code" }}</div>
+          <a href="https://maps.google.com/?q=Sun+Yat-sen+University+North+Campus+Guangzhou"
+             target="_blank" rel="noopener noreferrer" class="ll-btn ll-btn--outline mt-4">
+            {{ i18n "btn_open_map" }} ↗
+          </a>
+        </div>
       </div>
+
     </div>
   </div>
 </div>

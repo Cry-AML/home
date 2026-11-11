@@ -39,7 +39,7 @@
         </div>
 
         <h2 class="ui-heading ll-pub-title">{{ $item.title }}</h2>
-        <p class="ui-caption ll-pub-authors">{{ $item.authors }}</p>
+        <p class="ui-caption ll-pub-authors">{{ partial "authors.html" $item }}</p>
 
         <div class="ll-pub-actions">
           <span class="ui-caption ll-text-accent">{{ cond $isEn $item.roleNote $item.roleNoteZh }}</span>
@@ -47,15 +47,26 @@
             {{ if $item.doiUrl }}
               <a href="{{ $item.doiUrl }}" target="_blank" rel="noopener noreferrer" class="ll-btn ll-btn--xs">DOI ↗</a>
             {{ end }}
-            <button data-abstract-title="{{ $item.title }}"
-                    data-abstract-journal="{{ $item.journal }}"
-                    data-abstract-pmid="{{ $item.pmid }}"
-                    data-abstract-text="{{ if $isEn }}{{ $item.abstractEn }}{{ else }}{{ $item.abstractZh }}{{ end }}"
-                    onclick="openAbstractFromEl(this)"
-                    class="ll-btn ll-btn--xs">{{ i18n "pub_btn_abstract" }}</button>
+            {{ $absId := printf "abs-%s" $item.id }}
+            <button type="button"
+                    class="ll-btn ll-btn--xs"
+                    aria-expanded="false"
+                    aria-controls="{{ $absId }}"
+                    onclick="toggleAbstract(this, '{{ $absId }}')">{{ i18n "pub_btn_abstract" }}</button>
             <button data-bibtex="{{ $item.bibtex }}"
-                    onclick="copyBibtex(this.dataset.bibtex)"
+                    onclick="copyBibtex(this.dataset.bibtex, this)"
                     class="ll-btn ll-btn--xs">{{ i18n "pub_btn_bibtex" }}</button>
+          </div>
+        </div>
+
+        <div id="{{ $absId }}" class="ll-abstract" data-open="false">
+          <div>
+            <div class="ll-abstract-inner">
+              <div class="ui-caption ll-abstract-kicker">
+                {{ i18n "modal_abstract_title" }}{{ with $item.pmid }} · PMID {{ . }}{{ end }}
+              </div>
+              <p class="ui-body">{{ if $isEn }}{{ $item.abstractEn }}{{ else }}{{ $item.abstractZh }}{{ end }}</p>
+            </div>
           </div>
         </div>
       </div>

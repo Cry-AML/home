@@ -1,0 +1,22 @@
+{{/*
+  Render an author list with the PI emphasised.
+  The data stores plain text ("…, Man CH#, …"), so the split happens here:
+  every segment containing the PI's initials is wrapped in <strong>, and a
+  trailing role marker (# or *) stays outside the emphasis.
+  The regex is bounded so "Leung AYH" can never match "Man CH".
+*/}}
+{{- $authors := .authors -}}
+{{- $parts := split $authors ", " -}}
+<span class="ll-authors">
+  {{- range $i, $a := $parts -}}
+    {{- if $i }}, {{ end -}}
+    {{- $isPi := findRE `^\s*Man\s*C\.?H\.?` $a -}}
+    {{- $marks := findRE `[#*]+$` $a -}}
+    {{- $name := replaceRE `[#*]+$` "" $a -}}
+    {{- if $isPi -}}
+      <strong class="ll-author-self">{{ $name | strings.TrimSpace }}</strong>{{ delimit $marks "" }}
+    {{- else -}}
+      {{ $a }}
+    {{- end -}}
+  {{- end -}}
+</span>

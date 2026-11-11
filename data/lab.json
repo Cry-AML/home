@@ -401,5 +401,22 @@
       "descZh": "阐明 PLK4 抑制剂重构组蛋白甲基化、重启 TP53 突变白血病细胞 cGAS-STING 通路并激活宿主抗肿瘤免疫的全新机理。",
       "descEn": "Revealing that PLK4 inhibition overcomes epigenetic suppression of the cGAS-STING innate immunity pathway in TP53-mutated AML."
     }
+  ],
+  "snapshots": [
+    {
+      "image": "",
+      "captionZh": "课题组活动",
+      "captionEn": "Lab gathering"
+    },
+    {
+      "image": "",
+      "captionZh": "期刊封面",
+      "captionEn": "Journal cover"
+    },
+    {
+      "image": "",
+      "captionZh": "学术会议",
+      "captionEn": "Conference"
+    }
   ]
 }

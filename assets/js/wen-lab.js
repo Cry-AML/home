@@ -129,7 +129,7 @@
   // ---------------------------------------------------------------------------
   // 3. BibTeX Copy & Toast Notification (Global)
   // ---------------------------------------------------------------------------
-  window.copyBibtex = function(bibtex) {
+  window.copyBibtex = function(bibtex, sourceEl) {
     if (!bibtex) return;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(bibtex);
@@ -140,6 +140,21 @@
       ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta);
+    }
+
+    // Inline feedback: the button itself flips to a confirmed state, and a
+    // hand-drawn stamp lands on it. Falls back to the corner slip if the call
+    // came from somewhere without a source element.
+    if (sourceEl) {
+      sourceEl.classList.add('is-copied');
+      const original = sourceEl.textContent;
+      sourceEl.textContent = '✓ Copied';
+      setTimeout(() => {
+        sourceEl.classList.remove('is-copied');
+        sourceEl.textContent = original;
+      }, 1500);
+      stampOn(sourceEl, 'COPIED');
+      return;
     }
 
     const toast = document.getElementById('toast-notification');
@@ -325,7 +340,106 @@
   }
 
   // ---------------------------------------------------------------------------
-  // 7. Smooth Anchor Scrolling & Navigation
+  // 7. Back-to-top index tab
+  // ---------------------------------------------------------------------------
+  function initBackToTop() {
+    const tab = document.getElementById('scroll-to-top');
+    if (!tab) return;
+
+    let scheduled = false;
+    const update = () => {
+      const past = window.scrollY > window.innerHeight * 0.8;
+      tab.classList.toggle('is-visible', past);
+      tab.setAttribute('aria-hidden', past ? 'false' : 'true');
+      scheduled = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(update);
+    }, { passive: true });
+    update();
+  }
+
+  // ---------------------------------------------------------------------------
+  // 8. Copy confirmation: a rubber stamp, not a toast far away
+  // ---------------------------------------------------------------------------
+  function stampOn(el, label) {
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const stamp = document.createElement('span');
+    stamp.className = 'll-stamp-mark';
+    stamp.textContent = label;
+    stamp.style.left = `${rect.left + rect.width / 2}px`;
+    stamp.style.top = `${rect.top}px`;
+    document.body.appendChild(stamp);
+    // force layout so the entry animation runs
+    void stamp.offsetWidth;
+    stamp.classList.add('is-inked');
+    setTimeout(() => {
+      stamp.classList.add('is-fading');
+      setTimeout(() => stamp.remove(), 260);
+    }, 1400);
+  }
+
+  // ---------------------------------------------------------------------------
+  // 8b. Abstract disclosure — an inline accordion, not a modal
+  // ---------------------------------------------------------------------------
+  window.toggleAbstract = function (btn, id) {
+    const panel = document.getElementById(id);
+    if (!panel) return;
+    const open = panel.dataset.open === 'true';
+    if (open) {
+      panel.dataset.open = 'false';
+      btn.setAttribute('aria-expanded', 'false');
+    } else {
+      panel.dataset.open = 'true';
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  };
+
+  // ---------------------------------------------------------------------------
+  // 9. Timeline ink fill — the spine darkens as each entry reaches mid-screen
+  // ---------------------------------------------------------------------------
+  function initTimelineInk() {
+    const nodes = [...document.querySelectorAll('.pedigree-node')];
+    if (!nodes.length) return;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      nodes.forEach(n => {
+        n.style.setProperty('--ink-progress', '1');
+        n.classList.add('is-reached');
+      });
+      return;
+    }
+
+    let queued = false;
+    const paint = () => {
+      queued = false;
+      const line = window.innerHeight * 0.62;
+      nodes.forEach(node => {
+        const r = node.getBoundingClientRect();
+        // progress: 0 when the entry's top is below the line, 1 once its
+        // bottom has passed it, interpolated in between.
+        let p = (line - r.top) / Math.max(r.height, 1);
+        p = Math.max(0, Math.min(1, p));
+        node.style.setProperty('--ink-progress', p.toFixed(3));
+        node.classList.toggle('is-reached', p > 0.35);
+      });
+    };
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(paint);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    paint();
+  }
+
+  // ---------------------------------------------------------------------------
+  // 10. Smooth Anchor Scrolling & Navigation
   // ---------------------------------------------------------------------------
   function initSmoothAnchorScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -364,7 +478,9 @@
     // 2. Initialize Canvas
     initAmbientCanvas();
 
-    // 3. Smooth anchor scroll
+    // 3. Back-to-top tab + smooth anchor scroll + timeline ink
+    initBackToTop();
+    initTimelineInk();
     initSmoothAnchorScroll();
 
     // 5. Search input listener

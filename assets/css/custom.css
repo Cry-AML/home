@@ -513,6 +513,9 @@ body {
   margin-inline: -0.06em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+  /* the wipe reveals the band that is already painted, so the text never
+     flashes without its highlight */
+  animation: ll-hi-wipe 620ms cubic-bezier(0.22, 1, 0.36, 1) 260ms both;
 }
 
 /* --------------------------------------------------------------------------
@@ -827,6 +830,7 @@ button.bf-icon-color-hover:hover {
   padding-left: 22px;
   padding-bottom: 26px;
   border-left: 0.5px solid var(--md-outline);
+  --ink-progress: 0;
 }
 .pedigree-node:last-child {
   border-left-color: transparent;
@@ -873,7 +877,11 @@ html.dark #ambient-canvas {
 /* --------------------------------------------------------------------------
    14. Ink draw-in for every drawn path
    -------------------------------------------------------------------------- */
-[data-ink] > svg[data-ll-ink] path[data-ink-draw] {
+/* Every vector the ink engine draws gets the same pen-stroke reveal —
+   card edges, buttons, and the research diagrams alike. The selector must
+   cover both hosts, or a path would stay parked at offset 1 and be invisible. */
+[data-ink] > svg[data-ll-ink] path[data-ink-draw],
+[data-diagram] > svg[data-ll-diagram] path[data-ink-draw] {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   animation: ll-draw var(--ll-dur-soak) var(--ll-ease-out) forwards;
@@ -943,25 +951,56 @@ html.dark #ambient-canvas {
   justify-content: center;
 }
 
-#scroll-to-top a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  font-size: 15px;
-  border-radius: 12px;
-  background-color: var(--md-secondary-container) !important;
-  border: 0 !important;
-  color: var(--md-on-secondary-container) !important;
-  box-shadow: var(--ll-shadow-loose) !important;
-  text-decoration: none;
-  transition: background-color var(--ll-dur-hover) var(--ll-ease-out),
-              color var(--ll-dur-hover) var(--ll-ease-out);
+/* Back-to-top is an index tab tucked against the sheet's right edge, not a
+   floating button: it slides out once the reader is past the first screen.
+   No filled chip, no saturated colour — a slip of paper with a pencil edge. */
+.ll-to-top {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  z-index: 30;
+  transform: translate(100%, -50%);
+  transition: transform var(--ll-dur-sheet) var(--ll-ease-settle);
 }
-#scroll-to-top a:hover {
-  background-color: var(--md-secondary) !important;
-  color: var(--md-on-secondary) !important;
+.ll-to-top.is-visible {
+  transform: translate(0, -50%);
+}
+.ll-to-top a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  color: var(--md-on-surface-variant);
+  background-color: var(--ll-paper);
+  border-left: 0.5px solid var(--md-outline);
+  border-radius: 3px 0 0 3px;
+  box-shadow: var(--ll-shadow-loose);
+  text-decoration: none;
+  writing-mode: vertical-rl;
+  transition: color var(--ll-dur-hover) var(--ll-ease-out),
+              background-color var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-to-top a::before {
+  content: '↑';
+  writing-mode: horizontal-tb;
+  font-size: 12px;
+  transition: transform var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-to-top a:hover {
+  color: var(--md-primary);
+  background-color: var(--md-primary-container);
+}
+.ll-to-top a:hover::before {
+  transform: translateY(-3px);
+}
+@media (max-width: 900px) {
+  .ll-to-top { display: none; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1180,7 +1219,8 @@ img, svg, video, canvas { max-width: 100%; }
     translate: 0 !important;
     animation: none !important;
   }
-  [data-ink] > svg[data-ll-ink] path[data-ink-draw] {
+  [data-ink] > svg[data-ll-ink] path[data-ink-draw],
+  [data-diagram] > svg[data-ll-diagram] path[data-ink-draw] {
     animation: none !important;
     stroke-dashoffset: 0 !important;
   }
@@ -1313,3 +1353,366 @@ h1, h2, h3 {
   .ll-notfound { grid-template-columns: minmax(0, 1fr); }
   .ll-notfound-mark { justify-content: flex-start; order: -1; }
 }
+
+
+/* --------------------------------------------------------------------------
+   22. Copy confirmation — a rubber stamp landing on the page
+   The stamp is drawn (wobbly double ring, seeded) and pressed: it arrives
+   oversized and rotated, settles with a slight overshoot, then lifts off.
+   -------------------------------------------------------------------------- */
+.ll-btn.is-copied {
+  color: var(--md-on-secondary-container) !important;
+  background-color: var(--md-secondary-container) !important;
+}
+
+.ll-stamp-mark {
+  position: fixed;
+  z-index: 1200;
+  transform: translate(-50%, -120%) rotate(-7deg) scale(1.35);
+  padding: 8px 13px 7px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  color: var(--md-primary);
+  /* ring thickness via inset shadow so the stamp is not a "card border" */
+  box-shadow: inset 0 0 0 1.5px currentColor;
+  border: 0;
+  border-radius: 6px 9px 5px 8px / 8px 5px 9px 6px;
+  background-color: color-mix(in srgb, var(--ll-paper) 82%, transparent);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--ll-dur-hover) var(--ll-ease-out),
+              transform var(--ll-dur-pop) var(--ll-ease-pop);
+}
+.ll-stamp-mark::after {
+  /* a second, offset ring reads as an imperfect double stamp */
+  content: '';
+  position: absolute;
+  inset: 2px -2px -2px 2px;
+  border: 0;
+  box-shadow: inset 0 0 0 1px currentColor;
+  border-radius: 8px 5px 9px 6px / 5px 9px 6px 8px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.ll-stamp-mark.is-inked {
+  opacity: 1;
+  transform: translate(-50%, -120%) rotate(-4deg) scale(1);
+}
+.ll-stamp-mark.is-fading {
+  opacity: 0;
+  transform: translate(-50%, -130%) rotate(-2deg) scale(0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-stamp-mark {
+    transition: opacity 1ms;
+    transform: translate(-50%, -120%) rotate(-4deg) scale(1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   23. Research pillars — a drawn mechanism beside the prose
+   Three columns at desktop, with the figure holding the left edge so the eye
+   lands on the mechanism before the paragraph.
+   -------------------------------------------------------------------------- */
+.ll-pillar-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.ll-pillar-body {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 44px);
+  align-items: start;
+}
+
+.ll-diagram {
+  margin: 0;
+  padding: 14px 10px;
+  border-radius: 8px;
+  background-color: var(--md-surface-container-low);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+}
+.ll-diagram > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.ll-pillar-text { min-width: 0; }
+.ll-pillar-text .ui-body { max-width: 40em; }
+
+/* At narrow widths the figure sits above the prose and stops being a column. */
+@media (max-width: 860px) {
+  .ll-pillar-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .ll-diagram { max-width: 260px; }
+}
+
+/* The pillar figure: a drawn plate on the sheet, no border of its own */
+.ll-fig {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.ll-diagram .ll-fig {
+  max-width: 220px;
+  margin-inline: auto;
+}
+
+/* --------------------------------------------------------------------------
+   24. PI emphasis in an author list
+   A warmer, heavier mark — a highlighter pass rather than a colour change, so
+   the name stays legible and the row keeps one ink colour.
+   -------------------------------------------------------------------------- */
+.ll-authors { display: inline; }
+.ll-author-self {
+  font-weight: 600;
+  color: var(--md-on-surface);
+  background: linear-gradient(103deg, transparent 1%, color-mix(in srgb, var(--md-tertiary-container) 85%, transparent) 3%,
+              color-mix(in srgb, var(--md-tertiary-container) 85%, transparent) 97%, transparent 99%);
+  background-size: 100% 0.52em;
+  background-position: 0 82%;
+  background-repeat: no-repeat;
+  padding-inline: 0.12em;
+  margin-inline: -0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* --------------------------------------------------------------------------
+   25. News — the timeline keeps its spine; the margin holds lab photographs
+   The empty right half becomes a column of framed snapshots (polaroid stock,
+   drawn edge), so the page reads as a notebook page with prints pinned on.
+   -------------------------------------------------------------------------- */
+.ll-news-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 52px);
+  align-items: start;
+}
+.ll-news-timeline { min-width: 0; }
+
+.ll-news-snapshots {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-left: clamp(20px, 3vw, 36px);
+  border-left: 0.5px solid var(--md-outline-variant);
+}
+.ll-snap-title {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--md-on-surface-variant);
+}
+
+.ll-snap { margin: 0; }
+.ll-snap-frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  padding: 8px 8px 0;
+  background-color: var(--md-surface-lowest);
+  box-shadow: var(--ll-shadow-loose);
+  border-radius: 2px;
+  rotate: calc(var(--snap-tilt, 0deg));
+  overflow: hidden;
+}
+.ll-snap:nth-of-type(2) .ll-snap-frame { --snap-tilt: -0.8deg; }
+.ll-snap:nth-of-type(3) .ll-snap-frame { --snap-tilt: 0.6deg; }
+.ll-snap:nth-of-type(4) .ll-snap-frame { --snap-tilt: -0.4deg; }
+.ll-snap-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Placeholder: a printed frame with a faint diagonal hatch, so an empty slot
+   still reads as "a photograph belongs here" rather than as a broken image. */
+.ll-snap-empty {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--md-surface-container);
+  background-image:
+    repeating-linear-gradient(135deg,
+      transparent 0 7px,
+      color-mix(in srgb, var(--md-outline-variant) 55%, transparent) 7px 8px);
+}
+.ll-snap-cap {
+  margin-top: 8px;
+  color: var(--md-on-surface-variant);
+}
+
+@media (max-width: 900px) {
+  .ll-news-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .ll-news-snapshots {
+    padding-left: 0;
+    border-left: 0;
+    padding-top: 22px;
+    border-top: 0.5px solid var(--md-outline-variant);
+  }
+  .ll-snap-frame { max-width: 260px; }
+}
+
+/* --------------------------------------------------------------------------
+   26. Contact — the plate on the right carries a drawn map, not a paragraph
+   -------------------------------------------------------------------------- */
+.ll-contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 52px);
+  align-items: start;
+}
+.ll-contact-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.ll-contact-map {
+  padding-left: clamp(20px, 3vw, 36px);
+  border-left: 0.5px solid var(--md-outline-variant);
+}
+.ll-map {
+  margin: 0 0 20px;
+  padding: 12px;
+  background-color: var(--md-surface-low);
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+}
+.ll-map .ll-fig { max-width: 100%; }
+.ll-map-cap {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+.ll-map-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ll-key-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.ll-key-lab { background-color: var(--md-primary); }
+.ll-key-metro { background-color: var(--md-secondary); }
+
+@media (max-width: 900px) {
+  .ll-contact-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .ll-contact-map {
+    padding-left: 0;
+    border-left: 0;
+    padding-top: 22px;
+    border-top: 0.5px solid var(--md-outline-variant);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   27. Highlighter wipe — the marker pass on the hero's second line
+   A clip-path sweep, timed to read as a hand moving left to right. It runs
+   once, on load, and is disabled under reduced motion.
+   -------------------------------------------------------------------------- */
+@keyframes ll-hi-wipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 -2% 0 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ll-hi { animation: none; clip-path: none; }
+}
+
+/* --------------------------------------------------------------------------
+   28. Inked hover — the drawn edge re-traces itself on approach
+   The engine already emits a second, lighter pass; hovering replays it, which
+   reads as the pen going over the line once more rather than a fill change.
+   -------------------------------------------------------------------------- */
+.ll-btn > svg[data-ll-ink] path[data-ink-draw] {
+  transition: stroke-dashoffset var(--ll-dur-sheet) var(--ll-ease-out);
+}
+.ll-btn:hover > svg[data-ll-ink] path[data-ink-draw] {
+  stroke-dashoffset: 0;
+  animation: ll-retrace var(--ll-dur-sheet) var(--ll-ease-out) 1;
+}
+@keyframes ll-retrace {
+  0%   { stroke-dashoffset: 0.55; }
+  100% { stroke-dashoffset: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ll-btn:hover > svg[data-ll-ink] path[data-ink-draw] { animation: none; }
+}
+
+/* --------------------------------------------------------------------------
+   29. Timeline ink fill — the spine darkens as the reader passes it
+   Scroll-linked where supported; a static dark spine otherwise, which is the
+   same reading, just without the growth.
+   -------------------------------------------------------------------------- */
+/* the spine itself is the fill: a pseudo-element grows down over the static
+   0.5px rule, so there is only ever one line on screen */
+.pedigree-node::before {
+  content: '';
+  position: absolute;
+  left: -0.75px;
+  top: 0;
+  width: 1.5px;
+  height: calc(100% * var(--ink-progress));
+  border-radius: 1px;
+  background-color: var(--md-primary);
+  opacity: 0.8;
+  pointer-events: none;
+  transition: height var(--ll-dur-fade, 160ms) linear;
+}
+.pedigree-node.is-reached .pedigree-indicator {
+  background-color: var(--md-primary);
+  box-shadow: 0 0 0 3px var(--md-primary-container);
+}
+
+/* --------------------------------------------------------------------------
+   30. Abstract disclosure — grid-rows easing, no measured height
+   -------------------------------------------------------------------------- */
+/* The disclosure uses grid-template-rows 0fr → 1fr, which animates without
+   measuring content height. `hidden` cannot be used here: it sets
+   display:none and kills the transition, so the panel is toggled by the
+   data-open attribute and clipped by the inner wrapper instead. */
+.ll-abstract {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows var(--ll-dur-sheet) var(--ll-ease-settle),
+              visibility 0s linear var(--ll-dur-sheet);
+}
+.ll-abstract[data-open="true"] {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows var(--ll-dur-sheet) var(--ll-ease-settle),
+              visibility 0s;
+}
+.ll-abstract > div {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* The disclosure panel: a tinted block with a marker rule down its left edge */
+.ll-abstract-inner {
+  margin-top: 14px;
+  padding: 14px 16px 16px 18px;
+  border-left: 2px solid var(--md-secondary);
+  border-radius: 0 6px 6px 0;
+  background-color: var(--md-surface-container-low);
+}
+.ll-abstract-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+  color: var(--md-on-surface-variant);
+}
+.ll-abstract .ui-body { max-width: 62em; }
