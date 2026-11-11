@@ -1,59 +1,59 @@
 [[main]]
   name = "首页"
-  url = "/"
+  url = "/zh-cn/"
   weight = 10
 
 [[main]]
   name = "研究方向"
-  url = "/research/"
+  url = "/zh-cn/research/"
   weight = 20
 
 [[main]]
   name = "代表论著"
-  url = "/publications/"
+  url = "/zh-cn/publications/"
   weight = 30
 
 [[main]]
   name = "学术经历"
-  url = "/pedigree/"
+  url = "/zh-cn/pedigree/"
   weight = 40
 
 [[main]]
   name = "新闻动态"
-  url = "/news/"
+  url = "/zh-cn/news/"
   weight = 50
 
 [[main]]
   name = "招贤纳士"
-  url = "/join/"
+  url = "/zh-cn/join/"
   weight = 60
 
 [[main]]
   name = "联系我们"
-  url = "/contact/"
+  url = "/zh-cn/contact/"
   weight = 70
 
 [[footer]]
   name = "文卓谦实验室"
-  url = "/"
+  url = "/zh-cn/"
   weight = 10
 
 [[footer]]
   name = "研究方向"
-  url = "/research/"
+  url = "/zh-cn/research/"
   weight = 20
 
 [[footer]]
   name = "代表论著"
-  url = "/publications/"
+  url = "/zh-cn/publications/"
   weight = 30
 
 [[footer]]
   name = "学术经历"
-  url = "/pedigree/"
+  url = "/zh-cn/pedigree/"
   weight = 40
 
 [[footer]]
   name = "联系方式"
-  url = "/contact/"
+  url = "/zh-cn/contact/"
   weight = 50

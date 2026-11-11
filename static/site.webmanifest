@@ -1,7 +1,7 @@
 {
-  "name": "文卓谦实验室 MHC Laboratory",
-  "short_name": "MHC Lab",
-  "lang": "zh-CN",
+  "name": "MCH Laboratory, Sun Yat-sen University",
+  "short_name": "MCH Lab",
+  "lang": "en",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

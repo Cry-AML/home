@@ -39,3 +39,10 @@ resources/_gen/
 /*.jpeg
 /*.png
 /*.svg
+
+# Source imagery dropped in for one-off processing. The site ships optimised
+# derivatives in static/images/ instead, so the 20 MB originals stay local.
+figs/
+
+# opencc-js is installed on demand for tools/gen-zh-tw.py
+tools/node_modules/

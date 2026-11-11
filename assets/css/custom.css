@@ -668,14 +668,33 @@ body {
   border-bottom: 0.5px solid var(--md-outline-variant);
 }
 
-.main-menu > a:first-child {
+/* Masthead: a small inked mark beside the wordmark, on one optical baseline */
+.ll-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  text-decoration: none;
+}
+.ll-brand__mark {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  object-fit: contain;
+  opacity: 0.92;
+}
+.ll-brand__name {
   font-family: var(--font-hand);
   font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.012em;
+  line-height: 1.1;
   color: var(--md-on-surface);
-  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+.ll-brand:hover .ll-brand__name { color: var(--md-primary); }
 
 .main-menu nav a {
   position: relative;
@@ -1008,8 +1027,8 @@ html.dark #ambient-canvas {
    -------------------------------------------------------------------------- */
 .ll-hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  gap: clamp(28px, 4vw, 64px);
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: clamp(32px, 4.5vw, 76px);
   align-items: start;
 }
 .ll-hero-lead { min-width: 0; }
@@ -1173,7 +1192,8 @@ img, svg, video, canvas { max-width: 100%; }
   :root { --ll-tilt-max: 0deg; }
 
   .ui-container { padding-inline: 16px; }
-  .main-menu > a:first-child { font-size: 20px !important; }
+  .ll-brand__name { font-size: 15px; }
+  .ll-brand__mark { width: 22px; height: 22px; }
 
   /* Touch targets stay >= 40px */
   .ll-btn,
@@ -1196,12 +1216,7 @@ img, svg, video, canvas { max-width: 100%; }
 }
 
 @media (max-width: 379px) {
-  .main-menu > a:first-child {
-    max-width: 12ch;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+  .ll-brand__name { max-width: 13ch; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1426,16 +1441,22 @@ h1, h2, h3 {
   margin-bottom: 18px;
 }
 
+/* Prose holds the left, the plate sits right, and the gutter between them is
+   the widest gap on the page — the pillar is the one place where a figure and
+   a paragraph have to coexist without touching. */
 .ll-pillar-body {
   display: grid;
-  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
-  gap: clamp(20px, 3vw, 44px);
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+  gap: clamp(28px, 5vw, 88px);
+  align-items: center;
 }
+.ll-pillar-text { min-width: 0; }
+.ll-pillar-text .ui-body { max-width: 34em; }
+.ll-pillar-text .ui-caption { max-width: 34em; }
 
 .ll-diagram {
   margin: 0;
-  padding: 14px 10px;
+  padding: 18px 16px;
   border-radius: 8px;
   background-color: var(--md-surface-container-low);
   box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
@@ -1445,16 +1466,15 @@ h1, h2, h3 {
   width: 100%;
   height: auto;
 }
-.ll-pillar-text { min-width: 0; }
-.ll-pillar-text .ui-body { max-width: 40em; }
-
 /* At narrow widths the figure sits above the prose and stops being a column. */
 @media (max-width: 860px) {
   .ll-pillar-body {
     grid-template-columns: minmax(0, 1fr);
-    gap: 18px;
+    gap: 22px;
+    align-items: start;
   }
-  .ll-diagram { max-width: 260px; }
+  /* on one column the plate leads, so the mechanism still frames the text */
+  .ll-diagram { order: -1; max-width: 300px; }
 }
 
 /* The pillar figure: a drawn plate on the sheet, no border of its own */
@@ -1464,8 +1484,7 @@ h1, h2, h3 {
   height: auto;
 }
 .ll-diagram .ll-fig {
-  max-width: 220px;
-  margin-inline: auto;
+  max-width: 100%;
 }
 
 /* --------------------------------------------------------------------------
@@ -1517,7 +1536,6 @@ h1, h2, h3 {
 .ll-snap { margin: 0; }
 .ll-snap-frame {
   position: relative;
-  aspect-ratio: 4 / 3;
   padding: 8px 8px 0;
   background-color: var(--md-surface-lowest);
   box-shadow: var(--ll-shadow-loose);
@@ -1531,7 +1549,8 @@ h1, h2, h3 {
 .ll-snap-frame img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 /* Placeholder: a printed frame with a faint diagonal hatch, so an empty slot
@@ -1539,7 +1558,7 @@ h1, h2, h3 {
 .ll-snap-empty {
   display: block;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 4 / 3;
   background-color: var(--md-surface-container);
   background-image:
     repeating-linear-gradient(135deg,
@@ -1580,32 +1599,45 @@ h1, h2, h3 {
   padding-left: clamp(20px, 3vw, 36px);
   border-left: 0.5px solid var(--md-outline-variant);
 }
+/* The map is a photograph of the campus plate: framed, slightly warm, with a
+   single marker for the lab. No key legend — the marker and the caption carry
+   the meaning, and two dots in a legend would repeat it. */
 .ll-map {
-  margin: 0 0 20px;
-  padding: 12px;
+  margin: 0 0 22px;
+  padding: 10px;
   background-color: var(--md-surface-low);
   border-radius: 4px;
   box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
 }
-.ll-map .ll-fig { max-width: 100%; }
+.ll-map-plate {
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: var(--md-surface-container);
+}
+.ll-map-plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+/* the marker: a primary ring with a soft halo, sitting on the building */
+.ll-map-pin {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background-color: var(--md-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--md-primary) 26%, transparent),
+              0 0 0 0.5px var(--md-surface-lowest);
+}
 .ll-map-cap {
-  display: flex;
-  gap: 16px;
   margin-top: 10px;
 }
-.ll-map-key {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.ll-key-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  display: inline-block;
-}
-.ll-key-lab { background-color: var(--md-primary); }
-.ll-key-metro { background-color: var(--md-secondary); }
 
 @media (max-width: 900px) {
   .ll-contact-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
@@ -1716,3 +1748,56 @@ h1, h2, h3 {
   color: var(--md-on-surface-variant);
 }
 .ll-abstract .ui-body { max-width: 62em; }
+
+/* --------------------------------------------------------------------------
+   31. Language switch — a three-way segmented control
+   Three languages is few enough to show all at once; a dropdown would hide
+   the two the reader has not chosen yet.
+   -------------------------------------------------------------------------- */
+.ll-langswitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  padding: 2px;
+  border-radius: 7px;
+  background-color: var(--md-surface-container-high);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+}
+.ll-langswitch__opt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 24px;
+  padding-inline: 7px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--md-on-surface-variant);
+  text-decoration: none;
+  transition: color var(--ll-dur-hover) var(--ll-ease-out),
+              background-color var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-langswitch__opt:hover {
+  color: var(--md-on-surface);
+  background-color: var(--md-surface-lowest);
+}
+.ll-langswitch__opt.is-current {
+  color: var(--md-on-secondary-container);
+  background-color: var(--md-secondary-container);
+  font-weight: 600;
+}
+@media (max-width: 639px) {
+  .ll-langswitch__opt { min-width: 26px; padding-inline: 6px; }
+}
+
+/* Footer signature: the mark at 22px, aligned with the copyright baseline */
+.ll-footer-mark {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  opacity: 0.55;
+  flex: none;
+}

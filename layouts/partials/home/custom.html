@@ -1,8 +1,9 @@
 <!-- =========================================================================
      HOMEPAGE — one sheet on the desk, with the PI note in the margin
      ========================================================================= -->
+{{ partial "labdata.html" . }}
 {{ $isEn := eq .Site.Language.Lang "en" }}
-{{ $lab := hugo.Data.lab }}
+{{ $lab := .Scratch.Get "lab" }}
 
 <div class="ui-container pt-12 pb-20 sm:pt-16">
   <div class="ll-sheet" style="--ll-tilt:-0.3deg; --ll-sheet-i:0">

@@ -70,7 +70,19 @@ def main():
         return 1
 
     # Live HTTP check against the built output.
-    handler = lambda *a, **k: SimpleHTTPRequestHandler(*a, directory=str(ROOT), **k)
+    class Prefixed(SimpleHTTPRequestHandler):
+        """Serve the built site under /home/ so baseURL-absolute paths resolve."""
+
+        def translate_path(self, path):
+            path = path.split('?', 1)[0].split('#', 1)[0]
+            if path.startswith(BASE.rstrip('/')):
+                path = path[len(BASE.rstrip('/')):]
+            return super().translate_path(path or '/')
+
+        def log_message(self, *args):
+            pass  # keep the audit output clean
+
+    handler = lambda *a, **k: Prefixed(*a, directory=str(ROOT), **k)
     srv = ThreadingHTTPServer(('127.0.0.1', 0), handler)
     port = srv.server_address[1]
     threading.Thread(target=srv.serve_forever, daemon=True).start()

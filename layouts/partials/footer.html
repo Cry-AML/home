@@ -2,7 +2,9 @@
   <div class="ui-container">
     <hr class="ll-rule mb-6" style="border-top-color: var(--ll-pencil-faint);">
     <div class="flex flex-wrap items-center justify-between gap-3">
-      {{/* Copyright */}}
+      <div class="flex items-center gap-3">
+        <img class="ll-footer-mark" src="{{ "images/mark-ink.png" | relURL }}" width="22" height="22" alt="" aria-hidden="true" decoding="async" loading="lazy">
+        {{/* Copyright */}}
       {{ if .Site.Params.footer.showCopyright | default true }}
         <p class="ui-caption">
           {{- $custom := i18n "footer_text" -}}
@@ -12,6 +14,7 @@
             &copy; {{ now.Format "2006" }} {{ .Site.Params.Author.name | markdownify }}
           {{- end }}
         </p>
+      </div>
       {{ end }}
 
       <div class="flex flex-wrap items-center gap-x-5 gap-y-2">

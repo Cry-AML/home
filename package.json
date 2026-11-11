@@ -17,7 +17,7 @@
     "bilingual",
     "multi-theme"
   ],
-  "author": "MHC Laboratory",
+  "author": "MCH Laboratory",
   "license": "MIT",
   "devDependencies": {
     "vite": "^5.4.0",

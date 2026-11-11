@@ -1,6 +1,7 @@
 {{ define "main" }}
+{{ partial "labdata.html" . }}
 {{ $isEn := eq .Site.Language.Lang "en" }}
-{{ $lab := hugo.Data.lab }}
+{{ $lab := .Scratch.Get "lab" }}
 
 <div class="ui-container pt-12 pb-20 sm:pt-16">
   <div class="mb-8 ll-measure">
@@ -26,48 +27,15 @@
       </div>
 
       <div class="ll-contact-map">
-        <!-- a hand-drawn plate: campus block, two metro stops, a dotted walk -->
-        <figure class="ll-map" aria-hidden="true">
-          <svg viewBox="0 0 260 220" fill="none" class="ll-fig">
-            <defs>
-              <filter id="rough-map" x="-8%" y="-8%" width="116%" height="116%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="5" result="n"/>
-                <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
-              </filter>
-            </defs>
-            <g filter="url(#rough-map)" stroke-linecap="round" stroke-linejoin="round">
-              <!-- the campus block -->
-              <path d="M96 34 H 214 V 128 H 96 Z"
-                    fill="var(--md-surface-container)" stroke="var(--md-outline)" stroke-width="2.4"/>
-              <!-- interior blocks -->
-              <path d="M112 52 H 168 V 78 H 112 Z" stroke="var(--md-outline-variant)" stroke-width="1.6"/>
-              <path d="M112 92 H 150 V 114 H 112 Z" stroke="var(--md-outline-variant)" stroke-width="1.6"/>
-              <path d="M182 92 H 202 V 114 H 182 Z" stroke="var(--md-outline-variant)" stroke-width="1.6"/>
-
-              <!-- the lab: primary marker on the block -->
-              <circle cx="140" cy="65" r="9" fill="var(--md-primary)"/>
-              <circle cx="140" cy="65" r="17" stroke="var(--md-primary)" stroke-width="2" opacity="0.5"/>
-
-              <!-- metro line -->
-              <path d="M18 196 H 244" stroke="var(--md-outline)" stroke-width="3"/>
-              <path d="M52 196 V 210 M120 196 V 210 M196 196 V 210"
-                    stroke="var(--md-outline-variant)" stroke-width="1.6"/>
-
-              <!-- two stations -->
-              <circle cx="76" cy="196" r="7" fill="var(--md-secondary)"/>
-              <circle cx="180" cy="196" r="7" fill="var(--md-secondary)"/>
-
-              <!-- walking routes: dotted -->
-              <path d="M76 189 C 92 168, 116 150, 140 132" stroke="var(--md-secondary)" stroke-width="2.2"
-                    stroke-dasharray="5 5" opacity="0.85"/>
-              <path d="M180 189 C 170 166, 156 150, 146 130" stroke="var(--md-secondary)" stroke-width="2.2"
-                    stroke-dasharray="5 5" opacity="0.85"/>
-            </g>
-          </svg>
-          <figcaption class="ui-caption ll-map-cap">
-            <span class="ll-map-key"><span class="ll-key-dot ll-key-lab"></span>{{ if $isEn }}Lab{{ else }}实验室{{ end }}</span>
-            <span class="ll-map-key"><span class="ll-key-dot ll-key-metro"></span>{{ if $isEn }}Metro{{ else }}地铁站{{ end }}</span>
-          </figcaption>
+        <!-- the campus map, printed as a plate on the sheet -->
+        <figure class="ll-map">
+          <div class="ll-map-plate">
+            <img src="{{ "images/lab-map.jpg" | relURL }}"
+                 alt="{{ i18n "map_building_title" }}"
+                 width="1200" height="800" loading="lazy" decoding="async">
+            <span class="ll-map-pin" aria-hidden="true"></span>
+          </div>
+          <figcaption class="ui-caption ll-map-cap">{{ i18n "contact_map_note" }}</figcaption>
         </figure>
 
         <div class="ll-map-meta">

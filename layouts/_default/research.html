@@ -1,6 +1,7 @@
 {{ define "main" }}
+{{ partial "labdata.html" . }}
 {{ $isEn := eq .Site.Language.Lang "en" }}
-{{ $lab := hugo.Data.lab }}
+{{ $lab := .Scratch.Get "lab" }}
 
 <div class="ui-container pt-12 pb-20 sm:pt-16">
   <div class="mb-8 ll-measure">
@@ -17,12 +18,12 @@
           <span class="ll-stamp">{{ cond $isEn $item.tagEn $item.tagZh }}</span>
         </div>
         <div class="ll-pillar-body">
-          <figure class="ll-diagram" aria-hidden="true">{{ partial (printf "diagrams/%s.html" $item.id) . }}</figure>
           <div class="ll-pillar-text">
             <h2 class="ui-heading">{{ cond $isEn $item.titleEn $item.titleZh }}</h2>
             <p class="ui-body mt-3">{{ cond $isEn $item.descEn $item.descZh }}</p>
             <p class="ui-caption mt-4">{{ $item.highlightPaper }}</p>
           </div>
+          <figure class="ll-diagram" aria-hidden="true">{{ partial (printf "diagrams/%s.html" $item.id) . }}</figure>
         </div>
       </div>
     {{ end }}

@@ -1,59 +1,59 @@
 [[main]]
   name = "Home"
-  url = "/en/"
+  url = "/"
   weight = 10
 
 [[main]]
   name = "Research"
-  url = "/en/research/"
+  url = "/research/"
   weight = 20
 
 [[main]]
   name = "Publications"
-  url = "/en/publications/"
+  url = "/publications/"
   weight = 30
 
 [[main]]
   name = "Experience"
-  url = "/en/pedigree/"
+  url = "/pedigree/"
   weight = 40
 
 [[main]]
   name = "News"
-  url = "/en/news/"
+  url = "/news/"
   weight = 50
 
 [[main]]
   name = "Join Us"
-  url = "/en/join/"
+  url = "/join/"
   weight = 60
 
 [[main]]
   name = "Contact"
-  url = "/en/contact/"
+  url = "/contact/"
   weight = 70
 
 [[footer]]
-  name = "MHC Laboratory"
-  url = "/en/"
+  name = "MCH Laboratory"
+  url = "/"
   weight = 10
 
 [[footer]]
   name = "Research"
-  url = "/en/research/"
+  url = "/research/"
   weight = 20
 
 [[footer]]
   name = "Publications"
-  url = "/en/publications/"
+  url = "/publications/"
   weight = 30
 
 [[footer]]
   name = "Experience"
-  url = "/en/pedigree/"
+  url = "/pedigree/"
   weight = 40
 
 [[footer]]
   name = "Contact"
-  url = "/en/contact/"
+  url = "/contact/"
   weight = 50

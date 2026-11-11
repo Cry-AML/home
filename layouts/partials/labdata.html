@@ -1,0 +1,17 @@
+{{/*
+  Resolve the lab dataset for the current language.
+
+  `data/lab.json` is the English source; `lab-zh-cn.json` / `lab-zh-tw.json`
+  are the Chinese variants. Traditional Chinese is generated from Simplified
+  by tools/ (OpenCC, s2twp) so the three stay in sync.
+
+  Sets `.Scratch` values rather than returning a map, because Hugo templates
+  cannot return complex data from a partial directly.
+*/}}
+{{- $lang := .Site.Language.Lang -}}
+{{- $key := printf "lab-%s" $lang -}}
+{{- $data := index hugo.Data $key -}}
+{{- if not $data -}}
+  {{- $data = hugo.Data.lab -}}
+{{- end -}}
+{{- .Scratch.Set "lab" $data -}}

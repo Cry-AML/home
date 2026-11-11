@@ -4,7 +4,7 @@
 
 theme = "blowfish"
 baseURL = "https://cry-aml.github.io/home/"
-defaultContentLanguage = "zh-cn"
+defaultContentLanguage = "en"
 hasCJKLanguage = true
 
 enableRobotsTXT = true

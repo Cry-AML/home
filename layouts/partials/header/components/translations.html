@@ -1,0 +1,27 @@
+{{/*
+  Language switch — a compact three-way segmented control.
+
+  A dropdown would hide two of the three languages behind a click, and the
+  reader who lands on the English default should be able to see that Chinese
+  and Traditional Chinese exist without opening anything. Three short labels
+  fit on one row at every width, so that is what this is.
+*/}}
+{{ if .IsTranslated }}
+  <div class="ll-langswitch" role="group" aria-label="{{ i18n "global.language" }}">
+    {{- $order := slice "en" "zh-cn" "zh-tw" -}}
+    {{- range $order -}}
+      {{- $code := . -}}
+      {{- range $.AllTranslations -}}
+        {{- if eq .Language.Lang $code -}}
+          {{- $short := cond (eq $code "en") "EN" (cond (eq $code "zh-cn") "简" "繁") -}}
+          <a href="{{ .RelPermalink }}"
+             class="ll-langswitch__opt{{ if eq $code $.Site.Language.Lang }} is-current{{ end }}"
+             lang="{{ .Language.Lang }}"
+             hreflang="{{ .Language.Lang }}"
+             {{ if eq $code $.Site.Language.Lang }}aria-current="true"{{ end }}
+             title="{{ .Language.Params.displayName }}">{{ $short }}</a>
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  </div>
+{{ end }}

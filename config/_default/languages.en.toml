@@ -1,14 +1,14 @@
 locale = "en"
 label = "English"
 weight = 2
-title = "MHC Laboratory, Sun Yat-sen University"
+title = "MCH Laboratory, Sun Yat-sen University"
 
 [params]
   displayName = "English"
   isoCode = "en"
   rtl = false
   dateFormat = "January 2, 2006"
-  logo = "images/logo.png"
+  logo = "images/mark.png"
   description = "Sun Yat-sen University Zhongshan School of Medicine, Leukemia Epigenetics, Metabolic Homeostasis & Tumor Immunology Laboratory"
 
 [params.author]

@@ -392,7 +392,7 @@
       "titleZh": "文卓谦博士入选中大“逸仙学者计划”并全职加入中山医学院组建独立实验室",
       "titleEn": "Dr. Cheuk-Him Man appointed Associate Professor & Yat-sen Scholar at SYSU",
       "descZh": "文卓谦博士正式加入中山大学中山医学院病理生理学教研室担任副教授、博士生导师，成立白血病表观遗传与代谢免疫实验室，开启全新篇章。",
-      "descEn": "Dr. Cheuk-Him Man joins Sun Yat-sen University School of Medicine as Associate Professor & Ph.D. Supervisor, launching the MHC Laboratory."
+      "descEn": "Dr. Cheuk-Him Man joins Sun Yat-sen University School of Medicine as Associate Professor & Ph.D. Supervisor, launching the MCH Laboratory."
     },
     {
       "date": "2023-12",
@@ -404,19 +404,14 @@
   ],
   "snapshots": [
     {
-      "image": "",
-      "captionZh": "课题组活动",
-      "captionEn": "Lab gathering"
+      "image": "images/lab-outside.jpg",
+      "captionZh": "中大北校园科技楼外景",
+      "captionEn": "Science & Technology Building, SYSU North Campus"
     },
     {
-      "image": "",
-      "captionZh": "期刊封面",
-      "captionEn": "Journal cover"
-    },
-    {
-      "image": "",
-      "captionZh": "学术会议",
-      "captionEn": "Conference"
+      "image": "images/lab-meeting.jpg",
+      "captionZh": "课题组组会",
+      "captionEn": "Weekly lab meeting"
     }
   ]
 }

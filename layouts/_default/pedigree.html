@@ -1,6 +1,7 @@
 {{ define "main" }}
+{{ partial "labdata.html" . }}
 {{ $isEn := eq .Site.Language.Lang "en" }}
-{{ $lab := hugo.Data.lab }}
+{{ $lab := .Scratch.Get "lab" }}
 
 <div class="ui-container pt-12 pb-20 sm:pt-16">
   <div class="mb-8 ll-measure">
