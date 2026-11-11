@@ -45,7 +45,10 @@
     <div class="ll-measure">
       <h2 class="ui-heading mb-2">{{ i18n "join_contact_banner_title" }}</h2>
       <p class="ui-body mb-5">{{ i18n "join_contact_banner_desc" }}</p>
-      <a href="mailto:{{ $lab.pi.email }}" class="ll-btn ll-btn--marker">{{ i18n "btn_send_email" }}</a>
+      {{ $inquirySubject := i18n "apply_subject_inquiry" }}
+      {{ $inquiryBody := i18n "apply_body_inquiry" }}
+      {{ $inquiryMailto := printf "mailto:%s?subject=%s&body=%s" $lab.pi.email ($inquirySubject | urlquery) ($inquiryBody | urlquery) }}
+      <a href="{{ $inquiryMailto | safeURL }}" class="ll-btn ll-btn--marker">{{ i18n "btn_send_email" }}</a>
     </div>
   </div>
 </div>

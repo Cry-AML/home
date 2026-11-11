@@ -176,3 +176,21 @@ apply_body_intern: |
     Sincerely,
     [Your Name]
     [Student ID & Contact Details]
+apply_subject_inquiry: "[Lab Recruitment & Admissions Inquiry] Your Name - Institution"
+apply_body_inquiry: |
+    Dear Dr. Cheuk-Him Man,
+
+    I am writing to inquire about open positions / admissions opportunities in your laboratory at Sun Yat-sen University School of Medicine.
+
+    1. Current Affiliation & Background: [University/Institute, Degree, Major/Field]
+    2. Area of Interest: [Postdoc / Graduate Study / Research Assistant / Internship / Collaboration]
+    3. Core Research Interests: [Brief overview of your interests in AML, epigenetics, metabolism, or immunology]
+    4. Questions or Specific Inquiries: [Your questions regarding research projects, requirements, or timeline]
+
+    Attached please find my curriculum vitae. Thank you very much for your time and guidance.
+
+    Sincerely,
+    [Your Name]
+    [Phone / WeChat]
+    [Personal Webpage or Profile, if any]
+

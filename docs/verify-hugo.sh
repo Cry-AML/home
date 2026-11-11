@@ -223,11 +223,14 @@ chk "both marks are zoom-eligible (no .nozoom)" "! sed -n '/ll-brand__mark/p;/ll
 chk "dark mode brand mark filter defined" "grep -A3 'html.dark .ll-brand__mark {' assets/css/custom.css | grep -q 'brightness'"
 chk "dark mode footer mark filter defined" "grep -A3 'html.dark .ll-footer-mark {' assets/css/custom.css | grep -q 'invert'"
 chk "join page has 4 open positions in data" "[ $(grep -o '"type":' data/lab.json | wc -l) -ge 4 ]"
-chk "join page has 4 apply buttons in EN" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/join/index.html | wc -l) -eq 4 ]"
-chk "join page has 4 apply buttons in ZH-CN" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/zh-cn/join/index.html | wc -l) -eq 4 ]"
-chk "join page has 4 apply buttons in ZH-TW" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/zh-tw/join/index.html | wc -l) -eq 4 ]"
+chk "join page has 5 pre-filled mail buttons in EN (4 positions + 1 inquiry)" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/join/index.html | wc -l) -eq 5 ]"
+chk "join page has 5 pre-filled mail buttons in ZH-CN" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/zh-cn/join/index.html | wc -l) -eq 5 ]"
+chk "join page has 5 pre-filled mail buttons in ZH-TW" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/zh-tw/join/index.html | wc -l) -eq 5 ]"
 chk "apply mailto includes pre-filled body in all langs" "grep -q '&amp;body=' public/join/index.html && grep -q '&amp;body=' public/zh-cn/join/index.html && grep -q '&amp;body=' public/zh-tw/join/index.html"
 chk "apply mailto pre-fills Traditional Chinese in ZH-TW" "grep -q '文卓謙老師' public/zh-tw/join/index.html"
+chk "join bottom banner button has pre-filled mail template in EN" "grep -A3 'class=\"ll-btn ll-btn--marker\"' public/join/index.html | grep -q 'Lab+Recruitment' || grep -B1 'class=\"ll-btn ll-btn--marker\"' public/join/index.html | grep -q 'Lab+Recruitment'"
+chk "join bottom banner button has pre-filled mail template in ZH-CN" "grep -B1 'class=\"ll-btn ll-btn--marker\"' public/zh-cn/join/index.html | grep -q '%E5%B2%97%E4%BD%8D%E5%BA%94%E8%81%98%E4%B8%8E%E5%92%A8%E8%AF%A2'"
+chk "join bottom banner button has pre-filled mail template in ZH-TW" "grep -B1 'class=\"ll-btn ll-btn--marker\"' public/zh-tw/join/index.html | grep -q '%E5%B4%97%E4%BD%8D%E6%87%89%E8%81%98%E8%88%87%E8%AB%AE%E8%A9%A2'"
 chk "header mark rendered once per page" "[ \$(grep -o 'll-brand__mark' public/index.html | wc -l) -eq 1 ]"
 
 

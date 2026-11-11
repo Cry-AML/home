@@ -118,7 +118,7 @@ def main():
     # ---- i18n/zh-tw.yaml -----------------------------------------------------
     i18n_src = (ROOT / 'i18n/zh-cn.yaml').read_text()
     quoted_m = list(re.finditer(r'"((?:[^"\\]|\\.)*)"', i18n_src))
-    block_m = list(re.finditer(r'(^[a-zA-Z0-9_]+:\s*\|\n)((?:    .*\n?)+)', i18n_src, re.M))
+    block_m = list(re.finditer(r'(^[a-zA-Z0-9_]+:\s*\|\n)((?:(?:    .*|[ \t]*)\n)+?)(?=^[a-zA-Z0-9_]+:|\Z)', i18n_src, re.M))
     all_raw = [m.group(1) for m in quoted_m] + [m.group(2) for m in block_m]
     conv = converter(all_raw)
     for a, b in TERMS:
@@ -128,7 +128,7 @@ def main():
     it_q = iter(conv_q)
     out = re.sub(r'"((?:[^"\\]|\\.)*)"', lambda m: '"' + next(it_q) + '"', i18n_src)
     it_b = iter(conv_b)
-    out = re.sub(r'(^[a-zA-Z0-9_]+:\s*\|\n)((?:    .*\n?)+)', lambda m: m.group(1) + next(it_b), out, flags=re.M)
+    out = re.sub(r'(^[a-zA-Z0-9_]+:\s*\|\n)((?:(?:    .*|[ \t]*)\n)+?)(?=^[a-zA-Z0-9_]+:|\Z)', lambda m: m.group(1) + next(it_b), out, flags=re.M)
     (ROOT / 'i18n/zh-tw.yaml').write_text(out)
     print(f'i18n/zh-tw.yaml — {len(all_raw)} strings ({len(quoted_m)} quoted, {len(block_m)} blocks)')
 
