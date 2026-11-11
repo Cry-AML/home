@@ -53,7 +53,7 @@
           <span class="ll-portrait__seam" data-compare-seam aria-hidden="true"></span>
         </div>
         <figcaption class="ll-portrait__cap">
-          <span>{{ .captionZh }}</span>
+          <span>{{ cond $isEn .captionEn .captionZh }}</span>
           <span class="ll-portrait__place">{{ cond $isEn .placeEn .placeZh }}</span>
         </figcaption>
       </figure>

@@ -136,8 +136,14 @@
     href="{{ $bundleCSS.RelPermalink }}"
     integrity="{{ $bundleCSS.Data.Integrity }}">
 
-  {{/* JS loaded immediately */}}
-  {{ $jsAppearance := resources.Get "js/appearance.js" | resources.ExecuteAsTemplate "js/appearance.js" . | resources.Minify | resources.Fingerprint $alg }}
+  {{/* JS loaded immediately.
+       The output path must be unique per language. ExecuteAsTemplate caches by
+       output path, so a fixed "js/appearance.js" made all three languages share
+       whichever locale happened to build first (zh-cn, weight 1) — and the
+       English pages then rewrote the theme switcher's aria-label/title into
+       Chinese at runtime, even though the static HTML was correct. */}}
+  {{ $appearancePath := printf "js/appearance.%s.js" .Site.Language.Lang }}
+  {{ $jsAppearance := resources.Get "js/appearance.js" | resources.ExecuteAsTemplate $appearancePath . | resources.Minify | resources.Fingerprint $alg }}
   <script
     type="text/javascript"
     src="{{ $jsAppearance.RelPermalink }}"
