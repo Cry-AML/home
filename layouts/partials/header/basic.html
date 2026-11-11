@@ -1,13 +1,18 @@
 <div class="main-menu flex items-center w-full gap-2 p-1 pl-0">
   {{/*
-    The mark sits left of the wordmark, at 26px, as a single-ink stamp.
-    It is decorative here (the wordmark already names the lab), so it carries
-    an empty alt and no link of its own — the wordmark is the home link.
+    The mark and the wordmark are siblings, not one link.
+
+    The mark is decorative (empty alt, aria-hidden) and its click belongs to
+    medium-zoom, which does not call preventDefault. Wrapping it in the home
+    link made every click navigate away before the zoom could open — the
+    footer mark, which sits outside any link, zoomed correctly. Keeping them
+    side by side gives both marks the same behaviour, and leaves the wordmark
+    as the single, explicit way home.
   */}}
-  <a href="{{ "" | relLangURL }}" class="ll-brand">
+  <div class="ll-brand">
     <img class="ll-brand__mark" src="{{ "images/mark.png" | relURL }}" width="26" height="26" alt="" aria-hidden="true" decoding="async">
-    <span class="ll-brand__name">{{ .Site.Title | markdownify }}</span>
-  </a>
+    <a href="{{ "" | relLangURL }}" class="ll-brand__name">{{ .Site.Title | markdownify }}</a>
+  </div>
 
   <div class="flex items-center ms-auto">
     <div class="hidden md:flex">

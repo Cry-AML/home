@@ -674,7 +674,6 @@ body {
   align-items: center;
   gap: 9px;
   min-width: 0;
-  text-decoration: none;
 }
 .ll-brand__mark {
   width: 26px;
@@ -690,11 +689,12 @@ body {
   letter-spacing: -0.012em;
   line-height: 1.1;
   color: var(--md-on-surface);
+  text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ll-brand:hover .ll-brand__name { color: var(--md-primary); }
+.ll-brand__name:hover { color: var(--md-primary); }
 
 .main-menu nav a {
   position: relative;

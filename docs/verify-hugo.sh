@@ -201,6 +201,14 @@ chk "no legacy MHC anywhere in build" "! grep -rq 'MHC' public/index.html public
 chk "Traditional data generated" "[ -s data/lab-zh-tw.json ] && grep -q '文卓謙' data/lab-zh-tw.json"
 chk "generator is reproducible" "[ -s tools/gen-zh-tw.py ]"
 
+
+echo "== 17. Logo zoom parity & header structure =="
+chk "header mark is not wrapped in a link" "python3 -c \"import pathlib,re;s=pathlib.Path('layouts/partials/header/basic.html').read_text();m=re.search(r'<a[^>]*>\\s*<img class=\"ll-brand__mark\"',s);raise SystemExit(1 if m else 0)\""
+chk "header mark and wordmark are siblings" "python3 -c \"import pathlib,re;s=pathlib.Path('layouts/partials/header/basic.html').read_text();i=s.index('ll-brand__mark');j=s.index('ll-brand__name');raise SystemExit(0 if i<j else 1)\""
+chk "wordmark is still the home link" "grep -q 'class=ll-brand__name' public/index.html && grep -q 'href=/home/ class=ll-brand__name' public/index.html"
+chk "both marks are zoom-eligible (no .nozoom)" "! sed -n '/ll-brand__mark/p;/ll-footer-mark/p' layouts/partials/header/basic.html layouts/partials/footer.html | grep -q 'nozoom'"
+chk "header mark rendered once per page" "[ \$(grep -o 'll-brand__mark' public/index.html | wc -l) -eq 1 ]"
+
 echo ""
 if [ "$fail" -eq 0 ]; then
   printf '\033[32mALL %d ACCEPTANCE CHECKS PASSED!\033[0m\n' "$pass"
