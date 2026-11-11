@@ -7,8 +7,8 @@
     "institutionZh": "中山大學中山醫學院 病理生理學教研室",
     "institutionEn": "Department of Pathophysiology, Zhongshan School of Medicine, Sun Yat-sen University",
     "email": "manzhq@mail.sysu.edu.cn",
-    "officeZh": "廣州市越秀區中山二路74號 中山大學廣州校區北校園 科技樓",
-    "officeEn": "Science & Technology Building, North Campus, Sun Yat-sen University, 74 Zhongshan 2nd Rd, Guangzhou, China",
+    "officeZh": "廣州市越秀區中山二路74號 中山大學廣州校區北校園 醫學2號樓 1303",
+    "officeEn": "Medical Building 2, Room 1303, North Campus, Sun Yat-sen University, 74 Zhongshan 2nd Rd, Guangzhou, China",
     "pedigree": [
       {
         "year": "2024 – Present",
@@ -441,8 +441,8 @@
   "snapshots": [
     {
       "image": "images/lab-outside.jpg",
-      "captionZh": "中大北校園科技樓外景",
-      "captionEn": "Science & Technology Building, SYSU North Campus"
+      "captionZh": "中大北校園外景",
+      "captionEn": "SYSU North Campus"
     },
     {
       "image": "images/lab-meeting.jpg",
