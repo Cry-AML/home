@@ -687,7 +687,7 @@ body {
 }
 .ll-brand__name {
   font-family: var(--font-hand);
-  font-size: 20px;
+  font-size: clamp(15px, 1.4vw, 20px);
   font-weight: 700;
   letter-spacing: -0.012em;
   line-height: 1.1;
@@ -788,6 +788,18 @@ button.bf-icon-color-hover:hover {
   font-size: 20px !important;
   font-weight: 700 !important;
   color: var(--md-on-surface) !important;
+}
+
+/* On narrower desktop screens, tighten the gap between navigation links and
+   collapse to the drawer menu at 1060px before the long English title can
+   truncate. Below 1060px the mobile drawer takes over smoothly. */
+@media (min-width: 1141px) and (max-width: 1280px) {
+  .main-menu nav { column-gap: clamp(8px, 1.1vw, 20px) !important; }
+  .main-menu nav a { padding-inline: 1px !important; }
+}
+@media (max-width: 1140px) {
+  .main-menu .hidden.md\:flex { display: none !important; }
+  .main-menu .flex.md\:hidden { display: flex !important; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1047,8 +1059,14 @@ html.dark #ambient-canvas {
   position: absolute;
   inset-block: 4px;
   left: 0;
-  width: 0.5px;
-  background: linear-gradient(to bottom, transparent, var(--md-outline) 12%, var(--md-outline) 88%, transparent);
+  width: 0;
+  /* A real border-left snaps to a device pixel reliably across all DPRs
+     and viewports; a width: 0.5px element with linear-gradient background
+     vanished in Chrome on subpixel columns. We mask the border to keep
+     the tapered top and bottom. */
+  border-left: 0.5px solid var(--md-outline);
+  mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
 }
 .ll-note-head { padding-bottom: 14px; }
 .ll-note-body {
@@ -1178,6 +1196,9 @@ img, svg, video, canvas { max-width: 100%; }
     top: 0;
     width: auto;
     height: 0.5px;
+    border-left: 0;
+    mask-image: none;
+    -webkit-mask-image: none;
     background: linear-gradient(to right, var(--md-outline), transparent);
   }
   .ll-stat-row {
