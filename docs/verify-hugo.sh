@@ -230,6 +230,13 @@ chk "open seat card present" "grep -q 'll-seat' public/team/index.html"
 chk "team script shipped" "grep -q 'team.min' public/team/index.html"
 chk "student role reads Ph.D. Candidate" "grep -q 'Ph.D. Candidate' public/team/index.html"
 chk "student role localized" "grep -q '博士研究生' public/zh-cn/team/index.html && grep -q '博士研究生' public/zh-tw/team/index.html"
+chk "seat census: 1 postdoc seat" "[ \$(grep -o 'll-sheet-count>1' public/team/index.html | wc -l) -ge 2 ]"
+chk "seat census: 8 doctoral seats" "grep -q 'll-sheet-count>8' public/team/index.html"
+chk "seat census: 3 master seats" "grep -q 'll-sheet-count>3' public/team/index.html"
+chk "seat census: 2 intern seats" "grep -q 'll-sheet-count>2' public/team/index.html"
+chk "vacant desks rendered" "[ \$(grep -o 'll-person--vacant' public/team/index.html | wc -l) -eq 10 ]"
+chk "open-seat cards rendered" "[ \$(grep -o '<a class=ll-seat' public/team/index.html | wc -l) -eq 3 ]"
+chk "grid rows are equal height" "grep -q 'grid-auto-rows: 1fr' assets/css/custom.css"
 
 echo ""
 if [ "$fail" -eq 0 ]; then

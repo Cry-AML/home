@@ -466,7 +466,7 @@
         "nameEn": "Yanhua Zheng",
         "roleZh": "博士研究生",
         "roleEn": "Ph.D. Candidate",
-        "group": "students",
+        "group": "phd",
         "since": "2024",
         "photoReal": "images/team/zyh-real.jpg",
         "photoIllustrated": "images/team/zyh-illustrated.jpg",
@@ -480,6 +480,38 @@
         ],
         "email": "",
         "links": []
+      }
+    ],
+    "groups": [
+      {
+        "id": "pi",
+        "seats": 1,
+        "openSeat": false,
+        "columns": 0
+      },
+      {
+        "id": "postdocs",
+        "seats": 1,
+        "openSeat": false,
+        "columns": 3
+      },
+      {
+        "id": "phd",
+        "seats": 8,
+        "openSeat": true,
+        "columns": 3
+      },
+      {
+        "id": "msc",
+        "seats": 3,
+        "openSeat": true,
+        "columns": 4
+      },
+      {
+        "id": "interns",
+        "seats": 2,
+        "openSeat": true,
+        "columns": 3
       }
     ]
   }

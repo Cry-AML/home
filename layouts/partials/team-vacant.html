@@ -1,0 +1,17 @@
+{{/*
+  An empty desk. It must read as "a seat exists and is free", not as a broken
+  image: the frame is drawn as a dashed outline with a faint silhouette, and
+  the only text is the word for "vacant". No name, no avatar, nothing that
+  pretends a person is there.
+*/}}
+{{ $isEn := .isEn }}
+<article class="ll-person ll-person--vacant" aria-label="{{ i18n "team_seat_vacant" }}">
+  <div class="ll-vacant__frame" aria-hidden="true">
+    <svg viewBox="0 0 100 125" fill="none">
+      <circle cx="50" cy="46" r="17" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 6"/>
+      <path d="M22 112c0-16 12.5-27 28-27s28 11 28 27" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 6"/>
+    </svg>
+  </div>
+  <p class="ll-vacant__label">{{ i18n "team_seat_vacant" }}</p>
+  <p class="ll-vacant__note">{{ i18n "team_seat_note" }}</p>
+</article>
