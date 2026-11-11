@@ -126,6 +126,19 @@ chk "manifest has a real name" "! grep -q '\"name\": *\"\"' public/site.webmanif
 chk "manifest icons exist" "[ -s public/android-chrome-192x192.png ] && [ -s public/android-chrome-512x512.png ]"
 chk "all site URLs under baseURL are built" "python3 tools/linkcheck.py"
 
+
+echo "== 13. English Naming (Cheuk-Him Man / MHC Laboratory) =="
+chk "EN uses Cheuk-Him Man" "grep -q 'Cheuk-Him Man' i18n/en.yaml"
+chk "EN never says Chi-Hin" "! grep -rq 'Chi-Hin' i18n/en.yaml config/_default/languages.en.toml content/_index.en.md content/pedigree/index.en.md data/lab.json"
+chk "EN uses MHC Laboratory" "grep -q 'MHC Laboratory' i18n/en.yaml"
+chk "EN never says Wen Laboratory" "! grep -rq 'Wen Laboratory' i18n/en.yaml config/_default/languages.en.toml content/_index.en.md"
+chk "ZH keeps 文卓谦实验室" "grep -q '文卓谦实验室' i18n/zh-cn.yaml"
+chk "ZH PI name unchanged" "grep -q '文卓谦 博士' config/_default/languages.zh-cn.toml"
+chk "EN citation author updated" "grep -q 'Man, Cheuk-Him' layouts/partials/extend-head.html"
+chk "EN output has no legacy names" "! grep -q 'Chi-Hin\|Wen Laboratory' public/en/index.html"
+chk "ZH output keeps Chinese name" "grep -q '文卓谦实验室' public/index.html"
+chk "manifest uses MHC" "! grep -q 'Wen Lab' public/site.webmanifest"
+
 echo ""
 if [ "$fail" -eq 0 ]; then
   printf '\033[32mALL %d ACCEPTANCE CHECKS PASSED!\033[0m\n' "$pass"

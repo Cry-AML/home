@@ -1,7 +1,7 @@
 locale = "en"
 label = "English"
 weight = 2
-title = "Wen Laboratory, Sun Yat-sen University"
+title = "MHC Laboratory, Sun Yat-sen University"
 
 [params]
   displayName = "English"
@@ -12,7 +12,7 @@ title = "Wen Laboratory, Sun Yat-sen University"
   description = "Sun Yat-sen University Zhongshan School of Medicine, Leukemia Epigenetics, Metabolic Homeostasis & Tumor Immunology Laboratory"
 
 [params.author]
-  name = "Chi-Hin Man, Ph.D."
+  name = "Cheuk-Him Man, Ph.D."
   headline = "Associate Professor / Ph.D. Supervisor / Yat-sen Scholar"
   bio = "Deciphering leukemogenesis and relapse mechanisms in acute myeloid leukemia (AML), interrogating epigenetic rewiring, proton partitioning/pHi dynamics, and metabolic vulnerabilities for clinical translation."
   links = [
