@@ -46,78 +46,121 @@
 }
 
 /* --------------------------------------------------------------------------
-   1. Looseleaf Tokens — Paper, Ink, Marker, Highlighter
+   1. Material Design 3 tokens
+   A three-colour tonal triad (brick primary, deep-teal secondary, amber
+   tertiary) over a warm neutral, generated in CIELCh and gamut-mapped.
+   Verified pairs: >= 4.5:1 for every text role, >= 3:1 for every divider and
+   control boundary (WCAG 1.4.3 / 1.4.11). The only 1.x:1 lines are purely
+   decorative (sheet edge glow, header hairline) and carry no information.
+   Looseleaf's paper/ink names remain as aliases so the components read the
+   same as the upstream registry.
    -------------------------------------------------------------------------- */
 :root {
   color-scheme: light;
 
-  /* Ground & stock */
-  --ll-desk: #a8c8bb;
-  --ll-desk-deep: #93b4a7;
-  --ll-paper: #f8f5ee;
-  --ll-paper-shade: #ece6da;
-  --ll-slip: #fbf8f1;
-  --ll-card: #fbf6e9;
-  --ll-graph: #f4f7ef;
+  /* — MD3 roles, light — */
+  --md-primary: #a93441;
+  --md-on-primary: #ffffff;
+  --md-primary-container: #ffdad9;
+  --md-on-primary-container: #400109;
 
-  /* Ink */
-  --ll-ink: #2a2420;
-  --ll-ink-soft: #4a423b;
-  --ll-ink-muted: #6b6660;
-  --ll-pencil: #5a554e;
-  --ll-pencil-mark: #cfc8bb;
-  --ll-pencil-faint: #e2dcd1;
+  --md-secondary: #056969;
+  --md-on-secondary: #ffffff;
+  --md-secondary-container: #8bf4f2;
+  --md-on-secondary-container: #002020;
 
-  /* Colour */
-  /* Marker fill deepened from #df6b3c so paper-on-marker clears WCAG AA (4.6:1).
-     The original tone is kept as --ll-marker-tint for washes and hairlines. */
-  --ll-marker: #b8501f;
-  --ll-marker-deep: #a34318;
-  --ll-marker-tint: #df6b3c;
-  --ll-ink-you: #2c4f9e;
-  --ll-ink-you-hover: #1f3b7a;
-  --ll-hi: #f8dc4c;
-  --ll-hi-select: #f6e39b;
-  --ll-green: #3b7a4b;
-  --ll-red: #c2412d;
-  --ll-tomato: #e8483a;
-  --ll-teal: #2fb1a3;
+  --md-tertiary: #7d5711;
+  --md-on-tertiary: #ffffff;
+  --md-tertiary-container: #ffddb2;
+  --md-on-tertiary-container: #261900;
 
-  /* Sheet physics */
-  --ll-shade: 58 44 30;
-  --ll-tilt-max: 2deg;
+  --md-error: #b42431;
+  --md-on-error: #ffffff;
+  --md-error-container: #fedad7;
+  --md-on-error-container: #410000;
+
+  --md-background: #fff8f5;
+  --md-on-background: #241914;
+  --md-surface: #fff8f5;
+  --md-on-surface: #241914;
+  --md-surface-variant: #fcdcce;
+  --md-on-surface-variant: #5a4136;
+  --md-surface-lowest: #ffffff;
+  --md-surface-low: #fff1ea;
+  --md-surface-container: #fbebe3;
+  --md-surface-high: #f5e5dd;
+  --md-surface-highest: #efdfd8;
+  --md-outline: #8d7165;
+  --md-outline-variant: #dfc0b3;
+  --md-inverse-surface: #392e28;
+  --md-inverse-on-surface: #fdeee6;
+  --md-inverse-primary: #feb3b3;
+  --md-scrim: #000000;
+
+  /* — Desk & sheet (the surface the paper sits on) — */
+  --ll-desk: #efe4dd;
+  --ll-desk-deep: #e2d4cb;
+  --ll-paper: var(--md-surface);
+  --ll-paper-shade: var(--md-surface-container);
+  --ll-slip: var(--md-surface-low);
+  --ll-card: var(--md-surface-low);
+  --ll-graph: #f7f4ee;
+
+  /* — Ink (text roles) — */
+  --ll-ink: var(--md-on-surface);
+  --ll-ink-soft: #4a3931;
+  --ll-ink-muted: var(--md-on-surface-variant);
+  --ll-pencil: var(--md-outline);
+  --ll-pencil-mark: var(--md-outline-variant);
+  --ll-pencil-faint: #f0e2d8;
+
+  /* — Accents — */
+  --ll-marker: var(--md-primary);
+  --ll-marker-deep: #8f2531;
+  --ll-marker-tint: var(--md-primary-container);
+  --ll-ink-you: var(--md-secondary);
+  --ll-ink-you-hover: #045454;
+  --ll-hi: var(--md-tertiary-container);
+  --ll-hi-select: #ffddb2;
+  --ll-green: var(--md-secondary);
+  --ll-red: var(--md-error);
+  --ll-tomato: var(--md-error);
+  --ll-teal: var(--md-secondary);
+
+  /* — Sheet physics — */
+  --ll-shade: 78 52 38;
+  --ll-tilt-max: 1.6deg;
   --ll-press-sink: 1px;
   --ll-shadow-k: 1;
   --ll-shadow-paper:
-    0 1px 1.5px rgb(var(--ll-shade) / calc(0.2 * var(--ll-shadow-k))),
-    0 2px 5px -1px rgb(var(--ll-shade) / calc(0.1 * var(--ll-shadow-k))),
-    0 12px 22px -8px rgb(var(--ll-shade) / calc(0.2 * var(--ll-shadow-k)));
+    0 1px 1.5px rgb(var(--ll-shade) / 0.16),
+    0 3px 7px -2px rgb(var(--ll-shade) / 0.1),
+    0 14px 26px -10px rgb(var(--ll-shade) / 0.18);
   --ll-shadow-loose:
-    0 1px 2px rgb(var(--ll-shade) / calc(0.12 * var(--ll-shadow-k))),
-    0 6px 16px -2px rgb(var(--ll-shade) / calc(0.12 * var(--ll-shadow-k)));
+    0 1px 2px rgb(var(--ll-shade) / 0.12),
+    0 7px 18px -3px rgb(var(--ll-shade) / 0.13);
   --ll-paper-light: linear-gradient(
     135deg,
-    rgb(255 255 255 / 0.38),
+    rgb(255 255 255 / 0.5),
     rgb(255 255 255 / 0) 42%,
-    rgb(var(--ll-shade) / calc(0.035 * var(--ll-shadow-k)))
+    rgb(var(--ll-shade) / 0.03)
   );
-  --ll-desk-vignette: radial-gradient(ellipse 120% 100% at 50% 40%, transparent 60%, rgb(var(--ll-shade) / 0.05));
+  --ll-desk-vignette: radial-gradient(ellipse 120% 100% at 50% 40%, transparent 58%, rgb(var(--ll-shade) / 0.07));
 
-  /* Paper fibre — a fine grain, multiplied over the stock */
-  --ll-tex-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+  --ll-tex-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
 
-  /* Motion — Looseleaf's durations & settle curves */
+  /* — Motion — */
   --ll-dur-press: 90ms;
-  --ll-dur-hover: 120ms;
-  --ll-dur-fade: 150ms;
-  --ll-dur-pop: 180ms;
-  --ll-dur-sheet: 300ms;
+  --ll-dur-hover: 140ms;
+  --ll-dur-fade: 160ms;
+  --ll-dur-pop: 190ms;
+  --ll-dur-sheet: 320ms;
   --ll-dur-soak: 520ms;
-  --ll-ease-out: ease-out;
+  --ll-ease-out: cubic-bezier(0.2, 0, 0, 1);
   --ll-ease-settle: cubic-bezier(0.2, 0.9, 0.25, 1.12);
   --ll-ease-pop: cubic-bezier(0.2, 0.9, 0.3, 1.15);
 
-  /* Semantic mapping */
+  /* — Semantic aliases — */
   --bg-page: var(--ll-desk);
   --bg-paper: var(--ll-paper);
   --border-subtle: var(--ll-pencil-mark);
@@ -128,15 +171,15 @@
   --text-accent: var(--ll-ink-you);
   --brand-primary: var(--ll-marker);
   --brand-primary-hover: var(--ll-marker-deep);
-  --brand-text-on-primary: var(--ll-paper);
+  --brand-text-on-primary: var(--md-on-primary);
 
-  /* Type */
-  /* Kevin Sans draws the Latin; Kai gives the Chinese the same brush-written
-     hand. Both fall back gracefully to the platform UI face. */
+  /* — Type — */
+  /* Latin from Kevin Sans, CJK from the brush Kai faces — the fallback chain
+     only advances per-glyph, so one line can mix both. */
   --font-hand: 'Kevin Sans Hand', 'Kevin Sans', 'Kaiti SC', 'STKaiti', 'KaiTi',
-    'Songti SC', 'PingFang SC', 'Microsoft YaHei', Georgia, serif;
+    'Songti SC', Georgia, serif;
   --font-hand-plain: 'Kevin Sans', 'Kaiti SC', 'STKaiti', 'KaiTi', 'Songti SC',
-    'PingFang SC', 'Microsoft YaHei', Georgia, serif;
+    Georgia, serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
   --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
@@ -144,41 +187,88 @@
 html.dark {
   color-scheme: dark;
 
-  --ll-desk: #101314;
-  --ll-desk-deep: #0a0c0d;
-  --ll-paper: #1a1c1e;
-  --ll-paper-shade: #23262a;
-  --ll-slip: #1e2124;
-  --ll-card: #1d2023;
-  --ll-graph: #191c1e;
+  /* — MD3 roles, dark — */
+  --md-primary: #feb3b3;
+  --md-on-primary: #67021a;
+  --md-primary-container: #8b162b;
+  --md-on-primary-container: #ffdad9;
 
-  --ll-ink: #f2efe8;
-  --ll-ink-soft: #c6c0b6;
-  --ll-ink-muted: #928d84;
-  --ll-pencil: #9aa0a6;
-  --ll-pencil-mark: #363b40;
-  --ll-pencil-faint: #2a2e32;
+  --md-secondary: #6dd7d6;
+  --md-on-secondary: #003737;
+  --md-secondary-container: #00504f;
+  --md-on-secondary-container: #8bf4f2;
 
-  --ll-marker: #f19a6d;
-  --ll-marker-deep: #f6ae87;
-  --ll-marker-tint: #e8834f;
-  --ll-ink-you: #8aa9ff;
-  --ll-ink-you-hover: #a6bfff;
-  --ll-hi: #f4d84a;
-  --ll-hi-select: #6a5a1c;
-  --ll-green: #5cb874;
-  --ll-red: #e6604a;
+  --md-tertiary: #f0be76;
+  --md-on-tertiary: #422c01;
+  --md-tertiary-container: #604101;
+  --md-on-tertiary-container: #ffddb2;
+
+  --md-error: #feb4ae;
+  --md-on-error: #680112;
+  --md-error-container: #92021e;
+  --md-on-error-container: #fedad7;
+
+  --md-background: #1c1108;
+  --md-on-background: #efdfd8;
+  --md-surface: #1c1108;
+  --md-on-surface: #efdfd8;
+  --md-surface-variant: #5a4136;
+  --md-on-surface-variant: #dfc0b3;
+  --md-surface-lowest: #190b01;
+  --md-surface-low: #241914;
+  --md-surface-container: #281d18;
+  --md-surface-high: #332822;
+  --md-surface-highest: #3e322c;
+  --md-outline: #a88b7e;
+  --md-outline-variant: #5a4136;
+  --md-inverse-surface: #efdfd8;
+  --md-inverse-on-surface: #392e28;
+  --md-inverse-primary: #a93441;
+  --md-scrim: #000000;
+
+  --ll-desk: #140d08;
+  --ll-desk-deep: #0d0805;
+  --ll-paper: var(--md-surface);
+  --ll-paper-shade: var(--md-surface-container);
+  --ll-slip: var(--md-surface-low);
+  --ll-card: var(--md-surface-low);
+  --ll-graph: #241d18;
+
+  --ll-ink: var(--md-on-surface);
+  --ll-ink-soft: #dfc9bd;
+  --ll-ink-muted: var(--md-on-surface-variant);
+  --ll-pencil: var(--md-outline);
+  --ll-pencil-mark: var(--md-outline-variant);
+  --ll-pencil-faint: #3e322c;
+
+  --ll-marker: var(--md-primary);
+  --ll-marker-deep: #ffc9c9;
+  --ll-marker-tint: var(--md-primary-container);
+  --ll-ink-you: var(--md-secondary);
+  --ll-ink-you-hover: #8fe5e4;
+  --ll-hi: var(--md-tertiary-container);
+  --ll-hi-select: #604101;
+  --ll-green: var(--md-secondary);
+  --ll-red: var(--md-error);
+  --ll-tomato: var(--md-error);
+  --ll-teal: var(--md-secondary);
 
   --ll-shade: 0 0 0;
-  --ll-shadow-k: 1.4;
+  --ll-shadow-k: 1.6;
+  --ll-shadow-paper:
+    0 1px 2px rgb(0 0 0 / 0.5),
+    0 8px 20px -8px rgb(0 0 0 / 0.6);
+  --ll-shadow-loose:
+    0 1px 2px rgb(0 0 0 / 0.45),
+    0 8px 20px -4px rgb(0 0 0 / 0.5);
   --ll-paper-light: linear-gradient(
     135deg,
-    rgb(255 255 255 / 0.035),
+    rgb(255 255 255 / 0.05),
     rgb(255 255 255 / 0) 42%,
-    rgb(0 0 0 / 0.12)
+    rgb(0 0 0 / 0.14)
   );
-  --ll-desk-vignette: radial-gradient(ellipse 120% 100% at 50% 40%, transparent 55%, rgb(0 0 0 / 0.35));
-  --ll-tex-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  --ll-desk-vignette: radial-gradient(ellipse 120% 100% at 50% 40%, transparent 55%, rgb(0 0 0 / 0.45));
+  --ll-tex-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
 }
 
 /* --------------------------------------------------------------------------
@@ -187,23 +277,23 @@ html.dark {
 html {
   background-color: var(--ll-desk);
   -webkit-text-size-adjust: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--md-outline-variant) transparent;
+  scroll-padding-top: 72px;
 }
 
 body {
   margin: 0 !important;
   padding: 0 !important;
   max-width: 100% !important;
-  height: auto !important;
-  min-height: 100vh !important;
-  color: var(--ll-ink) !important;
+  min-height: 100vh;
+  color: var(--md-on-surface) !important;
+  background-color: var(--ll-desk) !important;
+  background-image: var(--ll-desk-vignette), var(--ll-tex-fibre);
+  background-attachment: fixed;
   font-family: var(--font-ui);
   font-size: 15px !important;
   line-height: 1.7 !important;
-  background-color: var(--ll-desk) !important;
-  background-image:
-    var(--ll-desk-vignette),
-    var(--ll-tex-fibre);
-  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -211,36 +301,48 @@ body {
 
 ::selection {
   background-color: var(--ll-hi-select);
-  color: inherit;
+  color: var(--md-on-tertiary-container);
+}
+
+/* Focus is always visible: MD3 uses a filled 2px ring with a 2px gap. */
+:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* --------------------------------------------------------------------------
-   3. Layout container — sheets align to one spine
+   3. Layout — one spine, full-width on a desk
    -------------------------------------------------------------------------- */
 .ui-container {
   width: 100%;
-  max-width: 1000px;
+  max-width: 100%;
   margin-inline: auto;
-  padding-inline: 20px;
+  padding-inline: clamp(20px, 6vw, 72px);
   box-sizing: border-box;
 }
-@media (min-width: 640px) {
-  .ui-container {
-    padding-inline: 32px;
-  }
+@media (min-width: 1280px) {
+  .ui-container { padding-inline: 72px; }
+}
+@media (min-width: 1680px) {
+  .ui-container { max-width: 1680px; padding-inline: 88px; }
 }
 
+/* Reading measures, in em so CJK and Latin agree. */
+.ll-measure      { max-width: 38em; }
+.ll-measure-wide { max-width: 44em; }
+
 /* --------------------------------------------------------------------------
-   4. Typography — hand display, mono metadata
+   4. Typography — Kevin Sans display, IBM Plex Mono metadata
+   Four steps only: 12 / 15 / 20 / fluid display.
    -------------------------------------------------------------------------- */
 .ui-title {
   font-family: var(--font-hand);
-  /* one scale, fluid 26→32px: still counts as a single step */
-  font-size: clamp(26px, 5vw, 32px);
-  line-height: 1.16;
+  font-size: clamp(26px, 3.4vw, 44px);
+  line-height: 1.1;
   font-weight: 700;
   letter-spacing: -0.012em;
-  color: var(--ll-ink);
+  color: var(--md-on-surface);
   text-wrap: balance;
 }
 
@@ -249,28 +351,31 @@ body {
   font-size: 20px;
   line-height: 1.34;
   font-weight: 700;
-  color: var(--ll-ink);
+  color: var(--md-on-surface);
   text-wrap: balance;
 }
 
 .ui-body {
   font-size: 15px;
-  line-height: 1.78;
+  line-height: 1.7;
   font-weight: 400;
   color: var(--ll-ink-soft);
-  max-width: 34em;
+  max-width: 38em;
+  text-wrap: pretty;
 }
 
 .ui-caption {
   font-family: var(--font-mono);
   font-size: 12px;
-  line-height: 1.55;
+  line-height: 1.6;
   font-weight: 400;
   letter-spacing: 0.01em;
-  color: var(--ll-ink-muted);
+  color: var(--md-on-surface-variant);
 }
 
-.font-mono {
+.font-mono,
+.ui-caption,
+.ll-stamp {
   font-family: var(--font-mono);
   font-feature-settings: 'tnum' 1, 'zero' 1;
 }
@@ -279,21 +384,51 @@ body {
   font-family: var(--font-hand);
 }
 
+/* CJK keeps the same brush weight the Latin already has. */
+:lang(zh) .ui-title,
+:lang(zh-cn) .ui-title,
+:lang(zh) .ui-heading,
+:lang(zh-cn) .ui-heading {
+  font-weight: 700;
+  letter-spacing: 0.005em;
+}
+
+.ui-title,
+.ui-heading {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
 /* --------------------------------------------------------------------------
-   5. Paper — the Looseleaf sheet primitive
+   5. Paper — the sheet primitive
+   The edge is drawn by the ink engine (data-ink="sheet"); the element itself
+   carries no border, so the outline can wobble like a real hand.
    -------------------------------------------------------------------------- */
 .ll-sheet {
   position: relative;
   isolation: isolate;
+  overflow: visible;
   background-color: var(--ll-paper);
-  border-radius: 1px;
-  padding: 20px 24px;
+  border-radius: 2px;
+  padding: 24px 20px;
   box-shadow: var(--ll-shadow-paper);
   rotate: clamp(calc(var(--ll-tilt-max) * -1), var(--ll-tilt, 0deg), var(--ll-tilt-max));
   transition: rotate var(--ll-dur-sheet) var(--ll-ease-settle),
               box-shadow var(--ll-dur-hover) var(--ll-ease-out);
+  animation: ll-sheet-drop var(--ll-dur-sheet) var(--ll-ease-settle) both;
+  animation-delay: calc(var(--ll-sheet-i, 0) * var(--ll-dur-hover));
 }
-/* fibre + raking light sits behind the content, above the stock */
+@media (min-width: 640px) {
+  .ll-sheet { padding: 32px 36px; }
+}
+@media (min-width: 1024px) {
+  .ll-sheet { padding: 48px clamp(40px, 4vw, 64px); }
+}
+@media (min-width: 1536px) {
+  .ll-sheet { padding: 56px 72px; }
+}
+
+/* fibre and raking light, behind the content and above the stock */
 .ll-sheet::before {
   content: '';
   position: absolute;
@@ -305,35 +440,54 @@ body {
   background-size: 180px 180px, 100% 100%;
   pointer-events: none;
 }
-/* a very fine pencil edge, not a printed border */
 .ll-sheet::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  box-shadow: inset 0 0 0 0.5px var(--ll-pencil-mark);
+  background: radial-gradient(120% 100% at 50% 0%, rgb(255 255 255 / 0.16), transparent 60%);
   pointer-events: none;
-  opacity: 0.55;
 }
-@media (min-width: 640px) {
-  .ll-sheet {
-    padding: 32px 36px;
+.ll-sheet > svg[data-ll-ink] {
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes ll-sheet-drop {
+  0% {
+    opacity: 0;
+    translate: 0 -8px;
+    rotate: calc(var(--ll-tilt, 0deg) * -1.9);
+  }
+  62% { opacity: 1; }
+  100% {
+    opacity: 1;
+    translate: 0 0;
+    rotate: clamp(calc(var(--ll-tilt-max) * -1), var(--ll-tilt, 0deg), var(--ll-tilt-max));
   }
 }
 
 /* --------------------------------------------------------------------------
-   6. Ink-drawn rules (0.5px pencil)
+   6. Hairlines — the only printed rule left is 0.5px on entry rows
    -------------------------------------------------------------------------- */
 .ll-rule {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 10px;
   border: 0;
-  border-top: 0.5px solid var(--ll-pencil-mark);
   margin: 0;
+  overflow: visible;
 }
-/* Entry rows inside a sheet — a pencil rule between, none at the end */
+.ll-rule > svg[data-ll-ink] { z-index: 0; }
+
 .ll-entry {
   padding-block: 22px;
-  border-top: 0.5px solid var(--ll-pencil-faint);
+  /* a divider that separates content is a graphical object: WCAG 1.4.11
+     asks 3:1, so it uses `outline` (4.27:1), not the decorative variant. */
+  border-top: 0.5px solid var(--md-outline);
+  opacity: 1;
 }
 .ll-entry:first-child {
   border-top: 0;
@@ -342,13 +496,17 @@ body {
 .ll-entry:last-child {
   padding-bottom: 0;
 }
+@media (min-width: 1024px) {
+  .ll-entry { padding-block: 26px; }
+}
 
 /* --------------------------------------------------------------------------
-   7. Marker & highlighter ink on text
+   7. Marker & highlighter on text
    -------------------------------------------------------------------------- */
 .ll-hi {
+  color: var(--md-on-tertiary-container);
   background: linear-gradient(104deg, transparent 0.9%, var(--ll-hi-select) 2.4%, var(--ll-hi-select) 96%, transparent 98%);
-  background-size: 100% 0.48em;
+  background-size: 100% 0.5em;
   background-position: 0 84%;
   background-repeat: no-repeat;
   padding-inline: 0.06em;
@@ -358,7 +516,7 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   8. Buttons — marker, outline, whisper (Looseleaf press physics)
+   8. Buttons — every edge is drawn, so the element owns no border
    -------------------------------------------------------------------------- */
 .ll-btn {
   position: relative;
@@ -370,230 +528,305 @@ body {
   font-size: 15px;
   font-weight: 700;
   line-height: 1;
-  padding: 12px 20px;
-  border-radius: 3px;
-  border: 0.5px solid transparent;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
+  isolation: isolate;
   transition: translate var(--ll-dur-press) var(--ll-ease-out),
-              box-shadow var(--ll-dur-hover) var(--ll-ease-out),
               background-color var(--ll-dur-hover) var(--ll-ease-out),
-              border-color var(--ll-dur-hover) var(--ll-ease-out),
               color var(--ll-dur-hover) var(--ll-ease-out);
 }
 .ll-btn:active {
   translate: 0 var(--ll-press-sink);
 }
-
-/* marker-filled: ink laid down wet, then dry */
-.ll-btn--marker {
-  background-color: var(--ll-marker);
-  color: var(--ll-paper);
-  box-shadow:
-    0 1px 0 rgb(var(--ll-shade) / 0.18),
-    0 3px 8px -3px rgb(var(--ll-shade) / 0.3);
+/* the drawn layer sits under the label, over the ground */
+.ll-btn > svg[data-ll-ink] {
+  z-index: -1;
 }
-.ll-btn--marker:hover {
-  background-color: var(--ll-marker-deep);
-  box-shadow:
-    0 1px 0 rgb(var(--ll-shade) / 0.2),
-    0 5px 12px -4px rgb(var(--ll-shade) / 0.34);
+
+/* marker-filled: a solid hand-cut blot behind the label */
+.ll-btn--marker {
+  background-color: transparent;
+  color: var(--md-on-primary);
+}
+.ll-btn--marker > svg[data-ll-ink] {
+  color: var(--md-primary);
+  transition: color var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-btn--marker:hover > svg[data-ll-ink] {
+  color: var(--ll-marker-deep);
 }
 
 /* inked outline */
 .ll-btn--outline {
   background-color: transparent;
-  color: var(--ll-ink);
-  border-color: var(--ll-pencil);
+  color: var(--md-primary);
+}
+.ll-btn--outline > svg[data-ll-ink] {
+  color: var(--md-primary);
+  opacity: 0.85;
+  transition: opacity var(--ll-dur-hover) var(--ll-ease-out),
+              color var(--ll-dur-hover) var(--ll-ease-out);
 }
 .ll-btn--outline:hover {
-  background-color: var(--ll-paper-shade);
-  border-color: var(--ll-ink-soft);
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+.ll-btn--outline:hover > svg[data-ll-ink] {
+  opacity: 1;
+  color: var(--md-on-primary-container);
 }
 
-/* whisper: no box at all, just a hand swipe on hover */
+/* whisper: no ground at all */
 .ll-btn--ghost {
   background: transparent;
-  color: var(--ll-ink-soft);
-  padding-inline: 4px;
+  color: var(--md-secondary);
+  padding-inline: 0;
+  border-radius: 4px;
 }
-.ll-btn--ghost:hover {
-  color: var(--ll-ink);
+.ll-btn--ghost:hover { color: var(--md-on-surface); }
+.ll-btn--ghost > svg[data-ll-ink] {
+  opacity: 0;
+  transition: opacity var(--ll-dur-hover) var(--ll-ease-out);
 }
+.ll-btn--ghost:hover > svg[data-ll-ink] { opacity: 1; }
 
 /* small mono action inside rows */
 .ll-btn--xs {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;
-  line-height: 1;
-  padding: 6px 10px;
-  border-radius: 2px;
-  border: 0.5px solid var(--ll-pencil-mark);
+  padding: 8px 12px;
+  border-radius: 6px;
   background: transparent;
-  color: var(--ll-ink-soft);
+  color: var(--md-on-surface-variant);
+}
+.ll-btn--xs > svg[data-ll-ink] {
+  color: var(--md-outline);
+  opacity: 0.75;
+  transition: opacity var(--ll-dur-hover) var(--ll-ease-out),
+              color var(--ll-dur-hover) var(--ll-ease-out);
 }
 .ll-btn--xs:hover {
-  border-color: var(--ll-pencil);
-  background-color: var(--ll-paper-shade);
-  color: var(--ll-ink);
+  background-color: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+}
+.ll-btn--xs:hover > svg[data-ll-ink] {
+  opacity: 1;
+  color: var(--md-on-surface-variant);
 }
 
 /* --------------------------------------------------------------------------
-   9. Stamps — badges written in the margin
+   9. Chips — MD3 filled container, no border
    -------------------------------------------------------------------------- */
 .ll-stamp {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 1;
   font-weight: 500;
-  letter-spacing: 0.02em;
-  padding: 4px 8px;
-  border-radius: 2px;
-  color: var(--ll-ink-you);
-  background-color: color-mix(in srgb, var(--ll-ink-you) 7%, transparent);
-  border: 0.5px solid color-mix(in srgb, var(--ll-ink-you) 26%, transparent);
+  letter-spacing: 0.01em;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--md-on-secondary-container);
+  background-color: var(--md-secondary-container);
+  border: 0;
 }
 .ll-stamp--marker {
-  color: var(--ll-marker);
-  background-color: color-mix(in srgb, var(--ll-marker-tint) 9%, transparent);
-  border-color: color-mix(in srgb, var(--ll-marker-tint) 30%, transparent);
+  color: var(--md-on-primary-container);
+  background-color: var(--md-primary-container);
 }
 .ll-stamp--muted {
-  color: var(--ll-ink-muted);
-  background-color: color-mix(in srgb, var(--ll-pencil) 6%, transparent);
-  border-color: var(--ll-pencil-mark);
+  color: var(--md-on-surface-variant);
+  background-color: var(--md-surface-container-high);
 }
 .ll-stamp--landmark {
-  color: #9a6a08;
-  background-color: color-mix(in srgb, var(--ll-hi) 40%, transparent);
-  border-color: color-mix(in srgb, var(--ll-hi) 70%, transparent);
-}
-html.dark .ll-stamp--landmark {
-  color: var(--ll-hi);
-  background-color: color-mix(in srgb, var(--ll-hi) 14%, transparent);
-  border-color: color-mix(in srgb, var(--ll-hi) 40%, transparent);
+  color: var(--md-on-tertiary-container);
+  background-color: var(--md-tertiary-container);
 }
 
 /* --------------------------------------------------------------------------
-   10. Fixed header — a taped strip across the top of the desk
+   10. Header — a fixed MD3 surface across the top of the desk
    -------------------------------------------------------------------------- */
 .ll-header {
   position: fixed;
   inset-inline: 0;
   top: 0;
   z-index: 40;
-  background-color: color-mix(in srgb, var(--ll-paper) 92%, transparent);
-  backdrop-filter: blur(10px) saturate(1.1);
-  -webkit-backdrop-filter: blur(10px) saturate(1.1);
-  border-bottom: 0.5px solid var(--ll-pencil-mark);
+  background-color: color-mix(in srgb, var(--md-surface) 88%, transparent);
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  /* purely decorative seam between chrome and page */
+  border-bottom: 0.5px solid var(--md-outline-variant);
 }
-.ll-header + * {
-  /* spacer handled by .h-14 in markup */
-}
+
 .main-menu > a:first-child {
   font-family: var(--font-hand);
   font-size: 20px;
   font-weight: 700;
-  color: var(--ll-ink);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.012em;
+  color: var(--md-on-surface);
   text-decoration: none;
 }
+
 .main-menu nav a {
   position: relative;
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.01em;
-  color: var(--ll-ink-muted);
+  color: var(--md-on-surface-variant);
   padding: 4px 2px;
-  border-radius: 1px;
   text-decoration: none;
   transition: color var(--ll-dur-hover) var(--ll-ease-out);
 }
 .main-menu nav a::after {
   content: '';
   position: absolute;
-  left: 1px;
-  right: 1px;
+  left: 0;
+  right: 0;
   bottom: 0;
   height: 2px;
   border-radius: 2px;
-  background-color: var(--ll-marker-tint);
+  background-color: var(--md-primary);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--ll-dur-hover) var(--ll-ease-out);
 }
 .main-menu nav a:hover {
-  color: var(--ll-ink);
+  color: var(--md-on-surface);
 }
 .main-menu nav a:hover::after {
   transform: scaleX(1);
 }
+/* Blowfish wraps menu labels in a span; retune that too */
+.main-menu nav > a > span,
+.main-menu nav .translation > button > span {
+  font-family: var(--font-mono) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: var(--md-on-surface-variant) !important;
+}
+.main-menu nav > a:hover > span,
+.main-menu nav .translation > button:hover > span {
+  color: var(--md-on-surface) !important;
+}
+
+.menuhide > li {
+  border-radius: 12px !important;
+  border: 0 !important;
+  background-color: var(--md-surface-container) !important;
+  box-shadow: var(--ll-shadow-loose) !important;
+  padding: 6px !important;
+}
+.menuhide a,
+.menuhide a > span {
+  font-family: var(--font-mono) !important;
+  font-size: 12px !important;
+  color: var(--md-on-surface-variant) !important;
+  border-radius: 8px !important;
+}
+.menuhide a:hover {
+  background-color: var(--md-secondary-container) !important;
+  color: var(--md-on-secondary-container) !important;
+}
+
+#appearance-switcher,
+#appearance-switcher-mobile,
+#search-button,
+button.bf-icon-color-hover {
+  color: var(--md-on-surface-variant) !important;
+  border-radius: 8px !important;
+  transition: color var(--ll-dur-hover) var(--ll-ease-out),
+              background-color var(--ll-dur-hover) var(--ll-ease-out);
+}
+#appearance-switcher:hover,
+#appearance-switcher-mobile:hover,
+button.bf-icon-color-hover:hover {
+  color: var(--md-on-surface) !important;
+  background-color: var(--md-surface-container-high) !important;
+}
+
+#mobile-menu-dialog {
+  border-radius: 16px !important;
+  border: 0 !important;
+  background-color: var(--md-surface-container) !important;
+  box-shadow: var(--ll-shadow-loose) !important;
+}
+#mobile-menu-dialog a > span {
+  font-family: var(--font-hand) !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: var(--md-on-surface) !important;
+}
 
 /* --------------------------------------------------------------------------
-   11. Publication filter — tabbed index cards
+   11. Filter chips & text field
    -------------------------------------------------------------------------- */
 .pub-filter-btn {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.01em;
-  padding: 6px 11px;
-  border-radius: 2px;
-  border: 0.5px solid var(--ll-pencil-mark);
+  padding: 8px 13px;
+  border: 0;
+  border-radius: 8px;
   background-color: transparent;
-  color: var(--ll-ink-muted);
+  color: var(--md-on-surface-variant);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline);
   cursor: pointer;
-  transition: border-color var(--ll-dur-hover) var(--ll-ease-out),
-              background-color var(--ll-dur-hover) var(--ll-ease-out),
-              color var(--ll-dur-hover) var(--ll-ease-out);
+  transition: background-color var(--ll-dur-hover) var(--ll-ease-out),
+              color var(--ll-dur-hover) var(--ll-ease-out),
+              box-shadow var(--ll-dur-hover) var(--ll-ease-out);
 }
 .pub-filter-btn:hover {
-  border-color: var(--ll-pencil);
-  color: var(--ll-ink);
+  background-color: var(--md-surface-container-high);
+  color: var(--md-on-surface);
 }
 .pub-filter-btn.active {
-  background-color: var(--ll-paper-shade);
-  border-color: var(--ll-ink-you);
-  color: var(--ll-ink-you);
+  background-color: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  box-shadow: none;
   font-weight: 600;
 }
 
-/* Search field — a ruled line on the page, not a box */
 .ll-input {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--ll-ink);
+  color: var(--md-on-surface);
   background: transparent;
   border: 0;
-  border-bottom: 0.5px solid var(--ll-pencil-mark);
-  border-radius: 0;
-  padding: 6px 2px;
+  border-bottom: 0.5px solid var(--md-outline);
+  border-radius: 4px 4px 0 0;
+  padding: 10px;
   width: 100%;
-  transition: border-color var(--ll-dur-hover) var(--ll-ease-out);
+  transition: border-color var(--ll-dur-hover) var(--ll-ease-out),
+              background-color var(--ll-dur-hover) var(--ll-ease-out);
 }
 .ll-input::placeholder {
-  color: var(--ll-ink-muted);
+  color: var(--md-on-surface-variant);
   opacity: 1;
 }
+.ll-input:hover { background-color: var(--md-surface-container); }
 .ll-input:focus {
   outline: none;
-  border-bottom-color: var(--ll-ink-you);
+  border-bottom-color: var(--md-primary);
+  border-bottom-width: 1px;
 }
 
 /* --------------------------------------------------------------------------
-   12. Timeline — pencil spine, seeded stamp dot
+   12. Timeline — a drawn spine with a seeded dot
    -------------------------------------------------------------------------- */
 .pedigree-node {
   position: relative;
   padding-left: 22px;
   padding-bottom: 26px;
-  border-left: 0.5px solid var(--ll-pencil-mark);
+  border-left: 0.5px solid var(--md-outline);
 }
 .pedigree-node:last-child {
   border-left-color: transparent;
@@ -606,15 +839,15 @@ html.dark .ll-stamp--landmark {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: var(--ll-pencil-mark);
+  background-color: var(--md-outline);
 }
 .pedigree-node:first-child .pedigree-indicator {
-  background-color: var(--ll-marker-tint);
-  box-shadow: 0 0 0 2.5px color-mix(in srgb, var(--ll-marker) 18%, transparent);
+  background-color: var(--md-primary);
+  box-shadow: 0 0 0 3px var(--md-primary-container);
 }
 
 /* --------------------------------------------------------------------------
-   13. Ambient ink canvas
+   13. Ink wash canvas
    -------------------------------------------------------------------------- */
 #ambient-canvas {
   position: fixed;
@@ -623,28 +856,321 @@ html.dark .ll-stamp--landmark {
   height: 100vh;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.34;
-  transition: opacity var(--ll-dur-fade) var(--ll-ease-out);
+  opacity: 0.3;
   mix-blend-mode: multiply;
+  transition: opacity var(--ll-dur-fade) var(--ll-ease-out);
 }
 html.dark #ambient-canvas {
   mix-blend-mode: screen;
-  opacity: 0.2;
+  opacity: 0.18;
+}
+#main-content,
+#site-footer {
+  position: relative;
+  z-index: 1;
 }
 
 /* --------------------------------------------------------------------------
-   14. Focus & reduced motion
+   14. Ink draw-in for every drawn path
    -------------------------------------------------------------------------- */
-:focus-visible {
-  outline: 2px solid var(--ll-ink-you);
-  outline-offset: 3px;
-  border-radius: 1px;
+[data-ink] > svg[data-ll-ink] path[data-ink-draw] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ll-draw var(--ll-dur-soak) var(--ll-ease-out) forwards;
+}
+@keyframes ll-draw {
+  to { stroke-dashoffset: 0; }
+}
+/* ghost swipes are already drawn; they fade in on hover instead */
+[data-ink="underline"] > svg[data-ll-ink] path[data-ink-draw] {
+  animation: none;
+  stroke-dashoffset: 0;
 }
 
+/* --------------------------------------------------------------------------
+   15. Overlays: skip link, toast, dialog, back-to-top
+   -------------------------------------------------------------------------- */
+.ll-skip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  color: var(--md-on-primary-container);
+  background-color: var(--md-primary-container);
+  border: 0;
+  border-radius: 0 0 10px 10px;
+  box-shadow: var(--ll-shadow-loose);
+  transform: translateY(-100%);
+  transition: transform var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-skip:focus-visible {
+  transform: translateY(0);
+  outline-offset: 2px;
+}
+
+.ll-toast {
+  background-color: var(--md-inverse-surface);
+  border-radius: 12px;
+  box-shadow: var(--ll-shadow-loose);
+}
+.ll-toast .ui-caption {
+  color: var(--md-inverse-on-surface);
+}
+#toast-notification { z-index: 1100; }
+
+.ll-scrim {
+  background-color: color-mix(in srgb, var(--md-scrim) 32%, transparent);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+#abstract-modal { z-index: 1000; }
+.ll-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 16px;
+  border-bottom: 0.5px solid var(--md-outline);
+}
+.ll-modal-close {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  justify-content: center;
+}
+
+#scroll-to-top a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-size: 15px;
+  border-radius: 12px;
+  background-color: var(--md-secondary-container) !important;
+  border: 0 !important;
+  color: var(--md-on-secondary-container) !important;
+  box-shadow: var(--ll-shadow-loose) !important;
+  text-decoration: none;
+  transition: background-color var(--ll-dur-hover) var(--ll-ease-out),
+              color var(--ll-dur-hover) var(--ll-ease-out);
+}
+#scroll-to-top a:hover {
+  background-color: var(--md-secondary) !important;
+  color: var(--md-on-secondary) !important;
+}
+
+/* --------------------------------------------------------------------------
+   16. Homepage — one sheet: statement, margin note, ruled index
+   -------------------------------------------------------------------------- */
+.ll-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+.ll-hero-lead { min-width: 0; }
+.ll-hero-lead .ui-title { max-width: 20em; }
+.ll-hero-lead .ui-body  { max-width: 34em; }
+
+.ll-hero-note {
+  position: relative;
+  min-width: 0;
+  padding-left: clamp(24px, 3vw, 44px);
+}
+.ll-hero-note::before {
+  content: '';
+  position: absolute;
+  inset-block: 4px;
+  left: 0;
+  width: 0.5px;
+  background: linear-gradient(to bottom, transparent, var(--md-outline) 12%, var(--md-outline) 88%, transparent);
+}
+.ll-note-head { padding-bottom: 14px; }
+.ll-note-body {
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 30em;
+  color: var(--ll-ink-soft);
+}
+.ll-note-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-top: 18px;
+}
+.ll-note-links .ll-btn {
+  padding: 4px 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+}
+.ll-dot-scholar { background-color: var(--md-secondary); }
+
+.ll-stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.ll-stat-cell {
+  padding-inline: clamp(14px, 2vw, 26px);
+  border-left: 0.5px solid var(--md-outline);
+}
+.ll-stat-cell:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.ll-stat {
+  font-family: var(--font-mono);
+  font-size: clamp(26px, 2.8vw, 40px);
+  line-height: 1;
+  font-weight: 500;
+  color: var(--md-on-surface);
+  font-variant-numeric: tabular-nums;
+}
+
+.ll-text-ink    { color: var(--md-on-surface); }
+.ll-text-soft   { color: var(--ll-ink-soft); }
+.ll-text-accent { color: var(--md-secondary); }
+.ll-text-marker { color: var(--md-primary); }
+.ll-text-pencil { color: var(--md-outline); }
+
+.ll-h-18,
+.ll-h-17 { font-size: 20px; line-height: 1.34; }
+.ll-body-sm { font-size: 15px; line-height: 1.7; color: var(--ll-ink-soft); }
+
+/* --------------------------------------------------------------------------
+   17. Page heads & publication entries
+   -------------------------------------------------------------------------- */
+.ll-page-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px 40px;
+  margin-bottom: 18px;
+}
+.ll-page-search {
+  flex: 0 1 300px;
+  min-width: 220px;
+}
+.ll-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 26px;
+}
+.ll-pub-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.ll-pub-impact { margin-left: auto; }
+.ll-pub-title {
+  max-width: 46em;
+  margin-bottom: 6px;
+}
+.ll-pub-authors {
+  max-width: 62em;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.ll-pub-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.ll-pub-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   18. Responsive — narrow, mid and wide
+   -------------------------------------------------------------------------- */
+*, ::before, ::after { box-sizing: border-box; }
+
+html, body { overflow-x: clip; }
+img, svg, video, canvas { max-width: 100%; }
+.ll-sheet, .ui-container, .ll-header { max-width: 100vw; }
+
+@media (max-width: 900px) {
+  .ll-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .ll-hero-note {
+    padding-left: 0;
+    padding-top: 22px;
+  }
+  .ll-hero-note::before {
+    inset-block: auto;
+    inset-inline: 0;
+    top: 0;
+    width: auto;
+    height: 0.5px;
+    background: linear-gradient(to right, var(--md-outline), transparent);
+  }
+  .ll-stat-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 24px;
+  }
+  .ll-stat-cell:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  :root { --ll-tilt-max: 0deg; }
+
+  .ll-sheet { padding: 22px 18px; }
+  .ui-container { padding-inline: 16px; }
+  .main-menu > a:first-child { font-size: 20px !important; }
+
+  /* Touch targets stay >= 40px */
+  .ll-btn,
+  .ll-btn--xs,
+  .pub-filter-btn,
+  .ll-input { min-height: 40px; }
+  .ll-btn--xs,
+  .pub-filter-btn { padding-block: 9px; }
+}
+
+@media (max-width: 560px) {
+  .ll-stat-row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 20px;
+  }
+  .ll-stat-cell {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+@media (max-width: 379px) {
+  .main-menu > a:first-child {
+    max-width: 12ch;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   19. Preference & environment fallbacks
+   -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
+  *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -655,9 +1181,12 @@ html.dark #ambient-canvas {
     translate: 0 !important;
     animation: none !important;
   }
+  [data-ink] > svg[data-ll-ink] path[data-ink-draw] {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+  }
 }
 
-/* Forced colours: drop the paper illusion, keep the structure */
 @media (forced-colors: active) {
   .ll-sheet,
   .ll-sheet::before,
@@ -671,309 +1200,11 @@ html.dark #ambient-canvas {
 }
 
 /* --------------------------------------------------------------------------
-   15. Utility shims — Blowfish's precompiled Tailwind lacks arbitrary values,
-       so every bespoke value lives here instead.
+   20. Utility completion
+   Blowfish ships a precompiled Tailwind with only the classes its own
+   templates use. These are the ones our markup needs, defined with Tailwind's
+   own semantics.
    -------------------------------------------------------------------------- */
-.ll-measure      { max-width: 34em; }
-.ll-measure-tight{ max-width: 27em; }
-.ll-measure-wide { max-width: 37em; }
-/* `ch` resolves against a Latin digit, far narrower than a CJK glyph, so the
-   hero uses a type-relative measure instead. */
-.ll-measure-hero { max-width: 17em; }
-
-.ll-stat {
-  font-family: var(--font-mono);
-  font-size: clamp(26px, 5vw, 32px);
-  line-height: 1;
-  font-weight: 500;
-  color: var(--ll-ink);
-  font-variant-numeric: tabular-nums;
-}
-
-.ll-text-ink    { color: var(--ll-ink); }
-.ll-text-soft   { color: var(--ll-ink-soft); }
-.ll-text-accent { color: var(--ll-ink-you); }
-.ll-text-marker { color: var(--ll-marker); }
-.ll-text-pencil { color: var(--ll-pencil); }
-
-.ll-h-18 { font-size: 20px; line-height: 1.34; }
-.ll-h-17 { font-size: 20px; line-height: 1.34; }
-.ll-body-sm { font-size: 15px; line-height: 1.75; color: var(--ll-ink-soft); }
-
-
-#ambient-canvas {
-  z-index: 0;
-}
-#main-content,
-#site-footer,
-main,
-footer {
-  position: relative;
-  z-index: 1;
-}
-.ll-header {
-  z-index: 40;
-}
-
-/* --------------------------------------------------------------------------
-   17. Sheet drop — the page is laid down, not faded in
-   -------------------------------------------------------------------------- */
-@keyframes ll-sheet-drop {
-  0% {
-    opacity: 0;
-    translate: 0 -10px;
-    rotate: calc(var(--ll-tilt, 0deg) * -2.2);
-  }
-  60% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-    translate: 0 0;
-    rotate: clamp(calc(var(--ll-tilt-max) * -1), var(--ll-tilt, 0deg), var(--ll-tilt-max));
-  }
-}
-.ll-sheet {
-  animation: ll-sheet-drop var(--ll-dur-sheet) var(--ll-ease-settle) both;
-  animation-delay: calc(var(--ll-sheet-i, 0) * var(--ll-dur-hover));
-}
-
-/* Ink-drawn strokes are revealed as if laid down by hand.
-   The engine stamps pathLength="1", so a normalised dash works without
-   measuring geometry (which is unavailable before the node is attached). */
-[data-ink] > svg[data-ll-ink] path[data-ink-draw] {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: ll-draw 560ms var(--ll-ease-out) forwards;
-}
-@keyframes ll-draw {
-  to { stroke-dashoffset: 0; }
-}
-/* Ghost-link swipes are already drawn; they fade in on hover instead */
-[data-ink="underline"] > svg[data-ll-ink] path[data-ink-draw] {
-  animation: none;
-  stroke-dashoffset: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ll-sheet {
-    animation: none !important;
-    opacity: 1 !important;
-  }
-  [data-ink] > svg[data-ll-ink] path[data-ink-draw] {
-    animation: none !important;
-    stroke-dashoffset: 0 !important;
-  }
-}
-
-/* Ghost links: the pen swipe only appears on hover */
-.ll-btn--ghost {
-  position: relative;
-}
-.ll-btn--ghost > svg[data-ll-ink] {
-  opacity: 0;
-  transition: opacity var(--ll-dur-hover) var(--ll-ease-out);
-}
-.ll-btn--ghost:hover > svg[data-ll-ink] {
-  opacity: 1;
-}
-
-/* Headings inside prose / theme defaults keep the hand typeface */
-h1, h2, h3 {
-  font-family: var(--font-hand);
-  font-weight: 700;
-  letter-spacing: -0.012em;
-}
-
-/* Inline links in body copy read as pencil marks, not browser blue */
-.ll-sheet a:not(.ll-btn):not(.ll-btn--xs) {
-  color: var(--ll-ink-you);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: color-mix(in srgb, var(--ll-ink-you) 40%, transparent);
-  transition: text-decoration-color var(--ll-dur-hover) var(--ll-ease-out);
-}
-.ll-sheet a:not(.ll-btn):not(.ll-btn--xs):hover {
-  text-decoration-color: var(--ll-ink-you);
-}
-
-
-/* Map Blowfish's global font tokens onto the Looseleaf stack */
-:root {
-  --font-sans: var(--font-ui);
-  --default-font-family: var(--font-ui);
-}
-
-/* The desk shows through the scroll gutter */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: var(--ll-pencil-mark) transparent;
-  scroll-padding-top: 72px;
-}
-
-/* Paper sheets never clip a focused control */
-.ll-sheet {
-  overflow: visible;
-}
-
-/* --------------------------------------------------------------------------
-   19. CJK hand setting — Kai reads as the same brush as Kevin Sans
-   -------------------------------------------------------------------------- */
-:lang(zh) .ui-title,
-:lang(zh-cn) .ui-title,
-:lang(zh) .ui-heading,
-:lang(zh-cn) .ui-heading,
-.main-menu > a:first-child {
-  font-weight: 700;
-  letter-spacing: 0.005em;
-}
-
-/* Latin numerals and codes stay in the mono face, never the hand face */
-.font-mono,
-.ui-caption,
-.ll-stamp {
-  font-family: var(--font-mono);
-  font-feature-settings: 'tnum' 1, 'zero' 1;
-}
-
-/* Sheet titles balance their lines; body copy stays ragged-right */
-.ui-title,
-.ui-heading {
-  text-wrap: balance;
-  word-break: keep-all;
-  overflow-wrap: anywhere;
-}
-.ui-body {
-  text-wrap: pretty;
-}
-
-/* --------------------------------------------------------------------------
-   20. Blowfish chrome, re-cut as Looseleaf stationery
-   The theme ships its own menu markup; these rules retune it rather than
-   forking every partial.
-   -------------------------------------------------------------------------- */
-
-/* Header links: mono, pencil-muted, marker rule on hover */
-.main-menu nav > a > span,
-.main-menu nav .translation > button > span {
-  font-family: var(--font-mono) !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.01em !important;
-  color: var(--ll-ink-muted) !important;
-  transition: color var(--ll-dur-hover) var(--ll-ease-out);
-}
-.main-menu nav > a:hover > span,
-.main-menu nav .translation > button:hover > span {
-  color: var(--ll-ink) !important;
-}
-
-/* The masthead wordmark */
-.main-menu > a:first-child {
-  font-family: var(--font-hand) !important;
-  font-size: 20px !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.012em !important;
-  color: var(--ll-ink) !important;
-}
-
-/* Language + appearance dropdowns become index slips, not floating cards */
-.menuhide > li {
-  border-radius: 2px !important;
-  border: 0.5px solid var(--ll-pencil-mark) !important;
-  background-color: var(--ll-slip) !important;
-  box-shadow: var(--ll-shadow-loose) !important;
-  padding: 6px !important;
-}
-.menuhide a,
-.menuhide a > span {
-  font-family: var(--font-mono) !important;
-  font-size: 12px !important;
-  color: var(--ll-ink-soft) !important;
-  border-radius: 1px !important;
-}
-.menuhide a:hover {
-  background-color: var(--ll-paper-shade) !important;
-  color: var(--ll-ink) !important;
-}
-
-/* Appearance switcher + a11y button: pencil icons, no chips */
-#appearance-switcher,
-#appearance-switcher-mobile,
-#search-button,
-button.bf-icon-color-hover {
-  color: var(--ll-ink-muted) !important;
-  border-radius: 2px !important;
-  transition: color var(--ll-dur-hover) var(--ll-ease-out),
-              background-color var(--ll-dur-hover) var(--ll-ease-out);
-}
-#appearance-switcher:hover,
-#appearance-switcher-mobile:hover,
-button.bf-icon-color-hover:hover {
-  color: var(--ll-ink) !important;
-  background-color: transparent !important;
-}
-
-/* Mobile drawer: a sheet pinned under the header */
-#mobile-menu-dialog {
-  border-radius: 3px !important;
-  border: 0.5px solid var(--ll-pencil-mark) !important;
-  background-color: var(--ll-paper) !important;
-  box-shadow: var(--ll-shadow-loose) !important;
-}
-#mobile-menu-dialog a > span {
-  font-family: var(--font-hand) !important;
-  font-size: 20px !important;
-  font-weight: 700 !important;
-  color: var(--ll-ink) !important;
-}
-
-/* Back-to-top and skip link sit on the desk, quietly */
-#scroll-to-top a {
-  background-color: var(--ll-paper) !important;
-  border: 0.5px solid var(--ll-pencil-mark) !important;
-  color: var(--ll-ink-soft) !important;
-  box-shadow: var(--ll-shadow-loose) !important;
-}
-#scroll-to-top a:hover {
-  background-color: var(--ll-paper-shade) !important;
-  color: var(--ll-ink) !important;
-}
-#the-top a {
-  background-color: var(--ll-paper) !important;
-  color: var(--ll-ink) !important;
-  border-bottom: 0.5px solid var(--ll-pencil-mark);
-}
-
-/* Overlay & toast layers — Blowfish compiles only a few z utilities */
-#abstract-modal { z-index: 1000; }
-#toast-notification { z-index: 1100; }
-
-/* --------------------------------------------------------------------------
-   16. Layer order — ink wash on the desk, sheets above it, chrome above all
-   -------------------------------------------------------------------------- */
-#ambient-canvas {
-  z-index: 0;
-}
-#main-content,
-#site-footer {
-  position: relative;
-  z-index: 1;
-}
-.ll-header {
-  z-index: 40;
-}
-
-/* --------------------------------------------------------------------------
-   21. Utility completion layer
-   Blowfish ships a precompiled Tailwind containing only the classes its own
-   templates use. The 46 utilities our markup needs but the bundle lacks are
-   defined here with exactly the Tailwind semantics, so the layout is correct
-   by construction rather than by luck.
-   -------------------------------------------------------------------------- */
-
-/* — layout primitives — */
 .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
 .items-start { align-items: flex-start; }
 .items-baseline { align-items: baseline; }
@@ -982,8 +1213,9 @@ button.bf-icon-color-hover:hover {
 .max-h-\[85vh\] { max-height: 85vh; }
 .right-6 { right: 1.5rem; }
 .nozoom { cursor: default; }
+.w-1\.5 { width: 0.375rem; }
+.h-1\.5 { height: 0.375rem; }
 
-/* — spacing — */
 .gap-2\.5 { gap: 0.625rem; }
 .gap-5 { gap: 1.25rem; }
 .gap-7 { gap: 1.75rem; }
@@ -1002,21 +1234,15 @@ button.bf-icon-color-hover:hover {
 .my-9 { margin-block: 2.25rem; }
 .pb-20 { padding-bottom: 5rem; }
 .py-2\.5 { padding-block: 0.625rem; }
+
 .space-y-1\.5 > * + * { margin-top: 0.375rem; }
 .space-y-2 > * + * { margin-top: 0.5rem; }
 .space-y-3 > * + * { margin-top: 0.75rem; }
 .space-y-5 > * + * { margin-top: 1.25rem; }
 
-/* — type — */
-.text-xs-\[12\] { font-size: 12px; }
 .leading-5 { line-height: 1.25rem; }
 .tracking-\[0\.12em\] { letter-spacing: 0.12em; }
 
-/* — colour — */
-.bg-emerald-600 { background-color: #059669; }
-html.dark .dark\:bg-emerald-600 { background-color: #059669; }
-
-/* — responsive — */
 @media (min-width: 640px) {
   .sm\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .sm\:border-l { border-left-width: 0.5px; border-left-style: solid; }
@@ -1034,133 +1260,28 @@ html.dark .dark\:bg-emerald-600 { background-color: #059669; }
   .md\:pl-9 { padding-left: 2.25rem; }
 }
 
-/* The single-column grid collapses correctly at every width */
-@media (min-width: 768px) {
-  .md\:grid-cols-12 > .md\:col-span-4,
-  .md\:grid-cols-12 > .md\:col-span-5,
-  .md\:grid-cols-12 > .md\:col-span-7,
-  .md\:grid-cols-12 > .md\:col-span-8 {
-    min-width: 0;
-  }
+/* Map Blowfish's global font tokens onto the Looseleaf stack */
+:root {
+  --font-sans: var(--font-ui);
+  --default-font-family: var(--font-ui);
 }
 
-/* Tailwind's 1.5 step (0.375rem) — the dot inside status stamps */
-.w-1\.5 { width: 0.375rem; }
-.h-1\.5 { height: 0.375rem; }
-
-/* --------------------------------------------------------------------------
-   22. Skip link — a torn strip of paper at the top edge
-   -------------------------------------------------------------------------- */
-.ll-skip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 4px 12px;
-  color: var(--ll-ink);
-  background-color: var(--ll-paper);
-  border: 0.5px solid var(--ll-pencil-mark);
-  border-top: 0;
-  border-radius: 0 0 3px 3px;
-  box-shadow: var(--ll-shadow-loose);
-  transform: translateY(-100%);
-  transition: transform var(--ll-dur-hover) var(--ll-ease-out);
-}
-.ll-skip:focus-visible {
-  transform: translateY(0);
-  outline-offset: 2px;
+/* Headings inside any Blowfish wrapper keep the hand typeface */
+h1, h2, h3 {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  letter-spacing: -0.012em;
 }
 
-/* --------------------------------------------------------------------------
-   23. Narrow-viewport safety
-   Nothing may scroll sideways at 320px; the sheet loses its tilt so the
-   paper edge never clips the text it holds.
-   -------------------------------------------------------------------------- */
-*, ::before, ::after { box-sizing: border-box; }
-
-html, body {
-  overflow-x: clip;
+/* Inline links in body copy read as ink, not browser blue */
+.ll-sheet a:not(.ll-btn):not(.ll-btn--xs) {
+  color: var(--md-secondary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--md-secondary) 40%, transparent);
+  transition: text-decoration-color var(--ll-dur-hover) var(--ll-ease-out);
 }
-
-img, svg, video, canvas {
-  max-width: 100%;
-}
-
-.ll-sheet,
-.ui-container,
-.ll-header {
-  max-width: 100vw;
-}
-
-@media (max-width: 639px) {
-  :root { --ll-tilt-max: 0deg; }
-
-  .ll-sheet { padding: 20px 18px; }
-  .ui-container { padding-inline: 16px; }
-
-  /* Touch targets: every control keeps a 40px hit box */
-  .ll-btn,
-  .ll-btn--xs,
-  .pub-filter-btn,
-  .ll-input {
-    min-height: 40px;
-  }
-  .ll-btn--xs { padding-block: 8px; }
-  .pub-filter-btn { padding-block: 9px; }
-  .ll-input { padding-block: 10px; }
-
-  /* The two-up metric grid gets a hairline gutter instead of vertical rules */
-  .sm\:border-l { border-left: 0 !important; padding-left: 0 !important; }
-
-  /* Masthead shrinks so the wordmark and the menu can share one row */
-  .main-menu > a:first-child { font-size: 20px !important; }
-}
-
-/* Below 380px the full wordmark wraps; drop the school name instead */
-@media (max-width: 379px) {
-  .main-menu > a:first-child {
-    max-width: 12ch;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   24. Back-to-top — a small inked square, revealed by the theme's own JS
-   -------------------------------------------------------------------------- */
-.ll-to-top {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 30;
-  /* Blowfish's scroll-to-top.js flips Tailwind's translate/opacity utilities;
-     we only supply the timing so the reveal matches the rest of the ink. */
-  transition: opacity var(--ll-dur-hover) var(--ll-ease-out),
-              transform var(--ll-dur-hover) var(--ll-ease-out);
-}
-.ll-to-top.opacity-100 {
-  pointer-events: auto;
-}
-.ll-to-top a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  font-size: 15px;
-  color: var(--ll-ink-soft);
-  background-color: var(--ll-paper);
-  border: 0.5px solid var(--ll-pencil-mark);
-  border-radius: 2px;
-  box-shadow: var(--ll-shadow-loose);
-  text-decoration: none;
-  transition: color var(--ll-dur-hover) var(--ll-ease-out),
-              background-color var(--ll-dur-hover) var(--ll-ease-out);
-}
-.ll-to-top a:hover {
-  color: var(--ll-ink);
-  background-color: var(--ll-paper-shade);
+.ll-sheet a:not(.ll-btn):not(.ll-btn--xs):hover {
+  text-decoration-color: var(--md-secondary);
 }

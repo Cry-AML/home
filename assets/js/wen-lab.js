@@ -14,12 +14,20 @@
   let isCanvasVisible = true;
   let lastActiveElement = null;
 
+  // The ink wash only ever uses the three MD3 accents, read from the live
+  // custom properties so the palette can never drift from the CSS.
+  function readToken(name, fallback) {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fallback;
+  }
+
   function getThemePaletteColors() {
     const isDark = document.documentElement.classList.contains('dark');
-    if (isDark) {
-      return ['#e8834f', '#8aa9ff', '#f2efe8', '#5cb874', '#f4d84a'];
-    }
-    return ['#2c4f9e', '#df6b3c', '#2a2420', '#3b7a4b', '#f8dc4c'];
+    const accent = readToken('--md-primary', isDark ? '#feb3b3' : '#a93441');
+    const second = readToken('--md-secondary', isDark ? '#6dd7d6' : '#056969');
+    const third = readToken('--md-tertiary', isDark ? '#f0be76' : '#7d5711');
+    const ink = readToken('--md-on-surface', isDark ? '#efdfd8' : '#241914');
+    return [accent, second, third, ink];
   }
 
   function updateCanvasThemeColors() {

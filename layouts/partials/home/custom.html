@@ -1,77 +1,81 @@
 <!-- =========================================================================
-     HOMEPAGE — a sheet on the desk
+     HOMEPAGE — one sheet on the desk, with the PI note in the margin
      ========================================================================= -->
 {{ $isEn := eq .Site.Language.Lang "en" }}
 {{ $lab := hugo.Data.lab }}
 
 <div class="ui-container pt-12 pb-20 sm:pt-16">
-  <div class="ll-sheet" style="--ll-tilt:-0.35deg; --ll-sheet-i:0">
-    <div class="flex flex-wrap items-center gap-2 mb-6">
-      <span class="ll-stamp"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>{{ i18n "hero_badge_scholar" }}</span>
-      <span class="ll-stamp ll-stamp--muted">{{ i18n "hero_badge_pedigree" }}</span>
-    </div>
+  <div class="ll-sheet" style="--ll-tilt:-0.3deg; --ll-sheet-i:0">
 
-    <h1 class="ui-title mb-5 ll-measure-hero">
-      {{ i18n "hero_title_1" }}<br>
-      <span class="ll-hi">{{ i18n "hero_title_2" | safeHTML }}</span>
-    </h1>
+    <div class="ll-hero-grid">
 
-    <p class="ui-body mb-8">
-      {{ i18n "hero_lead" }}
-    </p>
+      <!-- — the statement — -->
+      <div class="ll-hero-lead">
+        <div class="flex flex-wrap items-center gap-2 mb-6">
+          <span class="ll-stamp"><span class="w-1.5 h-1.5 rounded-full ll-dot-scholar"></span>{{ i18n "hero_badge_scholar" }}</span>
+          <span class="ll-stamp ll-stamp--muted">{{ i18n "hero_badge_pedigree" }}</span>
+        </div>
 
-    <div class="flex flex-wrap items-center gap-3">
-      <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ll-btn ll-btn--marker">
-        {{ i18n "btn_explore" }}
-      </a>
-      <a href="{{ if $isEn }}/en/join/{{ else }}/join/{{ end }}" class="ll-btn ll-btn--outline">
-        {{ i18n "btn_join_hero" }}
-      </a>
+        <h1 class="ui-title mb-5">
+          {{ i18n "hero_title_1" }}<br>
+          <span class="ll-hi">{{ i18n "hero_title_2" | safeHTML }}</span>
+        </h1>
+
+        <p class="ui-body mb-8">
+          {{ i18n "hero_lead" }}
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="{{ if $isEn }}/en/research/{{ else }}/research/{{ end }}" class="ll-btn ll-btn--marker">
+            {{ i18n "btn_explore" }}
+          </a>
+          <a href="{{ if $isEn }}/en/join/{{ else }}/join/{{ end }}" class="ll-btn ll-btn--outline">
+            {{ i18n "btn_join_hero" }}
+          </a>
+        </div>
+      </div>
+
+      <!-- — marginal note: who runs the lab — -->
+      <aside class="ll-hero-note">
+        <div class="ll-note-head">
+          <h2 class="ui-heading">{{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}</h2>
+          <p class="ui-caption mt-1">{{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }}</p>
+          <p class="ui-caption mt-0.5">{{ cond $isEn $lab.pi.institutionEn $lab.pi.institutionZh }}</p>
+        </div>
+
+        <p class="ui-body ll-note-body">{{ i18n "about_intro_p1" }}</p>
+
+        <div class="ll-note-links">
+          <a href="{{ if $isEn }}/en/pedigree/{{ else }}/pedigree/{{ end }}" class="ll-btn--ghost ll-btn">
+            {{ if $isEn }}Academic background{{ else }}学术经历与师承{{ end }} →
+          </a>
+          <a href="{{ if $isEn }}/en/publications/{{ else }}/publications/{{ end }}" class="ll-btn--ghost ll-btn">
+            {{ if $isEn }}Publications{{ else }}代表论著{{ end }} →
+          </a>
+        </div>
+      </aside>
     </div>
 
     <hr class="ll-rule my-9">
 
-    <!-- Marginalia stats: ruled columns, no boxes -->
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-y-7 gap-x-6">
-      <div>
+    <!-- — the record, set as a ruled index — -->
+    <div class="ll-stat-row">
+      <div class="ll-stat-cell">
         <div class="font-mono ll-stat ll-text-ink">{{ i18n "stat_blood_count" }}</div>
         <div class="ui-caption mt-2">{{ i18n "stat_blood_label" }}</div>
       </div>
-      <div class="sm:border-l sm:pl-6" style="border-left-width: 0.5px; border-color: var(--ll-pencil-faint)">
+      <div class="ll-stat-cell">
         <div class="font-mono ll-stat ll-text-ink">{{ i18n "stat_impact_count" }}</div>
         <div class="ui-caption mt-2">{{ i18n "stat_impact_label" }}</div>
       </div>
-      <div class="sm:border-l sm:pl-6" style="border-left-width: 0.5px; border-color: var(--ll-pencil-faint)">
+      <div class="ll-stat-cell">
         <div class="font-mono ll-stat ll-text-ink">{{ i18n "stat_lineage_count" }}</div>
         <div class="ui-caption mt-2">{{ i18n "stat_lineage_label" }}</div>
       </div>
-      <div class="sm:border-l sm:pl-6" style="border-left-width: 0.5px; border-color: var(--ll-pencil-faint)">
+      <div class="ll-stat-cell">
         <div class="font-mono ll-stat ll-text-ink">{{ i18n "stat_mentorship_count" }}</div>
         <div class="ui-caption mt-2">{{ i18n "stat_mentorship_label" }}</div>
       </div>
-    </div>
-  </div>
-
-  <!-- PI note, on its own sheet -->
-  <div class="ll-sheet mt-8" style="--ll-tilt:0.28deg; --ll-sheet-i:1">
-    <h2 class="ui-heading mb-1">
-      {{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}
-    </h2>
-    <p class="ui-caption mb-4">
-      {{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }} — {{ cond $isEn $lab.pi.institutionEn $lab.pi.institutionZh }}
-    </p>
-    <div class="space-y-3 ui-body">
-      <p>{{ i18n "about_intro_p1" }}</p>
-      <p>{{ i18n "about_intro_p2" }}</p>
-      <p>{{ i18n "about_intro_p3" }}</p>
-    </div>
-    <div class="mt-6 flex flex-wrap items-center gap-4">
-      <a href="{{ if $isEn }}/en/pedigree/{{ else }}/pedigree/{{ end }}" class="ll-btn--ghost ll-btn" data-ink="underline">
-        {{ if $isEn }}Academic background{{ else }}学术经历与师承{{ end }} 
-      </a>
-      <a href="{{ if $isEn }}/en/publications/{{ else }}/publications/{{ end }}" class="ll-btn--ghost ll-btn" data-ink="underline">
-        {{ if $isEn }}Publications{{ else }}代表论著{{ end }} →
-      </a>
     </div>
   </div>
 </div>

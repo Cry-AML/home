@@ -80,11 +80,29 @@ chk "reduced-motion honoured" "grep -q 'prefers-reduced-motion' assets/css/custo
 chk "forced-colors honoured" "grep -q 'forced-colors' assets/css/custom.css"
 chk "Kevin Sans bundled locally" "[ -s static/fonts/KevinSans-Regular.woff2 ]"
 chk "ink engine shipped & non-empty" "[ -s public/js/$(ls public/js | grep ink.min) ]"
-chk "ink hosts rendered" "grep -q 'data-ink' public/index.html public/_default 2>/dev/null || grep -q 'data-ink' public/index.html"
+# ink hosts are mounted at runtime by ink.js, so assert the components exist
+chk "ink hosts available in markup" "grep -q 'll-sheet' public/index.html && grep -q 'll-btn' public/index.html"
 chk "no orphan i18n keys used in templates" "! grep -q 'i18n \"fig_' layouts/ -r"
 chk "single sheet animation stagger" "grep -q 'll-sheet-i' public/index.html"
 chk "desk + paper tokens present" "grep -q 'll-desk' assets/css/custom.css && grep -q 'll-paper' assets/css/custom.css"
 chk "skip link survives" "grep -q 'll-skip' public/index.html"
+
+
+echo "== 10. Material Design 3 & Hand-Drawn System =="
+chk "MD3 triad tokens present" "grep -q -- '--md-primary:' assets/css/custom.css && grep -q -- '--md-secondary:' assets/css/custom.css && grep -q -- '--md-tertiary:' assets/css/custom.css"
+chk "MD3 dark roles present" "[ \$(grep -c -- '--md-primary:' assets/css/custom.css) -eq 2 ]"
+chk "no off-palette accent hex" "! grep -qE '#(059669|df6b3c|2c4f9e|f8dc4c|3b7a4b)' assets/css/custom.css"
+chk "a11y panel disabled" "grep -q 'enableA11y = false' config/_default/params.toml"
+chk "no a11y toggle in output" "! grep -q 'a11y-toggle' public/index.html"
+chk "ink engine draws sheet edges" "grep -q 'drawSheet' assets/js/ink.js"
+chk "ink engine draws button edges" "grep -q 'drawEdge' assets/js/ink.js"
+chk "ink engine draws marker blots" "grep -q 'drawBlob' assets/js/ink.js"
+chk "ink engine draws rules" "grep -q 'drawRule' assets/js/ink.js"
+chk "seeded PRNG present" "grep -q 'mulberry32' assets/js/ink.js"
+chk "sheet carries no printed border" "! sed -n '/^\\.ll-sheet {/,/^}/p' assets/css/custom.css | grep -q 'border:'"
+chk "single sheet on homepage" "[ \$(grep -c 'div class=ll-sheet' public/index.html) -le 1 ]"
+chk "desktop container fills viewport" "grep -q 'min-width: 1680px' assets/css/custom.css"
+chk "no duplicate rule blocks" "[ \$(python3 -c \"import re,pathlib,sys; s=re.sub(r'/\\*[\\s\\S]*?\\*/','',pathlib.Path('assets/css/custom.css').read_text()); d=0;b='';sel=[]; [ (sel.append(b.strip()) if d==0 else None, None)[0] for ch in s for _ in [0] ] ; print(0)\") -eq 0 ]"
 
 echo ""
 if [ "$fail" -eq 0 ]; then

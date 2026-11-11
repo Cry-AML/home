@@ -6,7 +6,7 @@ colorScheme = "slate" # base scaffolding only; assets/css/custom.css owns the pa
 defaultAppearance = "light" # valid options: light or dark
 autoSwitchAppearance = true
 
-enableA11y = true
+enableA11y = false
 enableSearch = false
 enableCodeCopy = true
 enableStructuredBreadcrumbs = false

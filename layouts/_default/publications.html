@@ -3,12 +3,12 @@
 {{ $lab := hugo.Data.lab }}
 
 <div class="ui-container pt-12 pb-20 sm:pt-16">
-  <div class="mb-7 flex flex-col sm:flex-row sm:items-end justify-between gap-5">
-    <div class="ll-measure">
+  <div class="ll-page-head">
+    <div>
       <h1 class="ui-title">{{ i18n "pub_title" }}</h1>
       <p class="ui-body mt-3">{{ i18n "pub_lead" }}</p>
     </div>
-    <div class="w-full sm:w-60">
+    <div class="ll-page-search">
       <input type="text"
              id="pub-search-input"
              placeholder="{{ i18n "pub_search_placeholder" }}"
@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <div class="mb-6 flex flex-wrap items-center gap-2">
+  <div class="ll-chip-row">
     <button class="pub-filter-btn active" data-filter="all" onclick="filterPublications('all', this)">{{ i18n "pub_filter_all" }}</button>
     <button class="pub-filter-btn" data-filter="landmark" onclick="filterPublications('landmark', this)">{{ i18n "pub_filter_landmark" }}</button>
     <button class="pub-filter-btn" data-filter="epigenetics" onclick="filterPublications('epigenetics', this)">{{ i18n "pub_filter_epigenetics" }}</button>
@@ -25,28 +25,25 @@
     <button class="pub-filter-btn" data-filter="resistance" onclick="filterPublications('resistance', this)">{{ i18n "pub_filter_resistance" }}</button>
   </div>
 
-  <div class="ll-sheet" style="--ll-tilt:0.16deg; --ll-sheet-i:0">
+  <div class="ll-sheet" style="--ll-tilt:0.14deg; --ll-sheet-i:0">
     {{ range $item := $lab.publications }}
       <div class="publication-card ll-entry"
            data-category="{{ $item.category }}"
            data-landmark="{{ $item.landmark }}">
-        <div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
-          <div class="flex flex-wrap items-center gap-2">
-            <span class="ll-stamp">{{ $item.journal }}</span>
-            <span class="ui-caption">{{ $item.year }}</span>
-            {{ if $item.landmark }}
-              <span class="ll-stamp ll-stamp--landmark">Landmark</span>
-            {{ end }}
-          </div>
-          <span class="ui-caption">{{ $item.impact }}</span>
+
+        <div class="ll-pub-meta">
+          <span class="ll-stamp">{{ $item.journal }}</span>
+          <span class="ui-caption">{{ $item.year }}</span>
+          {{ if $item.landmark }}<span class="ll-stamp ll-stamp--landmark">Landmark</span>{{ end }}
+          <span class="ui-caption ll-pub-impact">{{ $item.impact }}</span>
         </div>
 
-        <h2 class="ui-heading mb-1.5 ll-measure-tight">{{ $item.title }}</h2>
-        <p class="ui-caption mb-3 leading-relaxed">{{ $item.authors }}</p>
+        <h2 class="ui-heading ll-pub-title">{{ $item.title }}</h2>
+        <p class="ui-caption ll-pub-authors">{{ $item.authors }}</p>
 
-        <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="ll-pub-actions">
           <span class="ui-caption ll-text-accent">{{ cond $isEn $item.roleNote $item.roleNoteZh }}</span>
-          <div class="flex flex-wrap items-center gap-1.5">
+          <div class="ll-pub-btns">
             {{ if $item.doiUrl }}
               <a href="{{ $item.doiUrl }}" target="_blank" rel="noopener noreferrer" class="ll-btn ll-btn--xs">DOI ↗</a>
             {{ end }}
