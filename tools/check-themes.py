@@ -235,6 +235,23 @@ def main():
     dark_roles_has_stat = '--ac-stat' in dark_block
     need(dark_roles_has_stat, 'academy.css: --ac-stat is not redefined for dark mode')
 
+    # --- the Team page stack must share one left edge ---------------------
+    # Sheets rotate about their centre by default, so a tall group sheet and a
+    # short PI sheet put their left edges at different x. The corner pivot is
+    # what holds the baseline, and it must stay scoped to Team (applied
+    # globally it pulled standalone sheets outside the container inset).
+    # the rule is shared by three selectors, so match any block that names the
+    # people-sheet selector and check its body
+    pivot = re.search(r'\.ll-sheet:has\(\.ll-people\)[^{]*\{([^}]*)\}', custom)
+    need(pivot is not None and 'transform-origin: 0 0' in pivot.group(1),
+         'custom.css: the people sheets lost their corner pivot; the PI and the '
+         'group rows will drift apart')
+    # and it must not be set on the shared .ll-sheet rule
+    base_sheet = re.search(r'\n\.ll-sheet \{([^}]*)\}', custom)
+    need(base_sheet is not None and 'transform-origin' not in base_sheet.group(1),
+         'custom.css: transform-origin is applied to every sheet, which pulls '
+         'standalone pages outside the gutter')
+
     # the fluorescent cyan must not survive into the journal skin
     for bad in ('8bf4f2', '7CE7DF', '7ce7df'):
         need(bad.lower() not in css.lower(),

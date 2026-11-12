@@ -121,7 +121,14 @@
       {{ if eq $g.id "interns" }}{{ $label = i18n "team_intern_label" }}{{ end }}
 
       {{ $n = add $n 1 }}
-      <div class="ll-sheet" style="--ll-tilt:{{ if eq $n 2 }}-0.1{{ else }}0.1{{ end }}deg; --ll-sheet-i:{{ $n }}">
+      {{/* Every people sheet uses the PI's tilt, not alternating ones.
+           A sheet is rotated about its own centre, so a different angle moves
+           its top-left corner horizontally: at 1440, +0.12deg put the PI's first
+           portrait at x=129.2 while -0.1deg put the doctoral row at 128.4 and
+           +0.1deg the master's at 129.8. Up to 1.8px of drift between rows that
+           are meant to share one left edge — visible as a slight stagger on a
+           page whose whole structure is that edge. */}}
+      <div class="ll-sheet" style="--ll-tilt:0.12deg; --ll-sheet-i:{{ $n }}">
         <div class="ll-sheet-head">
           <span class="ll-sheet-ord">{{ printf "%02d" $n }}</span>
           <span class="ll-sheet-label">{{ $label }}</span>

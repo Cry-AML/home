@@ -2321,6 +2321,23 @@ html.dark .ll-footer-mark {
   .ll-bio-id { align-self: stretch; margin-top: 4px; }
 }
 
+/* Rotate about the top-left corner on the Team page only.
+   --------------------------------------------------------------------------
+   A sheet rotates about its centre by default, so its top-left corner swings
+   sideways by an amount proportional to the sheet's own size. On Team the PI
+   sheet and the group sheets are stacked and must share one left edge, and they
+   are very different heights: at 1440 a 486px PI sheet landed at 129.2 while a
+   1559px doctoral sheet landed at 130.3. Anchoring the rotation at the corner
+   pins the left edge regardless of height.
+   Scoped to Team because elsewhere a sheet stands alone, and the corner anchor
+   there would pull it outside the container's own inset (publications to 67.2
+   against a 72px gutter). */
+.ll-pi-row ~ .ll-sheet,
+.ll-sheet:has(.ll-people),
+.ll-sheet:has(.ll-pi-row) {
+  transform-origin: 0 0;
+}
+
 /* --- people grids -------------------------------------------------------- */
 /* Column count comes from the data, so the classes are numeric. Rows are
    equal height so a group reads as one block of desks rather than a ragged
@@ -2347,7 +2364,12 @@ html.dark .ll-footer-mark {
      justify-content centres the row and keeps every card the reference size
      regardless of how many colleagues share the sheet. */
   grid-template-columns: repeat(auto-fit, var(--ll-portrait-w));
-  justify-content: center;
+  /* Left-aligned, not centred. A centred row shifted the first card of every
+     group 146px right of the PI's portrait, breaking the one left baseline the
+     whole page is built on — the same edge the masthead, the section titles and
+     the biography all share. A short final row also belongs at the left, where
+     reading starts. */
+  justify-content: start;
 }
 
 .ll-person {
@@ -2548,7 +2570,10 @@ html.dark .ll-footer-mark {
      ancestor max-width and fills the sheet anyway. */
   .ll-people {
     grid-template-columns: minmax(0, min(var(--ll-portrait-w) * 1.5, 100%));
-    justify-content: center;
+    /* start, not center: a centred track leaves the first card inset from the
+       sheet edge and breaks the shared left baseline at exactly the width where
+       readers are most likely to be reading one column at a time */
+    justify-content: start;
   }
 }
 
