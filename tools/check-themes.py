@@ -252,6 +252,21 @@ def main():
          'custom.css: transform-origin is applied to every sheet, which pulls '
          'standalone pages outside the gutter')
 
+    # --- switching back must not replay the notebook's entry animation ----
+    # A class toggled on then off restarts a CSS animation on removal, so the
+    # suppression has to be permanent for the document. Without it the sheet
+    # swings from rotate(-1.9x tilt) back to rest after the page has settled.
+    skin_js = (ROOT / 'assets' / 'js' / 'skin.js').read_text()
+    need('ll-skin-switched' in skin_js,
+         'skin.js: no suppression class on skin change; the sheet entry '
+         'animation will replay and the page will visibly twist')
+    need(not re.search(r"classList\.remove\(\s*['\"]ll-skin-switched", skin_js),
+         'skin.js: the suppression class is removed again, which restarts the '
+         'very animation it exists to stop')
+    need('ll-skin-switched .ll-sheet' in custom and
+         'animation: none' in custom.split('ll-skin-switched .ll-sheet')[1][:120],
+         'custom.css: no rule suppressing the sheet animation on a skin change')
+
     # the fluorescent cyan must not survive into the journal skin
     for bad in ('8bf4f2', '7CE7DF', '7ce7df'):
         need(bad.lower() not in css.lower(),

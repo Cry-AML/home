@@ -24,7 +24,21 @@
   }
 
   function apply(skin) {
-    document.documentElement.setAttribute('data-theme', skin);
+    // A skin change is not a page load, but the notebook skin's sheets carry an
+    // entry animation (`ll-sheet-drop`) that replays the moment the attribute
+    // flips back: the sheet starts at rotate(-1.9 * tilt) and swings to its
+    // resting tilt. Under a View Transition the replay is delayed until the
+    // snapshot is released, so the reader sees the page arrive, settle, and then
+    // visibly twist. The class below suppresses that replay for one frame.
+    var root = document.documentElement;
+    // A class toggled on and then off will always restart a CSS animation on
+    // removal — which is the bug, not the fix. The suppression is therefore
+    // permanent for the life of the document: once the reader has changed skins,
+    // the sheets are already on screen and must never drop in again. A real page
+    // load clears it naturally, because nothing is carried across documents.
+    root.classList.add('ll-skin-switched');
+
+    root.setAttribute('data-theme', skin);
     try { localStorage.setItem(KEY, skin); } catch (e) {}
     // Announce the change. With View Transitions the mutation happens inside
     // an async callback, so anything that mirrors the state cannot just read

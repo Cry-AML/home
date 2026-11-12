@@ -457,6 +457,18 @@ body {
   pointer-events: none;
 }
 
+/* A skin change must not replay the sheet's entry animation.
+   The notebook skin drops each sheet in on load; switching back to it re-runs
+   that animation, and under a View Transition the replay is delayed until the
+   snapshot releases — so the page arrives, settles, and then visibly twists as
+   each sheet swings from rotate(-1.9x tilt) to its resting angle.
+   The class is set once and never removed: toggling it off would restart the
+   animation again. A real navigation clears it because nothing survives the
+   document. */
+html.ll-skin-switched .ll-sheet {
+  animation: none !important;
+}
+
 @keyframes ll-sheet-drop {
   0% {
     opacity: 0;
