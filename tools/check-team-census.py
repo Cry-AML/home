@@ -19,8 +19,8 @@ PAGE = ROOT / 'public' / 'team' / 'index.html'
 
 # label -> (expected members, expects an open-desk card at the end)
 EXPECT = {
-    'Ph.D. Candidates': (9, True),
-    'M.Sc. Candidates': (2, True),
+    'Ph.D. Candidates': (8, True),
+    'M.Sc. Candidates': (3, True),
 }
 
 
@@ -73,7 +73,7 @@ def main():
         print(f'\n{len(problems)} team census problem(s)')
         sys.exit(1)
 
-    print('team census correct: 9 + 1 open (doctoral), 2 + 1 open (master); '
+    print('team census correct: 8 + 1 open (doctoral), 3 + 1 open (master); '
           'empty groups hidden; no seat counters')
 
 

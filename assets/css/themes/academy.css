@@ -42,6 +42,7 @@
   /* --ac-bronze is a rule colour (3.96:1 on the card). Body-size bronze text
      needs its own darker tone; 5.07:1 on #e7ddd1. */
   --ac-bronze-text: #7a5238;
+  --ac-stat: #11362d;            /* the trust strip's numerals */
   /* Full-bleed blocks must inset their content by exactly what .ui-container
      insets its own, or the masthead, the banner headline and the body below it
      sit on three different left edges. The page read as a left-right-left
@@ -199,9 +200,14 @@
 }
 /* the mark is a red seal; on the green bar it becomes a white imprint */
 
-[data-theme="academy"] .main-menu nav a,
+/* Navigation links only. The dropdown panels live *inside* the same <nav>, so
+   a bare `nav a` also restyled the menu items — and with !important it beat
+   their own .is-current rule, leaving the selected language as pale text on a
+   pale ground (1.3:1). Excluding the panels keeps the two systems separate. */
+[data-theme="academy"] .main-menu nav > a,
 [data-theme="academy"] .main-menu nav > a > span,
-[data-theme="academy"] .main-menu nav .translation > button > span {
+[data-theme="academy"] .main-menu nav .translation > button > span,
+[data-theme="academy"] .main-menu nav a:not(.ll-langmenu__item):not(.ll-skinmenu__item) {
   font-family: var(--font-ui) !important;
   font-size: 12px !important;
   font-weight: 500 !important;
@@ -748,7 +754,11 @@
 [data-theme="academy"] .ll-stat {
   font-family: var(--font-hand);
   font-weight: 400;
-  color: var(--ac-forest);
+  /* A dedicated token, not --ac-forest: forest is the masthead's deep green and
+     in dark mode it is #0e2a23, which on the strip's dark card measures 1.01:1
+     — the four numerals disappeared entirely. --ac-stat is defined per mode and
+     calibrated against the strip's own ground (9.85:1 light, 12.05:1 dark). */
+  color: var(--ac-stat);
 }
 [data-theme="academy"] .ll-stat + .ui-caption {
   /* --ac-ink-muted measured 4.25:1 on the deeper sand card, below the 4.5:1
@@ -1341,7 +1351,9 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
   color: var(--ac-caption);
 }
 [data-theme="academy"] .ll-stat-row .ll-stat {
-  color: var(--ac-forest);
+  /* inherits the mode-aware token set on .ll-stat; forest would vanish in
+     dark mode against the strip's own dark card */
+  color: var(--ac-stat);
 }
 
 /* --------------------------------------------------------------------------
@@ -1801,6 +1813,7 @@ html.dark[data-theme="academy"] {
   --ac-bronze-deep: #cfa685;
   --ac-bronze-soft: #9c7a5f;
   --ac-bronze-text: #cfa685;     /* bronze reads light on the green-black */
+  --ac-stat: #e8e3da;            /* numerals on the dark strip */
   --ac-caption: #a9a29a;
   /* the filled button's label: white on #b78d6c is only 2.98:1, so dark ink */
   --ac-on-bronze: #1a1207;

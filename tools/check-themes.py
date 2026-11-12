@@ -219,6 +219,22 @@ def main():
          'academy.css: the selected filter chip is back on the deep masthead '
          'green instead of a soft container')
 
+    # --- dropdown menu items must not inherit the nav-link rule -----------
+    # `nav a` with !important beat the item's own .is-current rule and left the
+    # selected language as pale-on-pale (1.3:1).
+    nav_rule = re.search(r'\[data-theme="academy"\] \.main-menu nav > a,([^{]*)\{', css)
+    need(nav_rule is not None and 'll-langmenu__item' in nav_rule.group(1),
+         'academy.css: the nav-link rule is not scoped away from dropdown items')
+    need('.ll-langmenu__item.is-current' in css,
+         'academy.css: the selected dropdown item has no journal styling')
+
+    # --- the trust strip numerals need a mode-aware colour ----------------
+    need('--ac-stat' in css,
+         'academy.css: no --ac-stat token; the strip numerals would use forest '
+         'in dark mode and disappear')
+    dark_roles_has_stat = '--ac-stat' in dark_block
+    need(dark_roles_has_stat, 'academy.css: --ac-stat is not redefined for dark mode')
+
     # the fluorescent cyan must not survive into the journal skin
     for bad in ('8bf4f2', '7CE7DF', '7ce7df'):
         need(bad.lower() not in css.lower(),

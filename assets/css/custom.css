@@ -2326,14 +2326,29 @@ html.dark .ll-footer-mark {
    equal height so a group reads as one block of desks rather than a ragged
    stack — a vacant cell is shorter than a filled one, and without this the
    rows would step down the page. */
+/* Columns are sized from the portrait, not the other way round.
+   --------------------------------------------------------------------------
+   The grid used to be `repeat(N, 1fr)`, so a card's width was whatever the
+   sheet happened to leave over: in a three-column group that was 378px, in a
+   four-column group 281px — and the PI, on his own row, 281px. The same
+   photograph of the same kind of person therefore came in two sizes 1.35x
+   apart, purely because of how many colleagues happened to share the sheet.
+   That reads as a hierarchy that does not exist.
+   The columns are now explicit: as many as fit, each between the portrait's
+   own size and 1.5x it, all equal. A group of eight and a group of three get
+   the same card size; the row simply wraps when it runs out of width. */
 .ll-people {
   display: grid;
   gap: 24px;
   grid-auto-rows: 1fr;
+  /* Cards are a fixed size, centred, and wrap. `auto-fit` with a 1fr track
+     stretches a three-column group to 378px while a four-column group stays at
+     281px — the same problem in a different place. A fixed track plus
+     justify-content centres the row and keeps every card the reference size
+     regardless of how many colleagues share the sheet. */
+  grid-template-columns: repeat(auto-fit, var(--ll-portrait-w));
+  justify-content: center;
 }
-.ll-people--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-.ll-people--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.ll-people--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
 
 .ll-person {
   min-width: 0;
@@ -2506,29 +2521,35 @@ html.dark .ll-footer-mark {
 .ll-seat:hover .ll-seat__frame { border-color: var(--md-primary); }
 
 /* --- responsive ---------------------------------------------------------- */
-@media (max-width: 1100px) {
-  .ll-people--4 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
 @media (max-width: 900px) {
-  .ll-people--3,
-  .ll-people--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ll-pi-row { grid-template-columns: 220px minmax(0, 1fr); }
 }
 @media (max-width: 720px) {
   .ll-mode { width: 100%; }
   .ll-mode__opt { flex: 1; justify-content: center; }
-  .ll-people--2,
-  .ll-people--3,
-  .ll-people--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  /* the grid wraps on its own; only the gap tightens */
+  .ll-people { gap: 16px; }
   .ll-pi-row { grid-template-columns: minmax(0, 1fr); }
   .ll-person--pi { max-width: 220px; }
   .ll-person__name { font-size: 15px; }
   .ll-seat__title { font-size: 15px; }
+  /* The reference size drops with the PI at this breakpoint, so the 1.5x
+     ceiling the member grid uses must drop with it — otherwise "1.5x the
+     portrait" is measured against a number the PI no longer uses. */
+  :root { --ll-portrait-w: 220px; }
 }
 @media (max-width: 420px) {
-  .ll-people--2,
-  .ll-people--3,
-  .ll-people--4 { grid-template-columns: minmax(0, 1fr); }
+  /* On the narrowest phones a 280px card plus gutters no longer fits, so the
+     track yields. It is capped at 1.5x the portrait token: without the cap a
+     single-column track takes the full sheet width and a phone portrait ends up
+     larger than the PI's, which is the one relationship this layout exists to
+     hold. */
+  /* The track must carry the cap, not the container: a `1fr` track ignores an
+     ancestor max-width and fills the sheet anyway. */
+  .ll-people {
+    grid-template-columns: minmax(0, min(var(--ll-portrait-w) * 1.5, 100%));
+    justify-content: center;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

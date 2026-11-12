@@ -551,9 +551,9 @@
         "id": "yangjianxiang",
         "nameZh": "楊建香",
         "nameEn": "Jianxiang Yang",
-        "roleZh": "博士研究生",
-        "roleEn": "Ph.D. Candidate",
-        "group": "phd",
+        "roleZh": "碩士研究生",
+        "roleEn": "M.Sc. Candidate",
+        "group": "msc",
         "since": "2026",
         "photoReal": "images/team/yangjianxiang-real.jpg",
         "photoIllustrated": "images/team/yangjianxiang-illustrated.jpg",
@@ -668,13 +668,13 @@
       },
       {
         "id": "phd",
-        "seats": 10,
+        "seats": 9,
         "openSeat": true,
         "columns": 3
       },
       {
         "id": "msc",
-        "seats": 3,
+        "seats": 4,
         "openSeat": true,
         "columns": 4
       },
