@@ -1,0 +1,33 @@
+{{/*
+  The skin switcher.
+
+  Two skins, one document. The control names them by what they are — a lab
+  notebook and an institutional journal — rather than by colour, so the choice
+  reads as a point of view rather than a palette.
+
+  It is a real toggle button, not two links: the choice is a display
+  preference stored locally, and there is only ever one active state. The
+  pressed state is exposed for assistive tech, and the visible label changes
+  with it so the button never lies about what pressing it does.
+
+  At narrow widths the two names collapse to a single glyph pair, which on its
+  own reads as decoration rather than a control. The button therefore keeps a
+  compact current-skin label beside the glyphs, so a phone reader can still
+  tell what it does and what state it is in.
+*/}}
+<button
+  type="button"
+  id="skin-switcher"
+  class="ll-skin"
+  aria-label="{{ i18n "skin_switch_label" }}"
+  title="{{ i18n "skin_switch_label" }}"
+  aria-pressed="false">
+  <span class="ll-skin__opt is-current" data-skin-opt="manuscript">
+    <span class="ll-skin__glyph" aria-hidden="true">✒</span>
+    <span class="ll-skin__name">{{ i18n "skin_notebook" }}</span>
+  </span>
+  <span class="ll-skin__opt" data-skin-opt="academy">
+    <span class="ll-skin__glyph" aria-hidden="true">▤</span>
+    <span class="ll-skin__name">{{ i18n "skin_journal" }}</span>
+  </span>
+</button>

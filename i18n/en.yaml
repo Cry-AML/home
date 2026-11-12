@@ -194,3 +194,7 @@ apply_body_inquiry: |
     [Phone / WeChat]
     [Personal Webpage or Profile, if any]
 
+# Skin switcher (the two visual identities)
+skin_switch_label: "Switch between the lab notebook and the institutional journal"
+skin_notebook: "Notebook"
+skin_journal: "Journal"

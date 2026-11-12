@@ -23,12 +23,17 @@
     </a>
   </div>
 
-  <div class="flex items-center ms-auto">
-    <div class="hidden md:flex">
+  <div class="flex items-center ms-auto gap-2">
+    <div class="hidden md:flex items-center">
       {{ partial "header/components/desktop-menu.html" . }}
     </div>
     <div class="flex md:hidden">
       {{ partial "header/components/mobile-menu.html" . }}
     </div>
+    {{/* The skin switcher is the last control on the right, so it reads as a
+         display preference rather than another way to navigate. On the phone
+         it stays in the bar next to the drawer button, because the drawer is
+         for pages, not for how the site looks. */}}
+    {{ partial "header/components/skin-switcher.html" . }}
   </div>
 </div>
