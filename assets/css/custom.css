@@ -693,9 +693,20 @@ html.ll-skin-switched .ll-sheet {
   gap: 9px;
   min-width: 0;
 }
+/* The mark is a seal beside the wordmark, not an icon in a toolbar.
+   At 26px against a 20px title it was already 1.3x the type, but the bar is
+   57px tall so the seal had room the type did not use: at 30px it reads as the
+   imprint of the lab rather than a favicon that drifted into the masthead.
+   The size tracks the title rather than being fixed: the title is fluid
+   (clamp(15px, 1.4vw, 20px)), and a fixed 30px seal would be 1.5x the type at
+   1440 but 2x it at 1024, where the title has already stepped down. 1.5em of
+   the title keeps the lockup constant at every width. */
 .ll-brand__mark {
-  width: 26px;
-  height: 26px;
+  /* Tracks the title's own fluid size, which is clamp(15px, 1.4vw, 20px):
+     1.5x of that keeps the lockup constant instead of letting a fixed 30px
+     seal become 2x the type once the title steps down at 1024px. */
+  width: clamp(22.5px, 2.1vw, 30px);
+  height: clamp(22.5px, 2.1vw, 30px);
   flex: none;
   object-fit: contain;
   opacity: 0.92;
@@ -1281,7 +1292,7 @@ img, svg, video, canvas { max-width: 100%; }
 
   .ui-container { padding-inline: 16px; }
   .ll-brand__name { font-size: 15px; }
-  .ll-brand__mark { width: 22px; height: 22px; }
+  .ll-brand__mark { width: 24px; height: 24px; }
   /* On mobile small screens, display the concise brand name ("xxx实验室") */
   .ll-brand__short { display: inline; }
   .ll-brand__full  { display: none; }
@@ -2057,9 +2068,13 @@ h1, h2, h3 {
    the two the reader has not chosen yet.
    -------------------------------------------------------------------------- */
 /* Footer signature: the mark at 22px, aligned with the copyright baseline */
+/* The footer mark was 22px against 12px type — a large ratio but a small
+   object, and it looked like a stray bullet before the copyright line. At 28px
+   it balances the line it leads, and at 0.55 opacity it stays a quiet sign-off
+   rather than competing with the text. */
 .ll-footer-mark {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
   opacity: 0.55;
   flex: none;

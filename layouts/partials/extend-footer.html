@@ -35,6 +35,13 @@
   </div>
 </div>
 
+<!-- Language switch: keep the reader's place across the navigation -->
+{{ $langScroll := resources.Get "js/lang-scroll.js" }}
+{{ if $langScroll }}
+  {{ $ls := $langScroll | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $ls.RelPermalink }}" integrity="{{ $ls.Data.Integrity }}" defer></script>
+{{ end }}
+
 <!-- Publications: travelling filter marker (loaded everywhere; it only styles
      itself in the journal skin) -->
 {{ $filterMarker := resources.Get "js/filter-marker.js" }}

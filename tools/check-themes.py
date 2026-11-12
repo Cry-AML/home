@@ -267,6 +267,29 @@ def main():
          'animation: none' in custom.split('ll-skin-switched .ll-sheet')[1][:120],
          'custom.css: no rule suppressing the sheet animation on a skin change')
 
+    # --- language switch keeps the reader's place ------------------------
+    lang_js_path = ROOT / 'assets' / 'js' / 'lang-scroll.js'
+    need(lang_js_path.exists(),
+         'assets/js/lang-scroll.js is missing; switching language returns the '
+         'reader to the top of the page')
+    need('lang-scroll.js' in (ROOT / 'layouts/partials/extend-footer.html').read_text(),
+         'extend-footer.html: lang-scroll.js is not loaded')
+    lang_js = lang_js_path.read_text()
+    need('ll-langmenu__item' in lang_js,
+         'lang-scroll.js: does not arm itself from the language menu, so the '
+         'position is never stored')
+
+    # --- logo proportions -------------------------------------------------
+    # The mark must track the fluid title; a fixed size becomes 2x the type as
+    # soon as the title steps down at 1024px.
+    mark = re.search(r'\n\.ll-brand__mark \{([^}]*)\}', custom)
+    need(mark is not None, 'custom.css: .ll-brand__mark is gone')
+    if mark:
+        need('clamp(' in mark.group(1),
+             'custom.css: the header mark uses a fixed size and will drift out '
+             'of proportion with the fluid wordmark')
+    need('ll-footer-mark' in custom, 'custom.css: .ll-footer-mark is gone')
+
     # the fluorescent cyan must not survive into the journal skin
     for bad in ('8bf4f2', '7CE7DF', '7ce7df'):
         need(bad.lower() not in css.lower(),
