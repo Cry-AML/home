@@ -65,7 +65,6 @@
     <div class="ll-sheet-head">
       <span class="ll-sheet-ord">01</span>
       <span class="ll-sheet-label">{{ i18n "team_pi_label" }}</span>
-      <span class="ll-sheet-count">1 {{ i18n "team_count_one" }}</span>
     </div>
 
     {{ with $lab.pi }}
@@ -126,7 +125,6 @@
         <div class="ll-sheet-head">
           <span class="ll-sheet-ord">{{ printf "%02d" $n }}</span>
           <span class="ll-sheet-label">{{ $label }}</span>
-          <span class="ll-sheet-count">{{ $g.seats }} {{ if eq $g.seats 1 }}{{ i18n "team_count_one" }}{{ else }}{{ i18n "team_count_label" }}{{ end }}</span>
         </div>
 
         <div class="ll-people ll-people--{{ $g.columns }}">

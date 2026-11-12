@@ -2129,13 +2129,6 @@ html.dark .ll-footer-mark {
   color: var(--md-on-surface-variant);
 }
 /* the seat count is a quiet right-aligned numeral, not a badge */
-.ll-sheet-count {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--md-outline);
-  font-variant-numeric: tabular-nums;
-}
 
 /* the sheets below the group portrait sit on the desk with a gap */
 .ll-sheet--group + .ll-sheet,

@@ -668,7 +668,7 @@
       },
       {
         "id": "phd",
-        "seats": 9,
+        "seats": 10,
         "openSeat": true,
         "columns": 3
       },

@@ -289,13 +289,6 @@
   text-transform: uppercase;
   color: var(--ac-ink-muted);
 }
-[data-theme="academy"] .ll-sheet-count {
-  font-family: var(--font-ui);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  color: var(--ac-ink-muted);
-}
-
 /* --------------------------------------------------------------------------
    Page banner — the green gradient masthead under the bar
    --------------------------------------------------------------------------
