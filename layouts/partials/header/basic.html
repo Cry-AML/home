@@ -23,8 +23,13 @@
     </a>
   </div>
 
-  <div class="flex items-center ms-auto">
-    <div class="hidden md:flex">
+  <div class="flex items-center ms-auto gap-2">
+    {{/* One switcher for every width. The desktop menu already owns the
+         language control and the appearance toggle; adding a third control
+         inside it would nest it in the drawer on mobile, where it belongs in
+         the bar. */}}
+    {{ partial "header/components/skin-switcher.html" . }}
+    <div class="hidden md:flex items-center">
       {{ partial "header/components/desktop-menu.html" . }}
     </div>
     <div class="flex md:hidden">

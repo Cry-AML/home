@@ -1,0 +1,1075 @@
+/* ==========================================================================
+   The two skins
+   --------------------------------------------------------------------------
+   One document, one stylesheet, two visual identities. Everything below is
+   scoped to [data-theme="academy"]; the manuscript skin is simply the absence
+   of these overrides, which keeps the existing design untouched by default
+   and means a reader who never touches the switch gets the site that already
+   shipped.
+
+   The academy skin is an institutional journal: a deep green masthead, an
+   open sand canvas with no enclosing card, serif display type, and cards that
+   are defined by a single bronze rule down the left edge rather than by a
+   closed border. The palette is Zhongshan's own — deep green, warm sand,
+   bronze-red — so the change reads as the university, not as a borrowed trend.
+
+   The ink engine (assets/js/ink.js) draws hand-wobbled SVG outlines for
+   .ll-sheet, .ll-btn--outline and .ll-rule. In the journal skin those
+   outlines are suppressed rather than redrawn: a journal is set, not sketched.
+   ========================================================================== */
+
+[data-theme="academy"] {
+  color-scheme: light;
+
+  /* — The journal palette — */
+  --ac-canvas: #f3ece3;          /* open sand canvas */
+  --ac-card: #e7ddd1;            /* deeper sand, the card fill */
+  --ac-card-quiet: #ece3d8;      /* a card that should not shout */
+  --ac-forest: #11362d;          /* masthead, footer, primary button */
+  --ac-forest-deep: #0d2e26;
+  --ac-forest-soft: #1f493e;
+  --ac-bronze: #8c6246;          /* the rule, the links, the accent */
+  --ac-bronze-deep: #6f4c35;
+  --ac-bronze-soft: #a98266;
+  --ac-hairline: #d6c9b9;        /* list rules, table dividers */
+  --ac-ink: #182420;
+  --ac-ink-soft: #44423e;
+  --ac-ink-muted: #6a6660;
+  --ac-on-forest: #f3ece3;
+  --ac-on-forest-soft: #c9d4ce;
+  --ac-on-bronze: #ffffff;
+  --ac-caption: #57534d;         /* captions over the deeper sand card */
+  /* --ac-bronze is a rule colour (3.96:1 on the card). Body-size bronze text
+     needs its own darker tone; 5.07:1 on #e7ddd1. */
+  --ac-bronze-text: #7a5238;
+
+  /* — Rebind every MD3 role the components read, so nothing is left
+       pointing at the manuscript palette. — */
+  --md-primary: var(--ac-bronze);
+  --md-on-primary: #ffffff;
+  --md-primary-container: #e0cfc0;
+  --md-on-primary-container: #3b2818;
+
+  --md-secondary: var(--ac-forest);
+  --md-on-secondary: #ffffff;
+  --md-secondary-container: #d8e2dd;
+  --md-on-secondary-container: #16302a;
+
+  --md-tertiary: var(--ac-bronze-deep);
+  --md-on-tertiary: #ffffff;
+  --md-tertiary-container: #eee2d4;
+  --md-on-tertiary-container: #33220f;
+
+  --md-background: var(--ac-canvas);
+  --md-on-background: var(--ac-ink);
+  --md-surface: var(--ac-canvas);
+  --md-on-surface: var(--ac-ink);
+  --md-surface-variant: #e3d8cb;
+  --md-on-surface-variant: var(--ac-ink-muted);
+  --md-surface-lowest: #faf6f0;
+  --md-surface-low: var(--ac-card-quiet);
+  --md-surface-container: var(--ac-card);
+  --md-surface-high: #e1d6c9;
+  --md-surface-highest: #dbcfc1;
+  --md-outline: #8a7c6d;
+  --md-outline-variant: var(--ac-hairline);
+  --md-inverse-surface: var(--ac-forest);
+  --md-inverse-on-surface: var(--ac-on-forest);
+  --md-inverse-primary: var(--ac-bronze-soft);
+  --md-scrim: #0b1a15;
+
+  /* — Alias layer — */
+  --ll-desk: var(--ac-canvas);
+  --ll-desk-deep: #e9e0d5;
+  --ll-paper: var(--ac-canvas);
+  --ll-paper-shade: var(--ac-card);
+  --ll-slip: var(--ac-card-quiet);
+  --ll-card: var(--ac-card);
+  --ll-graph: #eae1d6;
+
+  --ll-ink: var(--ac-ink);
+  --ll-ink-soft: var(--ac-ink-soft);
+  --ll-ink-muted: var(--ac-ink-muted);
+  --ll-pencil: var(--ac-bronze);
+  --ll-pencil-mark: var(--ac-hairline);
+  --ll-pencil-faint: #e4d9cc;
+
+  --ll-marker: var(--ac-bronze);
+  --ll-marker-deep: var(--ac-bronze-deep);
+  --ll-marker-tint: #e6d7c8;
+  --ll-ink-you: var(--ac-bronze-deep);
+  --ll-ink-you-hover: #573a27;
+  --ll-hi: transparent;
+  --ll-hi-select: transparent;
+  --ll-green: var(--ac-forest);
+  --ll-red: var(--ac-bronze-deep);
+  --ll-tomato: var(--ac-bronze-deep);
+  --ll-teal: var(--ac-forest);
+
+  /* — No paper physics: a journal is flat stock — */
+  --ll-shade: 60 45 32;
+  --ll-tilt-max: 0deg;
+  --ll-shadow-paper: none;
+  --ll-shadow-loose: 0 1px 2px rgb(60 45 32 / 0.06),
+                     0 10px 30px -12px rgb(60 45 32 / 0.10);
+  --ll-paper-light: none;
+  --ll-desk-vignette: none;
+  --ll-tex-fibre: none;
+
+  /* — Type: serif display, humanist sans body, no monospace — */
+  --font-hand: 'Newsreader', 'Playfair Display', Georgia, 'Songti SC', 'STSong',
+    serif;
+  --font-hand-plain: 'Newsreader', 'Playfair Display', Georgia, 'Songti SC',
+    serif;
+  --font-mono: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* — Semantic aliases the components already use — */
+  --bg-page: var(--ac-canvas);
+  --bg-paper: var(--ac-canvas);
+  --border-subtle: var(--ac-hairline);
+  --border-component: var(--ac-bronze);
+  --text-primary: var(--ac-ink);
+  --text-secondary: var(--ac-ink-soft);
+  --text-muted: var(--ac-ink-muted);
+  --text-accent: var(--ac-bronze-deep);
+  --brand-primary: var(--ac-forest);
+  --brand-primary-hover: var(--ac-forest-soft);
+  --brand-text-on-primary: var(--ac-on-forest);
+}
+
+/* The body ground */
+[data-theme="academy"] body {
+  background-color: var(--ac-canvas) !important;
+  background-image: none !important;
+  color: var(--ac-ink) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Masthead — a full-bleed deep green bar
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-header {
+  background-color: var(--ac-forest) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 0 !important;
+  box-shadow: none;
+}
+[data-theme="academy"] .ll-brand__name {
+  font-family: var(--font-hand);
+  font-weight: 400;
+  font-size: clamp(15px, 1.5vw, 20px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ac-on-forest);
+}
+[data-theme="academy"] .ll-brand__name:hover { color: #ffffff; }
+[data-theme="academy"] .ll-brand__mark {
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+}
+/* the mark is a red seal; on the green bar it becomes a white imprint */
+
+[data-theme="academy"] .main-menu nav a,
+[data-theme="academy"] .main-menu nav > a > span,
+[data-theme="academy"] .main-menu nav .translation > button > span {
+  font-family: var(--font-ui) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
+  color: var(--ac-on-forest-soft) !important;
+}
+[data-theme="academy"] .main-menu nav a:hover,
+[data-theme="academy"] .main-menu nav > a:hover > span {
+  color: #ffffff !important;
+}
+/* the active item is marked by a bronze rule under the word, not a block */
+[data-theme="academy"] .main-menu nav a::after {
+  height: 2px;
+  border-radius: 0;
+  background-color: var(--ac-bronze-soft);
+}
+[data-theme="academy"] .main-menu nav a:hover::after,
+[data-theme="academy"] .main-menu nav a[aria-current]::after {
+  transform: scaleX(1);
+}
+
+/* the appearance and search buttons sit on green now */
+[data-theme="academy"] #appearance-switcher,
+[data-theme="academy"] #search-button,
+[data-theme="academy"] button.bf-icon-color-hover {
+  color: var(--ac-on-forest-soft) !important;
+}
+[data-theme="academy"] #appearance-switcher:hover,
+[data-theme="academy"] #search-button:hover,
+[data-theme="academy"] button.bf-icon-color-hover:hover {
+  color: #ffffff !important;
+  background-color: rgb(255 255 255 / 0.08) !important;
+}
+
+/* the language control on green */
+[data-theme="academy"] .ll-langswitch {
+  background-color: rgb(255 255 255 / 0.08);
+  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.22);
+}
+[data-theme="academy"] .ll-langswitch__opt {
+  color: var(--ac-on-forest-soft);
+  border-radius: 2px;
+}
+[data-theme="academy"] .ll-langswitch__opt:hover {
+  color: #ffffff;
+  background-color: rgb(255 255 255 / 0.10);
+}
+[data-theme="academy"] .ll-langswitch__opt.is-current {
+  color: var(--ac-forest-deep);
+  background-color: var(--ac-on-forest);
+}
+[data-theme="academy"] .ll-langmenu__btn {
+  background-color: rgb(255 255 255 / 0.10);
+  color: var(--ac-on-forest);
+  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.22);
+  border-radius: 2px;
+}
+[data-theme="academy"] .ll-langmenu__pop {
+  background-color: var(--ac-forest-soft);
+  border-color: rgb(255 255 255 / 0.16);
+  border-radius: 2px;
+}
+[data-theme="academy"] .ll-langmenu__item {
+  color: var(--ac-on-forest-soft);
+}
+[data-theme="academy"] .ll-langmenu__item:hover,
+[data-theme="academy"] .ll-langmenu__item.is-current {
+  background-color: rgb(255 255 255 / 0.12);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   The sheet disappears: content breathes on the canvas
+   --------------------------------------------------------------------------
+   In the notebook, .ll-sheet is the white card everything sits inside. Here it
+   keeps its role as the page's block container but loses every surface cue, so
+   type sits directly on sand. Suppressing ::before/::after removes the fibre
+   and raking light along with it.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-sheet {
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+  rotate: 0deg;
+  animation: none;
+}
+[data-theme="academy"] .ll-sheet::before,
+[data-theme="academy"] .ll-sheet::after {
+  display: none;
+}
+/* the ink engine's sketched panel edge is a hand-drawn rectangle; a journal
+   has no sketched edges */
+[data-theme="academy"] .ll-sheet > svg[data-ll-ink] {
+  display: none;
+}
+[data-theme="academy"] .ll-sheet + .ll-sheet,
+[data-theme="academy"] .ll-sheet--group + .ll-sheet {
+  margin-top: 56px;
+}
+
+/* Inside the (now invisible) sheet, the page's own title block becomes a
+   full-bleed banner: deep green, serif, generous. It is drawn with a
+   pseudo-element so the DOM keeps its single h1. */
+[data-theme="academy"] .ll-sheet-head {
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: 28px;
+}
+[data-theme="academy"] .ll-sheet-ord {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--ac-bronze-text);
+  text-transform: uppercase;
+}
+[data-theme="academy"] .ll-sheet-label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ac-ink-muted);
+}
+[data-theme="academy"] .ll-sheet-count {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--ac-ink-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Page banner — the green gradient masthead under the bar
+   --------------------------------------------------------------------------
+   Every page opens with a .ui-title and a lead paragraph. In this skin that
+   opening block becomes the institutional banner: a 115° green wash, white
+   serif type, and a bronze hairline underneath. Implemented by painting the
+   container that already wraps the title, so no template changes are needed.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ui-container > .mb-8,
+[data-theme="academy"] .ll-team-head,
+[data-theme="academy"] .ll-page-head {
+  position: relative;
+  isolation: isolate;
+  margin-inline: calc(50% - 50vw) !important;
+  padding: clamp(36px, 5vw, 64px) max(24px, calc(50vw - 36rem)) !important;
+  /* The pale end of the reference gradient (#7e8e85) puts white at only
+     3.45:1 and the lead at 2.26:1. Stop at #3d544c instead: white 8.17:1,
+     lead 5.24:1, and the wash still reads as a green diagonal. */
+  background: linear-gradient(
+    115deg,
+    #0d2e26 0%,
+    #1f493e 62%,
+    #3d544c 100%
+  ) !important;
+  color: var(--ac-on-forest);
+  margin-bottom: 44px !important;
+}
+/* The banner should meet the masthead rather than float below it. The page
+   wrapper carries pt-12/sm:pt-16 to keep content off the fixed bar in the
+   notebook skin; in the journal the banner itself provides that spacing. */
+[data-theme="academy"] .ui-container.pt-12 {
+  padding-top: 0 !important;
+}
+/* the container's own horizontal padding would otherwise inset the banner */
+[data-theme="academy"] .ui-container { overflow: visible; }
+
+[data-theme="academy"] .ui-container > .mb-8 .ui-title,
+[data-theme="academy"] .ll-team-head .ui-title,
+[data-theme="academy"] .ll-page-head .ui-title {
+  color: #ffffff !important;
+  font-family: var(--font-hand);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  max-width: 22em;
+}
+[data-theme="academy"] .ui-container > .mb-8 .ui-body,
+[data-theme="academy"] .ll-team-head .ui-body,
+[data-theme="academy"] .ll-page-head .ui-body {
+  /* the banner lead needs more light than --ac-on-forest-soft on the same
+     gradient: 5.24:1 at the pale end rather than 2.26:1 */
+  color: #dfe7e3 !important;
+  max-width: 46em;
+}
+/* the team page's mode toggle sits inside that head; give it room to read
+   on the dark ground */
+[data-theme="academy"] .ll-team-head .ll-mode {
+  /* A translucent white pill over a gradient leaves the label at 4.28:1.
+     A solid deep-green bed fixes the ground under the text at 8.2:1
+     regardless of where on the gradient the control sits. */
+  background-color: #16332b;
+  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.28);
+}
+[data-theme="academy"] .ll-team-head .ll-mode__opt {
+  color: #e6ece9;
+}
+[data-theme="academy"] .ll-team-head .ll-mode__opt.is-current {
+  color: var(--ac-forest-deep);
+  background-color: var(--ac-on-forest);
+}
+
+/* the search field on publications sits in the banner too */
+[data-theme="academy"] .ll-page-head .ll-input {
+  background-color: rgb(255 255 255 / 0.10);
+  color: #ffffff;
+  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.24);
+  border-radius: 2px;
+}
+[data-theme="academy"] .ll-page-head .ll-input::placeholder {
+  color: rgb(255 255 255 / 0.70);
+}
+
+/* --------------------------------------------------------------------------
+   Display type — the serif turn
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ui-title,
+[data-theme="academy"] .ui-heading {
+  font-family: var(--font-hand);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+[data-theme="academy"] .ui-heading { letter-spacing: 0; }
+[data-theme="academy"] .ui-body { font-family: var(--font-ui); }
+
+/* the hero's marker pass becomes a true italic, as a journal would set it */
+[data-theme="academy"] .ll-hi {
+  background: none !important;
+  animation: none !important;
+  color: inherit;
+  font-style: italic;
+  font-weight: 400;
+  padding-inline: 0;
+  margin-inline: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Chips — the fluorescent capsules bow out
+   --------------------------------------------------------------------------
+   .ll-stamp is the site's badge. In the notebook it is a tinted pill; here it
+   becomes a small uppercase bronze label with no fill, which is how a journal
+   marks a category.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-stamp {
+  background-color: transparent !important;
+  color: var(--ac-bronze) !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-family: var(--font-ui) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+[data-theme="academy"] .ll-stamp--muted {
+  color: var(--ac-ink-muted) !important;
+}
+[data-theme="academy"] .ll-stamp--landmark,
+[data-theme="academy"] .ll-stamp--marker {
+  color: var(--ac-bronze-deep) !important;
+}
+/* the dot inside a stamp is a signal, not decoration; keep it but recolour */
+[data-theme="academy"] .ll-stamp .ll-dot-scholar {
+  background-color: var(--ac-bronze) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons — squared off, bronze or forest
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-btn {
+  border-radius: 2px;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 13px 22px;
+}
+/* the marker button is drawn by the ink engine; a journal button is filled */
+[data-theme="academy"] .ll-btn--marker {
+  color: var(--ac-on-bronze);
+  background-color: var(--ac-bronze);
+}
+[data-theme="academy"] .ll-btn--marker:hover {
+  background-color: var(--ac-bronze-deep);
+}
+[data-theme="academy"] .ll-btn--marker > svg[data-ll-ink] {
+  display: none;
+}
+/* the outline button loses its sketch and becomes a hairline rectangle */
+[data-theme="academy"] .ll-btn--outline {
+  /* bronze text, not forest: forest ink on the green-black canvas is 1.14:1 */
+  color: var(--ac-bronze-text);
+  box-shadow: inset 0 0 0 1px var(--ac-bronze);
+  background-color: transparent;
+}
+[data-theme="academy"] .ll-btn--outline:hover {
+  background-color: var(--ac-bronze);
+  color: var(--ac-on-bronze);
+}
+[data-theme="academy"] .ll-btn--outline > svg[data-ll-ink] {
+  display: none;
+}
+[data-theme="academy"] .ll-btn--ghost {
+  color: var(--ac-bronze-text);
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-size: 15px;
+  padding-inline: 0;
+}
+[data-theme="academy"] .ll-btn--ghost:hover { color: var(--ac-forest); }
+
+/* focus rings stay visible on every ground */
+[data-theme="academy"] .ll-btn:focus-visible,
+[data-theme="academy"] .ll-skin:focus-visible {
+  outline: 2px solid var(--ac-bronze);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   The hero — open canvas, serif statement
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-hero-grid {
+  align-items: start;
+  gap: clamp(32px, 5vw, 88px);
+}
+[data-theme="academy"] .ui-title { text-wrap: balance; }
+[data-theme="academy"] .ll-hero-lead .ui-title {
+  font-size: clamp(28px, 3.8vw, 52px);
+  line-height: 1.06;
+  max-width: 18em;
+}
+/* the marginal divider becomes a bronze hairline */
+[data-theme="academy"] .ll-hero-note::before {
+  background: none !important;
+  border-left: 1px solid var(--ac-hairline);
+  mask-image: none;
+  -webkit-mask-image: none;
+  width: 0;
+}
+[data-theme="academy"] .ll-hero-note { padding-left: clamp(24px, 3.4vw, 52px); }
+
+/* --------------------------------------------------------------------------
+   The homepage hero — a full-bleed green band under the masthead
+   --------------------------------------------------------------------------
+   The homepage opens with .ui-container > .ll-sheet > .ll-hero-grid rather than
+   a page banner. Here that opening block becomes the journal's cover: the
+   green wash runs edge to edge, the statement is set in white serif, and the
+   marginal PI note moves onto the band as a quieter column of the same colour.
+   The sheet inside is already transparent, so only this container needs paint.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ui-container > .ll-sheet:first-child {
+  position: relative;
+  isolation: isolate;
+  margin-inline: calc(50% - 50vw);
+  padding: clamp(40px, 5.5vw, 76px) max(24px, calc(50vw - 36rem));
+  background: linear-gradient(
+    115deg,
+    #0d2e26 0%,
+    #1f493e 62%,
+    #3d544c 100%
+  );
+  color: var(--ac-on-forest);
+  margin-bottom: 0;
+}
+[data-theme="academy"] .ui-container:has(> .ll-sheet:first-child) {
+  padding-top: 0 !important;
+}
+/* the statement and the marginal note both become light on green */
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ui-title {
+  color: #ffffff !important;
+  font-family: var(--font-hand);
+  font-weight: 400;
+  font-size: clamp(30px, 4.2vw, 58px);
+  line-height: 1.05;
+  letter-spacing: -0.012em;
+  max-width: 17em;
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ui-body {
+  color: #dfe7e3 !important;
+  max-width: 40em;
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ui-heading {
+  color: #ffffff;
+  font-family: var(--font-hand);
+  font-weight: 400;
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ui-caption {
+  color: #c9d4ce;
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-note-body {
+  color: #dfe7e3;
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-hero-note::before {
+  border-left-color: rgb(255 255 255 / 0.24);
+}
+/* the badges on the band: bronze word-marks, light ground */
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-stamp {
+  color: #d9c3ad !important;
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-stamp--muted {
+  color: rgb(255 255 255 / 0.72) !important;
+}
+/* the primary CTA is bronze-filled, the secondary a white hairline */
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-btn--marker {
+  color: var(--ac-on-bronze);
+  background-color: var(--ac-bronze);
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-btn--outline {
+  color: #ffffff;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.60);
+  background-color: transparent;
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-btn--outline:hover {
+  background-color: rgb(255 255 255 / 0.12);
+  color: #ffffff;
+}
+/* the ghost links in the marginal note */
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-btn--ghost {
+  color: #d9c3ad;
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-btn--ghost:hover {
+  color: #ffffff;
+}
+/* the rule between the hero and the strip belongs to the band */
+[data-theme="academy"] .ui-container > .ll-sheet:first-child > .ll-rule {
+  border-top-color: rgb(255 255 255 / 0.18) !important;
+  margin-block: 40px 0;
+}
+
+/* --------------------------------------------------------------------------
+   The trust strip — four sand columns divided by hairlines
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-stat-row {
+  background-color: var(--ac-card);
+  margin-inline: calc(50% - 50vw);
+  padding-inline: max(24px, calc(50vw - 36rem));
+  padding-block: clamp(28px, 3.6vw, 44px);
+  border-top: 1px solid var(--ac-hairline);
+  border-bottom: 1px solid var(--ac-hairline);
+}
+[data-theme="academy"] .ll-stat-cell {
+  border-left: 1px solid var(--ac-hairline);
+  padding-inline: clamp(18px, 2.4vw, 34px);
+}
+[data-theme="academy"] .ll-stat-cell:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+[data-theme="academy"] .ll-stat {
+  font-family: var(--font-hand);
+  font-weight: 400;
+  color: var(--ac-forest);
+}
+[data-theme="academy"] .ll-stat + .ui-caption {
+  /* --ac-ink-muted measured 4.25:1 on the deeper sand card, below the 4.5:1
+     floor for body text. This tone is 5.70:1 there and still reads as a
+     caption; dark mode rebinds --ac-ink-muted below and clears the override. */
+  color: var(--ac-caption);
+  font-family: var(--font-ui);
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   Rules — hairline, not pencil
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-rule {
+  border-top: 1px solid var(--ac-hairline) !important;
+  background: none;
+  height: 0;
+  margin-block: 40px;
+}
+[data-theme="academy"] .ll-rule > svg[data-ll-ink] { display: none; }
+
+/* --------------------------------------------------------------------------
+   Section heads — serif title with a bronze rule, no red bar
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-section-head {
+  border-bottom: 1px solid var(--ac-hairline);
+  padding-bottom: 16px;
+}
+[data-theme="academy"] .ll-section-title {
+  font-family: var(--font-hand);
+  font-weight: 400;
+  font-size: clamp(22px, 2.2vw, 30px);
+  padding-left: 0;
+}
+[data-theme="academy"] .ll-section-title::before { display: none; }
+[data-theme="academy"] .ll-section-note {
+  font-family: var(--font-ui);
+  color: var(--ac-ink-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Research pillars — an editorial list, one hairline per row
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-pillar {
+  border-bottom: 1px solid var(--ac-hairline);
+  padding-block: clamp(24px, 3vw, 36px);
+}
+[data-theme="academy"] .ll-pillar:first-of-type {
+  border-top: 1px solid var(--ac-hairline);
+}
+[data-theme="academy"] .ll-pillar-title {
+  font-family: var(--font-hand);
+  font-weight: 400;
+}
+[data-theme="academy"] .ll-pillar-num {
+  font-family: var(--font-ui);
+  color: var(--ac-bronze-text);
+  letter-spacing: 0.14em;
+}
+[data-theme="academy"] .ll-pillar-crumb .ll-stamp { color: var(--ac-bronze) !important; }
+
+/* cite pills: a quiet bronze hairline tag */
+[data-theme="academy"] .ll-cite {
+  background-color: transparent;
+  color: var(--ac-bronze-deep);
+  box-shadow: inset 0 0 0 1px var(--ac-hairline);
+  border-radius: 0;
+  font-family: var(--font-ui);
+  letter-spacing: 0.02em;
+}
+[data-theme="academy"] .ll-cite:hover {
+  background-color: var(--ac-bronze);
+  color: var(--ac-on-bronze);
+  box-shadow: inset 0 0 0 1px var(--ac-bronze);
+}
+
+/* keyword chips: plain bronze words separated by middots, no boxes */
+[data-theme="academy"] .ll-keyword {
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  color: var(--ac-bronze-deep);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+[data-theme="academy"] .ll-keyword::before {
+  content: '·';
+  margin-inline-end: 6px;
+  color: var(--ac-hairline);
+}
+[data-theme="academy"] .ll-keyword:first-child::before { content: none; }
+
+/* --------------------------------------------------------------------------
+   Platform cards — the signature left-rule sand card
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-platform-grid { gap: 20px; }
+[data-theme="academy"] .ll-platform {
+  background-color: var(--ac-card);
+  box-shadow: none;
+  border-radius: 0;
+  border-left: 2px solid var(--ac-bronze);
+  padding: clamp(20px, 2.4vw, 30px);
+}
+[data-theme="academy"] .ll-platform-ord {
+  font-family: var(--font-ui);
+  color: var(--ac-bronze-text);
+  letter-spacing: 0.1em;
+}
+[data-theme="academy"] .ll-platform-tag { color: var(--ac-caption); font-family: var(--font-ui); }
+[data-theme="academy"] .ll-platform-name {
+  font-family: var(--font-hand);
+  font-weight: 400;
+}
+[data-theme="academy"] .ll-platform-feats {
+  border-top: 1px solid var(--ac-hairline);
+}
+[data-theme="academy"] .ll-platform-feats li {
+  font-family: var(--font-ui);
+  color: var(--ac-ink-soft);
+}
+[data-theme="academy"] .ll-platform-feats li::before {
+  background-color: var(--ac-bronze);
+  border-radius: 0;
+  opacity: 1;
+  width: 4px;
+  height: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   People — sand cards with a bronze rule, portrait ringed in bronze
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-person {
+  background-color: transparent;
+}
+[data-theme="academy"] .ll-person__frame {
+  background-color: var(--ac-card);
+  box-shadow: none;
+  border-radius: 0;
+  border-left: 2px solid var(--ac-bronze);
+  padding: 10px;
+}
+[data-theme="academy"] .ll-person__img {
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px var(--ac-bronze-soft);
+  object-fit: cover;
+}
+[data-theme="academy"] .ll-person__name,
+[data-theme="academy"] .ll-person__role,
+[data-theme="academy"] .ll-person__kw,
+[data-theme="academy"] .ll-person__mail {
+  padding-inline: 12px;
+}
+[data-theme="academy"] .ll-person__name {
+  font-family: var(--font-hand);
+  font-weight: 400;
+  font-size: 20px;
+}
+[data-theme="academy"] .ll-person__role { color: var(--ac-ink-muted); font-family: var(--font-ui); }
+[data-theme="academy"] .ll-person__kw li {
+  background-color: transparent;
+  box-shadow: none;
+  color: var(--ac-bronze-deep);
+  font-family: var(--font-ui);
+  padding: 0;
+}
+[data-theme="academy"] .ll-person__kw li::before {
+  content: '·';
+  margin-inline-end: 5px;
+  color: var(--ac-hairline);
+}
+[data-theme="academy"] .ll-person__kw li:first-child::before { content: none; }
+[data-theme="academy"] .ll-portrait__place { color: var(--ac-caption); }
+[data-theme="academy"] .ll-person__since { color: var(--ac-bronze-text); font-family: var(--font-ui); }
+[data-theme="academy"] .ll-person__swap {
+  border-radius: 0;
+  background-color: var(--ac-forest);
+  color: var(--ac-on-forest);
+}
+
+/* the vacant seat: a drafted outline, not a dashed hand-drawn box */
+[data-theme="academy"] .ll-seat {
+  border: 1px dashed var(--ac-hairline);
+  border-radius: 0;
+  background-color: transparent;
+  border-left: 2px solid var(--ac-bronze-soft);
+}
+[data-theme="academy"] .ll-seat__title {
+  font-family: var(--font-hand);
+  font-weight: 400;
+}
+[data-theme="academy"] .ll-seat__cta { color: var(--ac-bronze-deep); font-family: var(--font-ui); }
+
+/* the people group head: a serif label with a bronze ordinal */
+[data-theme="academy"] .ll-sheet--people .ll-sheet-label { color: var(--ac-ink-muted); }
+
+/* PI: the biography sits open on the canvas; the aside is a sand card */
+[data-theme="academy"] .ll-pi-row { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+[data-theme="academy"] .ll-pi-body .ui-body { color: var(--ac-ink-soft); }
+[data-theme="academy"] .ll-pi-links .ll-btn--outline {
+  color: #ffffff;
+  background-color: var(--ac-forest);
+  box-shadow: none;
+}
+[data-theme="academy"] .ll-pi-links .ll-btn--outline:hover {
+  background-color: var(--ac-forest-soft);
+}
+
+/* --------------------------------------------------------------------------
+   Publications — a table, not a stack of cards
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-pub {
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border-left: 0;
+  padding-inline: 0;
+  border-bottom: 1px solid var(--ac-hairline);
+  padding-block: 26px;
+}
+[data-theme="academy"] .ll-pub-title {
+  font-family: var(--font-hand);
+  font-weight: 400;
+}
+[data-theme="academy"] .ll-pub-meta,
+[data-theme="academy"] .ll-pub-authors,
+[data-theme="academy"] .ll-pub-impact {
+  font-family: var(--font-ui);
+}
+[data-theme="academy"] .ll-pub-impact { color: var(--ac-bronze-deep); }
+[data-theme="academy"] .pub-filter-btn {
+  border-radius: 2px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+[data-theme="academy"] .pub-filter-btn.active {
+  background-color: var(--ac-forest);
+  color: var(--ac-on-forest);
+}
+[data-theme="academy"] .ll-abstract__head {
+  font-family: var(--font-ui);
+  color: var(--ac-bronze-deep);
+}
+[data-theme="academy"] .ll-input {
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px var(--ac-hairline);
+  background-color: #faf6f0;
+}
+
+/* --------------------------------------------------------------------------
+   News, pedigree, join, contact — the same quiet treatment
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-news-snapshots,
+[data-theme="academy"] .ll-contact-map {
+  border-left: 2px solid var(--ac-bronze);
+  background-color: var(--ac-card);
+  border-radius: 0;
+  padding: clamp(20px, 2.4vw, 30px);
+}
+[data-theme="academy"] .ll-entry {
+  border-bottom: 1px solid var(--ac-hairline);
+  padding-block: 28px;
+}
+[data-theme="academy"] .ll-entry:first-of-type { border-top: 1px solid var(--ac-hairline); }
+[data-theme="academy"] .ll-entry .ui-heading {
+  font-family: var(--font-hand);
+  font-weight: 400;
+}
+[data-theme="academy"] .ll-entry .ll-btn--xs {
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--font-ui);
+}
+[data-theme="academy"] .pedigree-node { border-left: 1px solid var(--ac-hairline); }
+[data-theme="academy"] .ll-map {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px var(--ac-hairline);
+  border-radius: 0;
+  padding: 8px;
+}
+[data-theme="academy"] .ll-map-pin { filter: hue-rotate(300deg) saturate(0.6); }
+
+/* the timeline ink fill becomes a plain bronze rule progress */
+[data-theme="academy"] .pedigree-node::before {
+  background: var(--ac-bronze) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Footer — a full-bleed deep green band
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] #site-footer {
+  background-color: var(--ac-forest);
+  color: var(--ac-on-forest-soft);
+  margin-top: 72px;
+  padding-block: 56px 40px !important;
+}
+[data-theme="academy"] #site-footer .ll-rule {
+  border-top-color: rgb(255 255 255 / 0.16) !important;
+}
+[data-theme="academy"] #site-footer .ui-caption,
+[data-theme="academy"] #site-footer a {
+  color: var(--ac-on-forest-soft);
+  font-family: var(--font-ui);
+}
+[data-theme="academy"] #site-footer a:hover { color: #ffffff; }
+[data-theme="academy"] .ll-footer-mark {
+  filter: brightness(0) invert(1);
+  opacity: 0.6;
+}
+
+/* --------------------------------------------------------------------------
+   The skin switcher itself
+   --------------------------------------------------------------------------
+   A two-celled segmented control. Each cell names a skin; the active one is
+   filled. It sits on the green bar, so it is drawn in the bar's own terms.
+   -------------------------------------------------------------------------- */
+.ll-skin {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  padding: 2px;
+  border: 0;
+  border-radius: 7px;
+  background-color: var(--md-surface-container-high);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+  transition: background-color var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-skin__opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  border-radius: 5px;
+  color: var(--md-on-surface-variant);
+  transition: color var(--ll-dur-hover) var(--ll-ease-out),
+              background-color var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-skin__glyph { font-size: 12px; opacity: 0.8; }
+.ll-skin__opt.is-current {
+  color: var(--md-on-secondary-container);
+  background-color: var(--md-secondary-container);
+  font-weight: 600;
+}
+/* on the green masthead */
+[data-theme="academy"] .ll-skin {
+  background-color: rgb(255 255 255 / 0.08);
+  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.22);
+}
+[data-theme="academy"] .ll-skin__opt { color: var(--ac-on-forest-soft); border-radius: 2px; }
+[data-theme="academy"] .ll-skin__opt.is-current {
+  color: var(--ac-forest-deep);
+  background-color: var(--ac-on-forest);
+}
+/* narrow screens: the glyph carries the meaning, the word drops out */
+@media (max-width: 900px) {
+  .ll-skin__name { display: none; }
+  .ll-skin__opt { padding: 6px 8px; }
+}
+
+/* --------------------------------------------------------------------------
+   The cross-fade between skins
+   -------------------------------------------------------------------------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.01ms;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Dark mode in the journal skin
+   --------------------------------------------------------------------------
+   The academy skin is a light identity — sand stock, green ink. Rather than
+   invent a second dark palette that fights it, dark mode deepens the canvas to
+   a green-black and lifts all the text roles with it. The masthead and footer
+   are already dark, so they barely move.
+   -------------------------------------------------------------------------- */
+html.dark[data-theme="academy"] {
+  color-scheme: dark;
+  --ac-canvas: #141c19;
+  --ac-card: #1c2723;
+  --ac-card-quiet: #1a231f;
+  --ac-hairline: #33403a;
+  --ac-ink: #e8e3da;
+  --ac-ink-soft: #c3bdb2;
+  --ac-ink-muted: #97918a;
+  --ac-forest: #0e2a23;
+  --ac-bronze: #b78d6c;
+  --ac-bronze-deep: #cfa685;
+  --ac-bronze-soft: #9c7a5f;
+  --ac-bronze-text: #cfa685;     /* bronze reads light on the green-black */
+  --ac-caption: #a9a29a;
+  /* the filled button's label: white on #b78d6c is only 2.98:1, so dark ink */
+  --ac-on-bronze: #1a1207;
+
+  --md-primary: var(--ac-bronze);
+  --md-on-primary: #2a1c10;
+  --md-secondary: #a8c6ba;
+  --md-secondary-container: #24352f;
+  --md-on-secondary-container: #d6e6df;
+  --md-surface: var(--ac-canvas);
+  --md-on-surface: var(--ac-ink);
+  --md-surface-variant: #2a3630;
+  --md-on-surface-variant: var(--ac-ink-muted);
+  --md-surface-lowest: #101815;
+  --md-surface-low: var(--ac-card-quiet);
+  --md-surface-container: var(--ac-card);
+  --md-surface-high: #222e29;
+  --md-surface-highest: #27332d;
+  --md-outline: #6d7a73;
+  --md-outline-variant: var(--ac-hairline);
+  --ll-ink: var(--ac-ink);
+  --ll-ink-soft: var(--ac-ink-soft);
+  --ll-ink-muted: var(--ac-ink-muted);
+}
+html.dark[data-theme="academy"] body {
+  background-color: var(--ac-canvas) !important;
+}
+html.dark[data-theme="academy"] .ll-sheet { background-color: transparent; }
+html.dark[data-theme="academy"] .ll-platform,
+html.dark[data-theme="academy"] .ll-person__frame,
+html.dark[data-theme="academy"] .ll-news-snapshots,
+html.dark[data-theme="academy"] .ll-contact-map {
+  background-color: var(--ac-card);
+}
+html.dark[data-theme="academy"] .ll-stat-row {
+  background-color: var(--ac-card);
+}
+html.dark[data-theme="academy"] .ll-input {
+  background-color: var(--ac-card-quiet);
+  color: var(--ac-ink);
+}
+html.dark[data-theme="academy"] .ll-map-pin { filter: none; }

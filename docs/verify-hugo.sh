@@ -275,6 +275,11 @@ chk "team portraits excluded from the lightbox" "[ \$(grep -o 'll-person__img[^\
 chk "group portraits excluded from the lightbox" "[ \$(grep -o 'll-portrait__img[^\"]*nozoom' layouts/_default/team.html | wc -l) -eq 2 ]"
 chk "hidden portrait layer cannot take the click" "python3 -c \"import pathlib,re;s=pathlib.Path('assets/css/custom.css').read_text();b=re.search(r'\\.ll-person__img--art \\{[^}]*\\}',s);raise SystemExit(0 if b and 'pointer-events: none' in b.group(0) else 1)\""
 
+# ---------------------------------------------------------------------------
+chk "two-skin system wired correctly" "python3 tools/check-themes.py"
+chk "academy skin has its own stylesheet" "[ -s assets/css/themes/academy.css ]"
+chk "skin switcher present in the built page" "grep -q \"id=skin-switcher\" public/index.html"
+chk "built page defaults to the notebook skin" "grep -q \"data-theme=manuscript\" public/index.html"
 echo ""
 if [ "$fail" -eq 0 ]; then
   printf '\033[32mALL %d ACCEPTANCE CHECKS PASSED!\033[0m\n' "$pass"

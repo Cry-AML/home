@@ -203,3 +203,7 @@ apply_body_inquiry: |
     諮詢人：【您的姓名】
     聯繫電話 / 微信：【您的聯繫方式】
 
+# Skin switcher (the two visual identities)
+skin_switch_label: "在實驗室手帳與學院期刊之間切換"
+skin_notebook: "手帳"
+skin_journal: "期刊"

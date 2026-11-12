@@ -35,6 +35,13 @@
   </div>
 </div>
 
+<!-- Skin switcher wiring -->
+{{ $skinSwitch := resources.Get "js/skin-switcher.js" }}
+{{ if $skinSwitch }}
+  {{ $ss := $skinSwitch | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $ss.RelPermalink }}" integrity="{{ $ss.Data.Integrity }}" defer></script>
+{{ end }}
+
 <!-- Looseleaf ink engine + interactions -->
 {{ $ink := resources.Get "js/ink.js" }}
 {{ if $ink }}

@@ -4,7 +4,8 @@
   dir="{{ cond (site.Params.rtl | default false) `rtl` `ltr` }}"
   class="scroll-smooth"
   data-default-appearance="{{ site.Params.defaultAppearance | default `light` }}"
-  data-auto-appearance="{{ site.Params.autoSwitchAppearance | default `true` }}">
+  data-auto-appearance="{{ site.Params.autoSwitchAppearance | default `true` }}"
+  data-theme="manuscript">
   {{- partial "head.html" . -}}
   {{- partialCached "init.html" . -}}
 
