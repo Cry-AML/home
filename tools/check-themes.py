@@ -336,6 +336,26 @@ def main():
     need('position: fixed' in custom.split('.ll-wand {')[1][:400],
          'custom.css: the wand is not fixed to the viewport')
 
+    # --- the mobile drawer is a viewport panel with a scrim ---------------
+    # Blowfish's dropdown style anchored it to the header row (left:-227px for a
+    # 352px panel), clipping every label. It must be fixed to the viewport and
+    # carry a scrim.
+    drawer = re.search(r'#mobile-menu-dialog \{([^}]*)\}', custom)
+    need(drawer is not None, 'custom.css: no rule for #mobile-menu-dialog')
+    if drawer:
+        body = drawer.group(1)
+        need('position: fixed' in body,
+             'custom.css: the drawer is not fixed to the viewport; it will anchor '
+             'to the header row and clip its labels')
+        need('width:' in body, 'custom.css: the drawer has no explicit width')
+    need(':has(#mobile-menu-toggle:checked)::before' in custom,
+         'custom.css: the drawer has no scrim; the page stays visible behind it '
+         'and the focus is not held')
+    need('background-color: rgb(0 0 0 / 0.46)' in custom,
+         'custom.css: the scrim has no dim')
+    need('#mobile-menu-dialog a > span' in custom and 'white-space: normal' in custom,
+         'custom.css: drawer labels may still be clipped instead of wrapping')
+
     # --- language switch keeps the reader's place ------------------------
     lang_js_path = ROOT / 'assets' / 'js' / 'lang-scroll.js'
     need(lang_js_path.exists(),
