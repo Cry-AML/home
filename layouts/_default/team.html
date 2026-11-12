@@ -108,8 +108,13 @@
   {{/* ---- 02 · postdocs & research associates ------------------------------ */}}
   {{ $n := 1 }}{{/* 01 belongs to the PI; group sheets start at 02 */}}
   {{ range $idx, $g := $team.groups }}
-    {{ if in (slice "postdocs" "phd" "msc" "interns") $g.id }}
-      {{ $filled := index $byGroup $g.id | default slice }}
+    {{ $filled := index $byGroup $g.id | default slice }}
+    {{/* A group with no members and no photograph is not rendered at all.
+         Postdocs, research assistants and interns have no portraits yet, and
+         an empty sheet of dashed placeholder desks on a live site reads as a
+         broken page rather than as an invitation. When the first person joins a
+         group it appears on its own, with their card. */}}
+    {{ if and (in (slice "postdocs" "phd" "msc" "interns") $g.id) (gt (len $filled) 0) }}
       {{ $label := "" }}
       {{ if eq $g.id "postdocs" }}{{ $label = i18n "team_postdoc_label" }}{{ end }}
       {{ if eq $g.id "phd" }}{{ $label = i18n "team_phd_label" }}{{ end }}
