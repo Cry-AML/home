@@ -66,6 +66,9 @@
     // restore the reader's last choice, without animating on load
     let saved = null;
     try { saved = localStorage.getItem('mch_team_mode'); } catch (e) {}
+    // Default to the photograph. The illustrated layer is the reward for
+    // pressing the wand, and a first visit should read as a scientific group
+    // before it reads as a drawing.
     setMode(saved === 'illustrated' ? 'illustrated' : 'real', false);
 
     window.__teamSetMode = setMode;

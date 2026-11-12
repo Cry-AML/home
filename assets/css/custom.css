@@ -1078,6 +1078,118 @@ html.dark #ambient-canvas {
 }
 
 /* --------------------------------------------------------------------------
+   The wand — a switch between the two readings of this site
+   --------------------------------------------------------------------------
+   Fixed to the viewport, so it holds its position on every page and does not
+   travel with the scroll. Two states, and they are stated visually rather than
+   only in the label:
+
+     unlit  — the journal is showing; the button is a bronze pill, quiet enough
+              to sit in the corner of a page it is not the subject of
+     lit    — the notebook is showing; the button turns to the notebook's own
+              brick ink, and the wand's stars glow, so "the magic is on" reads
+              at a glance and not only from the word next to it
+   -------------------------------------------------------------------------- */
+.ll-wand {
+  position: fixed;
+  right: clamp(14px, 2.2vw, 26px);
+  bottom: clamp(14px, 2.2vw, 26px);
+  z-index: 55;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px 10px 12px;
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  cursor: pointer;
+  color: #fff;
+  background-color: var(--ll-wand-rest, #8c6246);
+  box-shadow:
+    0 2px 6px rgb(40 30 22 / 0.24),
+    0 12px 28px -10px rgb(40 30 22 / 0.42);
+  transition: transform 200ms var(--ll-ease-out),
+              box-shadow 200ms var(--ll-ease-out),
+              background-color 260ms var(--ll-ease-out),
+              color 260ms var(--ll-ease-out);
+}
+.ll-wand:hover {
+  transform: translateY(-2px);
+  background-color: var(--ll-wand-hover, #6f4c35);
+  box-shadow:
+    0 3px 8px rgb(40 30 22 / 0.26),
+    0 18px 34px -12px rgb(40 30 22 / 0.46);
+}
+.ll-wand:active { transform: translateY(0); }
+.ll-wand:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+.ll-wand__icon {
+  flex: none;
+  transition: transform 320ms var(--ll-ease-pop);
+}
+.ll-wand:hover .ll-wand__icon { transform: rotate(-12deg) scale(1.08); }
+
+/* the stars are the "is it on" signal: dim at rest, gold when lit */
+.ll-wand__star {
+  opacity: 0.45;
+  transition: opacity 320ms var(--ll-ease-out);
+}
+.ll-wand.is-lit .ll-wand__star { opacity: 1; }
+
+/* lit: the notebook's own ink, so the button belongs to the page it produced */
+.ll-wand.is-lit {
+  color: #fff8f5;
+  background-color: #a93441;
+  box-shadow:
+    0 2px 6px rgb(78 30 36 / 0.28),
+    0 0 0 4px rgb(169 52 65 / 0.14),
+    0 12px 28px -10px rgb(78 30 36 / 0.45);
+}
+.ll-wand.is-lit:hover {
+  background-color: #8f2531;
+  box-shadow:
+    0 3px 8px rgb(78 30 36 / 0.30),
+    0 0 0 5px rgb(169 52 65 / 0.18),
+    0 18px 34px -12px rgb(78 30 36 / 0.50);
+}
+
+/* the pulse: a cast going in, a settle coming out */
+.ll-wand.is-cast .ll-wand__icon { animation: ll-wand-cast 560ms var(--ll-ease-pop); }
+.ll-wand.is-settled .ll-wand__icon { animation: ll-wand-settle 460ms var(--ll-ease-out); }
+@keyframes ll-wand-cast {
+  0%   { transform: rotate(0) scale(1); }
+  32%  { transform: rotate(-24deg) scale(1.24); }
+  100% { transform: rotate(12deg) scale(1); }
+}
+@keyframes ll-wand-settle {
+  0%   { transform: rotate(12deg) scale(1.05); }
+  100% { transform: rotate(0) scale(1); }
+}
+
+/* The label is the point on a wide screen and noise on a narrow one. */
+@media (max-width: 520px) {
+  .ll-wand { padding: 11px; gap: 0; }
+  .ll-wand__label { display: none; }
+}
+
+/* The toast lives in the same corner; lift it clear of the wand. */
+body:has(.ll-wand) #toast-notification { bottom: calc(clamp(14px, 2.2vw, 26px) + 56px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-wand,
+  .ll-wand__icon,
+  .ll-wand__star { transition: none; }
+  .ll-wand.is-cast .ll-wand__icon,
+  .ll-wand.is-settled .ll-wand__icon { animation: none; }
+}
+
+/* --------------------------------------------------------------------------
    16. Homepage — one sheet: statement, margin note, ruled index
    -------------------------------------------------------------------------- */
 .ll-hero-grid {

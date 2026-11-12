@@ -199,3 +199,7 @@ skin_switch_label: "Switch between the lab notebook and the institutional journa
 skin_notebook: "Notebook"
 skin_journal: "Journal"
 pedigree_current: "Current"
+wand_label: "Turn this page into a lab notebook"
+wand_short: "Notebook"
+wand_back_label: "Back to the journal"
+wand_back_short: "Journal"

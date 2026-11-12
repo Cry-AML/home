@@ -278,7 +278,7 @@ chk "hidden portrait layer cannot take the click" "python3 tools/check-portrait-
 chk "two-skin system wired correctly" "python3 tools/check-themes.py"
 chk "academy skin has its own stylesheet" "[ -s assets/css/themes/academy.css ]"
 chk "skin switcher present in the built page" "grep -q \"id=skin-menu\" public/index.html"
-chk "built page defaults to the notebook skin" "grep -q \"data-theme=manuscript\" public/index.html"
+chk "built page defaults to the journal skin" "grep -q \"data-theme=academy\" public/index.html"
 chk "PI and member portraits share one size token" "python3 tools/check-portrait-scale.py"
 chk "PI portrait rendered on the homepage" "grep -q \"ll-person--hero\" public/index.html"
 chk "PI portrait rendered on the Experience page" "grep -q \"ll-person--bio\" public/pedigree/index.html"

@@ -13,7 +13,7 @@
   'use strict';
 
   var KEY = 'wenlab-skin';
-  var DEFAULT = 'manuscript';
+  var DEFAULT = 'academy';
 
   function read() {
     try {

@@ -62,8 +62,14 @@ def main():
     custom = CUSTOM.read_text()
 
     # --- wiring --------------------------------------------------------------
-    need('data-theme="manuscript"' in BASEOF.read_text(),
-         'baseof.html: <html> has no data-theme="manuscript" default')
+    # The default skin is the journal; the wand is how a reader reaches the
+    # notebook. baseof must still carry an explicit attribute so the first paint
+    # is never unstyled while skin.js resolves the stored choice.
+    need('data-theme="academy"' in BASEOF.read_text(),
+         'baseof.html: <html> has no data-theme default')
+    need("var DEFAULT = 'academy'" in (ROOT / 'assets/js/skin.js').read_text(),
+         'skin.js: DEFAULT must match baseof.html, or the first paint and the '
+         'resolved state disagree')
     head = HEAD.read_text()
     need('css/themes/academy.css' in head, 'head.html: academy.css is not bundled')
     need(head.index('css/custom.css') < head.index('css/themes/academy.css'),
@@ -305,6 +311,31 @@ def main():
              'academy.css: the selected dropdown row is back on the palette\'s '
              'fluorescent state colour')
 
+    # --- the wand is a two-way switch -------------------------------------
+    wand_html = (ROOT / 'layouts/partials/wand.html').read_text()
+    need('id="wand-toggle"' in wand_html, 'wand.html: no #wand-toggle')
+    need('aria-pressed' in wand_html,
+         'wand.html: the switch state is not exposed to assistive tech')
+    need('data-label-to-journal' in wand_html,
+         'wand.html: the return label is missing, so the button cannot say '
+         'what pressing it will do')
+    need('wand.html' in (ROOT / 'layouts/partials/extend-footer.html').read_text(),
+         'extend-footer.html: the wand is not mounted')
+    wand_js = (ROOT / 'assets/js/wand.js').read_text()
+    need('set(JOURNAL)' in wand_js,
+         'wand.js: never sets the journal back; the switch only goes one way')
+    need('setTeamMode' in wand_js,
+         'wand.js: does not drive the Team portraits')
+    need("setTeamMode('real')" in wand_js and "setTeamMode('illustrated')" in wand_js,
+         'wand.js: does not set the Team mode in both directions')
+    # it must never retire itself any more
+    need('removeChild' not in wand_js and 'is-gone' not in wand_js,
+         'wand.js: the button removes itself, so it cannot be pressed again')
+    need('.ll-wand.is-lit' in custom,
+         'custom.css: no lit state for the wand, so on/off is only in the label')
+    need('position: fixed' in custom.split('.ll-wand {')[1][:400],
+         'custom.css: the wand is not fixed to the viewport')
+
     # --- language switch keeps the reader's place ------------------------
     lang_js_path = ROOT / 'assets' / 'js' / 'lang-scroll.js'
     need(lang_js_path.exists(),
@@ -338,15 +369,21 @@ def main():
              f'academy: fluorescent cyan {bad} still used as a colour')
 
     # --- the default must be untouched --------------------------------------
-    need('[data-theme="academy"]' not in custom,
-         'custom.css: academy rules belong in themes/academy.css')
+    # Academy styling belongs in the theme layer. A single component may carry
+    # its own [data-theme="academy"] variant when the component itself is
+    # defined in custom.css (the wand is), so count blocks rather than forbidding
+    # the selector outright.
+    academy_blocks = len(re.findall(r'\[data-theme="academy"\]', custom))
+    need(academy_blocks <= 4,
+         f'custom.css: {academy_blocks} academy rules leaked into the base '
+         f'stylesheet; theming belongs in themes/academy.css')
 
     # --- the built page ------------------------------------------------------
     if PUBLIC.exists():
         index = (PUBLIC / 'index.html').read_text()
         need('data-theme=' in index, 'public/index.html: no data-theme on <html>')
-        need('data-theme=manuscript' in index or 'data-theme="manuscript"' in index,
-             'public/index.html: default skin is not the notebook')
+        need('data-theme=academy' in index or 'data-theme="academy"' in index,
+             'public/index.html: the default skin is not the journal')
 
     if problems:
         for p in problems:
@@ -355,7 +392,7 @@ def main():
         sys.exit(1)
 
     print('two skins wired correctly '
-          '(notebook default, journal overrides, resolved before paint)')
+          '(journal default, notebook one press away, resolved before paint)')
 
 
 if __name__ == '__main__':

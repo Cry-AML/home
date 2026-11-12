@@ -1,0 +1,34 @@
+{{/*
+  The wand — a switch between the two readings of this site.
+
+  Press it and the site becomes the notebook: ink edges, marker highlights, the
+  illustrated portraits. Press it again and it returns to the journal. The two
+  states are the two ways this site is meant to be read, so the control that
+  changes one changes back — a control that only goes one way leaves the reader
+  hunting the masthead menu to undo a click they were invited to make.
+
+  Fixed to the viewport: same place on every page, and it does not travel with
+  the scroll.
+
+  Both labels are localised and carried here; JS swaps between them and keeps
+  aria-pressed honest, so the button always says what pressing it will do.
+*/}}
+<button
+  type="button"
+  id="wand-toggle"
+  class="ll-wand"
+  aria-pressed="false"
+  aria-label="{{ i18n "wand_label" }}"
+  title="{{ i18n "wand_label" }}"
+  data-wand
+  data-label-to-journal="{{ i18n "wand_back_short" }}"
+  data-label-suffix="">
+  <svg class="ll-wand__icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+    <path d="M4.2 19.8 15.4 8.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M14.2 7.4l2.4 2.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path class="ll-wand__star ll-wand__star--a" d="M18.6 3.2l.7 1.9 1.9.7-1.9.7-.7 1.9-.7-1.9-1.9-.7 1.9-.7z" fill="currentColor"/>
+    <path class="ll-wand__star ll-wand__star--b" d="M7.4 3.6l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z" fill="currentColor"/>
+    <circle class="ll-wand__star ll-wand__star--c" cx="19.4" cy="11.2" r="1" fill="currentColor"/>
+  </svg>
+  <span class="ll-wand__label">{{ i18n "wand_short" }}</span>
+</button>

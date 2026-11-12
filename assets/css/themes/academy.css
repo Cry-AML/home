@@ -1783,6 +1783,14 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
   outline-color: var(--ac-bronze-soft);
 }
 
+/* The wand rests in the journal's own bronze. It is the one saturated object in
+   the corner of a sand page, so it takes the accent the page already uses for
+   its rules; the notebook's brick appears only once the notebook does. */
+html[data-theme="academy"] .ll-wand {
+  --ll-wand-rest: #8c6246;
+  --ll-wand-hover: #6f4c35;
+}
+
 /* --------------------------------------------------------------------------
    The switch between skins
    --------------------------------------------------------------------------

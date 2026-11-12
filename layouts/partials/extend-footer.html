@@ -35,6 +35,14 @@
   </div>
 </div>
 
+<!-- The wand: one press turns the site into the notebook -->
+{{ partial "wand.html" . }}
+{{ $wandJS := resources.Get "js/wand.js" }}
+{{ if $wandJS }}
+  {{ $wj := $wandJS | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $wj.RelPermalink }}" integrity="{{ $wj.Data.Integrity }}" defer></script>
+{{ end }}
+
 <!-- Language switch: keep the reader's place across the navigation -->
 {{ $langScroll := resources.Get "js/lang-scroll.js" }}
 {{ if $langScroll }}
