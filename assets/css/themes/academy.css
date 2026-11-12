@@ -397,7 +397,52 @@
   letter-spacing: -0.01em;
 }
 [data-theme="academy"] .ui-heading { letter-spacing: 0; }
-[data-theme="academy"] .ui-body { font-family: var(--font-ui); }
+[data-theme="academy"] .ui-body {
+  font-family: var(--font-ui);
+  /* Measured at 1440 the hero prose ran 80 characters to the line — past the
+     62–68 the editorial standard sets, and long enough that the eye loses its
+     place on return. 34ch at 15px lands at 66. Prose columns elsewhere are
+     already narrower, so this cap only bites where it should. */
+  /* Set in px: `ch` measures the width of the "0" glyph, but running prose is
+     mostly narrow letters, so 66ch resolved to a 384px column that fit only 45
+     real characters. 34em at 15px is 510px, which lands at 66–68 characters for
+     this face — the editorial target. */
+  max-width: 34em;
+  font-size: 15px;
+  line-height: 1.65;
+  letter-spacing: 0.005em;
+  text-wrap: pretty;
+}
+/* Display type wants optical tracking at large sizes: the serif opens up as it
+   grows, so a negative track keeps the headline a single gesture rather than a
+   row of letters. Small caps-style labels take positive tracking instead. */
+[data-theme="academy"] .ui-title,
+[data-theme="academy"] .ll-section-title,
+[data-theme="academy"] .ll-pillar-title,
+[data-theme="academy"] .ll-platform-name,
+[data-theme="academy"] .ll-person__name {
+  letter-spacing: -0.018em;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  text-wrap: balance;
+}
+/* The stat numerals are the page's one piece of display data. Newsreader's
+   default figures are proportional; lining, tabular figures align the four
+   columns and read as a table of record rather than four lucky numbers. */
+[data-theme="academy"] .ll-stat {
+  font-feature-settings: 'lnum' 1, 'tnum' 1;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+/* Labels and captions: the inverse treatment — small, tracked, set in caps
+   where the text allows it. This is what carries the journal's voice at the
+   small sizes, and it is doing almost none of that work today. */
+[data-theme="academy"] .ui-caption {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  line-height: 1.55;
+  color: var(--ac-caption);
+}
 
 /* the hero's marker pass becomes a true italic, as a journal would set it */
 [data-theme="academy"] .ll-hi {
@@ -554,15 +599,28 @@
 }
 [data-theme="academy"] .ui-container > .ll-sheet:first-child .ui-body {
   color: #dfe7e3 !important;
-  max-width: 40em;
+  /* This rule is more specific than the generic .ui-body cap, so it decides
+     the hero's measure. 40ch measured only 45 characters per line; the band is
+     wide enough that 62ch reads as a subhead without becoming a paragraph. */
+  max-width: 62ch;
 }
 [data-theme="academy"] .ui-container > .ll-sheet:first-child .ui-heading {
   color: #ffffff;
   font-family: var(--font-hand);
   font-weight: 400;
 }
-[data-theme="academy"] .ui-container > .ll-sheet:first-child .ui-caption {
+/* The banner's captions are light because they sit on green. The trust strip
+   lives inside the same sheet but on its own sand band, so it is excluded here
+   and given the card's caption tone further down. Without the :not() this rule
+   out-specifies that one and leaves "Blood Papers" at 1.14:1. */
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ui-caption:not(.ll-stat-row .ui-caption):not(.ll-stat-row *) {
   color: #c9d4ce;
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-stat-row .ui-caption {
+  /* token, not a literal: the same line must hold in dark mode, where the
+     strip's ground flips to a green-black and a fixed sand-tone caption
+     measured 2.02:1 */
+  color: var(--ac-caption);
 }
 [data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-note-body {
   color: #dfe7e3;
@@ -836,6 +894,188 @@
 }
 [data-theme="academy"] .ll-pi-links .ll-btn--outline:hover {
   background-color: var(--ac-forest-soft);
+}
+
+/* --------------------------------------------------------------------------
+   Scroll entrance (academy only)
+   --------------------------------------------------------------------------
+   journal-reveal.js puts .ll-rise on each block and .ll-rise-in when it first
+   comes into view. The block rises 14px and fades in over 420ms; siblings in a
+   row are staggered by the script. Nothing here runs in the notebook skin,
+   which keeps the ink engine's own entrance.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-rise {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 420ms var(--ll-ease-out),
+              transform 420ms var(--ll-ease-out);
+  will-change: opacity, transform;
+}
+[data-theme="academy"] .ll-rise-in {
+  opacity: 1;
+  transform: none;
+}
+/* Once in, drop the compositing hint: a page of will-change layers is slower
+   to paint, not faster. */
+[data-theme="academy"] .ll-rise-in {
+  will-change: auto;
+}
+/* The reduced-motion path reveals everything at once, so no rule is needed —
+   but if a block was marked before the preference was re-read, make sure it is
+   visible rather than stuck at zero. */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="academy"] .ll-rise {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Micro-interactions
+   --------------------------------------------------------------------------
+   The journal skin removed the notebook's ink hovers along with the ink, and
+   did not replace them: every card and every prose link measured a 0s
+   transition, so nothing on the page acknowledged the pointer. A journal is
+   quiet, not inert — the courtesy is in small, exact movements:
+
+     · the bronze rule on a card thickens rather than the card lifting or
+       glowing, because the rule is what the card is made of;
+     · a prose link draws its underline in, left to right, the way a rule is
+       ruled;
+     · stat cells settle their numeral a hair toward the baseline on approach.
+   -------------------------------------------------------------------------- */
+
+/* Cards: the left rule is the hover target. It grows from 2px to 3px and the
+   card's own ground deepens by one step — no shadow, no translate. */
+[data-theme="academy"] .ll-platform,
+[data-theme="academy"] .ll-person__frame,
+[data-theme="academy"] .ll-news-snapshots,
+[data-theme="academy"] .ll-contact-map {
+  transition: border-left-width 180ms var(--ll-ease-out),
+              background-color 180ms var(--ll-ease-out);
+}
+[data-theme="academy"] .ll-platform:hover,
+[data-theme="academy"] .ll-person:hover .ll-person__frame,
+[data-theme="academy"] .ll-news-snapshots:hover,
+[data-theme="academy"] .ll-contact-map:hover {
+  border-left-width: 3px;
+  background-color: var(--ac-card-quiet);
+}
+
+/* Editorial list rows: the whole row is the target. The title slides a few
+   pixels toward the reader and the ordinal fills in — the same gesture as
+   running a finger along an index. */
+[data-theme="academy"] .ll-pillar {
+  transition: background-color 200ms var(--ll-ease-out);
+}
+[data-theme="academy"] .ll-pillar-title {
+  transition: transform 220ms var(--ll-ease-out),
+              color 180ms var(--ll-ease-out);
+}
+[data-theme="academy"] .ll-pillar:hover {
+  background-color: color-mix(in srgb, var(--ac-card) 55%, transparent);
+}
+[data-theme="academy"] .ll-pillar:hover .ll-pillar-title {
+  transform: translateX(4px);
+  color: var(--ac-bronze-deep);
+}
+
+/* Prose links: an underline that is drawn rather than switched on. */
+[data-theme="academy"] main a:not(.ll-btn):not(.ll-cite):not(.ll-person__mail) {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 240ms var(--ll-ease-out),
+              color 160ms var(--ll-ease-out);
+}
+[data-theme="academy"] main a:not(.ll-btn):not(.ll-cite):not(.ll-person__mail):hover {
+  background-size: 100% 1px;
+  color: var(--ac-bronze-deep);
+}
+
+/* Stat cells: a bronze hairline appears under the numeral on approach. */
+[data-theme="academy"] .ll-stat-cell {
+  transition: background-color 200ms var(--ll-ease-out);
+}
+[data-theme="academy"] .ll-stat {
+  transition: transform 220ms var(--ll-ease-out);
+  transform-origin: left bottom;
+}
+[data-theme="academy"] .ll-stat-cell:hover .ll-stat {
+  transform: translateY(-2px);
+}
+
+/* The skin switcher's cells already have a colour transition; give the glyph
+   a small turn so the control feels mechanical rather than painted. */
+[data-theme="academy"] .ll-skin__glyph {
+  transition: transform 200ms var(--ll-ease-out);
+}
+[data-theme="academy"] .ll-skin:hover .ll-skin__glyph {
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   Contrast repairs found by pixel audit
+   --------------------------------------------------------------------------
+   Three text roles inherited a colour meant for a rule or a disabled control,
+   and landed under 4.5:1 — measured, not guessed:
+
+     · the vacant-desk label used --md-outline (a border colour): 3.46:1 light,
+       3.87:1 dark;
+     · the news snapshot title used --md-on-surface-variant over the deeper
+       sand card: 1.88:1 in dark, where the tone was calibrated for the canvas;
+     · the inactive publication filter used --md-on-surface-variant over the
+       card: 3.04:1 in dark.
+
+   Each takes the caption token instead, which is defined per mode and
+   calibrated against the card ground rather than the page.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-vacant__label {
+  color: var(--ac-caption);
+  font-family: var(--font-hand);
+  font-weight: 400;
+}
+[data-theme="academy"] .ll-vacant__note {
+  color: var(--ac-caption);
+  opacity: 1;
+}
+[data-theme="academy"] .ll-vacant__frame {
+  border-color: var(--ac-hairline);
+  color: var(--ac-hairline);
+}
+[data-theme="academy"] .ll-snap-title,
+[data-theme="academy"] .ll-snap figcaption {
+  color: var(--ac-caption);
+}
+[data-theme="academy"] .pub-filter-btn {
+  color: var(--ac-caption);
+}
+[data-theme="academy"] .pub-filter-btn:hover {
+  color: var(--ac-ink);
+  background-color: var(--ac-card-quiet);
+}
+[data-theme="academy"] .pub-filter-btn.active {
+  color: var(--ac-on-forest);
+  background-color: var(--ac-forest);
+}
+
+/* The trust strip's captions sit on the deeper sand band, where the generic
+   caption tone was still calibrated for the canvas. */
+/* The trust strip is a child of the hero sheet, which in this skin is the
+   green banner — so it inherits the banner's light ink and then sits on its
+   own sand band, where that light ink measures 1.14:1. Reset the whole subtree
+   to the card's own text roles rather than patching the caption alone. */
+[data-theme="academy"] .ll-stat-row {
+  color: var(--ac-ink);
+}
+[data-theme="academy"] .ll-stat-cell .ui-caption {
+  color: var(--ac-caption);
+}
+[data-theme="academy"] .ll-stat-row .ll-stat {
+  color: var(--ac-forest);
 }
 
 /* --------------------------------------------------------------------------

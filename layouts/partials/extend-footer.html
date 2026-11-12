@@ -35,6 +35,13 @@
   </div>
 </div>
 
+<!-- Journal skin scroll choreography (academy only) -->
+{{ $journalReveal := resources.Get "js/journal-reveal.js" }}
+{{ if $journalReveal }}
+  {{ $jr := $journalReveal | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $jr.RelPermalink }}" integrity="{{ $jr.Data.Integrity }}" defer></script>
+{{ end }}
+
 <!-- Skin switcher wiring -->
 {{ $skinSwitch := resources.Get "js/skin-switcher.js" }}
 {{ if $skinSwitch }}
