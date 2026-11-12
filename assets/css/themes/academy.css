@@ -53,6 +53,23 @@
      which put the banner 7px right of the masthead on phones. */
   --ac-gutter: clamp(20px, 6vw, 72px);
 
+  /* --- M3 shape scale, reduced to what this skin actually uses -----------
+     The journal is a squared identity: 2px is the default edge, and the
+     rounder steps exist only where a control needs to read as a control (a
+     dropdown panel, a search field). Naming them keeps that distinction
+     explicit instead of scattering one-off pixel values. */
+  --md-shape-xs: 2px;      /* cards, chips, buttons — the journal's edge */
+  --md-shape-sm: 4px;      /* badges, small tags */
+  --md-shape-md: 8px;      /* dropdown panels, popovers */
+  --md-shape-lg: 12px;     /* large containers, if ever needed */
+  --md-shape-full: 9999px; /* pills */
+
+  /* --- M3 motion ---------------------------------------------------------
+     The emphasised easing is M3's standard for anything that changes state;
+     it decelerates hard, which is what makes a control feel settled rather
+     than springy. */
+  --md-ease-emphasised: cubic-bezier(0.2, 0, 0, 1);
+
   /* — Rebind every MD3 role the components read, so nothing is left
        pointing at the manuscript palette. — */
   --md-primary: var(--ac-bronze);
@@ -366,8 +383,11 @@
   color: #e6ece9;
 }
 [data-theme="academy"] .ll-team-head .ll-mode__opt.is-current {
-  color: var(--ac-forest-deep);
-  background-color: var(--ac-on-forest);
+  /* A segmented control's selected segment is a state, not a call to action.
+     The soft container marks it without adding another block of deep green to
+     a bar that already carries one. */
+  color: var(--md-on-secondary-container);
+  background-color: var(--md-secondary-container);
 }
 
 /* the search field on publications sits in the banner too */
@@ -375,7 +395,7 @@
   background-color: rgb(255 255 255 / 0.10);
   color: #ffffff;
   box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.24);
-  border-radius: 2px;
+  border-radius: var(--md-shape-xs);
 }
 [data-theme="academy"] .ll-page-head .ll-input::placeholder {
   color: rgb(255 255 255 / 0.70);
@@ -515,7 +535,7 @@
    Buttons — squared off, bronze or forest
    -------------------------------------------------------------------------- */
 [data-theme="academy"] .ll-btn {
-  border-radius: 2px;
+  border-radius: var(--md-shape-xs);
   font-family: var(--font-ui);
   font-weight: 600;
   font-size: 12px;
@@ -1097,8 +1117,12 @@
   top: 0;
   left: 0;
   z-index: 0;
-  border-radius: 2px;
-  background-color: var(--ac-forest);
+  border-radius: var(--md-shape-xs);
+  /* The selected chip is a filter state, not a primary action. Deep forest is
+     the masthead and the footer — using the same tone here made four separate
+     things read as one block of green. A soft container with dark ink marks
+     the state without competing with the page's structure. */
+  background-color: var(--md-secondary-container);
   transition: transform 360ms var(--ll-ease-out),
               width 360ms var(--ll-ease-out),
               height 360ms var(--ll-ease-out);
@@ -1113,7 +1137,10 @@
 [data-theme="academy"] .pub-filter-btn.active,
 [data-theme="academy"] .pub-filter-btn:hover {
   background-color: transparent !important;
-  color: var(--ac-on-forest) !important;
+  color: var(--md-on-secondary-container) !important;
+}
+[data-theme="academy"] .pub-filter-btn:hover:not(.active) {
+  color: var(--ac-ink) !important;
 }
 [data-theme="academy"] .pub-filter-btn:not(.active) {
   color: var(--ac-caption);
@@ -1123,6 +1150,66 @@
    the academy skin (html has the attribute, so :not fails, BUT the compound
    still matched a descendant chain), which hid the marker at all times. */
 html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
+
+/* --------------------------------------------------------------------------
+   M3 state layers
+   --------------------------------------------------------------------------
+   Material's state model layers a translucent tint of the *content* colour over
+   the surface at a fixed opacity per interaction state — 8% hover, 12% press.
+   Because the tint is derived from the ink rather than hand-picked, it works on
+   sand, on the deep green band, and in dark mode without a second palette, and
+   it never fights the underlying surface tone the way a solid hover colour
+   does.
+
+   Applied to the controls that currently change colour wholesale on hover.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .pub-filter-btn,
+[data-theme="academy"] .ll-cite,
+[data-theme="academy"] .ll-btn--outline,
+[data-theme="academy"] .ll-person__mail {
+  position: relative;
+  isolation: isolate;
+}
+[data-theme="academy"] .pub-filter-btn::after,
+[data-theme="academy"] .ll-cite::after,
+[data-theme="academy"] .ll-btn--outline::after,
+[data-theme="academy"] .ll-person__mail::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-color: currentColor;
+  opacity: 0;
+  transition: opacity 120ms var(--md-ease-emphasised);
+  pointer-events: none;
+}
+[data-theme="academy"] .pub-filter-btn:hover::after,
+[data-theme="academy"] .ll-cite:hover::after,
+[data-theme="academy"] .ll-btn--outline:hover::after,
+[data-theme="academy"] .ll-person__mail:hover::after {
+  opacity: 0.08;
+}
+[data-theme="academy"] .pub-filter-btn:active::after,
+[data-theme="academy"] .ll-cite:active::after,
+[data-theme="academy"] .ll-btn--outline:active::after,
+[data-theme="academy"] .ll-person__mail:active::after {
+  opacity: 0.12;
+}
+/* The state layer replaces the wholesale hover repaint on these controls, so
+   their own hover rules must stop competing with it. */
+[data-theme="academy"] .pub-filter-btn:hover:not(.active) {
+  background-color: transparent !important;
+}
+[data-theme="academy"] .ll-cite:hover {
+  background-color: transparent;
+  color: var(--ac-bronze-deep);
+  box-shadow: inset 0 0 0 1px var(--ac-bronze);
+}
+[data-theme="academy"] .ll-btn--outline:hover {
+  background-color: transparent;
+  color: var(--ac-bronze-text);
+}
 
 /* --------------------------------------------------------------------------
    Micro-interactions
@@ -1246,14 +1333,7 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
 [data-theme="academy"] .pub-filter-btn {
   color: var(--ac-caption);
 }
-[data-theme="academy"] .pub-filter-btn:hover {
-  color: var(--ac-ink);
-  background-color: var(--ac-card-quiet);
-}
-[data-theme="academy"] .pub-filter-btn.active {
-  color: var(--ac-on-forest);
-  background-color: var(--ac-forest);
-}
+/* (handled above: the marker layer carries the selected fill) */
 
 /* The trust strip's captions sit on the deeper sand band, where the generic
    caption tone was still calibrated for the canvas. */
@@ -1297,7 +1377,7 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
 [data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-person__swap {
   background-color: rgb(19 54 45 / 0.85);
   color: var(--ac-on-forest);
-  border-radius: 2px;
+  border-radius: var(--md-shape-xs);
   width: 22px;
   height: 22px;
   right: 8px;
@@ -1348,7 +1428,7 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
   background-color: var(--ac-bronze) !important;
   color: var(--ac-on-bronze) !important;
   padding: 4px 9px !important;
-  border-radius: 2px !important;
+  border-radius: var(--md-shape-xs) !important;
   font-family: var(--font-ui) !important;
   font-size: 12px !important;
   font-weight: 600 !important;
@@ -1382,22 +1462,18 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
 }
 [data-theme="academy"] .ll-pub-impact { color: var(--ac-bronze-deep); }
 [data-theme="academy"] .pub-filter-btn {
-  border-radius: 2px;
+  border-radius: var(--md-shape-xs);
   font-family: var(--font-ui);
   font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-}
-[data-theme="academy"] .pub-filter-btn.active {
-  background-color: var(--ac-forest);
-  color: var(--ac-on-forest);
 }
 [data-theme="academy"] .ll-abstract__head {
   font-family: var(--font-ui);
   color: var(--ac-bronze-deep);
 }
 [data-theme="academy"] .ll-input {
-  border-radius: 2px;
+  border-radius: var(--md-shape-xs);
   box-shadow: inset 0 0 0 1px var(--ac-hairline);
   background-color: #faf6f0;
 }
@@ -1422,7 +1498,7 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
   font-weight: 400;
 }
 [data-theme="academy"] .ll-entry .ll-btn--xs {
-  border-radius: 2px;
+  border-radius: var(--md-shape-xs);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-family: var(--font-ui);
@@ -1506,7 +1582,7 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
   gap: 5px;
   height: 28px;
   padding-inline: 9px 7px;
-  border-radius: 7px;
+  border-radius: var(--md-shape-md);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;
@@ -1550,7 +1626,7 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
   display: flex;
   flex-direction: column;
   gap: 2px;
-  border-radius: 8px;
+  border-radius: var(--md-shape-md);
   border: 0.5px solid var(--md-outline-variant);
   background-color: var(--md-surface-container);
   box-shadow: var(--ll-shadow-loose);
@@ -1563,7 +1639,7 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
   width: 100%;
   padding: 8px 10px;
   border: 0;
-  border-radius: 5px;
+  border-radius: var(--md-shape-sm);
   background: transparent;
   font-family: var(--font-mono);
   font-size: 12px;
@@ -1596,7 +1672,7 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
   color: var(--ac-on-forest-soft);
   background-color: rgb(255 255 255 / 0.08);
   box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.22);
-  border-radius: 2px;
+  border-radius: var(--md-shape-xs);
 }
 [data-theme="academy"] .ll-langmenu > summary:hover,
 [data-theme="academy"] .ll-langmenu__btn:hover,
@@ -1608,12 +1684,12 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
 [data-theme="academy"] .ll-skinmenu__pop {
   background-color: var(--ac-forest-soft);
   border-color: rgb(255 255 255 / 0.16);
-  border-radius: 2px;
+  border-radius: var(--md-shape-xs);
 }
 [data-theme="academy"] .ll-langmenu__item,
 [data-theme="academy"] .ll-skinmenu__item {
   color: var(--ac-on-forest-soft);
-  border-radius: 2px;
+  border-radius: var(--md-shape-xs);
 }
 [data-theme="academy"] .ll-langmenu__item.is-current,
 [data-theme="academy"] .ll-skinmenu__item.is-current {
@@ -1738,9 +1814,18 @@ html.dark[data-theme="academy"] {
 
   --md-primary: var(--ac-bronze);
   --md-on-primary: #2a1c10;
+  --md-primary-container: #4a3527;
+  --md-on-primary-container: #f0dcc8;
   --md-secondary: #a8c6ba;
+  --md-on-secondary: #10231d;
   --md-secondary-container: #24352f;
   --md-on-secondary-container: #d6e6df;
+  --md-tertiary: #d9a487;
+  --md-on-tertiary: #38180c;
+  --md-tertiary-container: #54291b;
+  --md-on-tertiary-container: #f6d9c8;
+  --md-background: var(--ac-canvas);
+  --md-on-background: var(--ac-ink);
   --md-surface: var(--ac-canvas);
   --md-on-surface: var(--ac-ink);
   --md-surface-variant: #2a3630;
@@ -1752,6 +1837,10 @@ html.dark[data-theme="academy"] {
   --md-surface-highest: #27332d;
   --md-outline: #6d7a73;
   --md-outline-variant: var(--ac-hairline);
+  --md-inverse-surface: var(--ac-ink);
+  --md-inverse-on-surface: #171d1a;
+  --md-inverse-primary: var(--ac-bronze);
+  --md-scrim: #000000;
   --ll-ink: var(--ac-ink);
   --ll-ink-soft: var(--ac-ink-soft);
   --ll-ink-muted: var(--ac-ink-muted);

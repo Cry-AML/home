@@ -190,6 +190,35 @@ def main():
     need('.ll-chip-marker' in css,
          'academy.css: no filter marker styling')
 
+    # --- M3 token parity: dark must define the same roles as light --------
+    light_block = css[css.index('[data-theme="academy"] {'):]
+    light_block = light_block[:light_block.index('\n}')]
+    dark_i = css.index('html.dark[data-theme="academy"] {')
+    dark_block = css[dark_i:css.index('\n}', dark_i)]
+    light_tokens = set(re.findall(r'(--md-[a-z-]+):', light_block))
+    dark_tokens = set(re.findall(r'(--md-[a-z-]+):', dark_block))
+    missing = sorted(t for t in light_tokens - dark_tokens if not t.startswith('--md-shape')
+                     and not t.startswith('--md-ease'))
+    need(not missing,
+         f'academy.css: dark mode does not define {missing} — those roles fall '
+         f'back to the notebook palette and a foreign colour leaks in')
+
+    # --- the shape scale is declared and used ------------------------------
+    for tok in ('--md-shape-xs', '--md-shape-sm', '--md-shape-md'):
+        need(tok in css, f'academy.css: shape token {tok} is not declared')
+    need('border-radius: var(--md-shape' in css,
+         'academy.css: the shape scale is declared but never used')
+
+    # --- state layers ------------------------------------------------------
+    need('opacity: 0.08' in css and 'opacity: 0.12' in css,
+         'academy.css: M3 state layers (8% hover / 12% press) are missing')
+
+    # --- the selected chip must not be deep forest -------------------------
+    marker = re.search(r'\[data-theme="academy"\] \.ll-chip-marker \{([^}]*)\}', css)
+    need(marker is not None and 'var(--md-secondary-container)' in marker.group(1),
+         'academy.css: the selected filter chip is back on the deep masthead '
+         'green instead of a soft container')
+
     # the fluorescent cyan must not survive into the journal skin
     for bad in ('8bf4f2', '7CE7DF', '7ce7df'):
         need(bad.lower() not in css.lower(),
