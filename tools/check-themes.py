@@ -267,6 +267,44 @@ def main():
          'animation: none' in custom.split('ll-skin-switched .ll-sheet')[1][:120],
          'custom.css: no rule suppressing the sheet animation on a skin change')
 
+    # --- mobile header controls must be legible on the green bar ----------
+    # The desktop icon controls are `button.bf-icon-color-hover`; the mobile bar
+    # uses Tailwind's text-neutral-900 on a <button> and a bare <label> for the
+    # drawer, neither of which matched, so both rendered near-black on deep
+    # green.
+    need('#appearance-switcher-mobile' in css,
+         'academy.css: the mobile theme toggle has no journal colour, so it '
+         'renders near-black on the green bar')
+    need('label[for="mobile-menu-toggle"]' in css,
+         'academy.css: the mobile drawer trigger has no journal colour')
+    need('label.bf-icon-color-hover' in css,
+         'academy.css: the <label> variant of the icon control is not covered')
+
+    # --- the surface scale must actually be defined ------------------------
+    # --md-surface-container-high was referenced by six rules but never given a
+    # value, so each of them painted transparent.
+    # Both palettes must carry every surface step: a token defined only in the
+    # light block paints transparent in dark mode and vice versa.
+    light_block_c = custom[custom.index(':root {'):]
+    light_block_c = light_block_c[:light_block_c.index('\n}')]
+    dark_i_c = custom.index('html.dark {')
+    dark_block_c = custom[dark_i_c:custom.index('\n}', dark_i_c)]
+    for tok in ('--md-surface-container-high', '--md-surface-low',
+                '--md-surface-container', '--md-surface-highest'):
+        need(tok + ':' in light_block_c,
+             f'custom.css: {tok} missing from the light palette (rules using it '
+             f'paint transparent)')
+        need(tok + ':' in dark_block_c,
+             f'custom.css: {tok} missing from the dark palette')
+
+    # --- the selected dropdown row must not use the loud state colour -----
+    cur = re.search(r'\.ll-langmenu__item\.is-current[^{]*\{([^}]*)\}', css)
+    need(cur is not None, 'academy.css: no styling for the selected dropdown item')
+    if cur:
+        need('--md-secondary-container' not in cur.group(1),
+             'academy.css: the selected dropdown row is back on the palette\'s '
+             'fluorescent state colour')
+
     # --- language switch keeps the reader's place ------------------------
     lang_js_path = ROOT / 'assets' / 'js' / 'lang-scroll.js'
     need(lang_js_path.exists(),
@@ -290,10 +328,14 @@ def main():
              'of proportion with the fluid wordmark')
     need('ll-footer-mark' in custom, 'custom.css: .ll-footer-mark is gone')
 
-    # the fluorescent cyan must not survive into the journal skin
+    # The fluorescent cyan must not survive into the journal skin as a *colour*.
+    # Comments are stripped first: this file explains the decision to remove
+    # that cyan by naming it, and a bare substring test would flag its own
+    # rationale.
+    css_no_comments = re.sub(r'/\*[\s\S]*?\*/', '', css)
     for bad in ('8bf4f2', '7CE7DF', '7ce7df'):
-        need(bad.lower() not in css.lower(),
-             f'academy: fluorescent cyan {bad} still present')
+        need(bad.lower() not in css_no_comments.lower(),
+             f'academy: fluorescent cyan {bad} still used as a colour')
 
     # --- the default must be untouched --------------------------------------
     need('[data-theme="academy"]' not in custom,

@@ -88,6 +88,10 @@
   --md-surface-lowest: #ffffff;
   --md-surface-low: #fff1ea;
   --md-surface-container: #fbebe3;
+  /* The M3 surface scale has a step between "container" and "high" that this
+     palette referenced but never defined; without it any rule using
+     --md-surface-container-high painted transparent. */
+  --md-surface-container-high: #f5e5dd;
   --md-surface-high: #f5e5dd;
   --md-surface-highest: #efdfd8;
   --md-outline: #8d7165;
@@ -220,6 +224,7 @@ html.dark {
   --md-surface-lowest: #190b01;
   --md-surface-low: #241914;
   --md-surface-container: #281d18;
+  --md-surface-container-high: #332822;
   --md-surface-high: #332822;
   --md-surface-highest: #3e322c;
   --md-outline: #a88b7e;

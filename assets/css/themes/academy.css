@@ -230,17 +230,46 @@
   transform: scaleX(1);
 }
 
-/* the appearance and search buttons sit on green now */
+/* The masthead's icon controls sit on green now.
+   The desktop set is `button.bf-icon-color-hover`, but the mobile bar is built
+   differently: the theme toggle carries Tailwind's `text-neutral-900` and the
+   drawer trigger is a <label>, not a button. Neither matched the desktop rule,
+   so on a phone in this skin both rendered in near-black on the deep green bar
+   — the "black buttons" of the report. */
 [data-theme="academy"] #appearance-switcher,
+[data-theme="academy"] #appearance-switcher-mobile,
 [data-theme="academy"] #search-button,
-[data-theme="academy"] button.bf-icon-color-hover {
+[data-theme="academy"] #search-button-mobile,
+[data-theme="academy"] button.bf-icon-color-hover,
+[data-theme="academy"] label.bf-icon-color-hover,
+[data-theme="academy"] .main-menu label[for="mobile-menu-toggle"] {
   color: var(--ac-on-forest-soft) !important;
 }
 [data-theme="academy"] #appearance-switcher:hover,
+[data-theme="academy"] #appearance-switcher-mobile:hover,
 [data-theme="academy"] #search-button:hover,
-[data-theme="academy"] button.bf-icon-color-hover:hover {
+[data-theme="academy"] #search-button-mobile:hover,
+[data-theme="academy"] button.bf-icon-color-hover:hover,
+[data-theme="academy"] label.bf-icon-color-hover:hover {
   color: #ffffff !important;
-  background-color: rgb(255 255 255 / 0.08) !important;
+  background-color: rgb(255 255 255 / 0.10) !important;
+}
+/* Touch targets on the green bar need a visible box, not just a hover tint:
+   on a phone there is no hover, and a bare glyph at 4px wide (its natural size
+   before this rule) is not a target anyone can hit. */
+@media (max-width: 767px) {
+  [data-theme="academy"] #appearance-switcher-mobile,
+  [data-theme="academy"] .main-menu label[for="mobile-menu-toggle"] {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--md-shape-xs);
+    background-color: rgb(255 255 255 / 0.08);
+  }
+  [data-theme="academy"] #appearance-switcher-mobile svg,
+  [data-theme="academy"] .main-menu label[for="mobile-menu-toggle"] svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1562,6 +1591,32 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
 }
 
 /* --------------------------------------------------------------------------
+   The header dropdown shell — a panel on either skin
+   --------------------------------------------------------------------------
+   In the notebook skin the popover used --md-surface-container (#fbebe3) on a
+   page of --ll-desk (#efe4dd): a 1.0-ish step, so the panel had no edge and the
+   selected row filled it with the fluorescent cyan that is that palette's
+   state colour. Measured contrast inside the open popover was 1.47:1.
+   The shell now takes the raised surface and a real border on both skins, and
+   the selected row uses a filled container with dark ink instead of the
+   saturated accent.
+   -------------------------------------------------------------------------- */
+.ll-langmenu__pop,
+.ll-skinmenu__pop {
+  background-color: var(--md-surface-lowest);
+  border: 0.5px solid var(--md-outline-variant);
+  box-shadow: 0 10px 28px -12px rgb(0 0 0 / 0.28);
+}
+.ll-langmenu__item.is-current,
+.ll-skinmenu__item.is-current {
+  /* a filled, quiet container — not the palette's loudest state colour */
+  color: var(--md-primary);
+  background-color: var(--md-surface-container-high);
+  font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--md-primary);
+}
+
+/* --------------------------------------------------------------------------
    The two header dropdowns — language and skin
    --------------------------------------------------------------------------
    Both are <details> menus at every width, so the masthead carries one control
@@ -1632,9 +1687,8 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
   flex-direction: column;
   gap: 2px;
   border-radius: var(--md-shape-md);
-  border: 0.5px solid var(--md-outline-variant);
-  background-color: var(--md-surface-container);
-  box-shadow: var(--ll-shadow-loose);
+  /* the shell's colour and elevation are set by the panel rule below; only the
+     geometry lives here */
 }
 .ll-langmenu__item,
 .ll-skinmenu__item {
@@ -1662,11 +1716,17 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
   color: var(--md-on-surface);
   background-color: var(--md-surface-high);
 }
+/* The selected row is a quiet filled container with dark ink and a 2px accent
+   on its leading edge. It used --md-secondary-container, which in the notebook
+   palette is the fluorescent cyan (#8bf4f2): as a full-row fill inside a
+   popover that read as a highlighter smear, and measured 1.47:1 against the
+   panel because the panel was the same tone. */
 .ll-langmenu__item.is-current,
 .ll-skinmenu__item.is-current {
-  color: var(--md-on-secondary-container);
-  background-color: var(--md-secondary-container);
+  color: var(--md-primary);
+  background-color: var(--md-surface-container-high);
   font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--md-primary);
 }
 .ll-skinmenu__glyph { font-size: 12px; opacity: 0.85; }
 
