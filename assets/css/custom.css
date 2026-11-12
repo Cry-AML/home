@@ -127,6 +127,9 @@
   --ll-tomato: var(--md-error);
   --ll-teal: var(--md-secondary);
 
+  /* — Portrait width, shared by the PI and every member card — */
+  --ll-portrait-w: 280px;
+
   /* — Sheet physics — */
   --ll-shade: 78 52 38;
   --ll-tilt-max: 1.6deg;
@@ -2307,9 +2310,17 @@ html.dark .ll-footer-mark {
 .ll-portrait__place { color: var(--md-outline); }
 
 /* --- PI row -------------------------------------------------------------- */
+/* The PI portrait and the member portraits are the same kind of image, so they
+   share one size. The PI's column used to be 140px while a member card in a
+   three-column grid rendered at 379px — the founder of the lab read as a
+   thumbnail next to everyone else's full print.
+   A fixed 280px column splits the difference: the PI is large enough to be
+   the first portrait on the page, and the member cards (which are wider,
+   because three of them share the sheet) are no longer three times its size.
+   One token drives both, so they cannot drift apart again. */
 .ll-pi-row {
   display: grid;
-  grid-template-columns: 140px minmax(0, 1fr);
+  grid-template-columns: var(--ll-portrait-w) minmax(0, 1fr);
   gap: clamp(20px, 3vw, 40px);
   align-items: start;
 }
@@ -2332,6 +2343,61 @@ html.dark .ll-footer-mark {
    constrained, by the PI row's first column. */
 .ll-person--pi {
   width: 100%;
+}
+
+/* --- the PI portrait, wherever it appears --------------------------------
+   The same photograph appears three times: in the PI row on Team, in the
+   homepage's marginal note, and above the biography on the Experience page.
+   Each placement gets a width from the shared token and a layout that suits
+   its column, but the portrait itself is drawn by the one .ll-person--pi frame
+   in all three, so the face is never scaled differently for no reason.
+   ------------------------------------------------------------------------- */
+/* Team: sits in the PI row's first column, top-aligned with the name. */
+.ll-pi-row .ll-person--pi { width: 100%; }
+
+/* Home: the marginal note is narrower than the hero statement, so the
+   portrait takes the full column width and the note reads beneath it. */
+.ll-person--hero {
+  /* The marginal note's text runs edge to edge in its column, so the portrait
+     should too. Capping it at the shared token left a 100px step against the
+     text at 1440; letting it fill the column makes the note read as one block,
+     and the hero column is wider than the Team PI row anyway — never narrower,
+     so this cannot make the PI smaller than the reference size. */
+  width: 100%;
+  margin-bottom: 22px;
+}
+/* Once the note stacks under the statement it spans the whole container, so a
+   100%-wide portrait would become the largest image on the page. Hold it at
+   the shared reference size instead. */
+@media (max-width: 900px) {
+  .ll-person--hero {
+    width: var(--ll-portrait-w);
+    max-width: 100%;
+  }
+}
+
+
+/* Experience: the biography sheet is a 5-of-12 column. The portrait floats
+   beside the name block at that width and drops above it when the column
+   gets narrow, rather than squeezing the text into a sliver. */
+.ll-bio-head {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(16px, 2vw, 26px);
+}
+.ll-person--bio {
+  flex: none;
+  /* The biography sheet is a 5-of-12 column, roughly 400px at desktop. 34%
+     of that gave a 140px portrait — a thumbnail beside the same face at 281px
+     on the Team page. 44% lands at ~175px: still clearly the smaller of the
+     three placements, because this column is the narrowest, but no longer a
+     different order of magnitude. */
+  width: clamp(150px, 44%, 230px);
+}
+.ll-bio-id { min-width: 0; }
+@media (max-width: 640px) {
+  .ll-bio-head { flex-direction: column; }
+  .ll-person--bio { width: 160px; }
 }
 
 /* --- people grids -------------------------------------------------------- */
@@ -2525,7 +2591,7 @@ html.dark .ll-footer-mark {
 @media (max-width: 900px) {
   .ll-people--3,
   .ll-people--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ll-pi-row { grid-template-columns: 110px minmax(0, 1fr); }
+  .ll-pi-row { grid-template-columns: 220px minmax(0, 1fr); }
 }
 @media (max-width: 720px) {
   .ll-mode { width: 100%; }
@@ -2534,7 +2600,7 @@ html.dark .ll-footer-mark {
   .ll-people--3,
   .ll-people--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .ll-pi-row { grid-template-columns: minmax(0, 1fr); }
-  .ll-person--pi { max-width: 110px; }
+  .ll-person--pi { max-width: 220px; }
   .ll-person__name { font-size: 15px; }
   .ll-seat__title { font-size: 15px; }
 }

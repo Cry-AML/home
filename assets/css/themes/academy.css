@@ -825,7 +825,9 @@
 [data-theme="academy"] .ll-sheet--people .ll-sheet-label { color: var(--ac-ink-muted); }
 
 /* PI: the biography sits open on the canvas; the aside is a sand card */
-[data-theme="academy"] .ll-pi-row { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+/* Same portrait width as the notebook skin: the PI is a member card, and the
+   shared token keeps the two skins from disagreeing about how big a face is. */
+[data-theme="academy"] .ll-pi-row { grid-template-columns: var(--ll-portrait-w) minmax(0, 1fr); }
 [data-theme="academy"] .ll-pi-body .ui-body { color: var(--ac-ink-soft); }
 [data-theme="academy"] .ll-pi-links .ll-btn--outline {
   color: #ffffff;

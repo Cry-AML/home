@@ -10,9 +10,37 @@
 
   <div class="grid grid-cols-1 md:grid-cols-12 gap-7 items-start">
     <div class="md:col-span-5 ll-sheet" style="--ll-tilt:-0.3deg; --ll-sheet-i:0">
-      <h2 class="ui-heading">{{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}</h2>
-      <p class="ui-caption mt-1">{{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }}</p>
-      <p class="ui-caption mt-0.5">{{ cond $isEn $lab.pi.institutionEn $lab.pi.institutionZh }}</p>
+      {{/* The biography sheet opens with the portrait, matching Team. The
+           float keeps the three intro paragraphs to its right at wide widths
+           and lets them run full width beneath it when the column narrows. */}}
+      {{ with $lab.pi.photoReal }}
+        <div class="ll-bio-head">
+          <article class="ll-person ll-person--pi ll-person--bio" data-person>
+            <button type="button" class="ll-person__frame" data-person-toggle
+                    aria-label="{{ if $isEn }}Toggle illustrated portrait{{ else }}切换插画头像{{ end }}">
+              <img class="ll-person__img ll-person__img--real is-visible nozoom"
+                   src="{{ . | relURL }}" alt="{{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}"
+                   width="640" height="800" decoding="async">
+              {{ with $lab.pi.photoIllustrated }}
+                <img class="ll-person__img ll-person__img--art nozoom"
+                     src="{{ . | relURL }}" alt="" aria-hidden="true"
+                     width="640" height="800" loading="lazy" decoding="async">
+                <span class="ll-person__swap" aria-hidden="true">⇄</span>
+              {{ end }}
+            </button>
+          </article>
+
+          <div class="ll-bio-id">
+            <h2 class="ui-heading">{{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}</h2>
+            <p class="ui-caption mt-1">{{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }}</p>
+            <p class="ui-caption mt-0.5">{{ cond $isEn $lab.pi.institutionEn $lab.pi.institutionZh }}</p>
+          </div>
+        </div>
+      {{ else }}
+        <h2 class="ui-heading">{{ cond $isEn $lab.pi.nameEn $lab.pi.nameZh }}</h2>
+        <p class="ui-caption mt-1">{{ cond $isEn $lab.pi.titleEn $lab.pi.titleZh }}</p>
+        <p class="ui-caption mt-0.5">{{ cond $isEn $lab.pi.institutionEn $lab.pi.institutionZh }}</p>
+      {{ end }}
 
       <hr class="ll-rule my-5">
 
