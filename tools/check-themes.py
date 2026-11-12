@@ -82,9 +82,11 @@ def main():
 
     # --- the switcher --------------------------------------------------------
     sw = SWITCHER.read_text() if SWITCHER.exists() else ''
-    need('id="skin-switcher"' in sw, 'skin-switcher.html: missing #skin-switcher')
-    need('type="button"' in sw, 'skin-switcher.html: must be a <button>, not a link')
-    need('aria-pressed' in sw, 'skin-switcher.html: pressed state is not exposed')
+    need('id="skin-menu"' in sw, 'skin-switcher.html: missing #skin-menu')
+    need('<details' in sw, 'skin-switcher.html: must be a <details> menu')
+    need('role="option"' in sw and 'aria-selected' in sw,
+         'skin-switcher.html: menu items do not expose their selected state')
+    need('data-skin-opt' in sw, 'skin-switcher.html: no skin options to choose')
     need('header/components/skin-switcher.html'
          in (ROOT / 'layouts/partials/header/basic.html').read_text(),
          'header/basic.html: switcher is not mounted')
@@ -145,9 +147,12 @@ def main():
 
     # On narrow screens the switcher must still name the current skin rather
     # than reducing to two unexplained glyphs.
-    need(re.search(r'max-width:\s*900px[\s\S]{0,200}\.ll-skin__name\s*\{\s*display:\s*inline',
-                   css) is not None,
-         'academy.css: narrow screens hide the skin name, leaving glyphs only')
+    # The trigger always states the current value; no width may reduce it to a
+    # bare glyph.
+    need('ll-skinmenu__cur' in sw,
+         'skin-switcher.html: the trigger does not name the current skin')
+    need(re.search(r'\.ll-skinmenu__pop', css) is not None,
+         'academy.css: no popover rule for the skin menu')
 
     # the fluorescent cyan must not survive into the journal skin
     for bad in ('8bf4f2', '7CE7DF', '7ce7df'):

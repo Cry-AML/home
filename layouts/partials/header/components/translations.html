@@ -1,38 +1,31 @@
 {{/*
-  Language switch:
-  - On desktop (>=640px): compact 3-way segmented control [EN][简][繁].
-  - On mobile (<640px): elegant single-pill dropdown showing current language
-    [简 ▾], saving ~42px of header space so the brand title and controls
-    breathe cleanly on narrow viewports.
+  Language switch — a dropdown at every width.
+
+  It used to be a three-cell segmented control on desktop and a dropdown on
+  phones. Three cells is only worth the width when the labels are visible, and
+  once the bar also carries a skin switcher the two controls together crowded
+  the navigation. One dropdown for all widths keeps the bar quiet and puts the
+  full language names (not "EN / 简 / 繁") in the list, which is what a reader
+  actually needs to choose.
+
+  Pure CSS: <details> opens and closes without script, and the summary carries
+  the current language so the control always states its own state.
 */}}
 {{ if .IsTranslated }}
   {{ $order := slice "en" "zh-cn" "zh-tw" }}
   {{ $currCode := $.Site.Language.Lang }}
   {{ $currShort := cond (eq $currCode "en") "EN" (cond (eq $currCode "zh-cn") "简" "繁") }}
 
-  {{/* 1. Desktop segmented control */}}
-  <div class="ll-langswitch" role="group" aria-label="{{ i18n "lang_switch_label" }}">
-    {{- range $order -}}
-      {{- $code := . -}}
-      {{- range $.AllTranslations -}}
-        {{- if eq .Language.Lang $code -}}
-          {{- $short := cond (eq $code "en") "EN" (cond (eq $code "zh-cn") "简" "繁") -}}
-          <a href="{{ .RelPermalink }}"
-             class="ll-langswitch__opt{{ if eq $code $currCode }} is-current{{ end }}"
-             lang="{{ .Language.Lang }}"
-             hreflang="{{ .Language.Lang }}"
-             {{ if eq $code $currCode }}aria-current="true"{{ end }}
-             title="{{ .Language.Params.displayName }}">{{ $short }}</a>
-        {{- end -}}
-      {{- end -}}
-    {{- end -}}
-  </div>
-
-  {{/* 2. Mobile pure-CSS dropdown pill */}}
   <details class="ll-langmenu" aria-label="{{ i18n "lang_switch_label" }}">
-    <summary class="ll-langmenu__btn" aria-haspopup="listbox" aria-label="{{ i18n "lang_switch_label" }}: {{ $currShort }}">
-      <span>{{ $currShort }}</span>
-      <svg class="ll-langmenu__arrow" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true">
+    <summary class="ll-langmenu__btn" aria-haspopup="listbox"
+             aria-label="{{ i18n "lang_switch_label" }}: {{ $currShort }}">
+      <svg class="ll-langmenu__globe" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+        <circle cx="8" cy="8" r="6.4" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M1.6 8h12.8M8 1.6c1.8 1.9 2.7 4.1 2.7 6.4S9.8 12.5 8 14.4C6.2 12.5 5.3 10.3 5.3 8S6.2 3.5 8 1.6z"
+              fill="none" stroke="currentColor" stroke-width="1.1"/>
+      </svg>
+      <span class="ll-langmenu__cur">{{ $currShort }}</span>
+      <svg class="ll-langmenu__arrow" viewBox="0 0 10 6" width="9" height="6" aria-hidden="true">
         <path d="M1 1L5 5L9 1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
     </summary>
@@ -41,7 +34,7 @@
         {{- $code := . -}}
         {{- range $.AllTranslations -}}
           {{- if eq .Language.Lang $code -}}
-            {{- $name := cond (eq $code "en") "English (EN)" (cond (eq $code "zh-cn") "简体中文" "繁體中文") -}}
+            {{- $name := cond (eq $code "en") "English" (cond (eq $code "zh-cn") "简体中文" "繁體中文") -}}
             <a href="{{ .RelPermalink }}"
                class="ll-langmenu__item{{ if eq $code $currCode }} is-current{{ end }}"
                lang="{{ .Language.Lang }}"

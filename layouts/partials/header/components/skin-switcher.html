@@ -1,33 +1,35 @@
 {{/*
-  The skin switcher.
+  The skin switcher — a dropdown, matching the language control beside it.
 
-  Two skins, one document. The control names them by what they are — a lab
-  notebook and an institutional journal — rather than by colour, so the choice
-  reads as a point of view rather than a palette.
+  Two cells in the bar worked while the skin switcher was the only extra
+  control, but with the language dropdown next to it the bar carried three
+  different control shapes. One dropdown shape for both keeps the masthead to
+  a single visual grammar, and it lets each skin be named in full rather than
+  relying on two glyphs.
 
-  It is a real toggle button, not two links: the choice is a display
-  preference stored locally, and there is only ever one active state. The
-  pressed state is exposed for assistive tech, and the visible label changes
-  with it so the button never lies about what pressing it does.
-
-  At narrow widths the two names collapse to a single glyph pair, which on its
-  own reads as decoration rather than a control. The button therefore keeps a
-  compact current-skin label beside the glyphs, so a phone reader can still
-  tell what it does and what state it is in.
+  <details> is pure CSS and needs no script to open. The pressed state is still
+  exposed on the button inside, so assistive tech gets the toggle semantics even
+  though the affordance is a menu.
 */}}
-<button
-  type="button"
-  id="skin-switcher"
-  class="ll-skin"
-  aria-label="{{ i18n "skin_switch_label" }}"
-  title="{{ i18n "skin_switch_label" }}"
-  aria-pressed="false">
-  <span class="ll-skin__opt is-current" data-skin-opt="manuscript">
-    <span class="ll-skin__glyph" aria-hidden="true">✒</span>
-    <span class="ll-skin__name">{{ i18n "skin_notebook" }}</span>
-  </span>
-  <span class="ll-skin__opt" data-skin-opt="academy">
-    <span class="ll-skin__glyph" aria-hidden="true">▤</span>
-    <span class="ll-skin__name">{{ i18n "skin_journal" }}</span>
-  </span>
-</button>
+<details class="ll-skinmenu" id="skin-menu">
+  <summary class="ll-skinmenu__btn" aria-haspopup="listbox"
+           aria-label="{{ i18n "skin_switch_label" }}">
+    <span class="ll-skinmenu__glyph" aria-hidden="true" data-skin-glyph>✒</span>
+    <span class="ll-skinmenu__cur" data-skin-name>{{ i18n "skin_notebook" }}</span>
+    <svg class="ll-skinmenu__arrow" viewBox="0 0 10 6" width="9" height="6" aria-hidden="true">
+      <path d="M1 1L5 5L9 1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </summary>
+  <div class="ll-skinmenu__pop" role="listbox">
+    <button type="button" class="ll-skinmenu__item is-current" role="option"
+            data-skin-opt="manuscript" aria-selected="true">
+      <span class="ll-skinmenu__glyph" aria-hidden="true">✒</span>
+      <span>{{ i18n "skin_notebook" }}</span>
+    </button>
+    <button type="button" class="ll-skinmenu__item" role="option"
+            data-skin-opt="academy" aria-selected="false">
+      <span class="ll-skinmenu__glyph" aria-hidden="true">▤</span>
+      <span>{{ i18n "skin_journal" }}</span>
+    </button>
+  </div>
+</details>

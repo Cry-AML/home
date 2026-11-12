@@ -102,9 +102,14 @@ def main():
              f'{label}: PI portrait has no illustrated layer')
 
     # 5. the illustrated layer must not eat the flip click (the Chrome bug)
-    art = re.search(r'\.ll-person__img--art\s*\{([^}]*)\}', custom)
-    need(art is not None and 'pointer-events: none' in art.group(1),
-         'custom.css: .ll-person__img--art lost pointer-events:none')
+    # The base rule must keep the layer out of hit-testing. Variants that only
+    # adjust insets are fine; the invariant is that at least the base block
+    # declares pointer-events: none.
+    base_art = re.search(r'\n\.ll-person__img--art\s*\{([^}]*)\}', custom)
+    need(base_art is not None, 'custom.css: base .ll-person__img--art rule is gone')
+    if base_art:
+        need('pointer-events: none' in base_art.group(1),
+             'custom.css: base .ll-person__img--art lost pointer-events:none')
 
     if problems:
         for p in problems:

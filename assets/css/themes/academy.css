@@ -210,43 +210,6 @@
   background-color: rgb(255 255 255 / 0.08) !important;
 }
 
-/* the language control on green */
-[data-theme="academy"] .ll-langswitch {
-  background-color: rgb(255 255 255 / 0.08);
-  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.22);
-}
-[data-theme="academy"] .ll-langswitch__opt {
-  color: var(--ac-on-forest-soft);
-  border-radius: 2px;
-}
-[data-theme="academy"] .ll-langswitch__opt:hover {
-  color: #ffffff;
-  background-color: rgb(255 255 255 / 0.10);
-}
-[data-theme="academy"] .ll-langswitch__opt.is-current {
-  color: var(--ac-forest-deep);
-  background-color: var(--ac-on-forest);
-}
-[data-theme="academy"] .ll-langmenu__btn {
-  background-color: rgb(255 255 255 / 0.10);
-  color: var(--ac-on-forest);
-  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.22);
-  border-radius: 2px;
-}
-[data-theme="academy"] .ll-langmenu__pop {
-  background-color: var(--ac-forest-soft);
-  border-color: rgb(255 255 255 / 0.16);
-  border-radius: 2px;
-}
-[data-theme="academy"] .ll-langmenu__item {
-  color: var(--ac-on-forest-soft);
-}
-[data-theme="academy"] .ll-langmenu__item:hover,
-[data-theme="academy"] .ll-langmenu__item.is-current {
-  background-color: rgb(255 255 255 / 0.12);
-  color: #ffffff;
-}
-
 /* --------------------------------------------------------------------------
    The sheet disappears: content breathes on the canvas
    --------------------------------------------------------------------------
@@ -314,12 +277,26 @@
    serif type, and a bronze hairline underneath. Implemented by painting the
    container that already wraps the title, so no template changes are needed.
    -------------------------------------------------------------------------- */
+/* Full-bleed banner.
+   --------------------------------------------------------------------------
+   `margin-inline: calc(50% - 50vw)` is the usual trick, but it resolves 50%
+   against the *parent's content box*, not the viewport, when the parent has
+   horizontal padding — here the container is 1296px inside 72px gutters, so
+   the banner came out 570px wide and every heading wrapped to one word per
+   line, which read as vertical type.
+   The reliable form for a padded parent is to cancel the parent's padding and
+   then widen by the viewport, which needs no percentage at all. */
 [data-theme="academy"] .ui-container > .mb-8,
 [data-theme="academy"] .ll-team-head,
 [data-theme="academy"] .ll-page-head {
   position: relative;
   isolation: isolate;
-  margin-inline: calc(50% - 50vw) !important;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  /* Inset the banner's own text by the same optical margin the page body uses,
+     so the headline and the content below it share one left edge. */
   padding: clamp(36px, 5vw, 64px) max(24px, calc(50vw - 36rem)) !important;
   /* The pale end of the reference gradient (#7e8e85) puts white at only
      3.45:1 and the lead at 2.26:1. Stop at #3d544c instead: white 8.17:1,
@@ -551,15 +528,17 @@
   line-height: 1.06;
   max-width: 18em;
 }
-/* the marginal divider becomes a bronze hairline */
+/* The marginal divider: in the journal skin the note is already separated from
+   the statement by the grid gap and its own hairline, so the vertical rule the
+   notebook drew beside it is not needed. Suppressing it also removes the
+   column inset that went with it, which the byline grid now owns. */
 [data-theme="academy"] .ll-hero-note::before {
-  background: none !important;
-  border-left: 1px solid var(--ac-hairline);
-  mask-image: none;
-  -webkit-mask-image: none;
-  width: 0;
+  content: none;
+  display: none;
 }
-[data-theme="academy"] .ll-hero-note { padding-left: clamp(24px, 3.4vw, 52px); }
+[data-theme="academy"] .ll-hero-note {
+  padding-left: 0;
+}
 
 /* --------------------------------------------------------------------------
    The homepage hero — a full-bleed green band under the masthead
@@ -570,10 +549,19 @@
    marginal PI note moves onto the band as a quieter column of the same colour.
    The sheet inside is already transparent, so only this container needs paint.
    -------------------------------------------------------------------------- */
-[data-theme="academy"] .ui-container > .ll-sheet:first-child {
+/* The homepage's first sheet becomes the banner — but only its hero half.
+   The trust strip (four sand columns) is a child of the same sheet, so painting
+   the sheet put a sand band inside the green field, which is what read as
+   wrong. The banner is therefore painted on the hero row itself, and the sheet
+   stays transparent; the strip then sits on the page's own canvas, directly
+   under the band, which is how the reference lays it out. */
+[data-theme="academy"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
   position: relative;
   isolation: isolate;
-  margin-inline: calc(50% - 50vw);
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   padding: clamp(40px, 5.5vw, 76px) max(24px, calc(50vw - 36rem));
   background: linear-gradient(
     115deg,
@@ -582,7 +570,14 @@
     #3d544c 100%
   );
   color: var(--ac-on-forest);
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child {
+  padding: 0;
   margin-bottom: 0;
+}
+/* the rule that used to separate hero from strip is a hairline on the band */
+[data-theme="academy"] .ui-container > .ll-sheet:first-child > .ll-rule {
+  display: none;
 }
 [data-theme="academy"] .ui-container:has(> .ll-sheet:first-child) {
   padding-top: 0 !important;
@@ -1184,61 +1179,165 @@
 }
 
 /* --------------------------------------------------------------------------
-   The skin switcher itself
+   The two header dropdowns — language and skin
    --------------------------------------------------------------------------
-   A two-celled segmented control. Each cell names a skin; the active one is
-   filled. It sits on the green bar, so it is drawn in the bar's own terms.
+   Both are <details> menus at every width, so the masthead carries one control
+   shape instead of a segmented strip, a pill and a menu. They share their
+   geometry; only the accent differs (the language menu marks the current
+   locale, the skin menu marks the current identity).
+
+   Drawn in the bar's own terms: on the notebook skin the menubar is paper, on
+   the journal skin it is the green masthead.
    -------------------------------------------------------------------------- */
-.ll-skin {
-  display: inline-flex;
-  align-items: center;
-  gap: 1px;
-  padding: 2px;
-  border: 0;
-  border-radius: 7px;
-  background-color: var(--md-surface-container-high);
-  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1;
-  transition: background-color var(--ll-dur-hover) var(--ll-ease-out);
+.ll-langmenu,
+.ll-skinmenu {
+  position: relative;
+  display: inline-block;
+  flex: none;
 }
-.ll-skin__opt {
+.ll-langmenu > summary,
+.ll-langmenu__btn,
+.ll-skinmenu > summary {
+  list-style: none;
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 6px 9px;
-  border-radius: 5px;
+  height: 28px;
+  padding-inline: 9px 7px;
+  border-radius: 7px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
   color: var(--md-on-surface-variant);
-  transition: color var(--ll-dur-hover) var(--ll-ease-out),
-              background-color var(--ll-dur-hover) var(--ll-ease-out);
+  background-color: var(--md-surface-container-high);
+  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
+  transition: background-color var(--ll-dur-hover) var(--ll-ease-out),
+              color var(--ll-dur-hover) var(--ll-ease-out);
 }
-.ll-skin__glyph { font-size: 12px; opacity: 0.8; }
-.ll-skin__opt.is-current {
+.ll-langmenu > summary::-webkit-details-marker,
+.ll-langmenu__btn::-webkit-details-marker,
+.ll-skinmenu > summary::-webkit-details-marker { display: none; }
+.ll-langmenu > summary:hover,
+.ll-langmenu__btn:hover,
+.ll-skinmenu > summary:hover {
+  color: var(--md-on-surface);
+  background-color: var(--md-surface-high);
+}
+.ll-langmenu__globe { opacity: 0.7; }
+.ll-langmenu__arrow,
+.ll-skinmenu__arrow {
+  opacity: 0.75;
+  transition: transform 180ms var(--ll-ease-out);
+}
+.ll-langmenu[open] .ll-langmenu__arrow,
+.ll-skinmenu[open] .ll-skinmenu__arrow { transform: rotate(180deg); }
+
+/* the popover — a small sheet, anchored to its trigger's right edge */
+.ll-langmenu__pop,
+.ll-skinmenu__pop {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 60;
+  min-width: 150px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: 8px;
+  border: 0.5px solid var(--md-outline-variant);
+  background-color: var(--md-surface-container);
+  box-shadow: var(--ll-shadow-loose);
+}
+.ll-langmenu__item,
+.ll-skinmenu__item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: start;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--md-on-surface-variant);
+  transition: background-color var(--ll-dur-hover) var(--ll-ease-out),
+              color var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-langmenu__item:hover,
+.ll-skinmenu__item:hover {
+  color: var(--md-on-surface);
+  background-color: var(--md-surface-high);
+}
+.ll-langmenu__item.is-current,
+.ll-skinmenu__item.is-current {
   color: var(--md-on-secondary-container);
   background-color: var(--md-secondary-container);
   font-weight: 600;
 }
-/* on the green masthead */
-[data-theme="academy"] .ll-skin {
+.ll-skinmenu__glyph { font-size: 12px; opacity: 0.85; }
+
+/* --- on the journal masthead: the same shapes, in white on green --- */
+[data-theme="academy"] .ll-langmenu > summary,
+[data-theme="academy"] .ll-langmenu__btn,
+[data-theme="academy"] .ll-skinmenu > summary {
+  color: var(--ac-on-forest-soft);
   background-color: rgb(255 255 255 / 0.08);
   box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.22);
+  border-radius: 2px;
 }
-[data-theme="academy"] .ll-skin__opt { color: var(--ac-on-forest-soft); border-radius: 2px; }
-[data-theme="academy"] .ll-skin__opt.is-current {
+[data-theme="academy"] .ll-langmenu > summary:hover,
+[data-theme="academy"] .ll-langmenu__btn:hover,
+[data-theme="academy"] .ll-skinmenu > summary:hover {
+  color: #ffffff;
+  background-color: rgb(255 255 255 / 0.14);
+}
+[data-theme="academy"] .ll-langmenu__pop,
+[data-theme="academy"] .ll-skinmenu__pop {
+  background-color: var(--ac-forest-soft);
+  border-color: rgb(255 255 255 / 0.16);
+  border-radius: 2px;
+}
+[data-theme="academy"] .ll-langmenu__item,
+[data-theme="academy"] .ll-skinmenu__item {
+  color: var(--ac-on-forest-soft);
+  border-radius: 2px;
+}
+[data-theme="academy"] .ll-langmenu__item.is-current,
+[data-theme="academy"] .ll-skinmenu__item.is-current {
   color: var(--ac-forest-deep);
   background-color: var(--ac-on-forest);
 }
-/* Narrow screens: two glyphs alone read as decoration, so the control shows
-   only the skin you are in — glyph plus its name — and pressing it switches to
-   the other. This is the same shape as the dark-mode toggle beside it: one
-   compact indicator of current state, not a two-cell legend that has shrunk
-   past legibility. */
-@media (max-width: 900px) {
-  .ll-skin__opt:not(.is-current) { display: none; }
-  .ll-skin__opt.is-current { padding: 6px 10px; }
-  .ll-skin__name { display: inline; }
+
+/* Both triggers may drop their glyph text on very narrow bars, but keep the
+   current-value label: a bare glyph is not an affordance. */
+@media (max-width: 420px) {
+  .ll-langmenu__globe { display: none; }
+  .ll-langmenu > summary,
+  .ll-langmenu__btn,
+  .ll-skinmenu > summary { padding-inline: 8px 6px; }
+}
+
+/* Focus is visible on both triggers on every ground. */
+.ll-langmenu > summary:focus-visible,
+.ll-langmenu__btn:focus-visible,
+.ll-skinmenu > summary:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+[data-theme="academy"] .ll-langmenu > summary:focus-visible,
+[data-theme="academy"] .ll-skinmenu > summary:focus-visible {
+  outline-color: var(--ac-bronze-soft);
 }
 
 /* --------------------------------------------------------------------------
