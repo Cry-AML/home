@@ -116,6 +116,39 @@ def main():
     need(re.search(r'\[data-theme="academy"\]\s*\.ll-hi', css) is not None,
          'academy: the marker highlight is not neutralised')
 
+    # --- the switch must be visible and animated -----------------------------
+    # The control sits at the far right of the bar, after the navigation, so it
+    # reads as a display preference rather than another nav item.
+    basic = (ROOT / 'layouts/partials/header/basic.html').read_text()
+    need('header/components/skin-switcher.html' in basic,
+         'header/basic.html: the skin switcher is not mounted')
+    sw_pos = basic.index('header/components/skin-switcher.html')
+    nav_pos = basic.index('header/components/desktop-menu.html')
+    need(sw_pos > nav_pos,
+         'header/basic.html: the switcher must come after the desktop menu')
+
+    # The switch animates. A bare cross-fade (only a duration on both pseudo
+    # elements) reads as a flicker; the journal layer must define a directional
+    # wipe with its own keyframes.
+    need('@keyframes ll-skin-in' in css,
+         'academy.css: no keyframes for the incoming skin')
+    need('@keyframes ll-skin-out' in css,
+         'academy.css: no keyframes for the departing skin')
+    need("clip-path: inset(0 0 100% 0)" in css,
+         'academy.css: the incoming skin is not revealed by a wipe')
+    need('::view-transition-new(root)' in css,
+         'academy.css: the new-skin snapshot is not styled')
+    # reduced motion must collapse the animation, not remove the transition
+    need(re.search(r'prefers-reduced-motion[\s\S]{0,300}animation-duration:\s*1ms', css)
+         is not None,
+         'academy.css: reduced-motion must shorten the wipe, not disable the switch')
+
+    # On narrow screens the switcher must still name the current skin rather
+    # than reducing to two unexplained glyphs.
+    need(re.search(r'max-width:\s*900px[\s\S]{0,200}\.ll-skin__name\s*\{\s*display:\s*inline',
+                   css) is not None,
+         'academy.css: narrow screens hide the skin name, leaving glyphs only')
+
     # the fluorescent cyan must not survive into the journal skin
     for bad in ('8bf4f2', '7CE7DF', '7ce7df'):
         need(bad.lower() not in css.lower(),

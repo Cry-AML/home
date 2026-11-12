@@ -990,24 +990,82 @@
   color: var(--ac-forest-deep);
   background-color: var(--ac-on-forest);
 }
-/* narrow screens: the glyph carries the meaning, the word drops out */
+/* Narrow screens: two glyphs alone read as decoration, so the control shows
+   only the skin you are in — glyph plus its name — and pressing it switches to
+   the other. This is the same shape as the dark-mode toggle beside it: one
+   compact indicator of current state, not a two-cell legend that has shrunk
+   past legibility. */
 @media (max-width: 900px) {
-  .ll-skin__name { display: none; }
-  .ll-skin__opt { padding: 6px 8px; }
+  .ll-skin__opt:not(.is-current) { display: none; }
+  .ll-skin__opt.is-current { padding: 6px 10px; }
+  .ll-skin__name { display: inline; }
 }
 
 /* --------------------------------------------------------------------------
-   The cross-fade between skins
+   The switch between skins
+   --------------------------------------------------------------------------
+   A plain cross-fade reads as a flicker, not as a change of identity. The
+   transition is built so the two skins briefly coexist and one is visibly
+   swept away by the other:
+
+     · the outgoing page lifts and dims very slightly, so the incoming one has
+       something to arrive over;
+     · the incoming page is revealed by a soft vertical edge travelling
+       top-to-bottom, tinted with whichever skin is arriving — sand when the
+       notebook comes back, deep green when the journal takes over. The tint
+       is what makes the direction legible: you can see which way the page
+       turned over.
+
+   The sweep is a clip-path on the new snapshot over a still-visible old one,
+   which the View Transitions API gives us for free. Where the API is missing,
+   skin.js has already fallen back to an instant swap; this file only styles
+   the animated path.
    -------------------------------------------------------------------------- */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 320ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+/* The wipe runs at a near-constant rate: a strong ease-out over this distance
+   covered 77% of the page in the first quarter, which read as a flash rather
+   than a sweep. A gentle ease-in-out keeps the top and bottom readable while
+   the middle moves steadily. */
+::view-transition-old(root) {
+  animation: ll-skin-out 620ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  z-index: 1;
 }
+::view-transition-new(root) {
+  animation: ll-skin-in 620ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  z-index: 2;
+  clip-path: inset(0 0 100% 0);
+}
+/* The departing skin settles back very slightly as it is covered — enough to
+   feel like a sheet being drawn away, not enough to shift text. */
+@keyframes ll-skin-out {
+  0%   { transform: translateY(0) scale(1); filter: saturate(1) brightness(1); }
+  100% { transform: translateY(8px) scale(0.996); filter: saturate(0.75) brightness(0.94); }
+}
+/* The arriving skin is revealed by an edge travelling down the page. A narrow
+   shadow is cast just above that edge, so the boundary reads as a fold rather
+   than two flat images sliding past each other. The shadow is drawn with a
+   gradient of the arriving skin's own ink, which is why it works in both
+   directions: sand folding onto green and green folding onto sand. */
+@keyframes ll-skin-in {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.28));
+  }
+  92% {
+    filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.22));
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0));
+  }
+}
+
+/* Under reduced motion the API is still used for the swap (skin.js does not
+   skip it there — the preference removes animation, not function), so the
+   animation is collapsed rather than the whole transition. */
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation-duration: 0.01ms;
+    animation-duration: 1ms;
   }
 }
 

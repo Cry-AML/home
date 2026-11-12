@@ -9,6 +9,11 @@
   preference stored locally, and there is only ever one active state. The
   pressed state is exposed for assistive tech, and the visible label changes
   with it so the button never lies about what pressing it does.
+
+  At narrow widths the two names collapse to a single glyph pair, which on its
+  own reads as decoration rather than a control. The button therefore keeps a
+  compact current-skin label beside the glyphs, so a phone reader can still
+  tell what it does and what state it is in.
 */}}
 <button
   type="button"
