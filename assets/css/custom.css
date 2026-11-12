@@ -2324,34 +2324,14 @@ html.dark .ll-footer-mark {
 }
 
 /* --- portrait frames ----------------------------------------------------- */
-.ll-avatar {
-  position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: 3px;
-  background-color: var(--md-surface-low);
-  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-.ll-avatar--pi { aspect-ratio: 1 / 1; }
-.ll-avatar__placeholder {
-  display: grid;
-  place-items: center;
+/* The PI now renders through the same .ll-person card as everyone else, so the
+   only thing left to constrain here is how wide that card may grow inside the
+   PI row's fixed first column. */
+/* The PI is a member card at a smaller width, so it keeps the same frame:
+   the 6px mat, the hairline edge, the same 4:5 photograph. Only the width is
+   constrained, by the PI row's first column. */
+.ll-person--pi {
   width: 100%;
-  height: 100%;
-  background-color: var(--md-surface-container);
-}
-.ll-avatar__placeholder img {
-  width: 58%;
-  height: auto;
-  opacity: 0.5;
-  transition: filter var(--ll-dur-hover) var(--ll-ease-out),
-              opacity var(--ll-dur-hover) var(--ll-ease-out);
-}
-html.dark .ll-avatar__placeholder img {
-  filter: brightness(2.8) contrast(1.15);
-  opacity: 0.88;
 }
 
 /* --- people grids -------------------------------------------------------- */
@@ -2554,7 +2534,7 @@ html.dark .ll-avatar__placeholder img {
   .ll-people--3,
   .ll-people--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .ll-pi-row { grid-template-columns: minmax(0, 1fr); }
-  .ll-avatar--pi { max-width: 110px; }
+  .ll-person--pi { max-width: 110px; }
   .ll-person__name { font-size: 15px; }
   .ll-seat__title { font-size: 15px; }
 }
