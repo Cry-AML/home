@@ -198,3 +198,4 @@ apply_body_inquiry: |
 skin_switch_label: "Switch between the lab notebook and the institutional journal"
 skin_notebook: "Notebook"
 skin_journal: "Journal"
+pedigree_current: "Current"

@@ -42,6 +42,16 @@
   /* --ac-bronze is a rule colour (3.96:1 on the card). Body-size bronze text
      needs its own darker tone; 5.07:1 on #e7ddd1. */
   --ac-bronze-text: #7a5238;
+  /* Full-bleed blocks must inset their content by exactly what .ui-container
+     insets its own, or the masthead, the banner headline and the body below it
+     sit on three different left edges. The page read as a left-right-left
+     zigzag because the banner used calc(50vw - 36rem) = 144px while the
+     container used clamp(20px, 6vw, 72px) = 72px. */
+  /* Must equal .ui-container's own padding-inline at every width. The
+     container uses clamp(20px, 6vw, 72px) then pins 16px below 640px, so this
+     matches that curve rather than approximating it: 6vw at 390 is 23.4px,
+     which put the banner 7px right of the masthead on phones. */
+  --ac-gutter: clamp(20px, 6vw, 72px);
 
   /* — Rebind every MD3 role the components read, so nothing is left
        pointing at the manuscript palette. — */
@@ -297,16 +307,23 @@
   margin-right: calc(50% - 50vw) !important;
   /* Inset the banner's own text by the same optical margin the page body uses,
      so the headline and the content below it share one left edge. */
-  padding: clamp(36px, 5vw, 64px) max(24px, calc(50vw - 36rem)) !important;
+  padding: clamp(36px, 5vw, 64px) var(--ac-gutter) !important;
   /* The pale end of the reference gradient (#7e8e85) puts white at only
      3.45:1 and the lead at 2.26:1. Stop at #3d544c instead: white 8.17:1,
      lead 5.24:1, and the wash still reads as a green diagonal. */
-  background: linear-gradient(
-    115deg,
-    #0d2e26 0%,
-    #1f493e 62%,
-    #3d544c 100%
-  ) !important;
+  background-color: #14332b;
+  background-image:
+    radial-gradient(
+      circle at var(--mouse-x, 70%) var(--mouse-y, 26%),
+      rgb(140 175 155 / 0.16),
+      transparent 58%
+    ),
+    linear-gradient(
+      115deg,
+      #0d2e26 0%,
+      #1f493e 62%,
+      #3d544c 100%
+    ) !important;
   color: var(--ac-on-forest);
   margin-bottom: 44px !important;
 }
@@ -422,6 +439,12 @@
 }
 
 /* the hero's marker pass becomes a true italic, as a journal would set it */
+/* The marker pass becomes an italic in the journal skin — but only where the
+   typeface has a real italic. Newsreader does; Chinese does not. A browser
+   that slant-italicises CJK shears every horizontal stroke and opens the
+   structure of the character, which at 58px is unmistakably wrong. For CJK the
+   distinction is carried by tone instead: the second line takes the warm sand
+   gold, one step down from the white statement above it. */
 [data-theme="academy"] .ll-hi {
   background: none !important;
   animation: none !important;
@@ -430,6 +453,32 @@
   font-weight: 400;
   padding-inline: 0;
   margin-inline: 0;
+}
+[data-theme="academy"]:lang(zh) .ll-hi,
+[data-theme="academy"]:lang(zh-cn) .ll-hi,
+[data-theme="academy"]:lang(zh-tw) .ll-hi {
+  font-style: normal;
+  color: #e6d5c3;   /* warm sand-gold, 9.1:1 on the deep green band */
+}
+/* Headline breaking. Chinese sets no spaces, so the browser will happily leave
+   one or two characters stranded on a line ("…与复 / 发机制"). `text-wrap:
+   balance` evens the lines, and `line-break: strict` keeps punctuation off a
+   line start; together they remove the widow without hard-coding a <br> in the
+   copy, which would break the English and Traditional variants. */
+[data-theme="academy"] .ll-hero-lead .ui-title {
+  text-wrap: balance;
+  line-break: strict;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+/* Chinese needs a wider measure than Latin to hold the same line count: a
+   58px CJK glyph is roughly a full em, so the Latin 20em cap packs only a
+   dozen characters per line. */
+[data-theme="academy"]:lang(zh) .ll-hero-lead .ui-title,
+[data-theme="academy"]:lang(zh-cn) .ll-hero-lead .ui-title,
+[data-theme="academy"]:lang(zh-tw) .ll-hero-lead .ui-title {
+  max-width: 15em;
+  letter-spacing: 0.01em;
 }
 
 /* --------------------------------------------------------------------------
@@ -562,13 +611,20 @@
   max-width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding: clamp(40px, 5.5vw, 76px) max(24px, calc(50vw - 36rem));
-  background: linear-gradient(
-    115deg,
-    #0d2e26 0%,
-    #1f493e 62%,
-    #3d544c 100%
-  );
+  padding: clamp(40px, 5.5vw, 76px) var(--ac-gutter);
+  background-color: #14332b;
+  background-image:
+    radial-gradient(
+      circle at var(--mouse-x, 70%) var(--mouse-y, 26%),
+      rgb(140 175 155 / 0.16),
+      transparent 58%
+    ),
+    linear-gradient(
+      115deg,
+      #0d2e26 0%,
+      #1f493e 62%,
+      #3d544c 100%
+    );
   color: var(--ac-on-forest);
 }
 [data-theme="academy"] .ui-container > .ll-sheet:first-child {
@@ -663,7 +719,7 @@
 [data-theme="academy"] .ll-stat-row {
   background-color: var(--ac-card);
   margin-inline: calc(50% - 50vw);
-  padding-inline: max(24px, calc(50vw - 36rem));
+  padding-inline: var(--ac-gutter);
   padding-block: clamp(28px, 3.6vw, 44px);
   border-top: 1px solid var(--ac-hairline);
   border-bottom: 1px solid var(--ac-hairline);
@@ -927,6 +983,148 @@
 }
 
 /* --------------------------------------------------------------------------
+   Sand cards draw themselves in: rule first, then the card
+   --------------------------------------------------------------------------
+   The signature card in this skin is "deeper sand, bronze rule down the left".
+   When one enters the viewport it should arrive the way it is built: the rule
+   is ruled first (scaleY 0 → 1 from its top, 380ms), then the card opens from
+   that edge (clip-path inset from the left, 340ms, overlapping the last 120ms
+   of the rule). The order is the point — it reads as a card being laid down and
+   opened, not as a rectangle fading in.
+
+   journal-reveal.js already marks these blocks; this only changes what the
+   mark looks like for the two card kinds that carry a left rule.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-rise:is(.ll-platform, .ll-news-snapshots, .ll-contact-map, .ll-sheet:has(.pedigree-node)) {
+  /* the rule is drawn by a pseudo-element so it can scale independently of
+     the card's own background */
+  border-left-color: transparent !important;
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 340ms var(--ll-ease-out) 120ms;
+}
+[data-theme="academy"] .ll-rise:is(.ll-platform, .ll-news-snapshots, .ll-contact-map, .ll-sheet:has(.pedigree-node))::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--ac-bronze);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 380ms var(--ll-ease-out);
+}
+[data-theme="academy"] .ll-rise-in:is(.ll-platform, .ll-news-snapshots, .ll-contact-map, .ll-sheet:has(.pedigree-node)) {
+  clip-path: inset(0 0 0 0);
+}
+[data-theme="academy"] .ll-rise-in:is(.ll-platform, .ll-news-snapshots, .ll-contact-map, .ll-sheet:has(.pedigree-node))::before {
+  transform: scaleY(1);
+}
+/* these cards need a positioning context for the drawn rule */
+[data-theme="academy"] .ll-platform,
+[data-theme="academy"] .ll-news-snapshots,
+[data-theme="academy"] .ll-contact-map,
+[data-theme="academy"] .ll-sheet:has(.pedigree-node) {
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   Lab snapshots — a darkroom print settling into full colour
+   --------------------------------------------------------------------------
+   In the news column the photographs are printed onto sand stock, so at rest
+   they carry a faint warm cast that belongs to the paper. On approach the cast
+   lifts over 800ms and the frame drifts in by 3% — slow enough to read as a
+   print being looked at closely rather than a card responding to a cursor.
+   The caption's rule draws in as it settles.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-news-snapshots .ll-snap-frame {
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+  rotate: 0deg;
+  overflow: hidden;
+}
+[data-theme="academy"] .ll-news-snapshots .ll-snap-frame img {
+  filter: sepia(0.12) contrast(0.98) saturate(0.95);
+  transform: scale(1);
+  transition: filter 800ms var(--ll-ease-out),
+              transform 800ms var(--ll-ease-out);
+}
+[data-theme="academy"] .ll-news-snapshots .ll-snap:hover .ll-snap-frame img,
+[data-theme="academy"] .ll-news-snapshots .ll-snap:focus-within .ll-snap-frame img {
+  filter: none;
+  transform: scale(1.03);
+}
+/* the caption rule grows to meet the photograph */
+[data-theme="academy"] .ll-news-snapshots figcaption {
+  position: relative;
+  padding-top: 10px;
+  color: var(--ac-caption);
+}
+[data-theme="academy"] .ll-news-snapshots figcaption::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1px;
+  width: 0;
+  background-color: var(--ac-bronze);
+  transition: width 500ms var(--ll-ease-out) 120ms;
+}
+[data-theme="academy"] .ll-news-snapshots .ll-snap:hover figcaption::before,
+[data-theme="academy"] .ll-news-snapshots .ll-snap:focus-within figcaption::before {
+  width: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="academy"] .ll-news-snapshots .ll-snap-frame img { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   The publications filter marker
+   --------------------------------------------------------------------------
+   In this skin the active chip is a solid forest block. Painting that on the
+   chip itself makes the selection jump between cells; a single travelling
+   marker makes it slide. filter-marker.js positions it; this styles it, and
+   hides the per-chip fill so only one object carries the selection.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-chip-row {
+  position: relative;
+}
+[data-theme="academy"] .ll-chip-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  border-radius: 2px;
+  background-color: var(--ac-forest);
+  transition: transform 360ms var(--ll-ease-out),
+              width 360ms var(--ll-ease-out),
+              height 360ms var(--ll-ease-out);
+  pointer-events: none;
+}
+[data-theme="academy"] .pub-filter-btn {
+  position: relative;
+  z-index: 1;
+  background-color: transparent !important;
+  transition: color 220ms var(--ll-ease-out);
+}
+[data-theme="academy"] .pub-filter-btn.active,
+[data-theme="academy"] .pub-filter-btn:hover {
+  background-color: transparent !important;
+  color: var(--ac-on-forest) !important;
+}
+[data-theme="academy"] .pub-filter-btn:not(.active) {
+  color: var(--ac-caption);
+}
+/* The marker must not paint in the notebook skin. `html:` is required: the
+   bare `:not([data-theme="academy"])` also matches the <html> element itself in
+   the academy skin (html has the attribute, so :not fails, BUT the compound
+   still matched a descendant chain), which hid the marker at all times. */
+html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
+
+/* --------------------------------------------------------------------------
    Micro-interactions
    --------------------------------------------------------------------------
    The journal skin removed the notebook's ink hovers along with the ink, and
@@ -1074,6 +1272,94 @@
 }
 
 /* --------------------------------------------------------------------------
+   The homepage byline portrait on the green band
+   --------------------------------------------------------------------------
+   The PI print sat in the standard sand-card frame — a pale block with a 2px
+   bronze rule — dropped on the deep green band. Sand on forest is a heavy
+   contrast for a 96px image, and the rule read as a stray mark.
+   On the band it takes a hairline bronze outline instead, with a small inner
+   margin, so it sits inside the field like a tipped-in plate rather than a
+   card resting on top of it.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-person--hero .ll-person__frame {
+  background-color: transparent;
+  border-left: 0;
+  box-shadow: inset 0 0 0 1px rgb(197 160 125 / 0.5);
+  padding: 4px;
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-person--hero .ll-person__img {
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-person--hero:hover .ll-person__frame {
+  box-shadow: inset 0 0 0 1px rgb(197 160 125 / 0.85);
+}
+[data-theme="academy"] .ui-container > .ll-sheet:first-child .ll-person__swap {
+  background-color: rgb(19 54 45 / 0.85);
+  color: var(--ac-on-forest);
+  border-radius: 2px;
+  width: 22px;
+  height: 22px;
+  right: 8px;
+  bottom: 8px;
+}
+
+/* The muted chip (dates, roles) used --ac-ink-muted, which is calibrated for the
+   canvas; on the deeper sand card it measures 4.25:1. The caption token is
+   defined per mode and against the card ground, so it holds in both. */
+[data-theme="academy"] .ll-stamp--muted {
+  color: var(--ac-caption) !important;
+}
+[data-theme="academy"] .ll-sheet:has(.pedigree-node) .ui-caption,
+[data-theme="academy"] .ll-news-snapshots .ui-caption {
+  color: var(--ac-caption);
+}
+
+/* --------------------------------------------------------------------------
+   Experience — the record column gets the same sand card as News and Contact
+   --------------------------------------------------------------------------
+   News and Contact both present their secondary column as "deeper sand, bronze
+   rule down the left". The Experience page left both of its columns bare on
+   the canvas, so its timeline read as thinner than the pages beside it even
+   though it carries more structure. The right column now takes the same card.
+   The biographical column stays open: it is the page's argument, and a card
+   around an argument reads as a sidebar.
+   -------------------------------------------------------------------------- */
+[data-theme="academy"] .ll-sheet:has(.pedigree-node) {
+  background-color: var(--ac-card);
+  border-left: 2px solid var(--ac-bronze);
+  border-radius: 0;
+  padding: clamp(20px, 2.4vw, 32px);
+}
+[data-theme="academy"] .ll-sheet:has(.pedigree-node) .ui-heading {
+  font-family: var(--font-hand);
+  font-weight: 400;
+}
+/* the timeline spine becomes a hairline bronze rule inside the card */
+[data-theme="academy"] .ll-sheet:has(.pedigree-node) .pedigree-node {
+  border-left-color: var(--ac-hairline);
+}
+
+/* CURRENT is a status, not a doodle.
+   The notebook marks it with a hand-drawn red circle from the ink engine; in
+   the journal skin that reads as a sticker on a printed page. It becomes a
+   small solid bronze tag instead, and the sketched circle is suppressed. */
+[data-theme="academy"] .ll-stamp--current {
+  background-color: var(--ac-bronze) !important;
+  color: var(--ac-on-bronze) !important;
+  padding: 4px 9px !important;
+  border-radius: 2px !important;
+  font-family: var(--font-ui) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+[data-theme="academy"] .ll-stamp--current > svg[data-ll-ink] {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
    Publications — a table, not a stack of cards
    -------------------------------------------------------------------------- */
 [data-theme="academy"] .ll-pub {
@@ -1164,6 +1450,22 @@
   margin-top: 72px;
   padding-block: 56px 40px !important;
 }
+/* The homepage ends on the full-bleed trust strip, which is a band in its own
+   right. A 72px margin above the footer plus the container's 80px bottom
+   padding left a 152px empty stretch of canvas between the strip and the
+   footer — read as an unclosed margin rather than as breathing room. Where the
+   strip is the last thing on the page, the gap collapses to a hairline. */
+/* The homepage's last block is the trust strip. Both the container's bottom
+   padding and the footer's top margin exist to separate a page of prose from
+   the footer; a full-bleed band is already a separation, so the gap collapses
+   to nothing and the strip meets the footer directly. */
+[data-theme="academy"] main:has(.ll-stat-row) + #site-footer {
+  margin-top: 0;
+}
+[data-theme="academy"] .ui-container:has(.ll-stat-row) {
+  padding-bottom: 0 !important;
+}
+
 [data-theme="academy"] #site-footer .ll-rule {
   border-top-color: rgb(255 255 255 / 0.16) !important;
 }
@@ -1472,3 +1774,9 @@ html.dark[data-theme="academy"] .ll-input {
   color: var(--ac-ink);
 }
 html.dark[data-theme="academy"] .ll-map-pin { filter: none; }
+
+/* Same breakpoint and same value as .ui-container's narrow-screen padding, so
+   the banner headline and the body share one left edge on phones too. */
+@media (max-width: 639px) {
+  html[data-theme="academy"] { --ac-gutter: 16px; }
+}

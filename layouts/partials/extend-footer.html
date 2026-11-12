@@ -35,6 +35,21 @@
   </div>
 </div>
 
+<!-- Publications: travelling filter marker (loaded everywhere; it only styles
+     itself in the journal skin) -->
+{{ $filterMarker := resources.Get "js/filter-marker.js" }}
+{{ if $filterMarker }}
+  {{ $fm := $filterMarker | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $fm.RelPermalink }}" integrity="{{ $fm.Data.Integrity }}" defer></script>
+{{ end }}
+
+<!-- Journal skin: canopy light on the banner (academy only) -->
+{{ $canopy := resources.Get "js/canopy-light.js" }}
+{{ if $canopy }}
+  {{ $cp := $canopy | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $cp.RelPermalink }}" integrity="{{ $cp.Data.Integrity }}" defer></script>
+{{ end }}
+
 <!-- Journal skin scroll choreography (academy only) -->
 {{ $journalReveal := resources.Get "js/journal-reveal.js" }}
 {{ if $journalReveal }}

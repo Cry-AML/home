@@ -1168,6 +1168,23 @@ html.dark #ambient-canvas {
   flex: 0 1 300px;
   min-width: 220px;
 }
+/* Filter chips and the keyword field are one tools row: chips on the left,
+   search pushed to the right edge of the same measure. They belong together —
+   you narrow by category, then by keyword, and the list sits directly under
+   both. */
+.ll-pub-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin-bottom: 26px;
+}
+.ll-pub-tools .ll-chip-row { margin-bottom: 0; flex: 1 1 auto; }
+.ll-pub-tools .ll-page-search { flex: 0 1 300px; }
+@media (max-width: 720px) {
+  .ll-pub-tools .ll-page-search { flex: 1 1 100%; }
+}
 .ll-chip-row {
   display: flex;
   flex-wrap: wrap;

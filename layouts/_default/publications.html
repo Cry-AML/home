@@ -9,6 +9,20 @@
       <h1 class="ui-title">{{ i18n "pub_title" }}</h1>
       <p class="ui-body mt-3">{{ i18n "pub_lead" }}</p>
     </div>
+  </div>
+
+  {{/* Filter and search are one操作热区: you narrow the list by category, then
+       by keyword, both in the same row above it. The search field used to float
+       inside the banner, which put it far from the filters it works with and
+       left the banner lopsided. */}}
+  <div class="ll-pub-tools">
+    <div class="ll-chip-row">
+      <button class="pub-filter-btn active" data-filter="all" onclick="filterPublications('all', this)">{{ i18n "pub_filter_all" }}</button>
+      <button class="pub-filter-btn" data-filter="landmark" onclick="filterPublications('landmark', this)">{{ i18n "pub_filter_landmark" }}</button>
+      <button class="pub-filter-btn" data-filter="epigenetics" onclick="filterPublications('epigenetics', this)">{{ i18n "pub_filter_epigenetics" }}</button>
+      <button class="pub-filter-btn" data-filter="metabolism" onclick="filterPublications('metabolism', this)">{{ i18n "pub_filter_metabolism" }}</button>
+      <button class="pub-filter-btn" data-filter="resistance" onclick="filterPublications('resistance', this)">{{ i18n "pub_filter_resistance" }}</button>
+    </div>
     <div class="ll-page-search">
       <input type="text"
              id="pub-search-input"
@@ -16,14 +30,6 @@
              class="ll-input"
              aria-label="{{ i18n "pub_search_placeholder" }}">
     </div>
-  </div>
-
-  <div class="ll-chip-row">
-    <button class="pub-filter-btn active" data-filter="all" onclick="filterPublications('all', this)">{{ i18n "pub_filter_all" }}</button>
-    <button class="pub-filter-btn" data-filter="landmark" onclick="filterPublications('landmark', this)">{{ i18n "pub_filter_landmark" }}</button>
-    <button class="pub-filter-btn" data-filter="epigenetics" onclick="filterPublications('epigenetics', this)">{{ i18n "pub_filter_epigenetics" }}</button>
-    <button class="pub-filter-btn" data-filter="metabolism" onclick="filterPublications('metabolism', this)">{{ i18n "pub_filter_metabolism" }}</button>
-    <button class="pub-filter-btn" data-filter="resistance" onclick="filterPublications('resistance', this)">{{ i18n "pub_filter_resistance" }}</button>
   </div>
 
   <div class="ll-sheet" style="--ll-tilt:0.14deg; --ll-sheet-i:0">

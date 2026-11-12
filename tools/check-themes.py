@@ -154,6 +154,42 @@ def main():
     need(re.search(r'\.ll-skinmenu__pop', css) is not None,
          'academy.css: no popover rule for the skin menu')
 
+    # --- left baseline: masthead, banner heading and body share one edge ---
+    need('--ac-gutter' in css,
+         'academy.css: no --ac-gutter token; full-bleed blocks will drift from .ui-container')
+    for block_sel in ('.ui-container > .mb-8',
+                      '.ll-team-head',
+                      '.ll-page-head'):
+        i = css.find(block_sel)
+        seg = css[i:i + 700]
+        need('var(--ac-gutter)' in seg,
+             f'academy.css: banner padding for {block_sel} does not use --ac-gutter')
+
+    # --- CJK must not be slanted ---
+    need(':lang(zh) .ll-hi' in css or ':lang(zh-cn) .ll-hi' in css,
+         'academy.css: the CJK highlight has no non-italic rule')
+
+    # --- the current badge must not keep the sketched circle ---
+    need('.ll-stamp--current' in css,
+         'academy.css: the CURRENT badge is not restyled for the journal')
+    need(re.search(r'\.ll-stamp--current\s*>\s*svg\[data-ll-ink\][\s\S]{0,80}display:\s*none',
+                   css) is not None,
+         'academy.css: the hand-drawn circle is still showing on CURRENT')
+
+    # --- the animations this skin promises ---
+    need('@keyframes' in css, 'academy.css: no keyframes at all')
+    for js, what in (('journal-reveal.js', 'scroll choreography'),
+                     ('canopy-light.js', 'canopy light'),
+                     ('filter-marker.js', 'filter marker')):
+        need((ROOT / 'assets' / 'js' / js).exists(),
+             f'assets/js/{js} is missing ({what})')
+        need(js in (ROOT / 'layouts/partials/extend-footer.html').read_text(),
+             f'extend-footer.html: {js} is not loaded')
+    need('--mouse-x' in css,
+         'academy.css: the banner has no canopy gradient hook')
+    need('.ll-chip-marker' in css,
+         'academy.css: no filter marker styling')
+
     # the fluorescent cyan must not survive into the journal skin
     for bad in ('8bf4f2', '7CE7DF', '7ce7df'):
         need(bad.lower() not in css.lower(),

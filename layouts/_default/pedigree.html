@@ -66,7 +66,7 @@
         <div class="pedigree-node">
           <div class="flex items-center gap-2 mb-1">
             <span class="ll-stamp ll-stamp--muted">{{ cond $isEn $item.year $item.yearZh }}</span>
-            {{ if $item.highlight }}<span class="ll-stamp ll-stamp--marker" data-ink="circle">Current</span>{{ end }}
+            {{ if $item.highlight }}<span class="ll-stamp ll-stamp--marker ll-stamp--current" data-ink="circle">{{ i18n "pedigree_current" }}</span>{{ end }}
           </div>
           <div class="ui-heading ll-h-17 mt-1.5">{{ cond $isEn $item.roleEn $item.roleZh }}</div>
           <div class="ui-caption mt-1">{{ cond $isEn $item.instEn $item.instZh }}</div>
