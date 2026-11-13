@@ -693,10 +693,67 @@ html.ll-skin-switched .ll-sheet {
 
 /* Masthead: a small inked mark beside the wordmark, on one optical baseline */
 .ll-brand {
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   gap: 9px;
   min-width: 0;
+  /* Manuscript palette: cinnabar seal bleed + warm amber paper aura */
+  --ll-halo-core: rgb(169 52 65 / 0.28);
+  --ll-halo-glow: rgb(212 140 70 / 0.22);
+  --ll-halo-ring: rgb(169 52 65 / 0.36);
+}
+html.dark .ll-brand {
+  /* Dark manuscript: warm coral + golden ember aura */
+  --ll-halo-core: rgb(254 179 179 / 0.32);
+  --ll-halo-glow: rgb(240 190 118 / 0.22);
+  --ll-halo-ring: rgb(254 179 179 / 0.42);
+}
+.ll-brand::before,
+.ll-brand::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: clamp(22.5px, 2.1vw, 30px);
+  height: clamp(22.5px, 2.1vw, 30px);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.ll-brand::before {
+  background: radial-gradient(circle, var(--ll-halo-core) 0%, var(--ll-halo-glow) 54%, transparent 76%);
+  transform: translateY(-50%) scale(1.25);
+  animation: ll-halo-breathe 4.2s ease-in-out infinite;
+}
+.ll-brand::after {
+  box-shadow: 0 0 0 1px var(--ll-halo-ring), 0 0 10px 1px var(--ll-halo-glow);
+  transform: translateY(-50%) scale(1.08);
+  animation: ll-halo-ring 4.2s ease-in-out infinite;
+}
+.ll-brand:hover::before {
+  filter: brightness(1.15);
+}
+@keyframes ll-halo-breathe {
+  0%, 100% {
+    transform: translateY(-50%) scale(1.14);
+    opacity: 0.62;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.42);
+    opacity: 1;
+  }
+}
+@keyframes ll-halo-ring {
+  0%, 100% {
+    transform: translateY(-50%) scale(1.04);
+    opacity: 0.48;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.22);
+    opacity: 0.92;
+  }
 }
 /* The mark is a seal beside the wordmark, not an icon in a toolbar.
    At 26px against a 20px title it was already 1.3x the type, but the bar is
@@ -710,6 +767,8 @@ html.ll-skin-switched .ll-sheet {
   /* Tracks the title's own fluid size, which is clamp(15px, 1.4vw, 20px):
      1.5x of that keeps the lockup constant instead of letting a fixed 30px
      seal become 2x the type once the title steps down at 1024px. */
+  position: relative;
+  z-index: 1;
   width: clamp(22.5px, 2.1vw, 30px);
   height: clamp(22.5px, 2.1vw, 30px);
   flex: none;
@@ -1466,7 +1525,9 @@ img, svg, video, canvas { max-width: 100%; }
 
   .ui-container { padding-inline: 16px; }
   .ll-brand__name { font-size: 15px; }
-  .ll-brand__mark { width: 24px; height: 24px; }
+  .ll-brand__mark,
+  .ll-brand::before,
+  .ll-brand::after { width: 24px; height: 24px; }
   /* On mobile small screens, display the concise brand name ("xxx实验室") */
   .ll-brand__short { display: inline; }
   .ll-brand__full  { display: none; }
@@ -2246,7 +2307,43 @@ h1, h2, h3 {
    object, and it looked like a stray bullet before the copyright line. At 28px
    it balances the line it leads, and at 0.55 opacity it stays a quiet sign-off
    rather than competing with the text. */
+.ll-footer-brand {
+  position: relative;
+  isolation: isolate;
+  --ll-halo-core: rgb(169 52 65 / 0.20);
+  --ll-halo-glow: rgb(212 140 70 / 0.16);
+  --ll-halo-ring: rgb(169 52 65 / 0.26);
+}
+html.dark .ll-footer-brand {
+  --ll-halo-core: rgb(239 223 216 / 0.22);
+  --ll-halo-glow: rgb(240 190 118 / 0.16);
+  --ll-halo-ring: rgb(239 223 216 / 0.30);
+}
+.ll-footer-brand::before,
+.ll-footer-brand::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.ll-footer-brand::before {
+  background: radial-gradient(circle, var(--ll-halo-core) 0%, var(--ll-halo-glow) 54%, transparent 76%);
+  transform: translateY(-50%) scale(1.22);
+  animation: ll-halo-breathe 4.2s ease-in-out infinite;
+}
+.ll-footer-brand::after {
+  box-shadow: 0 0 0 1px var(--ll-halo-ring), 0 0 8px 1px var(--ll-halo-glow);
+  transform: translateY(-50%) scale(1.06);
+  animation: ll-halo-ring 4.2s ease-in-out infinite;
+}
 .ll-footer-mark {
+  position: relative;
+  z-index: 1;
   width: 28px;
   height: 28px;
   object-fit: contain;
