@@ -10,3 +10,40 @@
 <meta name="citation_publication_date" content="2026/04/06">
 <meta name="citation_journal_title" content="Nature Communications">
 <meta name="citation_doi" content="10.1038/s41467-026-71186-5">
+
+<script>
+(function() {
+  function injectFestiveDecor() {
+    if (document.documentElement.getAttribute('data-theme') === 'academy') return;
+    var fest = document.documentElement.getAttribute('data-festival');
+    var sheets = document.querySelectorAll('.ll-sheet');
+    sheets.forEach(function(s) {
+      // Manage Washi Tape
+      var tape = s.querySelector('.ll-fest-tape');
+      if (fest && !tape) {
+        tape = document.createElement('div');
+        tape.className = 'll-fest-tape';
+        tape.setAttribute('aria-hidden', 'true');
+        s.prepend(tape);
+      } else if (!fest && tape) {
+        tape.remove();
+      }
+
+      // Manage Postal Seal
+      var stamp = s.querySelector('.ll-fest-stamp');
+      if (fest && !stamp) {
+        stamp = document.createElement('div');
+        stamp.className = 'll-fest-stamp';
+        stamp.setAttribute('aria-hidden', 'true');
+        s.prepend(stamp);
+      } else if (!fest && stamp) {
+        stamp.remove();
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', injectFestiveDecor);
+  document.addEventListener('festivalchange', injectFestiveDecor);
+  document.addEventListener('skinchange', injectFestiveDecor);
+})();
+</script>

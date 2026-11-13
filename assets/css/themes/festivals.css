@@ -16,7 +16,7 @@
 
 /* --------------------------------------------------------------------------
    Macro-Atmosphere Ambient Overhead Banner (Academy & Manuscript)
-   A continuous 4px glowing ambient festive header edge beam
+   A continuous 3.5px glowing ambient festive header edge beam
    -------------------------------------------------------------------------- */
 [data-festival] .ll-header {
   border-bottom: 3.5px solid var(--fest-accent) !important;
@@ -25,9 +25,9 @@
 
 /* ==========================================================================
    MANUSCRIPT SKIN (手账风): High-Presence Paper Craft & Cultural Ornaments
-   1. Real 56px Washi Tape (和纸胶带封边) with festival patterns across cards
-   2. Bespoke 52px Embossed Postage / Wax Seal Stamp (右上角火漆邮票印记)
-   3. Festive Desk Edge Glow
+   1. Real 160px Washi Tape (和纸胶带封边) mounted as `.ll-fest-tape`
+   2. Bespoke 52px Embossed Postage / Wax Seal Stamp mounted as `.ll-fest-stamp`
+   3. Preserves .ll-sheet::before (paper fiber) and .ll-sheet::after (lighting)
    ========================================================================== */
 html:not([data-theme="academy"])[data-festival] .ll-sheet {
   position: relative;
@@ -38,29 +38,27 @@ html:not([data-theme="academy"])[data-festival] .ll-sheet {
     0 20px 40px -12px rgba(0, 0, 0, 0.14) !important;
 }
 
-/* Washi Tape Accent at Top Center of Sheets */
-html:not([data-theme="academy"])[data-festival] .ll-sheet::before {
-  content: '';
+/* Dedicated Washi Tape Accent Element */
+.ll-fest-tape {
   position: absolute;
-  top: -10px;
+  top: -11px;
   left: 50%;
   transform: translateX(-50%) rotate(-0.5deg);
   width: min(160px, 45%);
   height: 22px;
   background-color: var(--fest-tape-bg, var(--fest-accent));
   background-image: var(--fest-tape-pat, none);
-  opacity: 0.88;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  border-left: 2px dashed rgba(255, 255, 255, 0.4);
-  border-right: 2px dashed rgba(255, 255, 255, 0.4);
+  opacity: 0.92;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  border-left: 2px dashed rgba(255, 255, 255, 0.45);
+  border-right: 2px dashed rgba(255, 255, 255, 0.45);
   pointer-events: none;
-  z-index: 8;
+  z-index: 12;
   border-radius: 1px;
 }
 
-/* Large 48px Wax Seal / Vintage Postage Stamp at Top-Right of Sheets */
-html:not([data-theme="academy"])[data-festival] .ll-sheet::after {
-  content: var(--fest-stamp, '');
+/* Dedicated Wax Seal / Postage Stamp Element */
+.ll-fest-stamp {
   position: absolute;
   top: 14px;
   right: 18px;
@@ -71,18 +69,27 @@ html:not([data-theme="academy"])[data-festival] .ll-sheet::after {
   justify-content: center;
   font-size: 28px;
   line-height: 1;
-  background-color: var(--fest-stamp-bg, rgba(255, 255, 255, 0.85));
+  background-color: var(--fest-stamp-bg, rgba(255, 255, 255, 0.88));
   border: 2px dashed var(--fest-accent);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
   pointer-events: none;
   transform: rotate(var(--fest-stamp-rot, 6deg));
-  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.25, 1.2);
-  z-index: 10;
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.25, 1.2), box-shadow 0.3s ease;
+  z-index: 12;
 }
-html:not([data-theme="academy"])[data-festival] .ll-sheet:hover::after {
+.ll-sheet:hover .ll-fest-stamp {
   transform: rotate(0deg) scale(1.15);
   box-shadow: 0 6px 18px var(--fest-glow);
+}
+.ll-fest-stamp::before {
+  content: var(--fest-stamp, '');
+}
+
+/* Hide festive DOM elements if in Academy skin */
+html[data-theme="academy"] .ll-fest-tape,
+html[data-theme="academy"] .ll-fest-stamp {
+  display: none !important;
 }
 
 /* ==========================================================================
