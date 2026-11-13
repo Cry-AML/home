@@ -713,13 +713,13 @@ html.dark .ll-brand {
 
 /* Layer 1: Ambient outer breathing glow aura */
 .ll-brand::before,
-.ll-footer-brand::before {
+.ll-footer-mark-wrapper::before {
   content: '';
   position: absolute;
   left: -2px;
   top: 50%;
-  width: calc(clamp(22.5px, 2.1vw, 30px) + 4px);
-  height: calc(clamp(22.5px, 2.1vw, 30px) + 4px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
@@ -731,13 +731,13 @@ html.dark .ll-brand {
 
 /* Layer 2: Discord/Avatar-style gradient border ring with clean gap */
 .ll-brand::after,
-.ll-footer-brand::after {
+.ll-footer-mark-wrapper::after {
   content: '';
   position: absolute;
   left: -2px;
   top: 50%;
-  width: calc(clamp(22.5px, 2.1vw, 30px) + 4px);
-  height: calc(clamp(22.5px, 2.1vw, 30px) + 4px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
   border-radius: 50%;
   pointer-events: none;
   z-index: 1;
@@ -754,12 +754,12 @@ html.dark .ll-brand {
 
 /* Hover micro-interaction: subtle acceleration spin and luminescence burst */
 .ll-brand:hover::before,
-.ll-footer-brand:hover::before {
+.ll-footer-brand:hover .ll-footer-mark-wrapper::before {
   opacity: 1;
   filter: brightness(1.3) saturate(1.2);
 }
 .ll-brand:hover::after,
-.ll-footer-brand:hover::after {
+.ll-footer-brand:hover .ll-footer-mark-wrapper::after {
   transform: translateY(-50%) rotate(180deg) scale(1.05);
   box-shadow: 0 0 14px var(--ll-ring-glow), 0 0 22px var(--ll-ring-ambient);
   filter: brightness(1.25);
@@ -1230,8 +1230,8 @@ html.dark #ambient-canvas {
    -------------------------------------------------------------------------- */
 .ll-wand {
   position: fixed;
-  right: clamp(14px, 2.2vw, 26px);
-  bottom: clamp(14px, 2.2vw, 26px);
+  right: clamp(16px, 2.4vw, 32px);
+  bottom: clamp(140px, 15vh, 180px);
   z-index: 55;
   display: inline-flex;
   align-items: center;
@@ -2334,6 +2334,9 @@ h1, h2, h3 {
 .ll-footer-brand {
   position: relative;
   isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 14px;
   --ll-ring-grad: conic-gradient(from 140deg, #ff6b8b, #ff8e53 45%, #ffa07a 75%, #ff6b8b);
   --ll-ring-glow: rgb(255 107 139 / 0.35);
   --ll-ring-ambient: rgb(255 142 83 / 0.20);
@@ -2349,18 +2352,32 @@ html.dark .ll-footer-brand {
   width: 32px;
   height: 32px;
 }
+.ll-footer-mark-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+}
 .ll-footer-mark {
   position: relative;
   z-index: 2;
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   object-fit: cover;
-  opacity: 0.55;
+  opacity: 0.90;
   flex: none;
   transition: filter var(--ll-dur-hover) var(--ll-ease-out),
-              opacity var(--ll-dur-hover) var(--ll-ease-out);
+              opacity var(--ll-dur-hover) var(--ll-ease-out),
+              transform var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-footer-brand:hover .ll-footer-mark {
+  opacity: 1;
+  transform: scale(1.05);
 }
 /* In dark appearance, invert the dark ink stamp to a soft chalk mark */
 html.dark .ll-footer-mark {
@@ -2906,3 +2923,68 @@ html.dark .ll-footer-mark {
 }
 
 
+
+/* --------------------------------------------------------------------------
+   Footer Layout & Typography System
+   -------------------------------------------------------------------------- */
+#site-footer {
+  margin-top: clamp(48px, 6vw, 72px);
+  padding-top: 24px;
+  padding-bottom: clamp(48px, 6vw, 64px) !important;
+}
+.ll-footer-inner {
+  display: flex;
+  flex-direction: column;
+}
+.ll-footer-rule {
+  margin-block: 0 28px !important;
+}
+.ll-footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px 32px;
+}
+/* footer brand flex container */
+.ll-footer-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ll-footer-title {
+  font-family: var(--font-hand);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--md-on-surface);
+  line-height: 1.25;
+}
+.ll-footer-copy {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--md-on-surface-variant);
+  opacity: 0.85;
+  line-height: 1.25;
+}
+.ll-footer-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+}
+.ll-footer-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--md-on-surface-variant);
+  text-decoration: none !important;
+  transition: color var(--ll-dur-hover) var(--ll-ease-out),
+              transform var(--ll-dur-hover) var(--ll-ease-out);
+}
+.ll-footer-link:hover {
+  color: var(--md-primary);
+  transform: translateY(-1px);
+}

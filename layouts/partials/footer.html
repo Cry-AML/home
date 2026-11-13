@@ -1,33 +1,39 @@
-<footer id="site-footer" class="print:hidden" style="padding-block: 40px 48px;">
+<footer id="site-footer" class="print:hidden">
   <div class="ui-container">
-    <hr class="ll-rule mb-6" style="border-top-color: var(--ll-pencil-faint);">
-    <div class="flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3 ll-footer-brand">
-        {{ $defaultLogo := cond (eq .Site.Language.Lang "en") "images/logos/logo-en.webp" "images/logos/logo-zh.webp" }}<img class="ll-footer-mark" src="{{ $defaultLogo | relURL }}" width="22" height="22" alt="" aria-hidden="true" decoding="async" loading="lazy">
-        {{/* Copyright */}}
-      {{ if .Site.Params.footer.showCopyright | default true }}
-        <p class="ui-caption">
-          {{- $custom := i18n "footer_text" -}}
-          {{- if $custom -}}
-            {{ $custom }}
-          {{- else -}}
-            &copy; {{ now.Format "2006" }} {{ .Site.Params.Author.name | markdownify }}
-          {{- end }}
-        </p>
-      </div>
-      {{ end }}
+    <div class="ll-footer-inner">
+      <hr class="ll-rule ll-footer-rule" style="border-top-color: var(--ll-pencil-faint);">
+      
+      <div class="ll-footer-content">
+        {{/* Left side: Brand Logo + Two-tier Copyright */}}
+        <div class="ll-footer-brand">
+          {{ $defaultLogo := cond (eq .Site.Language.Lang "en") "images/logos/logo-en.webp" "images/logos/logo-zh.webp" }}
+          <div class="ll-footer-mark-wrapper">
+            <img class="ll-footer-mark" src="{{ $defaultLogo | relURL }}" width="36" height="36" alt="" aria-hidden="true" decoding="async" loading="lazy">
+          </div>
+          <div class="ll-footer-text">
+            {{ if eq .Site.Language.Lang "en" }}
+              <div class="ll-footer-title">MCH Laboratory - Zhongshan School of Medicine, SYSU</div>
+              <div class="ll-footer-copy">All Rights Reserved &copy; {{ now.Format "2006" }} Cheuk-Him Man.</div>
+            {{ else if eq .Site.Language.Lang "zh-tw" }}
+              <div class="ll-footer-title">中山大學中山醫學院 - 文卓謙實驗室</div>
+              <div class="ll-footer-copy">版權所有 &copy; {{ now.Format "2006" }} 保留所有權利</div>
+            {{ else }}
+              <div class="ll-footer-title">中山大学中山医学院 - 文卓谦实验室</div>
+              <div class="ll-footer-copy">版权所有 &copy; {{ now.Format "2006" }} 保留所有权利</div>
+            {{ end }}
+          </div>
+        </div>
 
-      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
-        {{ if .Site.Menus.footer }}
-          {{ range .Site.Menus.footer }}
-            <a href="{{ .URL }}" title="{{ .Title }}" class="ui-caption" style="text-decoration: none;">
-              {{ .Name | markdownify }}
-            </a>
+        {{/* Right side: Nav links */}}
+        <nav class="ll-footer-nav" aria-label="Footer navigation">
+          {{ if .Site.Menus.footer }}
+            {{ range .Site.Menus.footer }}
+              <a href="{{ .URL }}" title="{{ .Title }}" class="ll-footer-link">
+                {{ .Name | markdownify }}
+              </a>
+            {{ end }}
           {{ end }}
-        {{ end }}
-        {{ if .Site.Params.footer.showThemeAttribution | default false }}
-          <span class="ui-caption">Hugo + Blowfish</span>
-        {{ end }}
+        </nav>
       </div>
     </div>
   </div>
