@@ -697,62 +697,82 @@ html.ll-skin-switched .ll-sheet {
   isolation: isolate;
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 11px;
   min-width: 0;
-  /* Manuscript palette: cinnabar seal bleed + warm amber paper aura */
-  --ll-halo-core: rgb(169 52 65 / 0.28);
-  --ll-halo-glow: rgb(212 140 70 / 0.22);
-  --ll-halo-ring: rgb(169 52 65 / 0.36);
+  /* Manuscript Light: Scheme 3 - Hematology/Coral sunrise gradient ring with gap & aura */
+  --ll-ring-grad: conic-gradient(from 140deg, #ff6b8b, #ff8e53 45%, #ffa07a 75%, #ff6b8b);
+  --ll-ring-glow: rgb(255 107 139 / 0.42);
+  --ll-ring-ambient: rgb(255 142 83 / 0.26);
 }
 html.dark .ll-brand {
-  /* Dark manuscript: warm coral + golden ember aura */
-  --ll-halo-core: rgb(254 179 179 / 0.32);
-  --ll-halo-glow: rgb(240 190 118 / 0.22);
-  --ll-halo-ring: rgb(254 179 179 / 0.42);
+  /* Manuscript Dark: Scheme 1/3 hybrid - Cosmic electric aurora stream */
+  --ll-ring-grad: conic-gradient(from 140deg, #ff6b8b, #7b61ff 40%, #5ce1e6 75%, #ff8e53);
+  --ll-ring-glow: rgb(123 97 255 / 0.50);
+  --ll-ring-ambient: rgb(92 225 230 / 0.32);
 }
+
+/* Layer 1: Ambient outer breathing glow aura */
 .ll-brand::before,
-.ll-brand::after {
+.ll-footer-brand::before {
   content: '';
   position: absolute;
-  left: 0;
+  left: -2px;
   top: 50%;
-  width: clamp(22.5px, 2.1vw, 30px);
-  height: clamp(22.5px, 2.1vw, 30px);
+  width: calc(clamp(22.5px, 2.1vw, 30px) + 4px);
+  height: calc(clamp(22.5px, 2.1vw, 30px) + 4px);
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
+  background: radial-gradient(circle, var(--ll-ring-glow) 0%, var(--ll-ring-ambient) 50%, transparent 72%);
+  transform: translateY(-50%) scale(1.15);
+  animation: ll-ring-pulse 3.8s ease-in-out infinite;
+  transition: opacity var(--ll-dur-hover) var(--ll-ease-out), filter var(--ll-dur-hover) var(--ll-ease-out);
 }
-.ll-brand::before {
-  background: radial-gradient(circle, var(--ll-halo-core) 0%, var(--ll-halo-glow) 54%, transparent 76%);
-  transform: translateY(-50%) scale(1.25);
-  animation: ll-halo-breathe 4.2s ease-in-out infinite;
+
+/* Layer 2: Discord/Avatar-style gradient border ring with clean gap */
+.ll-brand::after,
+.ll-footer-brand::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  width: calc(clamp(22.5px, 2.1vw, 30px) + 4px);
+  height: calc(clamp(22.5px, 2.1vw, 30px) + 4px);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  background: var(--ll-ring-grad);
+  /* Cut out the center to form a crisp 1.5px ring with an interior gap to the seal */
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.8px), #fff calc(100% - 1.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1.8px), #fff calc(100% - 1.5px));
+  transform: translateY(-50%) rotate(0deg);
+  box-shadow: 0 0 8px var(--ll-ring-glow);
+  transition: transform 600ms cubic-bezier(0.2, 0.9, 0.25, 1.12),
+              filter 300ms var(--ll-ease-out),
+              box-shadow 300ms var(--ll-ease-out);
 }
-.ll-brand::after {
-  box-shadow: 0 0 0 1px var(--ll-halo-ring), 0 0 10px 1px var(--ll-halo-glow);
-  transform: translateY(-50%) scale(1.08);
-  animation: ll-halo-ring 4.2s ease-in-out infinite;
+
+/* Hover micro-interaction: subtle acceleration spin and luminescence burst */
+.ll-brand:hover::before,
+.ll-footer-brand:hover::before {
+  opacity: 1;
+  filter: brightness(1.3) saturate(1.2);
 }
-.ll-brand:hover::before {
-  filter: brightness(1.15);
+.ll-brand:hover::after,
+.ll-footer-brand:hover::after {
+  transform: translateY(-50%) rotate(180deg) scale(1.05);
+  box-shadow: 0 0 14px var(--ll-ring-glow), 0 0 22px var(--ll-ring-ambient);
+  filter: brightness(1.25);
 }
-@keyframes ll-halo-breathe {
+
+@keyframes ll-ring-pulse {
   0%, 100% {
-    transform: translateY(-50%) scale(1.14);
-    opacity: 0.62;
+    transform: translateY(-50%) scale(1.08);
+    opacity: 0.55;
   }
   50% {
-    transform: translateY(-50%) scale(1.42);
-    opacity: 1;
-  }
-}
-@keyframes ll-halo-ring {
-  0%, 100% {
-    transform: translateY(-50%) scale(1.04);
-    opacity: 0.48;
-  }
-  50% {
-    transform: translateY(-50%) scale(1.22);
-    opacity: 0.92;
+    transform: translateY(-50%) scale(1.35);
+    opacity: 0.95;
   }
 }
 /* The mark is a seal beside the wordmark, not an icon in a toolbar.
@@ -768,7 +788,7 @@ html.dark .ll-brand {
      1.5x of that keeps the lockup constant instead of letting a fixed 30px
      seal become 2x the type once the title steps down at 1024px. */
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: clamp(22.5px, 2.1vw, 30px);
   height: clamp(22.5px, 2.1vw, 30px);
   flex: none;
@@ -1062,7 +1082,7 @@ html.dark #ambient-canvas {
 #main-content,
 #site-footer {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* --------------------------------------------------------------------------
@@ -1303,6 +1323,10 @@ body:has(.ll-wand) #toast-notification { bottom: calc(clamp(14px, 2.2vw, 26px) +
   .ll-wand__star { transition: none; }
   .ll-wand.is-cast .ll-wand__icon,
   .ll-wand.is-settled .ll-wand__icon { animation: none; }
+  .ll-brand::before,
+  .ll-brand::after,
+  .ll-footer-brand::before,
+  .ll-footer-brand::after { animation: none !important; transition: none !important; transform: translateY(-50%) !important; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1525,9 +1549,9 @@ img, svg, video, canvas { max-width: 100%; }
 
   .ui-container { padding-inline: 16px; }
   .ll-brand__name { font-size: 15px; }
-  .ll-brand__mark,
+  .ll-brand__mark { width: 24px; height: 24px; }
   .ll-brand::before,
-  .ll-brand::after { width: 24px; height: 24px; }
+  .ll-brand::after { width: 28px; height: 28px; }
   /* On mobile small screens, display the concise brand name ("xxx实验室") */
   .ll-brand__short { display: inline; }
   .ll-brand__full  { display: none; }
@@ -2310,40 +2334,24 @@ h1, h2, h3 {
 .ll-footer-brand {
   position: relative;
   isolation: isolate;
-  --ll-halo-core: rgb(169 52 65 / 0.20);
-  --ll-halo-glow: rgb(212 140 70 / 0.16);
-  --ll-halo-ring: rgb(169 52 65 / 0.26);
+  --ll-ring-grad: conic-gradient(from 140deg, #ff6b8b, #ff8e53 45%, #ffa07a 75%, #ff6b8b);
+  --ll-ring-glow: rgb(255 107 139 / 0.35);
+  --ll-ring-ambient: rgb(255 142 83 / 0.20);
 }
 html.dark .ll-footer-brand {
-  --ll-halo-core: rgb(239 223 216 / 0.22);
-  --ll-halo-glow: rgb(240 190 118 / 0.16);
-  --ll-halo-ring: rgb(239 223 216 / 0.30);
+  --ll-ring-grad: conic-gradient(from 140deg, #ff6b8b, #7b61ff 40%, #5ce1e6 75%, #ff8e53);
+  --ll-ring-glow: rgb(123 97 255 / 0.40);
+  --ll-ring-ambient: rgb(92 225 230 / 0.25);
 }
 .ll-footer-brand::before,
 .ll-footer-brand::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
-}
-.ll-footer-brand::before {
-  background: radial-gradient(circle, var(--ll-halo-core) 0%, var(--ll-halo-glow) 54%, transparent 76%);
-  transform: translateY(-50%) scale(1.22);
-  animation: ll-halo-breathe 4.2s ease-in-out infinite;
-}
-.ll-footer-brand::after {
-  box-shadow: 0 0 0 1px var(--ll-halo-ring), 0 0 8px 1px var(--ll-halo-glow);
-  transform: translateY(-50%) scale(1.06);
-  animation: ll-halo-ring 4.2s ease-in-out infinite;
+  left: -2px;
+  width: 32px;
+  height: 32px;
 }
 .ll-footer-mark {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 28px;
   height: 28px;
   object-fit: contain;

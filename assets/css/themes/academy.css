@@ -186,10 +186,10 @@
   box-shadow: none;
 }
 html[data-theme="academy"] .ll-brand {
-  /* Academy palette: gilded bronze core + SYSU celadon jade outer aura */
-  --ll-halo-core: rgb(217 184 148 / 0.38);
-  --ll-halo-glow: rgb(140 185 165 / 0.28);
-  --ll-halo-ring: rgb(217 184 148 / 0.48);
+  /* Academy Light: Scheme 2 - SYSU Emerald + Champagne Gold + Bronze gradient ring with glow */
+  --ll-ring-grad: conic-gradient(from 140deg, #88d6c1, #d4af37 48%, #8c6246 80%, #88d6c1);
+  --ll-ring-glow: rgb(136 214 193 / 0.45);
+  --ll-ring-ambient: rgb(212 175 55 / 0.25);
 }
 [data-theme="academy"] .ll-brand__name {
   font-family: var(--font-hand);
@@ -1609,9 +1609,9 @@ html:not([data-theme="academy"]) .ll-chip-marker { display: none; }
 }
 [data-theme="academy"] #site-footer a:hover { color: #ffffff; }
 html[data-theme="academy"] .ll-footer-brand {
-  --ll-halo-core: rgb(217 184 148 / 0.30);
-  --ll-halo-glow: rgb(140 185 165 / 0.22);
-  --ll-halo-ring: rgb(217 184 148 / 0.38);
+  --ll-ring-grad: conic-gradient(from 140deg, #88d6c1, #d4af37 48%, #8c6246 80%, #88d6c1);
+  --ll-ring-glow: rgb(136 214 193 / 0.35);
+  --ll-ring-ambient: rgb(212 175 55 / 0.20);
 }
 [data-theme="academy"] .ll-footer-mark {
   filter: brightness(0) invert(1);
@@ -1948,14 +1948,15 @@ html.dark[data-theme="academy"] {
   --ll-ink-muted: var(--ac-ink-muted);
 }
 html.dark[data-theme="academy"] .ll-brand {
-  --ll-halo-core: rgb(217 184 148 / 0.42);
-  --ll-halo-glow: rgb(136 214 193 / 0.32);
-  --ll-halo-ring: rgb(217 184 148 / 0.52);
+  /* Academy Dark: Luminous celadon + pale gold + bronze shimmer on deep green */
+  --ll-ring-grad: conic-gradient(from 140deg, #a3f2dc, #f5d77f 48%, #cfa685 80%, #a3f2dc);
+  --ll-ring-glow: rgb(163 242 220 / 0.55);
+  --ll-ring-ambient: rgb(245 215 127 / 0.30);
 }
 html.dark[data-theme="academy"] .ll-footer-brand {
-  --ll-halo-core: rgb(217 184 148 / 0.36);
-  --ll-halo-glow: rgb(136 214 193 / 0.26);
-  --ll-halo-ring: rgb(217 184 148 / 0.44);
+  --ll-ring-grad: conic-gradient(from 140deg, #a3f2dc, #f5d77f 48%, #cfa685 80%, #a3f2dc);
+  --ll-ring-glow: rgb(163 242 220 / 0.40);
+  --ll-ring-ambient: rgb(245 215 127 / 0.22);
 }
 html.dark[data-theme="academy"] body {
   background-color: var(--ac-canvas) !important;
