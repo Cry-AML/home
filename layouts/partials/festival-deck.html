@@ -6,11 +6,14 @@
 {{ $isTw := eq .Site.Language.Lang "zh-tw" }}
 <details class="ll-fest-deck" id="festival-deck">
   <summary class="ll-fest-pill" title="{{ if $isEn }}Festive Theme Preview{{ else if $isTw }}節日主題效果預覽{{ else }}节日主题效果预览{{ end }}">
-    <span class="ll-fest-glyph" aria-hidden="true">🎏</span>
+    <span aria-hidden="true" class="ll-fest-glyph">🎏</span>
   </summary>
   <div class="ll-fest-menu" role="menu">
     <button type="button" class="ll-fest-btn is-active" data-fest="none" onclick="window.__mchFestival.setOverride('none')">
-      <span>{{ if $isEn }}🌱 Standard Logo{{ else if $isTw }}🌱 日常版 (Default){{ else }}🌱 日常版 (Default){{ end }}</span>
+      <span>{{ if $isEn }}🌱 Weekday Standard{{ else if $isTw }}🌱 日常版 (Default){{ else }}🌱 日常版 (Default){{ end }}</span>
+    </button>
+    <button type="button" class="ll-fest-btn" data-fest="disney" onclick="window.__mchFestival.setOverride('disney')">
+      <span>{{ if $isEn }}🏰 Weekend Disney Edition{{ else if $isTw }}🏰 週末迪士尼限定{{ else }}🏰 周末迪士尼限定{{ end }}</span>
     </button>
     <button type="button" class="ll-fest-btn" data-fest="spring" onclick="window.__mchFestival.setOverride('spring')">
       <span>{{ if $isEn }}🧨 Spring Festival{{ else if $isTw }}🧨 春節 (Spring Festival){{ else }}🧨 春节 (Spring Festival){{ end }}</span>

@@ -2,6 +2,7 @@
  * Wen Laboratory — Festival and Holiday Theme Dispatcher
  * Automatically detects festive windows (+/- 1 day of holiday, total 3 days)
  * Supports solar & accurate lunar festivals for 2025-2030.
+ * In English mode, automatically activates Disney theme on weekends (Sat & Sun).
  * Allows interactive preview override.
  */
 (function () {
@@ -9,10 +10,14 @@
 
   // Master festival schedule with solar & verified lunar dates (YYYY-MM-DD format for each festival peak)
   const FESTIVALS = {
+    disney: {
+      id: 'disney',
+      logo: 'logo-disney',
+      isWeekendTheme: true
+    },
     spring: {
       id: 'spring',
       logo: 'logo-spring',
-      // Lunar Jan 1 (Peak date; active window is peak - 1 day to peak + 1 day)
       dates: {
         2025: '2025-01-29',
         2026: '2026-02-17',
@@ -25,7 +30,6 @@
     lantern: {
       id: 'lantern',
       logo: 'logo-lantern',
-      // Lunar Jan 15
       dates: {
         2025: '2025-02-12',
         2026: '2026-03-03',
@@ -38,7 +42,6 @@
     qixi: {
       id: 'qixi',
       logo: 'logo-qixi',
-      // Lunar Jul 7
       dates: {
         2025: '2025-08-29',
         2026: '2026-08-19',
@@ -51,7 +54,6 @@
     midautumn: {
       id: 'midautumn',
       logo: 'logo-midautumn',
-      // Lunar Aug 15
       dates: {
         2025: '2025-10-06',
         2026: '2026-09-25',
@@ -64,14 +66,12 @@
     halloween: {
       id: 'halloween',
       logo: 'logo-halloween',
-      // Solar Oct 31 (Active Oct 30 - Nov 1)
       solarMonth: 10,
       solarDay: 31
     },
     christmas: {
       id: 'christmas',
       logo: 'logo-christmas',
-      // Solar Dec 25 (Active Dec 24 - Dec 26)
       solarMonth: 12,
       solarDay: 25
     }
@@ -87,16 +87,19 @@
   }
 
   /**
-   * Detect currently active festival based on system date
+   * Detect currently active festival or weekend based on system date
    */
   function detectActiveFestival(nowDate) {
     const now = nowDate || new Date();
     const curYear = now.getFullYear();
     const curMonth = now.getMonth() + 1; // 1-12
     const curDate = now.getDate();
+    const curDayOfWeek = now.getDay(); // 0 is Sunday, 6 is Saturday
     const curTime = new Date(curYear, now.getMonth(), curDate).getTime();
 
+    // 1. Check holiday festivals first (higher priority than routine weekend)
     for (const key of Object.keys(FESTIVALS)) {
+      if (key === 'disney') continue;
       const f = FESTIVALS[key];
       let peakTime = null;
 
@@ -111,6 +114,14 @@
         return f;
       }
     }
+
+    // 2. In English mode, check weekend (Saturday or Sunday) -> Disney theme
+    const htmlEl = document.documentElement;
+    const isEn = htmlEl.getAttribute('lang') === 'en';
+    if (isEn && (curDayOfWeek === 0 || curDayOfWeek === 6)) {
+      return FESTIVALS.disney;
+    }
+
     return null;
   }
 

@@ -5,6 +5,70 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
+   0. Disney Weekend Edition (迪士尼周末限定 - 英文模式)
+      Magical Twilight Castle Violet & Stardust Rose Gold
+   -------------------------------------------------------------------------- */
+[data-festival="disney"] {
+  --fest-accent: #9a4fd6;
+  --fest-gold: #f5b072;
+  --fest-glow: rgba(154, 79, 214, 0.45);
+}
+
+/* Academy Skin: Enchanted fairy-tale twilight indigo & stardust castle gold */
+html[data-theme="academy"][data-festival="disney"] {
+  --ac-forest: #141029;
+  --ac-forest-deep: #0c081e;
+  --ac-forest-soft: #241c42;
+  --ac-bronze: #bb74da;
+  --ac-bronze-deep: #9047b3;
+  --ac-hairline: #d1c1e6;
+}
+html[data-theme="academy"][data-festival="disney"] .ll-header {
+  background-color: #1a1436 !important;
+}
+html[data-theme="academy"][data-festival="disney"] .ui-container > .mb-8,
+html[data-theme="academy"][data-festival="disney"] .ll-team-head,
+html[data-theme="academy"][data-festival="disney"] .ll-page-head,
+html[data-theme="academy"][data-festival="disney"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
+  background: linear-gradient(118deg, #141029 0%, #3d2360 55%, #763b8c 100%) !important;
+}
+html[data-theme="academy"][data-festival="disney"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #d88aff, #ffca85 45%, #6fe3ff 80%, #d88aff);
+  --ll-ring-glow: rgba(216, 138, 255, 0.55);
+}
+
+/* Manuscript Skin: Dreamy pastel wonderland desk, rose gold highlighter & fairy violet tape */
+html:not([data-theme="academy"])[data-festival="disney"] {
+  --ll-desk: #f3ebf7;
+  --ll-desk-deep: #e2d2e9;
+  --md-primary: #853fa6;
+  --md-primary-container: #f5e2fe;
+  --md-secondary: #cc6d43;
+  --md-secondary-container: #ffe2d4;
+  --md-tertiary-container: #fbe09e;
+  --ll-marker: #9a4fd6;
+  --ll-marker-deep: #702a9b;
+  --ll-marker-tint: #f5e2fe;
+  --ll-pencil-mark: #c499e0;
+  --ll-hi: #f9d8ff;
+  --ll-hi-select: #f2bdff;
+  --ll-ink-you: #853fa6;
+  --ll-ink-you-hover: #702a9b;
+  --ll-paper-shade: #fbf5fd;
+}
+html:not([data-theme="academy"])[data-festival="disney"] .ll-sheet {
+  border-top: 3.5px solid #9a4fd6;
+  box-shadow:
+    0 1px 2px rgba(154, 79, 214, 0.12),
+    0 4px 10px -2px rgba(154, 79, 214, 0.10),
+    0 16px 30px -10px rgba(90, 30, 130, 0.18) !important;
+}
+html:not([data-theme="academy"])[data-festival="disney"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #d88aff, #ffca85 45%, #6fe3ff 80%, #d88aff);
+  --ll-ring-glow: rgba(216, 138, 255, 0.48);
+}
+
+/* --------------------------------------------------------------------------
    1. Spring Festival (春节) — Imperial Vermilion, Gilded Silk & New Year Joy
    -------------------------------------------------------------------------- */
 [data-festival="spring"] {
@@ -13,7 +77,6 @@
   --fest-glow: rgba(196, 38, 29, 0.45);
 }
 
-/* Academy Skin */
 html[data-theme="academy"][data-festival="spring"] {
   --ac-forest: #1c0908;
   --ac-forest-deep: #140504;
@@ -36,7 +99,6 @@ html[data-theme="academy"][data-festival="spring"] .ll-brand {
   --ll-ring-glow: rgba(230, 40, 30, 0.55);
 }
 
-/* Manuscript Skin: Festive vermilion wash, red desk paper, golden highlight & corner seal trim */
 html:not([data-theme="academy"])[data-festival="spring"] {
   --ll-desk: #f9ede7;
   --ll-desk-deep: #edd5ca;
@@ -95,7 +157,6 @@ html[data-theme="academy"][data-festival="lantern"] .ll-brand {
   --ll-ring-glow: rgba(242, 110, 40, 0.52);
 }
 
-/* Manuscript Skin: Warm lantern ambient, glowing amber highlighter, persimmon border */
 html:not([data-theme="academy"])[data-festival="lantern"] {
   --ll-desk: #f9eee3;
   --ll-desk-deep: #eedacb;
@@ -154,7 +215,6 @@ html[data-theme="academy"][data-festival="qixi"] .ll-brand {
   --ll-ring-glow: rgba(155, 114, 207, 0.52);
 }
 
-/* Manuscript Skin: Twilight lavender paper desk, ethereal purple accents */
 html:not([data-theme="academy"])[data-festival="qixi"] {
   --ll-desk: #efe8f5;
   --ll-desk-deep: #ded3ea;
@@ -213,7 +273,6 @@ html[data-theme="academy"][data-festival="midautumn"] .ll-brand {
   --ll-ring-glow: rgba(255, 215, 0, 0.50);
 }
 
-/* Manuscript Skin: Warm golden harvest desk, moonlit ochre markers */
 html:not([data-theme="academy"])[data-festival="midautumn"] {
   --ll-desk: #f9eee1;
   --ll-desk-deep: #eedcc3;
@@ -272,7 +331,6 @@ html[data-theme="academy"][data-festival="halloween"] .ll-brand {
   --ll-ring-glow: rgba(255, 122, 24, 0.55);
 }
 
-/* Manuscript Skin: Mysterious dusk-tinted desk, vivid pumpkin orange & shadow purple */
 html:not([data-theme="academy"])[data-festival="halloween"] {
   --ll-desk: #f2eae7;
   --ll-desk-deep: #dfd2ce;
@@ -331,7 +389,6 @@ html[data-theme="academy"][data-festival="christmas"] .ll-brand {
   --ll-ring-glow: rgba(230, 57, 70, 0.50);
 }
 
-/* Manuscript Skin: Evergreen pine accents with holiday holly red tape */
 html:not([data-theme="academy"])[data-festival="christmas"] {
   --ll-desk: #edf5ee;
   --ll-desk-deep: #d7e7d9;
