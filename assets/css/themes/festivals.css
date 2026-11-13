@@ -2,7 +2,7 @@
    Wen Laboratory — Festive Theme & Bespoke Macro-Atmosphere Decoration System
    Scoped to [data-festival="..."]
    Transforms both Academy (Journal) and Manuscript (Notebook) palettes
-   Includes unmistakable, rich, bespoke architectural & paper-craft ornaments
+   Includes complete, high-contrast, atmospheric Dark Mode support
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -129,7 +129,7 @@ html[data-theme="academy"][data-festival="spring"] .ll-brand {
   --ll-ring-glow: rgba(230, 40, 30, 0.55);
 }
 
-/* Manuscript Spring Theme */
+/* Manuscript Spring Light Theme */
 html:not([data-theme="academy"])[data-festival="spring"] {
   --ll-desk: #f9ede7;
   --ll-desk-deep: #edd5ca;
@@ -151,6 +151,30 @@ html:not([data-theme="academy"])[data-festival="spring"] {
 html:not([data-theme="academy"])[data-festival="spring"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #ff4d4d, #f5c042 50%, #d4241b 80%, #ff4d4d);
   --ll-ring-glow: rgba(230, 40, 30, 0.48);
+}
+
+/* Manuscript Spring Dark Theme */
+html.dark:not([data-theme="academy"])[data-festival="spring"] {
+  --ll-desk: #180e0c !important;
+  --ll-desk-deep: #100806 !important;
+  --ll-paper-shade: #261613 !important;
+  --fest-accent: #ff6b61;
+  --fest-stamp-bg: #2d1815;
+  --ll-marker: #ff6b61;
+  --ll-pencil-mark: #d4823b;
+  --ll-hi: #542217;
+  --ll-hi-select: #732a1b;
+  --md-primary: #ff8c82;
+}
+
+/* Academy Spring Dark Theme */
+html.dark[data-theme="academy"][data-festival="spring"] {
+  --ac-canvas: #150a09;
+  --ac-card: #201210;
+  --ac-card-quiet: #1c0e0c;
+  --ac-hairline: #4a2824;
+  --ac-forest: #200806;
+  --ac-bronze: #e6675e;
 }
 
 /* --------------------------------------------------------------------------
@@ -210,6 +234,30 @@ html:not([data-theme="academy"])[data-festival="lantern"] {
 html:not([data-theme="academy"])[data-festival="lantern"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #ff7a3d, #ffd15c 50%, #e65c19 80%, #ff7a3d);
   --ll-ring-glow: rgba(242, 110, 40, 0.45);
+}
+
+/* Manuscript Lantern Dark Theme */
+html.dark:not([data-theme="academy"])[data-festival="lantern"] {
+  --ll-desk: #19100a !important;
+  --ll-desk-deep: #110a05 !important;
+  --ll-paper-shade: #261910 !important;
+  --fest-accent: #ff8c52;
+  --fest-stamp-bg: #2d1b10;
+  --ll-marker: #ff8c52;
+  --ll-pencil-mark: #e69d45;
+  --ll-hi: #572e12;
+  --ll-hi-select: #783e18;
+  --md-primary: #ffa372;
+}
+
+/* Academy Lantern Dark Theme */
+html.dark[data-theme="academy"][data-festival="lantern"] {
+  --ac-canvas: #170d06;
+  --ac-card: #22140b;
+  --ac-card-quiet: #1c1008;
+  --ac-hairline: #4d2e1b;
+  --ac-forest: #220f06;
+  --ac-bronze: #f58447;
 }
 
 /* --------------------------------------------------------------------------
@@ -274,6 +322,30 @@ html:not([data-theme="academy"])[data-festival="qixi"] .ll-brand {
   --ll-ring-glow: rgba(155, 114, 207, 0.48);
 }
 
+/* Manuscript Qixi Dark Theme */
+html.dark:not([data-theme="academy"])[data-festival="qixi"] {
+  --ll-desk: #120d1c !important;
+  --ll-desk-deep: #0b0713 !important;
+  --ll-paper-shade: #211733 !important;
+  --fest-accent: #b485f5;
+  --fest-stamp-bg: #271a3d;
+  --ll-marker: #b485f5;
+  --ll-pencil-mark: #a178d9;
+  --ll-hi: #45216e;
+  --ll-hi-select: #5d2d94;
+  --md-primary: #c9a4ff;
+}
+
+/* Academy Qixi Dark Theme */
+html.dark[data-theme="academy"][data-festival="qixi"] {
+  --ac-canvas: #110d1c;
+  --ac-card: #1c152e;
+  --ac-card-quiet: #171126;
+  --ac-hairline: #413263;
+  --ac-forest: #140d24;
+  --ac-bronze: #ab7cee;
+}
+
 /* --------------------------------------------------------------------------
    4. Mid-Autumn Festival (中秋节) — Radiant Golden Harvest Moon & Osmanthus Amber
    -------------------------------------------------------------------------- */
@@ -333,6 +405,30 @@ html:not([data-theme="academy"])[data-festival="midautumn"] .ll-brand {
   --ll-ring-glow: rgba(255, 215, 0, 0.48);
 }
 
+/* Manuscript Mid-Autumn Dark Theme */
+html.dark:not([data-theme="academy"])[data-festival="midautumn"] {
+  --ll-desk: #171308 !important;
+  --ll-desk-deep: #0f0c04 !important;
+  --ll-paper-shade: #261f0d !important;
+  --fest-accent: #f5c042;
+  --fest-stamp-bg: #2d230d;
+  --ll-marker: #f5c042;
+  --ll-pencil-mark: #dca738;
+  --ll-hi: #543f0c;
+  --ll-hi-select: #755711;
+  --md-primary: #ffd166;
+}
+
+/* Academy Mid-Autumn Dark Theme */
+html.dark[data-theme="academy"][data-festival="midautumn"] {
+  --ac-canvas: #151107;
+  --ac-card: #201a0b;
+  --ac-card-quiet: #1a1508;
+  --ac-hairline: #4a3c17;
+  --ac-forest: #1e1606;
+  --ac-bronze: #e6b23a;
+}
+
 /* --------------------------------------------------------------------------
    5. Halloween (万圣节) — Midnight Shadow, Neon Pumpkin & Spooky Glow
    -------------------------------------------------------------------------- */
@@ -390,6 +486,30 @@ html:not([data-theme="academy"])[data-festival="halloween"] {
 html:not([data-theme="academy"])[data-festival="halloween"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #ff7a18, #9b51e0 50%, #ffa500 80%, #ff7a18);
   --ll-ring-glow: rgba(255, 122, 24, 0.48);
+}
+
+/* Manuscript Halloween Dark Theme */
+html.dark:not([data-theme="academy"])[data-festival="halloween"] {
+  --ll-desk: #150d17 !important;
+  --ll-desk-deep: #0d060e !important;
+  --ll-paper-shade: #26162a !important;
+  --fest-accent: #ff7a29;
+  --fest-stamp-bg: #2d182e;
+  --ll-marker: #ff7a29;
+  --ll-pencil-mark: #bd7fe3;
+  --ll-hi: #5e220a;
+  --ll-hi-select: #822e0a;
+  --md-primary: #ff9959;
+}
+
+/* Academy Halloween Dark Theme */
+html.dark[data-theme="academy"][data-festival="halloween"] {
+  --ac-canvas: #120914;
+  --ac-card: #1f1124;
+  --ac-card-quiet: #180d1c;
+  --ac-hairline: #4a2857;
+  --ac-forest: #190921;
+  --ac-bronze: #f57827;
 }
 
 /* --------------------------------------------------------------------------
@@ -453,6 +573,30 @@ html:not([data-theme="academy"])[data-festival="christmas"] {
 html:not([data-theme="academy"])[data-festival="christmas"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #e63946, #40916c 45%, #ffd166 80%, #e63946);
   --ll-ring-glow: rgba(230, 57, 70, 0.48);
+}
+
+/* Manuscript Christmas Dark Theme */
+html.dark:not([data-theme="academy"])[data-festival="christmas"] {
+  --ll-desk: #0a140d !important;
+  --ll-desk-deep: #050d07 !important;
+  --ll-paper-shade: #122418 !important;
+  --fest-accent: #48b875;
+  --fest-stamp-bg: #132b1b;
+  --ll-marker: #48b875;
+  --ll-pencil-mark: #74bf94;
+  --ll-hi: #0f4021;
+  --ll-hi-select: #17572e;
+  --md-primary: #6be39c;
+}
+
+/* Academy Christmas Dark Theme */
+html.dark[data-theme="academy"][data-festival="christmas"] {
+  --ac-canvas: #09140c;
+  --ac-card: #102115;
+  --ac-card-quiet: #0c1c11;
+  --ac-hairline: #294d34;
+  --ac-forest: #0c1f13;
+  --ac-bronze: #e65353;
 }
 
 /* --------------------------------------------------------------------------
@@ -519,6 +663,30 @@ html:not([data-theme="academy"])[data-festival="fantasy"] {
 html:not([data-theme="academy"])[data-festival="fantasy"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #d88aff, #ffca85 45%, #6fe3ff 80%, #d88aff);
   --ll-ring-glow: rgba(216, 138, 255, 0.48);
+}
+
+/* Manuscript Fantasy Dark Theme */
+html.dark:not([data-theme="academy"])[data-festival="fantasy"] {
+  --ll-desk: #120e1f !important;
+  --ll-desk-deep: #0a0714 !important;
+  --ll-paper-shade: #211938 !important;
+  --fest-accent: #ca82f8;
+  --fest-stamp-bg: #291c47;
+  --ll-marker: #ca82f8;
+  --ll-pencil-mark: #b082e6;
+  --ll-hi: #451b6e;
+  --ll-hi-select: #602599;
+  --md-primary: #dc9eff;
+}
+
+/* Academy Fantasy Dark Theme */
+html.dark[data-theme="academy"][data-festival="fantasy"] {
+  --ac-canvas: #0e0a1c;
+  --ac-card: #191230;
+  --ac-card-quiet: #140e26;
+  --ac-hairline: #3b2b69;
+  --ac-forest: #160d2b;
+  --ac-bronze: #be75eb;
 }
 
 /* ==========================================================================
