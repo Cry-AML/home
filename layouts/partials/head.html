@@ -131,6 +131,10 @@
   {{ with resources.Get "css/themes/academy.css" }}
     {{ $cssResources = $cssResources | append . }}
   {{ end }}
+  {{/* Festive theme overrides for festive dates & interactive review */}}
+  {{ with resources.Get "css/themes/festivals.css" }}
+    {{ $cssResources = $cssResources | append . }}
+  {{ end }}
   {{ if not .Site.Params.disableImageZoom | default true }}
     {{ $cssResources = $cssResources | append (resources.Get "lib/zoom/style.css") }}
   {{ end }}

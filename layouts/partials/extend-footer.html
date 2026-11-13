@@ -97,3 +97,10 @@
   {{ $minified := $script | resources.Minify | resources.Fingerprint }}
   <script src="{{ $minified.RelPermalink }}" integrity="{{ $minified.Data.Integrity }}" defer></script>
 {{ end }}
+<!-- Festival preview deck & festival scheduler -->
+{{ partial "festival-deck.html" . }}
+{{ $festJS := resources.Get "js/festival.js" }}
+{{ if $festJS }}
+  {{ $fj := $festJS | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $fj.RelPermalink }}" integrity="{{ $fj.Data.Integrity }}" defer></script>
+{{ end }}

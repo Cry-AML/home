@@ -1,0 +1,293 @@
+/* ==========================================================================
+   Wen Laboratory — Festive Theme & Decoration System
+   Scoped to [data-festival="..."]
+   Transforms both Academy (Journal) and Manuscript (Notebook) palettes
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Spring Festival (春节) — Auspicious Imperial Vermilion & Gilded Silk
+   -------------------------------------------------------------------------- */
+[data-festival="spring"] {
+  --fest-accent: #c4261d;
+  --fest-gold: #e6a13b;
+  --fest-glow: rgba(196, 38, 29, 0.42);
+}
+
+/* Academy Skin: Auspicious Red & Gold Banner with festive halo */
+html[data-theme="academy"][data-festival="spring"] {
+  --ac-forest: #1c0908;
+  --ac-forest-deep: #140504;
+  --ac-forest-soft: #2e0e0c;
+  --ac-bronze: #c4261d;
+  --ac-bronze-deep: #961b14;
+  --ac-hairline: #e0beb6;
+}
+html[data-theme="academy"][data-festival="spring"] .ll-header {
+  background-color: #240a08 !important;
+}
+html[data-theme="academy"][data-festival="spring"] .ui-container > .mb-8,
+html[data-theme="academy"][data-festival="spring"] .ll-team-head,
+html[data-theme="academy"][data-festival="spring"] .ll-page-head,
+html[data-theme="academy"][data-festival="spring"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
+  background: linear-gradient(118deg, #240a08 0%, #7d1c15 55%, #b32a20 100%) !important;
+}
+html[data-theme="academy"][data-festival="spring"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #ff4d4d, #f5c042 50%, #d4241b 80%, #ff4d4d);
+  --ll-ring-glow: rgba(230, 40, 30, 0.55);
+}
+
+/* Manuscript Skin: Festive seal bleed & red paper trim */
+[data-theme="manuscript"][data-festival="spring"] {
+  --md-primary: #b31d1d;
+  --ll-marker: #c4261d;
+  --ll-pencil-mark: #e6a13b;
+}
+[data-theme="manuscript"][data-festival="spring"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #ff4d4d, #f5c042 50%, #d4241b 80%, #ff4d4d);
+  --ll-ring-glow: rgba(230, 40, 30, 0.48);
+}
+
+/* --------------------------------------------------------------------------
+   2. Lantern Festival (元宵节) — Warm Amber Lantern Glow & Persimmon Red
+   -------------------------------------------------------------------------- */
+[data-festival="lantern"] {
+  --fest-accent: #d95e26;
+  --fest-gold: #f2ad44;
+  --fest-glow: rgba(217, 94, 38, 0.45);
+}
+
+html[data-theme="academy"][data-festival="lantern"] {
+  --ac-forest: #221207;
+  --ac-bronze: #d95e26;
+  --ac-hairline: #e3cbbd;
+}
+html[data-theme="academy"][data-festival="lantern"] .ll-header {
+  background-color: #2b170c !important;
+}
+html[data-theme="academy"][data-festival="lantern"] .ui-container > .mb-8,
+html[data-theme="academy"][data-festival="lantern"] .ll-team-head,
+html[data-theme="academy"][data-festival="lantern"] .ll-page-head,
+html[data-theme="academy"][data-festival="lantern"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
+  background: linear-gradient(118deg, #2b170c 0%, #8c3a14 55%, #c75b22 100%) !important;
+}
+html[data-theme="academy"][data-festival="lantern"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #ff7a3d, #ffd15c 50%, #e65c19 80%, #ff7a3d);
+  --ll-ring-glow: rgba(242, 110, 40, 0.52);
+}
+[data-theme="manuscript"][data-festival="lantern"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #ff7a3d, #ffd15c 50%, #e65c19 80%, #ff7a3d);
+  --ll-ring-glow: rgba(242, 110, 40, 0.45);
+}
+
+/* --------------------------------------------------------------------------
+   3. Qixi Festival (七夕节) — Galactic Twilight Violet & Starlit Moon
+   -------------------------------------------------------------------------- */
+[data-festival="qixi"] {
+  --fest-accent: #7852a9;
+  --fest-gold: #c3b1e1;
+  --fest-glow: rgba(120, 82, 169, 0.45);
+}
+
+html[data-theme="academy"][data-festival="qixi"] {
+  --ac-forest: #161224;
+  --ac-bronze: #8862b5;
+  --ac-hairline: #cfc5dd;
+}
+html[data-theme="academy"][data-festival="qixi"] .ll-header {
+  background-color: #1e1830 !important;
+}
+html[data-theme="academy"][data-festival="qixi"] .ui-container > .mb-8,
+html[data-theme="academy"][data-festival="qixi"] .ll-team-head,
+html[data-theme="academy"][data-festival="qixi"] .ll-page-head,
+html[data-theme="academy"][data-festival="qixi"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
+  background: linear-gradient(118deg, #161224 0%, #3e2863 55%, #694a96 100%) !important;
+}
+html[data-theme="academy"][data-festival="qixi"] .ll-brand,
+[data-theme="manuscript"][data-festival="qixi"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #9b72cf, #5ce1e6 50%, #e0c3fc 80%, #9b72cf);
+  --ll-ring-glow: rgba(155, 114, 207, 0.52);
+}
+
+/* --------------------------------------------------------------------------
+   4. Mid-Autumn Festival (中秋节) — Radiant Harvest Moon & Osmanthus Amber
+   -------------------------------------------------------------------------- */
+[data-festival="midautumn"] {
+  --fest-accent: #c48227;
+  --fest-gold: #f5c85b;
+  --fest-glow: rgba(245, 200, 91, 0.45);
+}
+
+html[data-theme="academy"][data-festival="midautumn"] {
+  --ac-forest: #1a160d;
+  --ac-bronze: #c48227;
+  --ac-hairline: #ded0b8;
+}
+html[data-theme="academy"][data-festival="midautumn"] .ll-header {
+  background-color: #241e12 !important;
+}
+html[data-theme="academy"][data-festival="midautumn"] .ui-container > .mb-8,
+html[data-theme="academy"][data-festival="midautumn"] .ll-team-head,
+html[data-theme="academy"][data-festival="midautumn"] .ll-page-head,
+html[data-theme="academy"][data-festival="midautumn"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
+  background: linear-gradient(118deg, #1c180f 0%, #5e4719 55%, #9c7728 100%) !important;
+}
+html[data-theme="academy"][data-festival="midautumn"] .ll-brand,
+[data-theme="manuscript"][data-festival="midautumn"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #ffd700, #ffaa00 45%, #fff1a8 80%, #ffd700);
+  --ll-ring-glow: rgba(255, 215, 0, 0.50);
+}
+
+/* --------------------------------------------------------------------------
+   5. Halloween (万圣节) — Midnight Shadow & Electric Pumpkin
+   -------------------------------------------------------------------------- */
+[data-festival="halloween"] {
+  --fest-accent: #e66012;
+  --fest-gold: #9a4fd6;
+  --fest-glow: rgba(230, 96, 18, 0.45);
+}
+
+html[data-theme="academy"][data-festival="halloween"] {
+  --ac-forest: #14101a;
+  --ac-bronze: #e66012;
+  --ac-hairline: #cec0db;
+}
+html[data-theme="academy"][data-festival="halloween"] .ll-header {
+  background-color: #1a1424 !important;
+}
+html[data-theme="academy"][data-festival="halloween"] .ui-container > .mb-8,
+html[data-theme="academy"][data-festival="halloween"] .ll-team-head,
+html[data-theme="academy"][data-festival="halloween"] .ll-page-head,
+html[data-theme="academy"][data-festival="halloween"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
+  background: linear-gradient(118deg, #120d1c 0%, #351c4a 55%, #82381e 100%) !important;
+}
+html[data-theme="academy"][data-festival="halloween"] .ll-brand,
+[data-theme="manuscript"][data-festival="halloween"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #ff7a18, #9b51e0 50%, #ffa500 80%, #ff7a18);
+  --ll-ring-glow: rgba(255, 122, 24, 0.55);
+}
+
+/* --------------------------------------------------------------------------
+   6. Christmas (圣诞节) — Pine Frost & Winter Berry
+   -------------------------------------------------------------------------- */
+[data-festival="christmas"] {
+  --fest-accent: #2e6644;
+  --fest-gold: #c72c2c;
+  --fest-glow: rgba(199, 44, 44, 0.42);
+}
+
+html[data-theme="academy"][data-festival="christmas"] {
+  --ac-forest: #0d2618;
+  --ac-bronze: #c72c2c;
+  --ac-hairline: #bccfbe;
+}
+html[data-theme="academy"][data-festival="christmas"] .ll-header {
+  background-color: #133321 !important;
+}
+html[data-theme="academy"][data-festival="christmas"] .ui-container > .mb-8,
+html[data-theme="academy"][data-festival="christmas"] .ll-team-head,
+html[data-theme="academy"][data-festival="christmas"] .ll-page-head,
+html[data-theme="academy"][data-festival="christmas"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
+  background: linear-gradient(118deg, #0e2b1b 0%, #1f5737 55%, #852424 100%) !important;
+}
+html[data-theme="academy"][data-festival="christmas"] .ll-brand,
+[data-theme="manuscript"][data-festival="christmas"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #e63946, #40916c 45%, #ffd166 80%, #e63946);
+  --ll-ring-glow: rgba(230, 57, 70, 0.50);
+}
+
+/* ==========================================================================
+   Festival Preview Deck UI (Fixed Control on lower right above wand)
+   ========================================================================== */
+.ll-fest-deck {
+  position: fixed;
+  left: clamp(14px, 2.2vw, 26px);
+  bottom: clamp(14px, 2.2vw, 26px);
+  z-index: 54;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.ll-fest-deck summary {
+  list-style: none;
+  cursor: pointer;
+}
+.ll-fest-deck summary::-webkit-details-marker {
+  display: none;
+}
+.ll-fest-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background-color: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+  border: 0.5px solid var(--md-outline-variant);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  user-select: none;
+  transition: all 0.2s var(--ll-ease-out);
+}
+.ll-fest-pill:hover {
+  background-color: var(--md-surface-highest);
+  transform: translateY(-1px);
+}
+.ll-fest-menu {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  min-width: 190px;
+  padding: 6px;
+  border-radius: 12px;
+  background-color: var(--md-surface-container);
+  border: 0.5px solid var(--md-outline-variant);
+  box-shadow: 0 10px 28px -10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ll-fest-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--md-on-surface-variant);
+  font-family: inherit;
+  font-size: 11px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.ll-fest-btn:hover {
+  background-color: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+}
+.ll-fest-btn.is-active {
+  background-color: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  font-weight: 600;
+}
+html[data-theme="academy"] .ll-fest-pill {
+  background-color: rgba(17, 54, 45, 0.88);
+  color: #f3ece3;
+  border-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+}
+html[data-theme="academy"] .ll-fest-menu {
+  background-color: #1e332c;
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #f3ece3;
+}
+html[data-theme="academy"] .ll-fest-btn {
+  color: #c9d4ce;
+}
+html[data-theme="academy"] .ll-fest-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+html[data-theme="academy"] .ll-fest-btn.is-active {
+  background-color: var(--ac-bronze);
+  color: #ffffff;
+}
