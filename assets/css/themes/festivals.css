@@ -5,15 +5,15 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Spring Festival (春节) — Auspicious Imperial Vermilion & Gilded Silk
+   1. Spring Festival (春节) — Imperial Vermilion, Gilded Silk & New Year Joy
    -------------------------------------------------------------------------- */
 [data-festival="spring"] {
   --fest-accent: #c4261d;
   --fest-gold: #e6a13b;
-  --fest-glow: rgba(196, 38, 29, 0.42);
+  --fest-glow: rgba(196, 38, 29, 0.45);
 }
 
-/* Academy Skin: Auspicious Red & Gold Banner with festive halo */
+/* Academy Skin */
 html[data-theme="academy"][data-festival="spring"] {
   --ac-forest: #1c0908;
   --ac-forest-deep: #140504;
@@ -36,13 +36,33 @@ html[data-theme="academy"][data-festival="spring"] .ll-brand {
   --ll-ring-glow: rgba(230, 40, 30, 0.55);
 }
 
-/* Manuscript Skin: Festive seal bleed & red paper trim */
-[data-theme="manuscript"][data-festival="spring"] {
-  --md-primary: #b31d1d;
+/* Manuscript Skin: Festive vermilion wash, red desk paper, golden highlight & corner seal trim */
+html:not([data-theme="academy"])[data-festival="spring"] {
+  --ll-desk: #f9ede7;
+  --ll-desk-deep: #edd5ca;
+  --md-primary: #ba2119;
+  --md-primary-container: #ffdad5;
+  --md-secondary: #8c2419;
+  --md-secondary-container: #fed8d3;
+  --md-tertiary-container: #ffe082;
   --ll-marker: #c4261d;
+  --ll-marker-deep: #981912;
+  --ll-marker-tint: #ffdad5;
   --ll-pencil-mark: #e6a13b;
+  --ll-hi: #ffe299;
+  --ll-hi-select: #ffdc7a;
+  --ll-ink-you: #ba2119;
+  --ll-ink-you-hover: #981912;
+  --ll-paper-shade: #fdf2ed;
 }
-[data-theme="manuscript"][data-festival="spring"] .ll-brand {
+html:not([data-theme="academy"])[data-festival="spring"] .ll-sheet {
+  border-top: 3.5px solid #c4261d;
+  box-shadow:
+    0 1px 2px rgba(186, 33, 25, 0.12),
+    0 4px 10px -2px rgba(186, 33, 25, 0.10),
+    0 16px 30px -10px rgba(120, 20, 15, 0.18) !important;
+}
+html:not([data-theme="academy"])[data-festival="spring"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #ff4d4d, #f5c042 50%, #d4241b 80%, #ff4d4d);
   --ll-ring-glow: rgba(230, 40, 30, 0.48);
 }
@@ -74,7 +94,34 @@ html[data-theme="academy"][data-festival="lantern"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #ff7a3d, #ffd15c 50%, #e65c19 80%, #ff7a3d);
   --ll-ring-glow: rgba(242, 110, 40, 0.52);
 }
-[data-theme="manuscript"][data-festival="lantern"] .ll-brand {
+
+/* Manuscript Skin: Warm lantern ambient, glowing amber highlighter, persimmon border */
+html:not([data-theme="academy"])[data-festival="lantern"] {
+  --ll-desk: #f9eee3;
+  --ll-desk-deep: #eedacb;
+  --md-primary: #cf531b;
+  --md-primary-container: #ffdbcb;
+  --md-secondary: #9e4317;
+  --md-secondary-container: #ffdcc8;
+  --md-tertiary-container: #ffe2a4;
+  --ll-marker: #d95e26;
+  --ll-marker-deep: #aa4213;
+  --ll-marker-tint: #ffdbcb;
+  --ll-pencil-mark: #f2ad44;
+  --ll-hi: #ffe4a8;
+  --ll-hi-select: #ffdc87;
+  --ll-ink-you: #cf531b;
+  --ll-ink-you-hover: #aa4213;
+  --ll-paper-shade: #fdf5ec;
+}
+html:not([data-theme="academy"])[data-festival="lantern"] .ll-sheet {
+  border-top: 3.5px solid #d95e26;
+  box-shadow:
+    0 1px 2px rgba(217, 94, 38, 0.12),
+    0 4px 10px -2px rgba(217, 94, 38, 0.10),
+    0 16px 30px -10px rgba(160, 60, 15, 0.16) !important;
+}
+html:not([data-theme="academy"])[data-festival="lantern"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #ff7a3d, #ffd15c 50%, #e65c19 80%, #ff7a3d);
   --ll-ring-glow: rgba(242, 110, 40, 0.45);
 }
@@ -102,10 +149,40 @@ html[data-theme="academy"][data-festival="qixi"] .ll-page-head,
 html[data-theme="academy"][data-festival="qixi"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
   background: linear-gradient(118deg, #161224 0%, #3e2863 55%, #694a96 100%) !important;
 }
-html[data-theme="academy"][data-festival="qixi"] .ll-brand,
-[data-theme="manuscript"][data-festival="qixi"] .ll-brand {
+html[data-theme="academy"][data-festival="qixi"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #9b72cf, #5ce1e6 50%, #e0c3fc 80%, #9b72cf);
   --ll-ring-glow: rgba(155, 114, 207, 0.52);
+}
+
+/* Manuscript Skin: Twilight lavender paper desk, ethereal purple accents */
+html:not([data-theme="academy"])[data-festival="qixi"] {
+  --ll-desk: #efe8f5;
+  --ll-desk-deep: #ded3ea;
+  --md-primary: #6c469e;
+  --md-primary-container: #ecdffe;
+  --md-secondary: #573a7d;
+  --md-secondary-container: #ede1fc;
+  --md-tertiary-container: #d8c8f8;
+  --ll-marker: #7852a9;
+  --ll-marker-deep: #54347c;
+  --ll-marker-tint: #ecdffe;
+  --ll-pencil-mark: #b49fd9;
+  --ll-hi: #e5d8ff;
+  --ll-hi-select: #d4bfff;
+  --ll-ink-you: #6c469e;
+  --ll-ink-you-hover: #54347c;
+  --ll-paper-shade: #f7f3fd;
+}
+html:not([data-theme="academy"])[data-festival="qixi"] .ll-sheet {
+  border-top: 3.5px solid #7852a9;
+  box-shadow:
+    0 1px 2px rgba(120, 82, 169, 0.12),
+    0 4px 10px -2px rgba(120, 82, 169, 0.10),
+    0 16px 30px -10px rgba(75, 45, 110, 0.16) !important;
+}
+html:not([data-theme="academy"])[data-festival="qixi"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #9b72cf, #5ce1e6 50%, #e0c3fc 80%, #9b72cf);
+  --ll-ring-glow: rgba(155, 114, 207, 0.48);
 }
 
 /* --------------------------------------------------------------------------
@@ -131,10 +208,40 @@ html[data-theme="academy"][data-festival="midautumn"] .ll-page-head,
 html[data-theme="academy"][data-festival="midautumn"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
   background: linear-gradient(118deg, #1c180f 0%, #5e4719 55%, #9c7728 100%) !important;
 }
-html[data-theme="academy"][data-festival="midautumn"] .ll-brand,
-[data-theme="manuscript"][data-festival="midautumn"] .ll-brand {
+html[data-theme="academy"][data-festival="midautumn"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #ffd700, #ffaa00 45%, #fff1a8 80%, #ffd700);
   --ll-ring-glow: rgba(255, 215, 0, 0.50);
+}
+
+/* Manuscript Skin: Warm golden harvest desk, moonlit ochre markers */
+html:not([data-theme="academy"])[data-festival="midautumn"] {
+  --ll-desk: #f9eee1;
+  --ll-desk-deep: #eedcc3;
+  --md-primary: #b3721b;
+  --md-primary-container: #ffdfaf;
+  --md-secondary: #8c550f;
+  --md-secondary-container: #ffdfb6;
+  --md-tertiary-container: #ffe79e;
+  --ll-marker: #c48227;
+  --ll-marker-deep: #8f5813;
+  --ll-marker-tint: #ffdfaf;
+  --ll-pencil-mark: #e6b35e;
+  --ll-hi: #ffea9e;
+  --ll-hi-select: #ffe17d;
+  --ll-ink-you: #b3721b;
+  --ll-ink-you-hover: #8f5813;
+  --ll-paper-shade: #fdf6ec;
+}
+html:not([data-theme="academy"])[data-festival="midautumn"] .ll-sheet {
+  border-top: 3.5px solid #c48227;
+  box-shadow:
+    0 1px 2px rgba(196, 130, 39, 0.12),
+    0 4px 10px -2px rgba(196, 130, 39, 0.10),
+    0 16px 30px -10px rgba(135, 80, 15, 0.16) !important;
+}
+html:not([data-theme="academy"])[data-festival="midautumn"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #ffd700, #ffaa00 45%, #fff1a8 80%, #ffd700);
+  --ll-ring-glow: rgba(255, 215, 0, 0.48);
 }
 
 /* --------------------------------------------------------------------------
@@ -160,10 +267,40 @@ html[data-theme="academy"][data-festival="halloween"] .ll-page-head,
 html[data-theme="academy"][data-festival="halloween"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
   background: linear-gradient(118deg, #120d1c 0%, #351c4a 55%, #82381e 100%) !important;
 }
-html[data-theme="academy"][data-festival="halloween"] .ll-brand,
-[data-theme="manuscript"][data-festival="halloween"] .ll-brand {
+html[data-theme="academy"][data-festival="halloween"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #ff7a18, #9b51e0 50%, #ffa500 80%, #ff7a18);
   --ll-ring-glow: rgba(255, 122, 24, 0.55);
+}
+
+/* Manuscript Skin: Mysterious dusk-tinted desk, vivid pumpkin orange & shadow purple */
+html:not([data-theme="academy"])[data-festival="halloween"] {
+  --ll-desk: #f2eae7;
+  --ll-desk-deep: #dfd2ce;
+  --md-primary: #d65509;
+  --md-primary-container: #ffd9cc;
+  --md-secondary: #743ea4;
+  --md-secondary-container: #edd9fc;
+  --md-tertiary-container: #fed1b2;
+  --ll-marker: #e66012;
+  --ll-marker-deep: #a84005;
+  --ll-marker-tint: #ffd9cc;
+  --ll-pencil-mark: #ba98c6;
+  --ll-hi: #fed6b5;
+  --ll-hi-select: #ffc494;
+  --ll-ink-you: #d65509;
+  --ll-ink-you-hover: #a84005;
+  --ll-paper-shade: #f9f3f0;
+}
+html:not([data-theme="academy"])[data-festival="halloween"] .ll-sheet {
+  border-top: 3.5px solid #e66012;
+  box-shadow:
+    0 1px 2px rgba(230, 96, 18, 0.12),
+    0 4px 10px -2px rgba(230, 96, 18, 0.10),
+    0 16px 30px -10px rgba(90, 30, 10, 0.18) !important;
+}
+html:not([data-theme="academy"])[data-festival="halloween"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #ff7a18, #9b51e0 50%, #ffa500 80%, #ff7a18);
+  --ll-ring-glow: rgba(255, 122, 24, 0.48);
 }
 
 /* --------------------------------------------------------------------------
@@ -189,14 +326,53 @@ html[data-theme="academy"][data-festival="christmas"] .ll-page-head,
 html[data-theme="academy"][data-festival="christmas"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
   background: linear-gradient(118deg, #0e2b1b 0%, #1f5737 55%, #852424 100%) !important;
 }
-html[data-theme="academy"][data-festival="christmas"] .ll-brand,
-[data-theme="manuscript"][data-festival="christmas"] .ll-brand {
+html[data-theme="academy"][data-festival="christmas"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #e63946, #40916c 45%, #ffd166 80%, #e63946);
   --ll-ring-glow: rgba(230, 57, 70, 0.50);
 }
 
+/* Manuscript Skin: Evergreen pine accents with holiday holly red tape */
+html:not([data-theme="academy"])[data-festival="christmas"] {
+  --ll-desk: #edf5ee;
+  --ll-desk-deep: #d7e7d9;
+  --md-primary: #25583a;
+  --md-primary-container: #c4ecd0;
+  --md-secondary: #b32525;
+  --md-secondary-container: #ffd5d5;
+  --md-tertiary-container: #c7edd2;
+  --ll-marker: #2e6644;
+  --ll-marker-deep: #1b452c;
+  --ll-marker-tint: #c4ecd0;
+  --ll-pencil-mark: #8cb89a;
+  --ll-hi: #d0f0d9;
+  --ll-hi-select: #b5e6c2;
+  --ll-ink-you: #b32525;
+  --ll-ink-you-hover: #8a1616;
+  --ll-paper-shade: #f4faf5;
+}
+html:not([data-theme="academy"])[data-festival="christmas"] .ll-sheet {
+  border-top: 3.5px solid #2e6644;
+  box-shadow:
+    0 1px 2px rgba(46, 102, 68, 0.12),
+    0 4px 10px -2px rgba(46, 102, 68, 0.10),
+    0 16px 30px -10px rgba(30, 70, 45, 0.16) !important;
+}
+html:not([data-theme="academy"])[data-festival="christmas"] .ll-brand {
+  --ll-ring-grad: conic-gradient(from 140deg, #e63946, #40916c 45%, #ffd166 80%, #e63946);
+  --ll-ring-glow: rgba(230, 57, 70, 0.48);
+}
+
+/* --------------------------------------------------------------------------
+   Logo rendering rules across skins under festive mode
+   -------------------------------------------------------------------------- */
+[data-festival] .ll-brand__mark,
+[data-theme="academy"][data-festival] .ll-brand__mark {
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35)) !important;
+  opacity: 1 !important;
+}
+
 /* ==========================================================================
-   Festival Preview Deck UI (Fixed Control on lower right above wand)
+   Festival Preview Deck UI (Fixed Control on lower left)
    ========================================================================== */
 .ll-fest-deck {
   position: fixed;
@@ -237,10 +413,6 @@ html[data-theme="academy"][data-festival="christmas"] .ll-brand,
 .ll-fest-glyph {
   font-size: 16px;
   line-height: 1;
-}
-.ll-fest-pill:hover {
-  background-color: var(--md-surface-highest);
-  transform: translateY(-1px);
 }
 .ll-fest-menu {
   position: absolute;
@@ -301,12 +473,4 @@ html[data-theme="academy"] .ll-fest-btn:hover {
 html[data-theme="academy"] .ll-fest-btn.is-active {
   background-color: var(--ac-bronze);
   color: #ffffff;
-}
-
-/* In Academy skin, festive badges and daily colorful badges should retain
-   their authentic festival colors with a crisp drop shadow rather than being pure white inverted imprints */
-[data-festival] .ll-brand__mark,
-[data-theme="academy"][data-festival] .ll-brand__mark {
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35)) !important;
-  opacity: 1 !important;
 }
