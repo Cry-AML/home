@@ -1,31 +1,54 @@
-# 文卓谦实验室官方学术主页 (Wen Laboratory Academic Website)
+# 文卓谦实验室官方主页 (MCH Laboratory Academic Website)
 
-> **中山大学中山医学院 · 白血病表观遗传与代谢免疫研究组**  
-> **Laboratory of Leukemia Epigenetics and Metabolic Immunology, Zhongshan School of Medicine, Sun Yat-sen University**
+> **中山大学中山医学院 · 文卓谦实验室**  
+> **Laboratory of Cheuk-Him Man (MCH Laboratory), Zhongshan School of Medicine, Sun Yat-sen University**  
+> 线上主页：[https://cry-aml.github.io/home/](https://cry-aml.github.io/home/)
 
-本项目已按照 **[baoyu-design](https://github.com/JimLiu/baoyu-design)** 高保真可交互原型（Hi-Fi Interactive Prototype）标准完成重构与重新设计。结合国际标杆实验室（**Harvard/MGH Scadden Lab** 与 **HKU The Leung Lab**）的视觉与学术架构，打造兼具学术厚重感与前沿转化活力的顶尖学术主页。
+本项目基于 **Hugo + Blowfish** 深度架构定制，专为文卓谦教授（Cheuk-Him Man / 文卓谦）课题组打造，提供**双生视觉皮肤体系（Academy 静奢期刊风 / Manuscript 极客手账风）**、**全天候智能节日与周末限定徽标调度引擎**、**三语原生国际化**以及**全流程自动化质量保障门禁**。
 
 ---
 
 ## 🌟 核心特性 (Key Features)
 
-1. **遵循 baoyu-design 设计规范**：
-   - 建立了标准的工程资产索引（`designs/wen-lab/_d_meta.json`），设计成果已通过 `record-asset.mjs` 审查归档。
-   - 引入学术级排版系统：正文 `Inter` + 标题宣言 `Newsreader` 典雅衬线 + 等宽代码 `JetBrains Mono`。
-2. **四套学术主题调色板 (Multi-Theme Palettes)**：
-   - 🏛️ **经典学术蓝 (Academic Navy - 默认)**：严谨克制，汲取哈佛与麻省总医院顶尖医学规范。
-   - 🔴 **逸仙庄严红 (Yat-sen Crimson)**：传承中山大学红砖古朴学脉，彰显“逸仙学者”学术声誉。
-   - 🌿 **生命科学绿 (Stem Cell Emerald)**：呼应造血干细胞、组织再生与生物医药生命力。
-   - 🌌 **曜石显微暗黑 (Confocal Obsidian Dark)**：适配多色荧光共聚焦显微图像阅览与暗光护眼阅读。
-3. **中英双语无缝切换 (Bilingual Support)**：
-   - 支持全站一键切换 `中文 / English`，包括菜单、核心理念、科学方向、学术论文摘要及招聘要求，偏好自动保存至本地 `localStorage`。
-4. **科研交互工具库**：
-   - **核心技术平台切换器**：支持在【斑马鱼疾病模型】、【人源 PDX 骨髓微环境】和【单细胞多组学药敏平台】之间进行选项卡切换与深度参数查阅。
-   - **科研图谱 Lightbox 弹窗**：展示 GFPhigh 白血病细胞单细胞转录组 UMAP 图谱（5 个给药组、25,252 个细胞，三类髓系状态），点击可查看超清大图与图谱注释。
-   - **论文检索与筛选**：支持按代表作 (Landmark)、研究方向（表观免疫/代谢pH/靶向耐药）或关键词（如 `PLK4`, `FLT3`, `Blood`, `2026` 等）实时过滤，附带当前文献统计徽章。
-   - **摘要弹窗 (Abstract Modal)**：点击即刻展开中英双语摘要详情。
-   - **一键复制 BibTeX**：文献卡片内置剪贴板交互，附带柔和动画 Toast 提示。
-   - **招聘快速邮件模板助手**：提供博后、博硕、科研助理的预填邮件主题与自荐信模板。
+### 1. 双生视觉皮肤体系 (Dual-Skin Architecture)
+无需切换 DOM 结构，通过 `html[data-theme]` 和 View Transitions API 实现 620ms 丝滑遮罩切肤体验：
+- **🏛️ Academy（静奢学术期刊风 - 默认）**：
+  - 中大翠绿（`#11362d`）+ 暖沙米（`#f3ece3`）+ 古铜棕（`#8c6246`）顶级学术期刊装帧；
+  - 沉稳经典的 `Newsreader` 古典衬线标题排版、2px 古铜竖线卡片裹边、横幅贴顶与基准线严密对齐；
+  - 漫反射绿瓦光影跟随（`canopy-light.js`）与滚动首屏交错编排（`journal-reveal.js`）。
+- **📓 Manuscript（极客学术手账风）**：
+  - 拟真纸张质感、手绘墨线印章、彩色荧光笔划线标记与便利贴卡片下落微动效；
+  - 带有真实纸本墨迹微渗透与印泥朱砂印记。
+- **🪄 全局悬浮魔法棒开关（`.ll-wand`）**：
+  - 固定于页面右下角的 44px 极简纯圆悬浮按钮（FAB），一键在期刊与手账之间切换，并同步联动全站人像模式（真实照 $\leftrightarrow$ 二次元动漫插画照）。
+
+### 2. 动态徽标与节日/周末限定系统 (Adaptive Logo & Festival Engine)
+内置自动化调度器（`assets/js/festival.js`），支持工作日、周末与重大节日三级优先级智能装配：
+- **平日工作日（Weekday Standard）**：
+  - 英文页面（`/`、`/team/` 等）展示纯正英文印章徽标（`logo-en.webp`）；
+  - 中文页面（`/zh-cn/`、`/zh-tw/`）展示经典篆刻中大医学院印章（`logo-zh.webp`）。
+- **英文周末奇幻限定（Weekend Fantasy Edition）**：
+  - 周六至周日，英文界面自动切换为暮光城堡徽标（`logo-fantasy.webp`），顶栏与手账自动融入梦幻暮光紫与星尘色调。
+- **6 大核心节日限定版（节日前后各 1 天，共 3 天优先激活）**：
+  - 精准支持公历节日（**万圣节** 10/30–11/01、**圣诞节** 12/24–12/26）与农历传统节日（**春节**、**元宵节**、**七夕节**、**中秋节** 2025–2030 天文日历折算）；
+  - 节日期间，手账本顶部点缀 3.5px 专属限定色纸胶带（Tape Trim），期刊顶栏变换专属节日深色微渐变，Logo 呼吸环同步展现璀璨光晕；
+  - **重叠仲裁**：当周末遇上节日时，自动以**节日限定为最高优先级**。
+- **🎏 极简测试预览胶囊（Festival Preview Deck）**：
+  - 位于页面左下角的 36px 纯圆旗帜图标按钮，支持一键实时预览任意节日或周末限定效果。
+
+### 3. 三语原生国际化 (Trilingual Native i18n)
+- **多语言架构**：默认英文（根路径 `/`），简体中文（`/zh-cn/`），繁体中文（`/zh-tw/`）。
+- **零 CJK 泄漏安全门禁**：英文页面经 `tools/check-en-no-cjk.py` 自动化检测，严禁出现任何未经转译的中文字符。
+- **平滑滚动保持（`lang-scroll.js`）**：语言切换时按百分比记忆视口深度，切换后平滑对齐当前阅读位置。
+
+### 4. 团队与科研平台 (Team & Research Showcase)
+- **满编 12 人团队卡片**：
+  - 博士研究生 8 人（含葛睿、郑焱华、关若晴、席哲、张露丹、杨思雨、焦宇、黄文妍）+ 1 开放申请席位；
+  - 硕士研究生 3 人（含杨建香、刘依依、李乐祺）+ 1 开放申请席位；
+  - 全员标准 640×800 高保真（真实相片 / 二次元插画照）双层 Compositor 平滑切换，支持单人卡片单独翻转。
+- **RFC 6068 邮件直连**：
+  - 全站 PI 邮箱严格统一为 `wenzhq9@mail.sysu.edu.cn`；
+  - 加入我们（Join Us）页面提供 4 岗位预填邮件模版，全面符合 RFC 6068 规范（换行 `%0D%0A`，空格 `%20`，杜绝 `+` 乱码）。
 
 ---
 
@@ -33,43 +56,71 @@
 
 ```text
 himm/
-├── index.html                   # 生产级入口 (全量语义化 HTML5，内嵌 SEO / 学术 JSON-LD Schema)
 ├── assets/
 │   ├── css/
-│   │   └── styles.css           # 4 套主题设计令牌变量、微动效与卡片排版规范
-│   ├── js/
-│   │   ├── data.js              # 实验室数据中心 (PI履历、9篇代表作、3大研究方向、招聘岗位、新闻)
-│   │   ├── i18n.js              # 中英双语完整字典与语言切换驱动
-│   │   └── main.js              # 应用控制器 (主题/双语切换、论文过滤搜索、BibTeX复制、模态窗)
+│   │   ├── custom.css             # 手账皮肤、基础排版、M3 变量与核心动效
+│   │   └── themes/
+│   │       ├── academy.css        # 静奢学术期刊皮肤覆盖层
+│   │       └── festivals.css      # 6 大节日与周末奇幻限定色彩与装饰
+│   └── js/
+│       ├── festival.js            # 节日历法计算与周末自动装配调度引擎
+│       ├── skin.js                # 首屏预载皮肤调度（防白屏闪烁）
+│       ├── wand.js                # 右下角全局魔法棒控制器
+│       ├── team.js                # 双模人像平滑切换驱动
+│       └── lang-scroll.js         # 语言切换滚动深度平滑恢复
+├── config/_default/               # Hugo 多语言与站点配置 (hugo.toml, languages.*.toml)
+├── content/                       # 站点内容源 Markdown（按 en / zh-cn / zh-tw 分流）
+├── data/
+│   ├── lab.json                   # 核心数据源（PI 档案、团队成员清单、研究方向、代表作）
+│   └── lab-zh-tw.json             # 繁体中文本地化数据
+├── figs/                          # 原始高清图片与设计归档
+│   ├── logos-new/                 # 2400x1792 原始设计原画
+│   └── members/                   # 课题组成员原始肖像
+├── layouts/                       # Hugo 自定义布局模版
+│   ├── _default/                  # 核心页面 (team, research, publications, join, contact)
+│   └── partials/                  # 结构化微组件 (wand, festival-deck, team-card, mailto)
+├── static/
 │   └── images/
-│       └── research-figure-1.jpg# 实验室代表性科研成果图 (GFPhigh 单细胞转录组 UMAP 图谱)
-├── designs/
-│   └── wen-lab/                 # baoyu-design 标准设计资产目录
-│       ├── _d_meta.json         # 设计资产元数据
-│       ├── index.html           # 设计工作副本
-│       └── assets/              # 本地自包含静态资源
-├── tools/
-│   └── make_research_figure.py  # 由 Wenyan_SC 单细胞坐标重绘 research-figure-1.jpg
-├── package.json                 # 现代前端依赖与脚本配置
-└── README.md                    # 项目部署与运维指南
+│       ├── logos/                 # 标准化透明 WebP/PNG 圆形印章徽标
+│       └── team/                  # 640x800 双模标准化人像
+└── tools/                         # 自动化测试与质量保障工具链
+    ├── check-en-no-cjk.py         # 门禁：确保英文全站零中文泄露
+    ├── check-mailto.py            # 门禁：校验 RFC 6068 邮件协议合规性
+    ├── check-themes.py            # 门禁：双生皮肤渲染连通性
+    ├── check-team-census.py       # 门禁：团队席位与人数对账
+    ├── check-portrait-scale.py    # 门禁：肖像比例与双层完整性
+    └── gen-zh-tw.py               # 繁体数据自动同步生成器
 ```
 
 ---
 
-## 🚀 本地预览与运行 (Local Preview)
+## 🛠️ 本地开发与质量门禁 (Development & QA)
 
-### 方式 1：双击直接打开
-直接在操作系统文件管理器中双击 `index.html`，即可在 Chrome / Safari / Edge 等现代浏览器中浏览完整功能。
-
-### 方式 2：使用 Python 本地服务器 (推荐)
-在当前目录下运行终端命令：
+### 1. 运行本地开发服务器
 ```bash
-python3 -m http.server 8000
+# 构建静态资源并启动本地服务
+hugo server -D
+# 或使用轻量服务器预览编译后的产物
+python3 /tmp/serve-home.py 8903
 ```
-然后在浏览器中访问：`http://localhost:8000` 或 `http://localhost:8000/designs/wen-lab/`
+浏览器访问：`http://127.0.0.1:8903/home/`
 
-### 方式 3：使用 Node.js / Vite
+### 2. 执行自动化全量门禁检查
+在提交代码或发布前，运行全套自动化测试套件（当前包含 233 项严苛验收标准）：
 ```bash
-npm install
-npm run dev
+python3 tools/check-css-dupes.py && \
+python3 tools/check-themes.py && \
+python3 tools/check-portrait-scale.py && \
+python3 tools/check-team-census.py && \
+python3 tools/check-en-no-cjk.py && \
+python3 tools/check-mailto.py && \
+bash docs/verify-hugo.sh
 ```
+
+---
+
+## 🚀 部署与发布 (CI/CD Deployment)
+
+项目采用 **GitHub Actions** 自动化持续集成：
+- **目标发布分支**：`hugo`
+- 只要向 `hugo` 分支推送提交，GitHub Pages 自动化工作流将自动执行编译、资源最小化压缩（Minification）、指纹哈希（Fingerprinting），并在数十秒内更新上线至公网。
