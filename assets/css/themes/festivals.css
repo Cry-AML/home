@@ -291,3 +291,11 @@ html[data-theme="academy"] .ll-fest-btn.is-active {
   background-color: var(--ac-bronze);
   color: #ffffff;
 }
+
+/* In Academy skin, festive badges and daily colorful badges should retain
+   their authentic festival colors with a crisp drop shadow rather than being pure white inverted imprints */
+[data-festival] .ll-brand__mark,
+[data-theme="academy"][data-festival] .ll-brand__mark {
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35)) !important;
+  opacity: 1 !important;
+}

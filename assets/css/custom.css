@@ -789,11 +789,13 @@ html.dark .ll-brand {
      seal become 2x the type once the title steps down at 1024px. */
   position: relative;
   z-index: 2;
-  width: clamp(22.5px, 2.1vw, 30px);
-  height: clamp(22.5px, 2.1vw, 30px);
+  width: clamp(24px, 2.2vw, 32px);
+  height: clamp(24px, 2.2vw, 32px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
   flex: none;
-  object-fit: contain;
-  opacity: 0.92;
+  object-fit: cover;
+  opacity: 0.95;
   transition: filter var(--ll-dur-hover) var(--ll-ease-out),
               opacity var(--ll-dur-hover) var(--ll-ease-out);
 }
@@ -2354,7 +2356,9 @@ html.dark .ll-footer-brand {
   z-index: 2;
   width: 28px;
   height: 28px;
-  object-fit: contain;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
   opacity: 0.55;
   flex: none;
   transition: filter var(--ll-dur-hover) var(--ll-ease-out),
