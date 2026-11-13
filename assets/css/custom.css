@@ -3041,3 +3041,21 @@ html.dark .ll-footer-mark {
   box-shadow: 0 0 14px var(--ll-ring-glow), 0 0 22px var(--ll-ring-ambient);
   filter: brightness(1.25);
 }
+
+/* Dark mode footer readability and crisp contrast boost */
+html.dark #site-footer .ll-footer-title {
+  color: #f7ede6 !important;
+}
+html.dark #site-footer .ll-footer-copy {
+  color: #e2d2c8 !important;
+  opacity: 0.95 !important;
+}
+html.dark #site-footer .ll-footer-link {
+  color: #f0ddd2 !important;
+}
+html.dark #site-footer .ll-footer-link:hover {
+  color: #ffffff !important;
+}
+html.dark #site-footer .ll-footer-rule {
+  border-top-color: rgba(255, 255, 255, 0.18) !important;
+}

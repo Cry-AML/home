@@ -2027,3 +2027,27 @@ html.dark[data-theme="academy"] .ll-map-pin { filter: none; }
   font-size: 13px;
   line-height: 1;
 }
+
+/* Dark mode academy skin footer & caption contrast enhancements */
+html.dark[data-theme="academy"] #site-footer {
+  background-color: #0b1e19 !important;
+}
+html.dark[data-theme="academy"] .ll-footer-title {
+  color: #ffffff !important;
+}
+html.dark[data-theme="academy"] .ll-footer-copy {
+  color: #d1ded8 !important;
+  opacity: 0.95 !important;
+}
+html.dark[data-theme="academy"] .ll-footer-link {
+  color: #e5f0eb !important;
+}
+html.dark[data-theme="academy"] .ll-footer-link:hover {
+  color: #ffffff !important;
+}
+html.dark[data-theme="academy"] .ll-footer-rule {
+  border-top-color: rgba(255, 255, 255, 0.22) !important;
+}
+html.dark[data-theme="academy"] .ui-caption {
+  color: #c4d1cb !important;
+}
