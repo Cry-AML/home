@@ -11,7 +11,7 @@ const LAB_DATA = {
     titleEn: "Associate Professor · Ph.D. Supervisor · Yat-sen Scholar",
     institutionZh: "中山大学中山医学院 病理生理学教研室",
     institutionEn: "Department of Pathophysiology, Zhongshan School of Medicine, Sun Yat-sen University",
-    email: "manzhq@mail.sysu.edu.cn",
+    email: "wenzhq9@mail.sysu.edu.cn",
     officeZh: "广州市越秀区中山二路74号 中山大学广州校区北校园 科技楼",
     officeEn: "Science & Technology Building, North Campus, Sun Yat-sen University, 74 Zhongshan 2nd Rd, Guangzhou, China",
     pedigree: [

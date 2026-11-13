@@ -236,9 +236,9 @@ chk "both marks are zoom-eligible (no .nozoom)" "! sed -n '/ll-brand__mark/p;/ll
 chk "dark mode brand mark filter defined" "grep -A3 'html.dark .ll-brand__mark {' assets/css/custom.css | grep -q 'brightness'"
 chk "dark mode footer mark filter defined" "grep -A3 'html.dark .ll-footer-mark {' assets/css/custom.css | grep -q 'invert'"
 chk "join page has 4 open positions in data" "[ $(grep -o '"type":' data/lab.json | wc -l) -ge 4 ]"
-chk "join page has 5 pre-filled mail buttons in EN (4 positions + 1 inquiry)" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/join/index.html | wc -l) -eq 5 ]"
-chk "join page has 5 pre-filled mail buttons in ZH-CN" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/zh-cn/join/index.html | wc -l) -eq 5 ]"
-chk "join page has 5 pre-filled mail buttons in ZH-TW" "[ $(grep -o 'mailto:manzhq@mail.sysu.edu.cn?subject=' public/zh-tw/join/index.html | wc -l) -eq 5 ]"
+chk "join page has 5 pre-filled mail buttons in EN (4 positions + 1 inquiry)" "[ $(grep -o 'mailto:wenzhq9@mail.sysu.edu.cn?subject=' public/join/index.html | wc -l) -eq 5 ]"
+chk "join page has 5 pre-filled mail buttons in ZH-CN" "[ $(grep -o 'mailto:wenzhq9@mail.sysu.edu.cn?subject=' public/zh-cn/join/index.html | wc -l) -eq 5 ]"
+chk "join page has 5 pre-filled mail buttons in ZH-TW" "[ $(grep -o 'mailto:wenzhq9@mail.sysu.edu.cn?subject=' public/zh-tw/join/index.html | wc -l) -eq 5 ]"
 chk "apply mailto includes pre-filled body in all langs" "grep -q '&amp;body=' public/join/index.html && grep -q '&amp;body=' public/zh-cn/join/index.html && grep -q '&amp;body=' public/zh-tw/join/index.html"
 # RFC 6068: mailto uses %20 for spaces, never "+". Go's urlquery applies the
 # HTML-form rule, which made the letter arrive as "Dear+Dr.+Cheuk-Him+Man,".

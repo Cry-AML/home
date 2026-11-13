@@ -561,7 +561,7 @@ function openEmailDrafter(roleType) {
   // RFC 6068 calls for %0D%0A between body lines; encodeURIComponent
   // leaves a bare %0A for \n, which some mail clients drop.
   const body = encodeURIComponent(rawBody.replace(/\r\n|\n/g, '\r\n'));
-  window.location.href = `mailto:manzhq@mail.sysu.edu.cn?subject=${subject}&body=${body}`;
+  window.location.href = `mailto:wenzhq9@mail.sysu.edu.cn?subject=${subject}&body=${body}`;
 }
 
 // Copy BibTeX with toast
