@@ -6,8 +6,7 @@
 {{ $isTw := eq .Site.Language.Lang "zh-tw" }}
 <details class="ll-fest-deck" id="festival-deck">
   <summary class="ll-fest-pill" title="{{ if $isEn }}Festive Theme Preview{{ else if $isTw }}節日主題效果預覽{{ else }}节日主题效果预览{{ end }}">
-    <span aria-hidden="true">🎏</span>
-    <span class="ll-fest-title">{{ if $isEn }}Festive Preview{{ else if $isTw }}節日效果預覽{{ else }}节日效果预览{{ end }}</span>
+    <span class="ll-fest-glyph" aria-hidden="true">🎏</span>
   </summary>
   <div class="ll-fest-menu" role="menu">
     <button type="button" class="ll-fest-btn is-active" data-fest="none" onclick="window.__mchFestival.setOverride('none')">

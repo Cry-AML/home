@@ -1986,3 +1986,19 @@ html.dark[data-theme="academy"] .ll-map-pin { filter: none; }
 @media (max-width: 639px) {
   html[data-theme="academy"] { --ac-gutter: 16px; }
 }
+
+/* Skin switcher button: compact icon-only badge */
+.ll-skinmenu > summary {
+  width: 28px;
+  height: 28px;
+  padding: 0 !important;
+  justify-content: center;
+}
+.ll-skinmenu .ll-skinmenu__cur,
+.ll-skinmenu .ll-skinmenu__arrow {
+  display: none !important;
+}
+.ll-skinmenu .ll-skinmenu__glyph {
+  font-size: 13px;
+  line-height: 1;
+}

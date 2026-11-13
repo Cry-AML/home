@@ -216,16 +216,27 @@ html[data-theme="academy"][data-festival="christmas"] .ll-brand,
 .ll-fest-pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 32px;
-  padding: 0 12px;
-  border-radius: 999px;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
   background-color: var(--md-surface-container-high);
   color: var(--md-on-surface);
   border: 0.5px solid var(--md-outline-variant);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
   user-select: none;
+  opacity: 0.72;
   transition: all 0.2s var(--ll-ease-out);
+}
+.ll-fest-pill:hover {
+  opacity: 1;
+  background-color: var(--md-surface-highest);
+  transform: translateY(-1px);
+}
+.ll-fest-glyph {
+  font-size: 16px;
+  line-height: 1;
 }
 .ll-fest-pill:hover {
   background-color: var(--md-surface-highest);

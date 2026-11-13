@@ -1235,10 +1235,12 @@ html.dark #ambient-canvas {
   z-index: 55;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 15px 10px 12px;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   border: 0;
-  border-radius: 999px;
+  border-radius: 50%;
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
@@ -1310,11 +1312,7 @@ html.dark #ambient-canvas {
   100% { transform: rotate(0) scale(1); }
 }
 
-/* The label is the point on a wide screen and noise on a narrow one. */
-@media (max-width: 520px) {
-  .ll-wand { padding: 11px; gap: 0; }
-  .ll-wand__label { display: none; }
-}
+.ll-wand__label { display: none !important; }
 
 /* The toast lives in the same corner; lift it clear of the wand. */
 body:has(.ll-wand) #toast-notification { bottom: calc(clamp(14px, 2.2vw, 26px) + 56px); }
