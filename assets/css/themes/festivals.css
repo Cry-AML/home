@@ -5,17 +5,17 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   0. Disney Weekend Edition (迪士尼周末限定 - 英文模式)
+   0. Weekend Fantasy Edition (周末奇幻限定 - 英文模式)
       Magical Twilight Castle Violet & Stardust Rose Gold
    -------------------------------------------------------------------------- */
-[data-festival="disney"] {
+[data-festival="fantasy"] {
   --fest-accent: #9a4fd6;
   --fest-gold: #f5b072;
   --fest-glow: rgba(154, 79, 214, 0.45);
 }
 
 /* Academy Skin: Enchanted fairy-tale twilight indigo & stardust castle gold */
-html[data-theme="academy"][data-festival="disney"] {
+html[data-theme="academy"][data-festival="fantasy"] {
   --ac-forest: #141029;
   --ac-forest-deep: #0c081e;
   --ac-forest-soft: #241c42;
@@ -23,22 +23,22 @@ html[data-theme="academy"][data-festival="disney"] {
   --ac-bronze-deep: #9047b3;
   --ac-hairline: #d1c1e6;
 }
-html[data-theme="academy"][data-festival="disney"] .ll-header {
+html[data-theme="academy"][data-festival="fantasy"] .ll-header {
   background-color: #1a1436 !important;
 }
-html[data-theme="academy"][data-festival="disney"] .ui-container > .mb-8,
-html[data-theme="academy"][data-festival="disney"] .ll-team-head,
-html[data-theme="academy"][data-festival="disney"] .ll-page-head,
-html[data-theme="academy"][data-festival="disney"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
+html[data-theme="academy"][data-festival="fantasy"] .ui-container > .mb-8,
+html[data-theme="academy"][data-festival="fantasy"] .ll-team-head,
+html[data-theme="academy"][data-festival="fantasy"] .ll-page-head,
+html[data-theme="academy"][data-festival="fantasy"] .ui-container > .ll-sheet:first-child > .ll-hero-grid {
   background: linear-gradient(118deg, #141029 0%, #3d2360 55%, #763b8c 100%) !important;
 }
-html[data-theme="academy"][data-festival="disney"] .ll-brand {
+html[data-theme="academy"][data-festival="fantasy"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #d88aff, #ffca85 45%, #6fe3ff 80%, #d88aff);
   --ll-ring-glow: rgba(216, 138, 255, 0.55);
 }
 
 /* Manuscript Skin: Dreamy pastel wonderland desk, rose gold highlighter & fairy violet tape */
-html:not([data-theme="academy"])[data-festival="disney"] {
+html:not([data-theme="academy"])[data-festival="fantasy"] {
   --ll-desk: #f3ebf7;
   --ll-desk-deep: #e2d2e9;
   --md-primary: #853fa6;
@@ -56,14 +56,14 @@ html:not([data-theme="academy"])[data-festival="disney"] {
   --ll-ink-you-hover: #702a9b;
   --ll-paper-shade: #fbf5fd;
 }
-html:not([data-theme="academy"])[data-festival="disney"] .ll-sheet {
+html:not([data-theme="academy"])[data-festival="fantasy"] .ll-sheet {
   border-top: 3.5px solid #9a4fd6;
   box-shadow:
     0 1px 2px rgba(154, 79, 214, 0.12),
     0 4px 10px -2px rgba(154, 79, 214, 0.10),
     0 16px 30px -10px rgba(90, 30, 130, 0.18) !important;
 }
-html:not([data-theme="academy"])[data-festival="disney"] .ll-brand {
+html:not([data-theme="academy"])[data-festival="fantasy"] .ll-brand {
   --ll-ring-grad: conic-gradient(from 140deg, #d88aff, #ffca85 45%, #6fe3ff 80%, #d88aff);
   --ll-ring-glow: rgba(216, 138, 255, 0.48);
 }

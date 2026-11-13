@@ -2,7 +2,7 @@
  * Wen Laboratory — Festival and Holiday Theme Dispatcher
  * Automatically detects festive windows (+/- 1 day of holiday, total 3 days)
  * Supports solar & accurate lunar festivals for 2025-2030.
- * In English mode, automatically activates Disney theme on weekends (Sat & Sun).
+ * In English mode, automatically activates Fantasy weekend theme on weekends (Sat & Sun).
  * Allows interactive preview override.
  */
 (function () {
@@ -10,9 +10,9 @@
 
   // Master festival schedule with solar & verified lunar dates (YYYY-MM-DD format for each festival peak)
   const FESTIVALS = {
-    disney: {
-      id: 'disney',
-      logo: 'logo-disney',
+    fantasy: {
+      id: 'fantasy',
+      logo: 'logo-fantasy',
       isWeekendTheme: true
     },
     spring: {
@@ -99,7 +99,7 @@
 
     // 1. Check holiday festivals first (higher priority than routine weekend)
     for (const key of Object.keys(FESTIVALS)) {
-      if (key === 'disney') continue;
+      if (key === 'fantasy') continue;
       const f = FESTIVALS[key];
       let peakTime = null;
 
@@ -115,11 +115,11 @@
       }
     }
 
-    // 2. In English mode, check weekend (Saturday or Sunday) -> Disney theme
+    // 2. In English mode, check weekend (Saturday or Sunday) -> Fantasy weekend theme
     const htmlEl = document.documentElement;
     const isEn = htmlEl.getAttribute('lang') === 'en';
     if (isEn && (curDayOfWeek === 0 || curDayOfWeek === 6)) {
-      return FESTIVALS.disney;
+      return FESTIVALS.fantasy;
     }
 
     return null;
