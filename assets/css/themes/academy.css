@@ -398,25 +398,6 @@
   color: #dfe7e3 !important;
   max-width: 46em;
 }
-/* the team page's mode toggle sits inside that head; give it room to read
-   on the dark ground */
-[data-theme="academy"] .ll-team-head .ll-mode {
-  /* A translucent white pill over a gradient leaves the label at 4.28:1.
-     A solid deep-green bed fixes the ground under the text at 8.2:1
-     regardless of where on the gradient the control sits. */
-  background-color: #16332b;
-  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.28);
-}
-[data-theme="academy"] .ll-team-head .ll-mode__opt {
-  color: #e6ece9;
-}
-[data-theme="academy"] .ll-team-head .ll-mode__opt.is-current {
-  /* A segmented control's selected segment is a state, not a call to action.
-     The soft container marks it without adding another block of deep green to
-     a bar that already carries one. */
-  color: var(--md-on-secondary-container);
-  background-color: var(--md-secondary-container);
-}
 
 /* the search field on publications sits in the banner too */
 [data-theme="academy"] .ll-page-head .ll-input {
@@ -780,6 +761,22 @@
   border-left: 0;
   padding-left: 0;
 }
+@media (max-width: 900px) {
+  [data-theme="academy"] .ll-stat-cell:nth-child(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+@media (max-width: 560px) {
+  [data-theme="academy"] .ll-stat-cell {
+    border-left: 0;
+    padding-inline: 0;
+  }
+  [data-theme="academy"] .ll-stat-cell + .ll-stat-cell {
+    border-top: 1px solid var(--ac-hairline);
+    padding-top: 16px;
+  }
+}
 [data-theme="academy"] .ll-stat {
   font-family: var(--font-hand);
   font-weight: 400;
@@ -924,12 +921,28 @@
 [data-theme="academy"] .ll-person {
   background-color: transparent;
 }
+[data-theme="academy"] .ll-people > .ll-person {
+  background-color: var(--ac-card);
+  border-left: 2px solid var(--ac-bronze);
+  padding-bottom: 14px;
+  transition: border-left-width 180ms var(--ll-ease-out),
+              background-color 180ms var(--ll-ease-out);
+}
+[data-theme="academy"] .ll-people > .ll-person:hover {
+  border-left-width: 3px;
+  background-color: var(--ac-card-quiet);
+}
 [data-theme="academy"] .ll-person__frame {
   background-color: var(--ac-card);
   box-shadow: none;
   border-radius: 0;
   border-left: 2px solid var(--ac-bronze);
   padding: 10px;
+}
+[data-theme="academy"] .ll-people > .ll-person .ll-person__frame {
+  background-color: transparent;
+  border-left: 0;
+  padding: 10px 10px 0;
 }
 [data-theme="academy"] .ll-person__img {
   border-radius: 0;
@@ -947,12 +960,13 @@
   font-weight: 400;
   font-size: 20px;
 }
-[data-theme="academy"] .ll-person__role { color: var(--ac-ink-muted); font-family: var(--font-ui); }
+[data-theme="academy"] .ll-person__role { color: var(--ac-caption); font-family: var(--font-ui); }
 [data-theme="academy"] .ll-person__kw li {
   background-color: transparent;
   box-shadow: none;
   color: var(--ac-bronze-deep);
   font-family: var(--font-ui);
+  line-height: 1.5;
   padding: 0;
 }
 [data-theme="academy"] .ll-person__kw li::before {
@@ -989,6 +1003,9 @@
 /* Same portrait width as the notebook skin: the PI is a member card, and the
    shared token keeps the two skins from disagreeing about how big a face is. */
 [data-theme="academy"] .ll-pi-row { grid-template-columns: var(--ll-portrait-w) minmax(0, 1fr); }
+@media (max-width: 720px) {
+  [data-theme="academy"] .ll-pi-row { grid-template-columns: minmax(0, 1fr); }
+}
 [data-theme="academy"] .ll-pi-body .ui-body { color: var(--ac-ink-soft); }
 [data-theme="academy"] .ll-pi-links .ll-btn--outline {
   color: #ffffff;
@@ -1925,9 +1942,13 @@ html.dark[data-theme="academy"] body {
 html.dark[data-theme="academy"] .ll-sheet { background-color: transparent; }
 html.dark[data-theme="academy"] .ll-platform,
 html.dark[data-theme="academy"] .ll-person__frame,
+html.dark[data-theme="academy"] .ll-people > .ll-person,
 html.dark[data-theme="academy"] .ll-news-snapshots,
 html.dark[data-theme="academy"] .ll-contact-map {
   background-color: var(--ac-card);
+}
+html.dark[data-theme="academy"] .ll-people > .ll-person .ll-person__frame {
+  background-color: transparent;
 }
 html.dark[data-theme="academy"] .ll-stat-row {
   background-color: var(--ac-card);

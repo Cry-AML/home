@@ -2265,7 +2265,7 @@ html.dark .ll-footer-mark {
    Team page — photographs as prints pasted into the lab notebook
    ========================================================================== */
 
-/* --- page head + the one global control ---------------------------------- */
+/* --- page head ----------------------------------------------------------- */
 .ll-team-head {
   display: flex;
   flex-wrap: wrap;
@@ -2275,38 +2275,6 @@ html.dark .ll-footer-mark {
   margin-bottom: 28px;
 }
 .ll-team-head .ll-measure { flex: 1 1 22em; }
-
-.ll-mode {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px;
-  border-radius: 9px;
-  background-color: var(--md-surface-container-high);
-  box-shadow: inset 0 0 0 0.5px var(--md-outline-variant);
-}
-.ll-mode__opt {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 12px;
-  border: 0;
-  border-radius: 7px;
-  background: transparent;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1;
-  color: var(--md-on-surface-variant);
-  cursor: pointer;
-  transition: color var(--ll-dur-hover) var(--ll-ease-out),
-              background-color var(--ll-dur-hover) var(--ll-ease-out);
-}
-.ll-mode__opt:hover { color: var(--md-on-surface); }
-.ll-mode__opt.is-current {
-  color: var(--md-on-secondary-container);
-  background-color: var(--md-secondary-container);
-  font-weight: 600;
-}
 
 /* --- sheet sub-head: an ordinal plus a label, used on every team sheet ---- */
 .ll-sheet-head {
@@ -2748,8 +2716,6 @@ html.dark .ll-footer-mark {
   .ll-pi-row { grid-template-columns: 220px minmax(0, 1fr); }
 }
 @media (max-width: 720px) {
-  .ll-mode { width: 100%; }
-  .ll-mode__opt { flex: 1; justify-content: center; }
   /* the grid wraps on its own; only the gap tightens */
   .ll-people { gap: 16px; }
   .ll-pi-row { grid-template-columns: minmax(0, 1fr); }

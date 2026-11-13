@@ -256,7 +256,7 @@ chk "team in the main menu (EN)" "grep -q 'name = \"Team\"' config/_default/menu
 chk "team in the main menu (ZH-CN)" "grep -q '团队成员' config/_default/menus.zh-cn.toml"
 chk "team in the main menu (ZH-TW)" "grep -q '團隊成員' config/_default/menus.zh-tw.toml"
 chk "group portrait ships both variants" "grep -q 'group-real.jpg' public/team/index.html && grep -q 'group-illustrated.jpg' public/team/index.html"
-chk "global portrait switch present" "grep -q 'll-mode__opt' public/team/index.html"
+chk "global portrait switch consolidated into wand" "! grep -q 'll-mode__opt' public/team/index.html && grep -q 'id=wand-toggle' public/team/index.html && grep -q 'skinchange' assets/js/team.js"
 chk "comparison slider present" "grep -q 'data-compare-range' public/team/index.html"
 chk "member portraits ship both variants" "grep -q 'zyh-real.jpg' public/team/index.html && grep -q 'zyh-illustrated.jpg' public/team/index.html"
 chk "every member card has a flip control" "[ \$(grep -o 'data-person-toggle' public/team/index.html | wc -l) -eq \$(grep -o 'data-person>' public/team/index.html | wc -l) ]"

@@ -34,17 +34,6 @@
     // the other label is carried in a data attribute so both are localised
     LABELS.toJournal = btn.getAttribute('data-label-to-journal') || '';
 
-    var team = {
-      real: null,
-      illustrated: null
-    };
-    // the Team page's own mode labels, if it is mounted
-    var modeOpts = document.querySelectorAll('.ll-mode__opt');
-    modeOpts.forEach(function (o) {
-      if (o.dataset.mode === 'real') team.real = o.querySelector('span:last-child') ? o.querySelector('span:last-child').textContent.trim() : 'Photographs';
-      if (o.dataset.mode === 'illustrated') team.illustrated = o.querySelector('span:last-child') ? o.querySelector('span:last-child').textContent.trim() : 'Illustrated';
-    });
-
     function setTeamMode(mode) {
       // Use the Team page's own control when present; otherwise persist the
       // choice so the next visit to Team arrives in the matching mode.

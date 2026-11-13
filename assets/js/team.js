@@ -15,14 +15,12 @@
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ---------------------------------------------------------------------------
-  // 1. Global mode
+  // 1. Global mode — driven by the site skin (academy -> real, manuscript -> illustrated)
   // ---------------------------------------------------------------------------
   function initMode() {
-    const opts = [...document.querySelectorAll('.ll-mode__opt')];
-    if (!opts.length) return;
-
     const members = [...document.querySelectorAll('[data-person]')];
     const group = document.querySelector('[data-compare]');
+    if (!members.length && !group) return;
 
     // The illustrated layer must be resident before the first switch, or the
     // first click shows an empty frame while the image decodes.
@@ -34,12 +32,6 @@
     if (groupArt && groupArt.decode) groupArt.decode().catch(() => {});
 
     function setMode(mode, animate) {
-      opts.forEach((o) => {
-        const on = o.dataset.mode === mode;
-        o.classList.toggle('is-current', on);
-        o.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-
       const stagger = animate && !prefersReduced();
 
       // group photo: full illustration = the seam all the way left
@@ -59,17 +51,20 @@
       try { localStorage.setItem('mch_team_mode', mode); } catch (e) {}
     }
 
-    opts.forEach((o) => {
-      o.addEventListener('click', () => setMode(o.dataset.mode, true));
+    // Keep portraits in lockstep whenever the skin is switched (via wand or header menu)
+    document.addEventListener('skinchange', (e) => {
+      const nextSkin = e.detail && e.detail.skin;
+      setMode(nextSkin === 'manuscript' ? 'illustrated' : 'real', true);
     });
 
-    // restore the reader's last choice, without animating on load
+    // Restore the reader's last choice, or align with the active skin on load
     let saved = null;
     try { saved = localStorage.getItem('mch_team_mode'); } catch (e) {}
-    // Default to the photograph. The illustrated layer is the reward for
-    // pressing the wand, and a first visit should read as a scientific group
-    // before it reads as a drawing.
-    setMode(saved === 'illustrated' ? 'illustrated' : 'real', false);
+    const currentSkin = document.documentElement.getAttribute('data-theme');
+    const initialMode = saved === 'illustrated' || (!saved && currentSkin === 'manuscript')
+      ? 'illustrated'
+      : 'real';
+    setMode(initialMode, false);
 
     window.__teamSetMode = setMode;
   }
