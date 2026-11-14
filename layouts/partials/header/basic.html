@@ -18,7 +18,7 @@
   <div class="ll-brand">
     {{ $defaultLogo := cond (eq .Site.Language.Lang "en") "images/logos/logo-en.webp" "images/logos/logo-zh.webp" }}
     <div class="ll-brand__halo">
-      {{ $hdLogo := cond (eq .Site.Language.Lang "en") "images/logos/logo-en-hd.webp" "images/logos/logo-zh-hd.webp" }}<img class="ll-brand__mark" src="{{ $defaultLogo | relURL }}" data-zoom-src="{{ $hdLogo | relURL }}" width="26" height="26" alt="" aria-hidden="true" decoding="async">
+      {{ $hdLogo := cond (eq .Site.Language.Lang "en") "images/logos/logo-en-hd.webp" "images/logos/logo-zh-hd.webp" }}<img class="ll-brand__mark" src="{{ $defaultLogo | relURL }}" width="26" height="26" alt="" aria-hidden="true" decoding="async">
     </div>
     <a href="{{ "" | relLangURL }}" class="ll-brand__name" title="{{ .Site.Title | markdownify }}">
       <span class="ll-brand__short">{{ i18n "brand_name" }}</span>

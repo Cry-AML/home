@@ -795,6 +795,7 @@ html.dark .ll-brand {
   transition: filter var(--ll-dur-hover) var(--ll-ease-out),
               opacity var(--ll-dur-hover) var(--ll-ease-out);
 }
+
 /* In dark appearance, lift the brick-red stamp so it reads cleanly against
    the dark surface without breaking medium-zoom */
 html.dark .ll-brand__mark {
