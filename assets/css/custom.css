@@ -792,6 +792,8 @@ html.dark .ll-brand {
   flex: none;
   object-fit: cover;
   opacity: 0.95;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
   transition: filter var(--ll-dur-hover) var(--ll-ease-out),
               opacity var(--ll-dur-hover) var(--ll-ease-out);
 }
@@ -3072,4 +3074,10 @@ html.dark #site-footer .ll-footer-rule {
   border-radius: 50% !important;
   box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.45) !important;
   filter: none !important;
+  /* Prevent Safari from downsampling the texture during 3D transform */
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+  -webkit-transform-style: preserve-3d !important;
+  transform-style: preserve-3d !important;
+  will-change: transform !important;
 }
