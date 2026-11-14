@@ -153,26 +153,30 @@
       logoSlug = festival.logo;
     }
 
-    // Update Header Brand Logo
+    // Update Header Brand Logo & HD Zoom source
     const headerMark = document.querySelector('.ll-brand__mark');
     if (headerMark) {
       const currentSrc = headerMark.getAttribute('src') || '';
       const basePrefix = currentSrc.includes('/home/') ? '/home/' : '/';
       const newSrc = `${basePrefix}images/logos/${logoSlug}.webp`;
+      const hdSrc = `${basePrefix}images/logos/${logoSlug}-hd.webp`;
       if (headerMark.getAttribute('src') !== newSrc) {
         headerMark.setAttribute('src', newSrc);
       }
+      headerMark.setAttribute('data-zoom-src', hdSrc);
     }
 
-    // Update Footer Brand Logo
+    // Update Footer Brand Logo & HD Zoom source
     const footerMark = document.querySelector('.ll-footer-mark');
     if (footerMark) {
       const currentSrc = footerMark.getAttribute('src') || '';
       const basePrefix = currentSrc.includes('/home/') ? '/home/' : '/';
       const newSrc = `${basePrefix}images/logos/${logoSlug}.webp`;
+      const hdSrc = `${basePrefix}images/logos/${logoSlug}-hd.webp`;
       if (footerMark.getAttribute('src') !== newSrc) {
         footerMark.setAttribute('src', newSrc);
       }
+      footerMark.setAttribute('data-zoom-src', hdSrc);
     }
 
     // Update Festival Deck active state if present
