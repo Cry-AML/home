@@ -8,7 +8,7 @@
         <div class="ll-footer-brand">
           {{ $defaultLogo := cond (eq .Site.Language.Lang "en") "images/logos/logo-en.webp" "images/logos/logo-zh.webp" }}
           <div class="ll-footer-mark-wrapper">
-            {{ $hdLogo := cond (eq .Site.Language.Lang "en") "images/logos/logo-en-hd.webp" "images/logos/logo-zh-hd.webp" }}<img class="ll-footer-mark" src="{{ $defaultLogo | relURL }}" width="36" height="36" alt="" aria-hidden="true" decoding="async" loading="lazy">
+            {{ $hdLogo := cond (eq .Site.Language.Lang "en") "images/logos/logo-en-hd.webp" "images/logos/logo-zh-hd.webp" }}<img class="ll-footer-mark" src="{{ $defaultLogo | relURL }}" width="36" height="36" alt="" aria-hidden="true" decoding="async" loading="eager">
           </div>
           <div class="ll-footer-text">
             {{ if eq .Site.Language.Lang "en" }}

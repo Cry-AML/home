@@ -201,8 +201,8 @@ html[data-theme="academy"] .ll-brand {
 }
 [data-theme="academy"] .ll-brand__name:hover { color: #ffffff; }
 [data-theme="academy"] .ll-brand__mark {
-  filter: brightness(0) invert(1);
-  opacity: 0.85;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.28));
+  opacity: 1;
 }
 /* the mark is a red seal; on the green bar it becomes a white imprint */
 
@@ -1639,8 +1639,8 @@ html[data-theme="academy"] .ll-footer-brand {
   --ll-ring-ambient: rgb(212 175 55 / 0.20);
 }
 [data-theme="academy"] .ll-footer-mark {
-  filter: brightness(0) invert(1);
-  opacity: 0.88;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.28));
+  opacity: 1;
 }
 
 /* --------------------------------------------------------------------------

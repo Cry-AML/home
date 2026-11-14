@@ -799,8 +799,8 @@ html.dark .ll-brand {
 /* In dark appearance, lift the brick-red stamp so it reads cleanly against
    the dark surface without breaking medium-zoom */
 html.dark .ll-brand__mark {
-  filter: brightness(2.8) contrast(1.15);
-  opacity: 0.96;
+  filter: brightness(1.0) contrast(1.05) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+  opacity: 1;
 }
 .ll-brand__name {
   font-family: var(--font-hand);
@@ -2378,8 +2378,8 @@ html.dark .ll-footer-brand {
 }
 /* In dark appearance, invert the dark ink stamp to a soft chalk mark */
 html.dark .ll-footer-mark {
-  filter: invert(0.9) brightness(1.2);
-  opacity: 0.72;
+  filter: invert(0) brightness(1.0) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+  opacity: 1;
 }
 
 /* ==========================================================================
