@@ -3056,22 +3056,19 @@ html.dark #site-footer .ll-footer-rule {
   border-top-color: rgba(255, 255, 255, 0.18) !important;
 }
 
-/* Medium-Zoom expanded modal styling for transparent badges & crisp rendering */
+/* Medium-Zoom: Completely transparent overlay (no content blocking / no dark mask)
+   and authentic full-scale expansion without CSS box padding constraints */
 .medium-zoom-overlay {
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  background-color: rgba(18, 24, 22, 0.78) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 0 !important;
+  pointer-events: auto !important;
   z-index: 998 !important;
 }
 .medium-zoom-image--opened {
   z-index: 999 !important;
   border-radius: 50% !important;
-  background-color: #fdfaf6 !important;
-  box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.55), 0 0 0 3px rgba(255, 255, 255, 0.35) !important;
-  image-rendering: auto !important;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.45) !important;
   filter: none !important;
-}
-html.dark .medium-zoom-image--opened {
-  background-color: #241b16 !important;
-  box-shadow: 0 16px 48px -8px rgba(0, 0, 0, 0.75), 0 0 0 2px rgba(255, 255, 255, 0.15) !important;
 }
