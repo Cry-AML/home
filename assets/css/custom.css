@@ -3074,10 +3074,7 @@ html.dark #site-footer .ll-footer-rule {
   border-radius: 50% !important;
   box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.45) !important;
   filter: none !important;
-  /* Prevent Safari from downsampling the texture during 3D transform */
-  -webkit-backface-visibility: hidden !important;
-  backface-visibility: hidden !important;
-  -webkit-transform-style: preserve-3d !important;
-  transform-style: preserve-3d !important;
-  will-change: transform !important;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1) !important;
+  max-width: none !important;
+  max-height: none !important;
 }
