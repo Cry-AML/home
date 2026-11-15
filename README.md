@@ -2,7 +2,9 @@
 
 > **中山大学中山医学院 · 文卓谦实验室**  
 > **Laboratory of Cheuk-Him Man (MCH Laboratory), Zhongshan School of Medicine, Sun Yat-sen University**  
-> 线上主页：[https://cry-aml.github.io/home/](https://cry-aml.github.io/home/)
+> 线上主页：[https://manchlab.com/](https://manchlab.com/)（备用入口 [cry-aml.github.io/home](https://cry-aml.github.io/home/) 会 301 跳转至主域名）
+>
+> 部署方式、自定义域名与换域名步骤详见 **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**
 
 本项目基于 **Hugo + Blowfish** 深度架构定制，专为文卓谦教授（Cheuk-Him Man / 文卓谦）课题组打造，提供**双生视觉皮肤体系（Academy 静奢期刊风 / Manuscript 极客手账风）**、**全天候智能节日与周末限定徽标调度引擎**、**三语原生国际化**以及**全流程自动化质量保障门禁**。
 
@@ -103,7 +105,10 @@ hugo server -D
 # 或使用轻量服务器预览编译后的产物
 python3 /tmp/serve-home.py 8903
 ```
-浏览器访问：`http://127.0.0.1:8903/home/`
+浏览器访问：`http://<host>:8903/`
+
+> 路径前缀由 `config/_default/hugo.toml` 的 `baseURL` 决定：根域名部署前缀为 `/`，
+> 项目页部署前缀为 `/home/`。可用 `python3 tools/get-base.py` 查看当前值。
 
 ### 2. 执行自动化全量门禁检查
 在提交代码或发布前，运行全套自动化测试套件（当前包含 233 项严苛验收标准）：
@@ -123,4 +128,7 @@ bash docs/verify-hugo.sh
 
 项目采用 **GitHub Actions** 自动化持续集成：
 - **目标发布分支**：`hugo`
+- **对外域名**：`https://manchlab.com/`（自定义域名，配置见 `static/CNAME`）
 - 只要向 `hugo` 分支推送提交，GitHub Pages 自动化工作流将自动执行编译、资源最小化压缩（Minification）、指纹哈希（Fingerprinting），并在数十秒内更新上线至公网。
+- **换域名 / 换路径前缀**：只需修改 `config/_default/hugo.toml` 中的 `baseURL`，
+  所有检查脚本与前端脚本会自动跟随（详见 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)）。

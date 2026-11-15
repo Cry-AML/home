@@ -153,30 +153,30 @@
       logoSlug = festival.logo;
     }
 
-    // Update Header Brand Logo & HD Zoom source
+    // Derive the deployment prefix from the mark's own src rather than
+    // hard-coding one, so the site works at /, /home/ or any future baseURL.
+    function logoPrefix(el) {
+      const src = (el && el.getAttribute('src')) || '';
+      const at = src.indexOf('images/logos/');
+      return at >= 0 ? src.slice(0, at) : '/';
+    }
+
+    // Update Header Brand Logo
     const headerMark = document.querySelector('.ll-brand__mark');
     if (headerMark) {
-      const currentSrc = headerMark.getAttribute('src') || '';
-      const basePrefix = currentSrc.includes('/home/') ? '/home/' : '/';
-      const newSrc = `${basePrefix}images/logos/${logoSlug}.webp`;
-      const hdSrc = `${basePrefix}images/logos/${logoSlug}-hd.webp`;
+      const newSrc = `${logoPrefix(headerMark)}images/logos/${logoSlug}.webp`;
       if (headerMark.getAttribute('src') !== newSrc) {
         headerMark.setAttribute('src', newSrc);
       }
-      
     }
 
-    // Update Footer Brand Logo & HD Zoom source
+    // Update Footer Brand Logo
     const footerMark = document.querySelector('.ll-footer-mark');
     if (footerMark) {
-      const currentSrc = footerMark.getAttribute('src') || '';
-      const basePrefix = currentSrc.includes('/home/') ? '/home/' : '/';
-      const newSrc = `${basePrefix}images/logos/${logoSlug}.webp`;
-      const hdSrc = `${basePrefix}images/logos/${logoSlug}-hd.webp`;
+      const newSrc = `${logoPrefix(footerMark)}images/logos/${logoSlug}.webp`;
       if (footerMark.getAttribute('src') !== newSrc) {
         footerMark.setAttribute('src', newSrc);
       }
-      
     }
 
     // Update Festival Deck active state if present

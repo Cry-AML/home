@@ -36,6 +36,12 @@ jobs:
             echo "Building with Hugo + Blowfish theme..."
             hugo --gc --minify
             touch public/.nojekyll
+            # GitHub Pages custom domain. Static/CNAME is copied by Hugo, but assert
+            # it survives minification so the domain binding never silently drops.
+            if [ -f static/CNAME ]; then
+              cp static/CNAME public/CNAME
+              echo "CNAME -> $(cat public/CNAME)"
+            fi
             echo "--- Hugo build complete ---"
             du -sh public
           else

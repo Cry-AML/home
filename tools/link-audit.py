@@ -20,9 +20,10 @@ import threading
 import urllib.parse
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from _baseurl import BASE, ORIGIN, SITE  # noqa: E402  (deployment prefix from hugo.toml)
+
 ROOT = pathlib.Path('public')
-BASE = '/home/'
-SITE = 'https://cry-aml.github.io'
 REF = re.compile(r"""(?:href|src)=["']?([^"'\s>]+)""")
 
 
@@ -41,7 +42,7 @@ def collect():
             if raw.startswith('//'):
                 continue
             if raw.startswith(('http://', 'https://')):
-                if raw.startswith(SITE + BASE):
+                if raw.startswith(ORIGIN):
                     raw = raw[len(SITE):]
                 else:
                     outbound.add(raw)
@@ -71,12 +72,14 @@ def main():
 
     # Live HTTP check against the built output.
     class Prefixed(SimpleHTTPRequestHandler):
-        """Serve the built site under /home/ so baseURL-absolute paths resolve."""
+        """Serve the built site under BASE so baseURL-absolute paths resolve."""
+
+        _prefix = BASE.rstrip('/')
 
         def translate_path(self, path):
             path = path.split('?', 1)[0].split('#', 1)[0]
-            if path.startswith(BASE.rstrip('/')):
-                path = path[len(BASE.rstrip('/')):]
+            if self._prefix and path.startswith(self._prefix):
+                path = path[len(self._prefix):]
             return super().translate_path(path or '/')
 
         def log_message(self, *args):

@@ -7,8 +7,10 @@ import glob
 import pathlib
 import urllib.parse
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from _baseurl import BASE, ORIGIN, SITE  # noqa: E402  (deployment prefix from hugo.toml)
+
 ROOT = pathlib.Path('public')
-BASE = '/home/'  # GitHub Pages sub-path
 
 # Both `href="…"`, `href='…'` and unquoted `href=…`
 REF = re.compile(r"""(?:href|src)=["']?([^"'\s>]+)""")
@@ -26,12 +28,11 @@ for pg in pages:
         raw = m.group(1).strip()
         if not raw or raw.startswith(('#', 'mailto:', 'tel:', 'javascript:', 'data:')):
             continue
-        SITE = 'https://cry-aml.github.io'
         if raw.startswith('//'):
             continue
         if raw.startswith(('http://', 'https://')):
             # absolute URLs that point back at this site must still resolve
-            if not raw.startswith(SITE + BASE):
+            if not raw.startswith(ORIGIN):
                 continue
             raw = raw[len(SITE):]
         checked += 1

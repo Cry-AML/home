@@ -3,7 +3,7 @@
 # https://blowfish.page/docs/getting-started/
 
 theme = "blowfish"
-baseURL = "https://cry-aml.github.io/home/"
+baseURL = "https://manchlab.com/"
 defaultContentLanguage = "en"
 hasCJKLanguage = true
 

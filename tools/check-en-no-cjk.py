@@ -26,6 +26,9 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / 'public'
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from _baseurl import BASE  # noqa: E402  (deployment prefix from hugo.toml)
+
 CJK = re.compile(r'[\u4e00-\u9fff\u3400-\u4dbf]')
 
 # The switcher is intentional. Everything else must be Latin.
@@ -36,7 +39,11 @@ SWITCHER = re.compile(
 
 # Runtime-injected strings: scan the JS bundles actually referenced by the
 # English pages, so a mis-localised ExecuteAsTemplate output is caught too.
-SCRIPT_ATTR = re.compile(r'src="?(/home/[^" >]*\.js)')
+# Match script srcs under whatever prefix `baseURL` resolves to, so a move
+# from the /home/ project page to an apex domain needs no edit here.
+SCRIPT_ATTR = re.compile(
+    r'src="?(' + re.escape(BASE) + r'[^" >]*\.js)'
+)
 
 
 def english_pages():
@@ -74,7 +81,7 @@ def scan_scripts():
             if src in seen:
                 continue
             seen.add(src)
-            path = PUBLIC / src[len('/home/'):]
+            path = PUBLIC / src[len(BASE):]
             if not path.exists():
                 continue
             js = path.read_text(errors='ignore')
