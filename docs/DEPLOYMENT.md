@@ -9,6 +9,8 @@
 | 项目 | 值 |
 | :--- | :--- |
 | 对外网址（主） | **https://manchlab.com/** |
+| HTTPS | 已启用（Let's Encrypt，`cert: approved`，到期 2027-02-13，自动续签） |
+| Enforce HTTPS | 已开启（`https_enforced: true`） |
 | 备用网址（GitHub Pages 默认） | https://cry-aml.github.io/home/ （301 跳转到主域名） |
 | GitHub 仓库 | `Cry-AML/home`（**保持此名称，不要改成 `cry-aml.github.io`**） |
 | 发布分支 | `hugo` |
@@ -112,8 +114,12 @@ Hugo 生成的绝对路径来自 `baseURL`，与 Pages 域名设置彼此独立�
 | A | `@` | `185.199.111.153` |
 | CNAME | `www` | `cry-aml.github.io` |
 
-> 若使用 Cloudflare，务必把记录设为 **DNS only（灰云）**，
-> 否则 GitHub 无法签发 Let's Encrypt 证书。
+> **签发期间**必须设为 **DNS only（灰云）**，否则 GitHub 无法签发 Let's Encrypt 证书。
+> 证书 `approved` 之后可以切回橙云（Proxied），但 SSL/TLS 模式必须是 **Full**。
+>
+> Cloudflare 默认会为 apex 同时下发 AAAA（`2606:4700::/32`，橙云代理地址）。
+> 灰云切换后若 AAAA 变为 `2606:50c0::/32`（GitHub 官方 IPv6 段）即为正常，**不阻塞签发**；
+> 但若仍残留 `2606:4700::` 说明代理未完全关闭。
 
 ### 5.3 HTTPS 证书
 
@@ -123,10 +129,14 @@ Hugo 生成的绝对路径来自 `baseURL`，与 Pages 域名设置彼此独立�
   ```bash
   gh api repos/Cry-AML/home/pages --jq '{cname, https_enforced, cert: .https_certificate.state}'
   ```
-- **若 `https_enforced` 无法通过 API 打开**（返回 `Toggling https is disabled`），
-  这是 GitHub 的 API 限制，请到网页操作：
-  `Settings → Pages → Custom domain` 勾选 **Enforce HTTPS**。
-- 证书签发完成前，`https://` 可能显示证书告警，属正常过渡状态。
+- **`https_enforced` 的两种失败信息含义不同**：
+  | 返回 | 含义 | 处理 |
+  | :--- | :--- | :--- |
+  | `Unavailable for your site because a certificate has not yet been issued` | 证书还没签发 | 等签发完成（或见第 8 节重触发） |
+  | `Toggling https is disabled` | 该入口被 GitHub 限制 | 到网页 `Settings → Pages` 勾选 Enforce HTTPS |
+- 证书签发完成前，`https://` 会返回 `000` 并伴随证书告警，属正常过渡状态。
+- 证书有效期 90 天，GitHub 在到期前 30 天自动续签；无需人工干预。
+  可用 `gh api repos/Cry-AML/home/pages --jq .https_certificate.expires_at` 查看。
 
 ---
 
@@ -171,12 +181,114 @@ curl -s -o /dev/null -w "%{http_code}\n" https://manchlab.com/images/logos/logo-
 
 ---
 
-## 8. 常见故障速查
+## 8. TLS 证书签发实录（2026-11-15）
+
+本次从 Cloudflare 橙云切换到灰云并签发 GitHub Pages 证书的完整过程，供以后复现参考。
+
+### 8.1 时间线
+
+| 时刻 (UTC) | 事件 | `cert` 状态 |
+| :--- | :--- | :--- |
+| 03:54 | 首次添加自定义域名，GitHub 发起 Let's Encrypt 申请 | `new` |
+| ~05:00 | 用户改为灰云（DNS only），A 记录指向 GitHub 官方 IP | `new` |
+| 05:37 | 确认 A 记录 ✅、CAA 无阻塞、AAAA 属 GitHub 官方 IPv6 段 | `new` |
+| 05:40 | 重新 `PUT pages -f cname=manchlab.com` 触发重新校验 | `new` |
+| 05:53 | 轮询 **12 分钟无进展** —— 判定流程卡死 | `new` |
+| ~06:00 | 网页端显示 3 步进度："Certificate Requested" | `new` |
+| 06:02 | 轮询第 2 轮：证书 **approved** | **`approved`** |
+| 06:03 | HTTPS 实测 200 + `ssl_verify_result=0` | `approved` |
+| 06:04 | 开启 `Enforce HTTPS` → 成功 | `approved`, enforced |
+
+最终证书：
+
+```
+subject  CN=manchlab.com
+issuer   Let's Encrypt
+notAfter Feb 13 04:59:41 2027 GMT
+SAN      DNS:manchlab.com          ← 不含 www
+```
+
+### 8.2 关键判定：`cert: new` 卡住时的排查顺序
+
+按以下顺序逐项排除，**每一项都给出可复制命令**：
+
+```bash
+# 1) 证书状态
+gh api repos/Cry-AML/home/pages --jq '{cname, cert: .https_certificate.state, enforced: .https_enforced}'
+
+# 2) A 记录必须全部是 GitHub 官方 IP（185.199.108-111.153）
+curl -s "https://dns.google/resolve?name=manchlab.com&type=A" | python3 -m json.tool | grep data
+
+# 3) 是否仍有 Cloudflare 代理（橙云）残留
+curl -sI https://manchlab.com/ | grep -iE "^(server|cf-ray):"
+#   server: cloudflare + 有 cf-ray  → 仍在代理，证书签发会被干扰
+
+# 4) AAAA 记录（GitHub 官方 IPv6 段 2606:50c0::/32 是正常的，不阻塞）
+curl -s "https://dns.google/resolve?name=manchlab.com&type=AAAA" | python3 -m json.tool | grep data
+
+# 5) CAA 记录不得限制 letsencrypt.org
+curl -s "https://dns.google/resolve?name=manchlab.com&type=CAA"
+#   Status=0 且无 Answer → 无 CAA，正常
+
+# 6) www 子域（GitHub 证书只含 apex，www 需单独走代理或另配）
+curl -s "https://dns.google/resolve?name=www.manchlab.com&type=CNAME"
+#   Status=3 (NXDOMAIN) → 未配置，不影响 apex 签发
+```
+
+### 8.3 本次真正的原因与新发现的坑
+
+**表面现象**：DNS 全部正确（灰云、4 条 A 记录、无 CAA 阻塞），但证书 40+ 分钟停留在 `new`。
+
+**处理**：重新 `PUT pages -f cname=manchlab.com` 触发 GitHub 侧重新校验，
+随后网页端出现 3 步进度条（"Certificate Requested"），约 2 分钟后签发完成。
+
+**结论**：**在 Cloudflare 橙云期间添加的自定义域名，其证书申请可能已失败并被静默终止；
+仅把 DNS 改成灰云并不会自动重试。必须重新提交一次 cname 才会重新发起 CA 申请。**
+
+> ⚠️ **绝对不要用 API 清空 `cname` 再重设**。本次尝试
+> `PUT pages -f cname=""` 会导致 Pages 直接解绑自定义域名
+> （`html_url` 立刻退回 `https://cry-aml.github.io/home/`），且重设请求在
+> 同一时刻可能不生效，需要再次单独绑定。**正确做法是直接重发一次
+> `PUT -f cname=manchlab.com`，不要先清空。**
+
+### 8.4 签发完成后的验证清单
+
+```bash
+# 证书主体（必须 CN=manchlab.com，而不是 *.github.io）
+echo | openssl s_client -connect 185.199.108.153:443 -servername manchlab.com 2>/dev/null \
+  | openssl x509 -noout -subject -dates -ext subjectAltName
+
+# 全站 HTTPS 抽查（verify 必须为 0）
+for p in / /team/ /zh-cn/ /zh-tw/ /publications/ /images/logos/logo-en.webp; do
+  printf "%-32s " "$p"
+  curl -s -o /dev/null -m 15 -w "https=%{http_code} verify=%{ssl_verify_result}\n" "https://manchlab.com$p"
+done
+
+# 强制 HTTPS 状态
+gh api repos/Cry-AML/home/pages --jq '{enforced: .https_enforced, expires: .https_certificate.expires_at}'
+```
+
+### 8.5 Cloudflare 橙云（Proxied）注意事项
+
+证书 `approved` 之后，**可以**安全切回橙云，但必须满足：
+
+| 项 | 要求 |
+| :--- | :--- |
+| SSL/TLS 模式 | **Full**（不能用 Flexible，否则 HTTP↔HTTPS 301 死循环） |
+| `www` 子域 | GitHub 证书**不含** `www`，需加 `CNAME www → cry-aml.github.io` 且**走橙云**（由 CF 提供边缘证书） |
+| 灰云→橙云时机 | 必须在 GitHub 证书 `approved` 之后；否则 CA 验证会被 CF 边缘拦截 |
+
+---
+
+## 9. 常见故障速查
 
 | 症状 | 原因 | 处理 |
 | :--- | :--- | :--- |
 | 页面无样式、控制台 CSS 404 | `baseURL` 与当前域名不匹配 | 改 `baseURL` → 重新构建部署 |
 | `manchlab.com` 打开是 404 | `public/CNAME` 丢失或 Pages 未绑定域名 | 检查 `static/CNAME`、Pages 设置 |
-| `https://` 证书告警 | Let's Encrypt 尚在签发 | 等待，或确认 DNS 未开代理（灰云） |
+| `https://` 证书告警 / `https=000` | 证书未签发或仍为 `*.github.io` 默认证书 | 见第 8 节排查 |
+| **`cert` 长期停留在 `new`** | 橙云期间申请失败且不会自动重试 | 重新 `PUT -f cname=manchlab.com`（**勿先清空**） |
 | 访问 `cry-aml.github.io/home/` 跳到自定义域名 | Pages 已绑定自定义域名（预期行为） | 无需处理 |
 | 资源路径出现 `/home/` | 旧构建缓存或 `baseURL` 未更新 | 清 `public/ resources/` 后重构建 |
+| `http://` 不跳 `https://` | `Enforce HTTPS` 刚开启，GitHub 侧传播需数分钟 | 等待；橙云下由 CF "Always Use HTTPS" 兜住 |
+| `www.manchlab.com` 证书错误 | GitHub 证书仅含 apex | 加 `CNAME www` 并走橙云 |
